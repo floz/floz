@@ -176,11 +176,11 @@ package five3D.display {
 			askRendering();
 		}
 
-		static private function formatRotation(angle:Number):Number {
+		static private function formatRotation(angle:Number):Number { // Modifiée
 			//var angle2:Number = angle%360;
 			//if (angle2 < -180) return angle2+360;
 			//if (angle2 > 180) return angle2-360;
-			return angle;
+			return angle; // angle2
 		}
 
 		public function get graphics3D():Graphics3D {

@@ -69,6 +69,16 @@
 			return a;
 		}
 		
+		public function getTextes():Array
+		{
+			var a:Array = [];
+			
+			var x:XML;
+			for each( x in xml.rubrique ) a.push( x );
+			
+			return a;
+		}
+		
 		public function set request(value:URLRequest):void 
 		{
 			_request = value;
