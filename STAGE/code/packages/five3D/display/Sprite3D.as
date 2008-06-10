@@ -48,6 +48,7 @@ package five3D.display {
 		private var __culling:Boolean = false;
 		private var __rendershading:Boolean = false;
 		private var __flatshading:Boolean = false;
+		private var _extra:Object;
 
 		public function Sprite3D() {
 			__matrix = new Matrix3D();
@@ -176,10 +177,10 @@ package five3D.display {
 		}
 
 		static private function formatRotation(angle:Number):Number {
-			var angle2:Number = angle%360;
-			if (angle2 < -180) return angle2+360;
-			if (angle2 > 180) return angle2-360;
-			return angle2;
+			//var angle2:Number = angle%360;
+			//if (angle2 < -180) return angle2+360;
+			//if (angle2 > 180) return angle2-360;
+			return angle;
 		}
 
 		public function get graphics3D():Graphics3D {
@@ -320,6 +321,13 @@ package five3D.display {
 			}
 			sort.sortOn("z", Array.DESCENDING | Array.NUMERIC);
 			for (i = 0; i < sort.length; i++) setChildIndex(sort[i].child, i);
+		}
+		
+		public function get extra():Object { return _extra; }
+		
+		public function set extra(value:Object):void 
+		{
+			_extra = value;
 		}
 
 		// Errors

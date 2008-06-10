@@ -3,6 +3,7 @@
 	import caurina.transitions.Tweener;
 	import five3D.display.Sprite3D;
 	import flash.events.Event;
+	import flash.filters.BlurFilter;
 	
 	public class Feuille extends Sprite3D
 	{
@@ -13,6 +14,9 @@
 		private var haut:Number;
 		private var color:uint;
 		private var alph:Number;
+		
+		private var eventCreate:Event;
+		private var eventErase:Event;
 		
 		private var nbrW:int;
 		private var nbrH:int;
@@ -40,6 +44,10 @@
 		private function onAddedToStage(e:Event):void 
 		{
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			//addEventListener( Feuille.ERASE, onRemovedFromStage );
+			
+			eventCreate = new Event( Feuille.CREATE );
+			eventErase = new Event( Feuille.ERASE );
 			
 			create();
 		}
@@ -64,13 +72,17 @@
 					t = new Tile( color );
 					background.addChild( t );
 					
-					t.x = Math.random() * 1000 - 500;
-					t.y = Math.random() * 1000 - 500;
-					t.z = Math.random() * 500 - 250;					
+					//t.x = Math.random() * 500 - 250;
+					//t.y = Math.random() * 500 - 250;
+					//t.z = Math.random() * 500 - 250;		
+					//t.x = larg/2;
+					//t.y = -larg / 2;
+					//t.z = Math.random() * 500 - 250;
 					
-					Tweener.addTween( t, { x: -larg/2 + j * 100, y: -haut/2 + i * 100, z: 0, rotationX: 0, rotationY: 0, rotationZ: 0, alpha: 1, time: 1, delay: (j+i)*.1, transition: "easeInOutQuad" } );
+					Tweener.addTween( t, { x: -larg/2 + j * 100, y: -haut/2 + i * 100, z:0, rotationX: 0, rotationY: 0, rotationZ: 0, alpha: 1, time: 1, delay: (j+i)*.1, transition: "easeInOutQuad" } );
 				}				
 				j = 0;
+				//if ( i == ( nbrH - 1 ) ) dispatchEvent( eventCreate );
 			}
 		}
 		
@@ -85,12 +97,11 @@
 			{
 				for ( j; j < nbrW; j++ )
 				{
-					Tweener.addTween( background.getChildAt( j + nbrW * i ), { x:  Math.random() * 1000 - 500, y:  Math.random() * 1000 - 500, z:  Math.random() * 500 - 250, rotationX: Math.random() * 360, rotationY: Math.random() * 360, rotationZ: Math.random() * 360, alpha: 1, time: 1, delay: .5, transition: "easeInOutQuad" } ); 
+					if ( j != nbrW - 1 && i != nbrH-1 ) Tweener.addTween( background.getChildAt( j + nbrW * i ), { x:  Math.random() * 1000 - 500, y:  Math.random() * 1000 - 500, z:  Math.random() * 500 - 250, rotationX: Math.random() * 360, rotationY: Math.random() * 360, rotationZ: Math.random() * 360, alpha: 1, time: 1, delay: .5, transition: "easeInOutQuad" } ); 
+						else Tweener.addTween( background.getChildAt( j + nbrW * i ), { x:  Math.random() * 1000 - 500, y:  Math.random() * 1000 - 500, z:  Math.random() * 500 - 250, rotationX: Math.random() * 360, rotationY: Math.random() * 360, rotationZ: Math.random() * 360, alpha: 1, time: 1, delay: .5, transition: "easeInOutQuad", onComplete: function():void { dispatchEvent( eventErase ); } } ); 
 				}
 				j = 0;
 			}
-			
-			dispatchEvent( new Event( Feuille.ERASE ) );
 		}
 		
 	}
