@@ -3,12 +3,12 @@
 	<rubrique name="INTRODUCTION"> / - "Peut on considérer Flash comme étant une technologie / morte ?" / / Plan : / 1 - Présentation de l'entreprise / 2 - Présentation des projets / 3 - Réponse a la problématique</rubrique>
 	<rubrique name="HAVAS ENTERTAINMENT"> / - Avant, StreamPower, aujourd'hui, Havas Entertainment / / - Apport de solutions multimédia / / - Gros clients : Simmons, Air France, NRJ...</rubrique>
 	<rubrique name="PROJETS">
-		<projet name="WIIFLASH" />
-		<projet name="M6 RENTREE" />
-		<projet name="MISES A JOURS" />
-		<projet name="AIR FRANCE PORTAIL" />
-		<projet name="NRJ TICKER" />
-		<projet name="GALERIE D'AGENTS" />
+		<projet name="WIIFLASH" img="wiiflash.jpg" url="" />
+		<projet name="M6 RENTREE" img="m6rentree.jpg" url="" />
+		<projet name="MISES A JOURS" img="maj.jpg" url="http://airfrancelasaga-lasagacinema.com/" />
+		<projet name="AIR FRANCE PORTAIL" img="airfranceportail.jpg" url="http://www.airfrancelasaga.com/" />
+		<projet name="NRJ TICKER" img="nrj.jpg" url="http://www.nrj.fr" />
+		<projet name="JASON BOURNE" img="bourne.jpg" url="http://www.jasonbourne-lejeu.com" />
 	</rubrique>
 	<rubrique name="PROBLEMATIQUE"> / FLASH, UNE TECHNOLOGIE MORTE ? / / - Les atouts de Flash : sa communauté, ses experts, / son apport / / - La concurrence / / - Pénurie de Flasheurs ?</rubrique>
 	<rubrique name="CONCLUSION"> / - Flash, un avenir / / - Les apports du stage / / - Et maintenant ?</rubrique>
