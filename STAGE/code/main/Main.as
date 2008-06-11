@@ -16,13 +16,9 @@
 	import interfaceSite.Datas;
 	import interfaceSite.Feuille;
 	import interfaceSite.Menu;
+	import interfaceSite.Rapport;
 	import interfaceSite.Rubrique;
-	import interfaceSite.rubriques.Conclusion;
-	import interfaceSite.rubriques.HavasEntertainment;
-	import interfaceSite.rubriques.Introduction;
-	import interfaceSite.rubriques.Problematique;
-	import interfaceSite.rubriques.Projets;
-	import interfaceSite.rubriques.Rapport;
+	import interfaceSite.Projets;
 	
 	public class Main extends MovieClip 
 	{
@@ -133,14 +129,14 @@
 			{
 				while ( container.numChildren ) container.removeChildAt( 0 );
 				
-				s = new Rubrique(3)
+				s = new Rubrique(3);
 				container.addChild( s );
 				
 			} else if ( menu.selected == _rubriques[ 4 ] )
 			{
 				while ( container.numChildren ) container.removeChildAt( 0 );
 				
-				s = new Rubrique(4)
+				s = new Rubrique(4);
 				container.addChild( s );
 				
 			} else if ( menu.selected == _rubriques[ 5 ] )
@@ -165,6 +161,15 @@
 			return loaderInfo.parameters[ "path_xml"] || "ressources/";
 		}
 		
+		public function get path_img():String
+		{
+			return loaderInfo.parameters[ "path_img"] || "img/";
+		}
+		
+		public function get path_pdf():String
+		{
+			return loaderInfo.parameters[ "path_pdf"] || "ressources/";
+		}
 	}
 	
 }

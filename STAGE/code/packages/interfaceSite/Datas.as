@@ -64,7 +64,7 @@
 			var a:Array = [];
 			
 			var x:XML;
-			for each( x in xml.rubrique.projet ) a.push( [ x.@name ] );
+			for each( x in xml.rubrique.projet ) a.push( { name: x.@name, image: x.@img, url: x.@url } );
 			
 			return a;
 		}
