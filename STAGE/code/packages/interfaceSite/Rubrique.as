@@ -1,8 +1,8 @@
-﻿package interfaceSite.rubriques 
+﻿package interfaceSite 
 {
 	import five3D.display.DynamicText3D;
 	import five3D.display.Sprite3D;
-	import five3D.typography.HelveticaMedium;
+	import five3D.typography.Helvetica65Medium;
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
@@ -10,13 +10,16 @@
 	import interfaceSite.Feuille;
 	import main.Main;
 	
-	public class Introduction extends Feuille
+	public class Rubrique extends Feuille
 	{
+		private var rub = rub;
+		
 		private var main:main.Main;
 		private var timer:Timer;
 		
-		public function Introduction() 
+		public function Rubrique( rub:int ) 
 		{
+			this.rub = rub;
 			super();
 			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
@@ -47,7 +50,7 @@
 		
 		private function create( e:TimerEvent ):void
 		{	
-			var s:String = main.text[ 0 ];
+			var s:String = main.text[ rub ];
 			var txt:Array = s.split( "/" );
 
 			var t:DynamicText3D;
@@ -57,7 +60,7 @@
 			{
 				if ( txt[ i ] != "" )
 				{
-					t = new DynamicText3D( HelveticaMedium );
+					t = new DynamicText3D( Helvetica65Medium );
 					t.size = 24;
 					t.color = 0xffffff;
 					t.text = txt[ i ];

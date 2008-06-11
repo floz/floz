@@ -5,6 +5,8 @@
 	import flash.display.GradientType;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.filters.BlurFilter;
@@ -14,6 +16,7 @@
 	import interfaceSite.Datas;
 	import interfaceSite.Feuille;
 	import interfaceSite.Menu;
+	import interfaceSite.Rubrique;
 	import interfaceSite.rubriques.Conclusion;
 	import interfaceSite.rubriques.HavasEntertainment;
 	import interfaceSite.rubriques.Introduction;
@@ -36,8 +39,15 @@
 		private var _text:Array;
 		private var menu:Menu;
 		
+		private var targetRotationX:Number;
+		private var targetRotationY:Number;
+		
 		public function Main() 
 		{
+			stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.addEventListener( Event.RESIZE, onResize );
+			
 			var m:Matrix = new Matrix( 1, 0, 0, 1, stage.stageWidth/2, stage.stageHeight );
 			background = new Sprite();
 			background.graphics.beginGradientFill( GradientType.RADIAL, [ BLEU, VERT ], [ .8, .8 ], [ 0, 255 ], m );
@@ -53,26 +63,19 @@
 			container = new Sprite3D();
 			container.x = -350 + 30;
 			container.y = -200 + 30;
+			container.rotationY = Math.random() * 10 - 5;
+			container.rotationX = Math.random() * 10 - 5;
 			scene.addChild( container );
 			
-			scene.filters = [ new DropShadowFilter( 0, 0, 0x000000, 1, 1.5, 1.5, 3, 3 ) ];
+			//scene.filters = [ new DropShadowFilter( 0, 0, 0x000000, 1, 1.5, 1.5, 3, 3 ) ];
 			
-			stage.addEventListener( MouseEvent.MOUSE_MOVE, onMove );
-			
-			datas = new Datas( "ressources/rubriques.xml" );
+			datas = new Datas( path_xml + "rubriques.xml" );
 			datas.addEventListener( Datas.COMPLETE, onDatasComplete );
 			
 			datas.load();
-			
-			stage.addEventListener( Event.RESIZE, onResize );
 		}
 		
 		// EVENTS
-		
-		private function onMove(e:MouseEvent):void 
-		{
-			if ( e.stageX > 0 && e.stageX < stage.stageWidth && e.stageY > 0 && e.stageY < stage.stageHeight );
-		}
 		
 		private function onResize(e:Event):void 
 		{
@@ -109,14 +112,14 @@
 			{
 				while ( container.numChildren ) container.removeChildAt( 0 );
 				
-				s = new Introduction();
+				s = new Rubrique(0);
 				container.addChild( s );
 				
 			} else if ( menu.selected == _rubriques[ 1 ] )
 			{
 				while ( container.numChildren ) container.removeChildAt( 0 );
 				
-				s = new HavasEntertainment();
+				s = new Rubrique(1)
 				container.addChild( s );
 				
 			} else if ( menu.selected == _rubriques[ 2 ] )
@@ -130,14 +133,14 @@
 			{
 				while ( container.numChildren ) container.removeChildAt( 0 );
 				
-				s = new Problematique();
+				s = new Rubrique(3)
 				container.addChild( s );
 				
 			} else if ( menu.selected == _rubriques[ 4 ] )
 			{
 				while ( container.numChildren ) container.removeChildAt( 0 );
 				
-				s = new Conclusion();
+				s = new Rubrique(4)
 				container.addChild( s );
 				
 			} else if ( menu.selected == _rubriques[ 5 ] )
