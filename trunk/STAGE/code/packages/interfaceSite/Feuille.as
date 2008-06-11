@@ -4,6 +4,7 @@
 	import five3D.display.Sprite3D;
 	import flash.events.Event;
 	import flash.filters.BlurFilter;
+	import fl.motion.easing.*;
 	
 	public class Feuille extends Sprite3D
 	{
