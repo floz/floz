@@ -1,0 +1,11 @@
+Différentes rubriques du site :
+- Accueil
+- Labs (Tout ce qui est programmation)
+	> Flash sites
+	> Flash expérimentations
+- Croquis
+	> Computer arts
+	> Croquis
+	> Traditionnel
+- Informations supplémentaires
+- Liens

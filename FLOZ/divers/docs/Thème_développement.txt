@@ -1,0 +1,7 @@
+Ambiance vivante/hardware
+Différents gadgets inutiles pour le site, mais qui rajoutent de l'ambiance.
+Processus qui se lancent en fond de manière aléatoire.
+3D ?
+
+Exemple : 
+Différents types d'interfaces/modules
