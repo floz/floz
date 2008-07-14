@@ -1,11 +1,19 @@
 Différentes rubriques du site :
+- Chargement !
+
 - Accueil
+	Informations :
+Présentation du site internet / de moi
+
 - Labs (Tout ce qui est programmation)
 	> Flash sites
 	> Flash expérimentations
+
 - Croquis
 	> Computer arts
 	> Croquis
 	> Traditionnel
+
 - Informations supplémentaires
+
 - Liens
