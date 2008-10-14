@@ -12,7 +12,12 @@ package plateau
 	
 	public class Cell extends Sprite 
 	{
-		
+		/**
+		 * Bonjour mix
+		 * Blalblalblalblal
+		 * @param	size Ca, c'est la taille
+		 * @param	texture Ca c'est la texture
+		 */
 		public function Cell( size:Number = 50, texture:BitmapData = null ) 
 		{
 			if ( texture )
@@ -34,8 +39,7 @@ package plateau
 		
 		private function onAddedToStage(e:Event):void 
 		{
-			trace ( this.parent );
-			trace ( this.name );
+			
 		}
 		
 		// PRIVATE	

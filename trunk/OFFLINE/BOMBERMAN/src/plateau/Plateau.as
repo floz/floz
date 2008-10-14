@@ -8,9 +8,14 @@ package plateau
 {	
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.geom.Point;
+	import items.characters.Player;
 	
 	public class Plateau extends MovieClip 
 	{
+		private static const P1:Point = new Point( 0, -15 );
+		
+		public var cnt:MovieClip;
 		
 		public function Plateau() 
 		{
@@ -29,6 +34,13 @@ package plateau
 		{
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
+			initPlateau();
+		}
+		
+		// PRIVATE
+		
+		private function initPlateau():void
+		{
 			var c:Cell;
 			
 			var i:int;
@@ -47,9 +59,21 @@ package plateau
 			}
 		}
 		
-		// PRIVATE
-		
 		// PUBLIC
+		
+		public function addPlayer( player:Player, position:String = null ):void
+		{
+			switch ( position )
+			{
+				case null :
+				{
+					player.x = P1.x;
+					player.y = P1.y;
+				}
+			}			
+			
+			addChild( player );
+		}
 		
 	}
 	
