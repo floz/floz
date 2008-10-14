@@ -12,22 +12,29 @@ package plateau
 	
 	public class Cell extends Sprite 
 	{
-		/**
-		 * Bonjour mix
-		 * Blalblalblalblal
-		 * @param	size Ca, c'est la taille
-		 * @param	texture Ca c'est la texture
-		 */
-		public function Cell( size:Number = 50, texture:BitmapData = null ) 
+		public var status:String;
+		
+		public function Cell( size:Number = 50, status:String = Const.FREE, texture:BitmapData = null ) 
 		{
+			this.status = status;
+			
 			if ( texture )
 			{
-				trace ("toto");
+				trace ("texture pas encore prise en compte");
 			}
 			else
 			{
+				var color:uint;		
+				switch( status )
+				{
+					case Const.FREE : color = 0xFFFFFF; break;
+					case Const.BLOCKED : color = 0xFF0000; break;
+					case Const.DESTROYABLE : color = 0x0000FF; break;
+					//case Const.CONSUMABLE : color = 0x00FF00; break;
+				}
+				
 				this.graphics.lineStyle( 1, 0x000000 );
-				this.graphics.beginFill( 0xffffff );
+				this.graphics.beginFill( color );
 				this.graphics.drawRect( 0, 0, size, size );
 				this.graphics.endFill();
 			}
