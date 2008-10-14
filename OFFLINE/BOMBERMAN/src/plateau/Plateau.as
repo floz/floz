@@ -17,6 +17,9 @@ package plateau
 		
 		public var cnt:MovieClip;
 		
+		/** Contient des tableaux de cellules. Chaque tableau contient une ligne de cellules */
+		private var aCells:Array = [];
+		
 		public function Plateau() 
 		{
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
@@ -43,18 +46,48 @@ package plateau
 		{
 			var c:Cell;
 			
+			var a:Array = [];
+			var status:String = Const.FREE;
+			var b1:Boolean;
+			var b2:Boolean;
+			
 			var i:int;
 			var j:int;
 			var n:int = 10;
 			for ( i; i < n; i++ )
-			{				
+			{
+				a = [];
 				for ( j; j < n; j++ )
 				{
-					c = new Cell();
+					if ( i == 0 )					
+					{
+						
+					}
+					else if ( i == n - 1 )
+					{
+						
+					}
+					else 
+					{
+						if ( a[ 0 ] )
+							b1 = ( a[ j - 1 ].status == Const.FREE || a[ j - 1 ].status == Const.DESTROYABLE ) ? true : false;
+						
+						b2 = ( aCells[ i - 1 ][ j ].status == Const.FREE || aCells[ i - 1 ][ j ].status == Const.DESTROYABLE ) ? true : false;
+						
+						if ( b1 && b2 ) status = Const.STATUS[ int( Math.random ) * 3 ];
+						else status = Const.STATUS[ int( Math.random ) * 2 ];
+						trace ( b1 && b2 );
+						
+					}
+					
+					c = new Cell( 50, status );
 					c.x = c.width * j;
 					c.y = c.width * i;
 					cnt.addChild( c );
+					
+					a.push( c );
 				}
+				aCells.push( a );
 				j = 0;
 			}
 		}
