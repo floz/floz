@@ -6,14 +6,16 @@
  */
 package items.characters 
 {	
+	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	
 	public class Character extends MovieClip 
 	{
+		// Les différentes variables qui définissent les items que le perso à ramassé.
 		
-		public function Character() 
+		public function Character( texture:BitmapData = null ) 
 		{
-			
+			if ( texture ) trace ( "texture given" );
 		}
 		
 		// EVENTS
