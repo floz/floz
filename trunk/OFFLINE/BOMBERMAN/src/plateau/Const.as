@@ -15,7 +15,7 @@ package plateau
 		public static const DESTROYABLE:String = "destroyable";
 		public static const CONSUMABLE:String = "consumable";
 		
-		public static const STATUS:Array = [ FREE, DESTROYABLE, BLOCKED ];
+		public static const STATUS:Array = [ FREE, BLOCKED ];
 	}
 	
 }

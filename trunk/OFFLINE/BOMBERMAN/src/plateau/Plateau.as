@@ -18,7 +18,6 @@ package plateau
 		public var cnt:MovieClip;
 		
 		/** Contient des tableaux de cellules. Chaque tableau contient une ligne de cellules */
-		private var aCells:Array = [];
 		
 		public function Plateau() 
 		{
@@ -42,54 +41,31 @@ package plateau
 		
 		// PRIVATE
 		
-		private function initPlateau():void
+		protected function initPlateau():void
 		{
 			var c:Cell;
 			
-			var a:Array = [];
-			var status:String = Const.FREE;
-			var b1:Boolean;
-			var b2:Boolean;
+			var status:String;
 			
 			var i:int;
 			var j:int;
-			var n:int = 10;
+			var n:int = 11;
 			for ( i; i < n; i++ )
 			{
-				a = [];
 				for ( j; j < n; j++ )
 				{
-					if ( i == 0 )					
-					{
-						
-					}
-					else if ( i == n - 1 )
-					{
-						
-					}
-					else 
-					{
-						if ( a[ 0 ] )
-							b1 = ( a[ j - 1 ].status == Const.FREE || a[ j - 1 ].status == Const.DESTROYABLE ) ? true : false;
-						
-						b2 = ( aCells[ i - 1 ][ j ].status == Const.FREE || aCells[ i - 1 ][ j ].status == Const.DESTROYABLE ) ? true : false;
-						
-						if ( b1 && b2 ) status = Const.STATUS[ int( Math.random ) * 3 ];
-						else status = Const.STATUS[ int( Math.random ) * 2 ];
-						trace ( b1 && b2 );
-						
-					}
+					status = ( ( j % 2 ) && ( i % 2 ) ) ? Const.BLOCKED : Const.FREE;
 					
 					c = new Cell( 50, status );
 					c.x = c.width * j;
 					c.y = c.width * i;
 					cnt.addChild( c );
-					
-					a.push( c );
 				}
-				aCells.push( a );
 				j = 0;
 			}
+			
+			this.x = stage.stageWidth - this.width >> 1;
+			this.y = stage.stageHeight - this.height  >> 1 ;
 		}
 		
 		// PUBLIC
