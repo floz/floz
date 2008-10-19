@@ -7,6 +7,7 @@
 package plateau 
 {	
 	import flash.display.MovieClip;
+	import main.Const;
 	
 	public class PlateauRandom extends Plateau 
 	{

@@ -10,6 +10,7 @@ package plateau
 	import flash.events.Event;
 	import flash.geom.Point;
 	import items.characters.Player;
+	import main.Const;
 	
 	public class Plateau extends MovieClip 
 	{

@@ -9,6 +9,7 @@ package plateau
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import main.Const;
 	
 	public class Cell extends Sprite 
 	{
