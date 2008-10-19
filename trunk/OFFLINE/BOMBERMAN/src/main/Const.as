@@ -4,7 +4,7 @@
  * @author Floz - Florian Zumbrunn
  * www.floz.fr || www.minuit-4.fr
  */
-package plateau 
+package main 
 {
 	
 	public class Const 
@@ -16,6 +16,12 @@ package plateau
 		public static const CONSUMABLE:String = "consumable";
 		
 		public static const STATUS:Array = [ FREE, BLOCKED ];
+		
+		// Keys
+		public static const LEFT:int = 37;
+		public static const UP:int = 38;
+		public static const RIGHT:int = 39;
+		public static const DOWN:int = 40;
 	}
 	
 }
