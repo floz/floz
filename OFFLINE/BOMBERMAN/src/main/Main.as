@@ -7,7 +7,8 @@
 package main 
 {
 	import flash.display.MovieClip;
-	import items.characters.Player;
+	import fr.minuit4.tools.FPS;
+	import objects.characters.Player;
 	import plateau.Plateau;
 	
 	public class Main extends MovieClip
@@ -18,6 +19,8 @@ package main
 		{
 			var p:Player = new Player();
 			plateau.addPlayer( p );
+			
+			//addChild( new FPS() );
 		}
 		
 		// EVENTS

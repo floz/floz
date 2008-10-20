@@ -14,6 +14,7 @@ package main
 		public static const BLOCKED:String = "blocked";
 		public static const DESTROYABLE:String = "destroyable";
 		public static const CONSUMABLE:String = "consumable";
+		public static const BOMB:String = "bomb";
 		
 		public static const STATUS:Array = [ FREE, BLOCKED ];
 		
