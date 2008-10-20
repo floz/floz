@@ -9,13 +9,14 @@ package plateau
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Point;
-	import items.characters.Player;
+	import objects.characters.Player;
 	import main.Const;
 	
 	public class Plateau extends MovieClip 
 	{
-		private static const P1:Point = new Point( 0, -15 );
+		private static const P1:Point = new Point( 50, 100 );
 		
+		public var aCells:Array = [];
 		public var cnt:MovieClip;
 		
 		/** Contient des tableaux de cellules. Chaque tableau contient une ligne de cellules */
@@ -45,24 +46,32 @@ package plateau
 		protected function initPlateau():void
 		{
 			var c:Cell;
+			var a:Array;
 			
 			var status:String;
 			
-			var i:int;
-			var j:int;
+			var i:int; // y
+			var j:int; // x
 			var n:int = 11;
 			for ( i; i < n; i++ )
 			{
+				a = [];
+				
 				for ( j; j < n; j++ )
 				{
-					status = ( ( j % 2 ) && ( i % 2 ) ) ? Const.BLOCKED : Const.FREE;
+					status = ( !( j % 2 ) && !( i % 2 ) ) ? Const.BLOCKED : Const.FREE;
+					if ( ( i == 0 ) || ( i == n - 1 ) || ( j == 0 ) || ( j == n - 1 ) ) status = Const.BLOCKED;
 					
 					c = new Cell( 50, status );
 					c.x = c.width * j;
 					c.y = c.width * i;
 					cnt.addChild( c );
+					
+					a.push( c );
 				}
 				j = 0;
+				
+				aCells.push( a );
 			}
 			
 			this.x = stage.stageWidth - this.width >> 1;
@@ -79,6 +88,8 @@ package plateau
 				{
 					player.x = P1.x;
 					player.y = P1.y;
+					
+					player.cell.x = player.cell.y = 1;
 				}
 			}			
 			

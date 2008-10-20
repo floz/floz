@@ -31,10 +31,10 @@ package plateau
 					case Const.FREE : color = 0xFFFFFF; break;
 					case Const.BLOCKED : color = 0xFF0000; break;
 					case Const.DESTROYABLE : color = 0x0000FF; break;
-					//case Const.CONSUMABLE : color = 0x00FF00; break;
+					case Const.CONSUMABLE : color = 0x00FF00; break;
 				}
 				
-				this.graphics.lineStyle( 1, 0x000000 );
+				this.graphics.lineStyle( 0, 0x000000 );
 				this.graphics.beginFill( color );
 				this.graphics.drawRect( 0, 0, size, size );
 				this.graphics.endFill();
