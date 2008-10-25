@@ -7,6 +7,7 @@
 package main 
 {
 	import flash.display.MovieClip;
+	import flash.system.Capabilities;
 	import fr.minuit4.tools.FPS;
 	import objects.characters.Player;
 	import plateau.Plateau;
@@ -17,6 +18,9 @@ package main
 		
 		public function Main() 
 		{
+			trace ( Capabilities.version );
+			trace ( Capabilities.playerType );
+			
 			var p:Player = new Player();
 			plateau.addPlayer( p );
 			
