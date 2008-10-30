@@ -10,7 +10,7 @@ package main
 	import flash.system.Capabilities;
 	import fr.minuit4.tools.FPS;
 	import objects.characters.Player;
-	import plateau.Plateau;
+	import game.Plateau;
 	
 	public class Main extends MovieClip
 	{
