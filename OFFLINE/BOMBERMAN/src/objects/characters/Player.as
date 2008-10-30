@@ -14,7 +14,7 @@ package objects.characters
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	import main.Const;
-	import plateau.Plateau;
+	import game.Plateau;
 	
 	public class Player extends Character 
 	{
