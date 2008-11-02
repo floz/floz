@@ -23,6 +23,10 @@ package main
 		public static const UP:int = 38;
 		public static const RIGHT:int = 39;
 		public static const DOWN:int = 40;
+		public static const SPACE:int = 32;
+		
+		// Items
+		public static const BOMB_DURATION:Number = 3000;
 	}
 	
 }
