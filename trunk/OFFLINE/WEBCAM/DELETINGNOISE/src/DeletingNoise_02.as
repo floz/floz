@@ -34,6 +34,8 @@ package
 			
 			image = new BitmapData( stage.stageWidth, stage.stageHeight, false, 0x000000 );
 			image.draw( s, new Matrix( 1, 0, 0, 1, stage.stageWidth >> 2, stage.stageHeight >> 2 ) );
+			image.draw( s, new Matrix( 1, 0, 0, 1, stage.stageWidth - (stage.stageWidth >> 4) - s.width, stage.stageHeight >> 2 ) );
+			image.draw( s, new Matrix( 1, 0, 0, 1, stage.stageWidth >> 2, stage.stageHeight - (stage.stageHeight >> 4) - s.height ) );
 			image.draw( s, new Matrix( 1, 0, 0, 1, stage.stageWidth - (stage.stageWidth >> 4) - s.width, stage.stageHeight - (stage.stageHeight >> 4) - s.height ) );
 			addChild( new Bitmap( image ) );
 			
@@ -116,19 +118,8 @@ package
 					xmin = ( p.x < xmin ) ? p.x : xmin;
 					ymin = ( p.y < ymin ) ? p.y : ymin;
 				}				
-				
-				if ( p.x > xmax )
-				{
-					if ( p.x - xmax < 1
-					xmax = ( p.x > xmax ) ? p.x : xmax;
-					ymax = ( p.y > ymax ) ? p.y : ymax;
-				}
-				
-				if ( i == (n - 1) || b )
-				{
-					aRects.push( o );
-					b = false;
-				}
+				xmax = ( p.x > xmax ) ? p.x : xmax;
+				ymax = ( p.y > ymax ) ? p.y : ymax;
 			}
 			
 			//
