@@ -15,6 +15,7 @@ package objects.characters
 	import flash.utils.Timer;
 	import main.Const;
 	import game.Plateau;
+	import objects.items.Bomb;
 	
 	public class Player extends Character 
 	{
@@ -105,6 +106,10 @@ package objects.characters
 					}
 					
 					break;
+				}
+				case Const.SPACE :
+				{
+					var b:Bomb = new Bomb( aCells[ cell.x ][ cell.y ] );
 				}
 			}
 		}
