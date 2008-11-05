@@ -8,55 +8,199 @@ package video
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	import flash.events.NetStatusEvent;
+	import flash.media.Video;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	
 	public class VideoPlayer02 extends Sprite
 	{
+		public static const INFOS_LOADED:String = "infos_loaded";
+		
+		private var cnt:Sprite;
+		private var menu:Sprite;		
 		private var connection:NetConnection;
+		private var client:Client;
 		private var stream:NetStream;
 		
-		public function VideoPlayer02() 
+		private var vdo:Video;
+		private var request:URLRequest;
+		private var loader:URLLoader;
+		
+		private var _vWidth:Number;
+		private var _vHeight:Number;
+		
+		private var url:String;
+		private var playAfter:Boolean;
+		
+		public function VideoPlayer02( connectParam:String = null ) 
 		{
-			connection = new NetConnection();
-			connection.connect( null ); // a changer avec l'url du serveur (uri du serveur)
+			cnt = new Sprite();
+			addChild( cnt );
 			
+			menu = new Sprite();
+			addChild( menu );
+			
+			connection = new NetConnection();
+			connection.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus )
+			connection.connect( connectParam );
+			
+			client = new Client();
 			stream = new NetStream( connection );
-			stream.client = this;
+			stream.client = client;
 			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
 		// EVENTS
 		
+		private function onNetStatus(e:NetStatusEvent):void 
+		{
+			trace ( "status info : " + e.info.code );
+		}
+		
 		private function onRemovedFromStage(e:Event):void 
 		{
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			
+			connection.removeEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
+			
+			client.removeEventListener( Event.COMPLETE, onClientComplete );
+			
+			//stream.removeEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
 		}
 		
 		private function onAddedToStage(e:Event):void 
 		{
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			
+			client.addEventListener( Event.COMPLETE, onClientComplete );
+			
+			//stream.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
+			
+			vdo = new Video();
+			vdo.attachNetStream( stream );
+			cnt.addChild( vdo );
+			
+			request = new URLRequest();
+			loader = new URLLoader();
+			loader.addEventListener( Event.COMPLETE, onLoadComplete );
+			loader.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
+		}
+		
+		private function onClientComplete(e:Event):void 
+		{
+			this._vWidth = e.currentTarget.vWidth;
+			this._vHeight = e.currentTarget.vHeight;
+		}
+		
+		private function onLoadComplete(e:Event):void 
+		{
+			dispatchEvent( new Event( VideoPlayer02.INFOS_LOADED ) );
+			
+			if ( playAfter ) play();
+		}
+		
+		private function onIOError(e:IOErrorEvent):void 
+		{
+			trace ( "IOError : this link isn't correct : " + request.url );
 		}
 		
 		// PRIVATE
 		
 		// PUBLIC
 		
-	}
-	
-	class Client
-	{
-		public function onMetaData( infos:Object ):void
+		public function config( sound:Object, timeline:Object ):void
 		{
-			for ( var o:Object in infos ) trace ( o + " : " + infos[ o ] );
+			if ( sound.exist ) ;// new SoundConfig
+			if ( timeline.exist ) ;// new TimelineConfig
 		}
 		
-		public function onCuePoint( infos:Object ):void
+		/**
+		 * Preload la vidéo.
+		 * @param	url	String	L'URL de la vidéo à jouer.
+		 * @param	playAfter	Boolean	Permet de jouer la vidéo, ou non, après le chargement.
+		 */
+		public function preload( url:String = null, playAfter:Boolean = false ):void
 		{
+			if ( url ) this.url = url;
+			if ( !this.url ) 
+			{
+				throw new Error( "There is no url used to preload the video. Please, attribute one. ('preload' method)" )
+				return;
+			}
 			
+			this.playAfter = playAfter;
+			
+			request.url = this.url;
+			loader.load( request );
 		}
+		
+		/**
+		 * Joue la vidéo.
+		 * @param	url	String	L'URL de la vidéo à jouer.
+		 */
+		public function play( url:String = null ):void
+		{
+			if ( url ) this.url = url;
+			if ( !this.url ) 
+			{
+				throw new Error( "There is no URL used to play the video. Please, attribute one. ('play' method)" );
+				return;				
+			}
+			
+			stream.play( this.url );
+			stream.seek( 0 );
+		}
+		
+		/** Relance la vidéo. */
+		public function resume():void
+		{
+			stream.resume();
+		}
+		
+		/** Stop la vidéo, et ferme les connexions à celle ci. */
+		public function close():void
+		{
+			stream.close();
+		}
+		
+		// GETTERS & SETTERS
+		
+		/** The real video width */
+		public function get vWidth():Number { return _vWidth; }
+		
+		/** The real video height */
+		public function get vHeight():Number { return _vHeight; }
+	}
+}
+
+//
+
+import flash.events.Event;
+import flash.events.EventDispatcher;
+	
+class Client extends EventDispatcher
+{
+	public var vWidth:Number;
+	public var vHeight:Number;
+	
+	public function onMetaData( infos:Object ):void
+	{
+		//for ( var o:Object in infos ) trace ( o + " : " + infos[ o ] );
+		
+		vWidth = infos.width;
+		vHeight = infos.height;
+		
+		dispatchEvent( new Event( Event.COMPLETE ) );
 	}
 	
+	public function onCuePoint( infos:Object ):void
+	{
+		trace( "Client.onCuePoint > infos : " + infos );			
+	}
 }

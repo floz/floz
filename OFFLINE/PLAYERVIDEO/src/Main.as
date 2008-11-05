@@ -21,16 +21,16 @@ package
 			p = new VideoPlayer02();
 			addChild( p );
 			
-			p.preload( "siera duel_40_4.flv" );
-			
-			var zStop:Sprite = new Sprite();
-			zStop.graphics.beginFill( 0xFF0000 );
-			zStop.graphics.drawRect( 0, 0, 20, 20 );
-			zStop.graphics.endFill();
-			
-			zStop.x = 500;
-			zStop.y = 400;
-			addChild( zStop );		
+			p.preload( "siera duel_40_4.flv", true );
+			//
+			//var zStop:Sprite = new Sprite();
+			//zStop.graphics.beginFill( 0xFF0000 );
+			//zStop.graphics.drawRect( 0, 0, 20, 20 );
+			//zStop.graphics.endFill();
+			//
+			//zStop.x = 500;
+			//zStop.y = 400;
+			//addChild( zStop );		
 		}
 		
 	}
