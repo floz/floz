@@ -6,6 +6,7 @@
  */
 package video 
 {
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -37,6 +38,8 @@ package video
 		
 		private var url:String;
 		private var playAfter:Boolean;
+		
+		private var timeline:Object;
 		
 		private var temp:Number;
 		
@@ -158,6 +161,12 @@ package video
 			stream.seek( 0 );
 		}
 		
+		/** Met en pause la vidéo */
+		public function pause():void
+		{
+			stream.pause();
+		}
+		
 		/** Relance la vidéo. */
 		public function resume():void
 		{
@@ -165,9 +174,14 @@ package video
 		}
 		
 		/** Stop la vidéo, et ferme les connexions à celle ci. */
-		public function close():void
+		public function close():void // stop() ? 
 		{
 			stream.close();
+		}
+		
+		public function configTimeline( loadedBar:DisplayObject, playedBar:DisplayObject, bar:DisplayObject, cursor:DisplayObject = null ):void
+		{
+			timeline = { loadedBar: loadedBar, playedBar: playedBar, bar: bar, cursor: cursor };
 		}
 		
 		/**
@@ -180,25 +194,39 @@ package video
 		}
 		
 		/**
-		 * Permet d'aller à un temps T de la vidéo en prenant comme référentiel une scrollbar.
+		 * Permet d'aller à un temps T de la vidéo en prenant comme référentiel la timeline de 
+		 * la vidéo.
 		 * @param	px	Number	La position x du clic souris
-		 * @param	width	Number	La largeur de la scrollbar
+		 * @param	width	Number	La largeur de la timeline
 		 */
-		public function clickToSecond( posX:Number, width:Number ):void
+		public function clickToSecond( posX:Number ):void
 		{			
-			var percent:Number = ( 100 * posX ) / width;
+			var percent:Number = ( 100 * posX ) / timeline.bar.width;
 			var second:int = ( percent * _vDuration ) / 100;
 			
 			stream.seek( second );
 		}
 		
-		public function dragToSecond( mouseX:Number, posX:Number, timelineWidth:Number, cursorWidth:Number = 0 ):Number
+		/**
+		 * Permet de calculer la position du curseur, et d'aller à un temps T de la vidéo en 
+		 * prenant comme référentiel la timeline de la vidéo.
+		 * Cette méthode est particulièrement adaptée en cas de 'drag' du curseur.
+		 * @param	mouseX	Number	La position x de la souris.
+		 * @param	posX	Number	La position x de la timeline.
+		 * @param	timelineWidth	Number	
+		 * @param	cursorWidth
+		 * @return
+		 */
+		public function dragToSecond( mouseX:Number ):Number
 		{
-			temp = mouseX - ( cursorWidth + ( cursorWidth >> 1 ) );
+			// if ( cursor == null ) ?
+			temp = mouseX - ( timeline.cursor.width + ( timeline.cursor.width >> 1 ) );
 			
-			if ( temp <= posX ) return posX;
-			else if ( temp >= posX + (timelineWidth - cursorWidth) ) return ( posX + timelineWidth - cursorWidth );
-			else return temp;
+			if ( temp <= timeline.bar.x ) temp = timeline.bar.x;
+			else if ( temp >= timeline.bar.x + (timeline.bar.width - timeline.cursor.width) ) temp = timeline.bar.x + (timeline.bar.width - timeline.cursor.width);
+			
+			clickToSecond( temp );
+			return temp;
 		}
 		
 		// GETTERS & SETTERS
