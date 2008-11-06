@@ -20,6 +20,7 @@ package video
 	{
 		public static const INFOS_LOADED:String = "infos_loaded";
 		
+		private var verbose:Boolean;
 		private var cnt:Sprite;
 		private var menu:Sprite;		
 		private var connection:NetConnection;
@@ -32,12 +33,17 @@ package video
 		
 		private var _vWidth:Number;
 		private var _vHeight:Number;
+		private var _vDuration:Number;
 		
 		private var url:String;
 		private var playAfter:Boolean;
 		
-		public function VideoPlayer02( connectParam:String = null ) 
+		private var temp:Number;
+		
+		public function VideoPlayer02( connectParam:String = null, verbose:Boolean = false ) 
 		{
+			this.verbose = verbose;
+			
 			cnt = new Sprite();
 			addChild( cnt );
 			
@@ -45,7 +51,7 @@ package video
 			addChild( menu );
 			
 			connection = new NetConnection();
-			connection.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus )
+			if ( verbose ) connection.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus )
 			connection.connect( connectParam );
 			
 			client = new Client();
@@ -67,11 +73,11 @@ package video
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			connection.removeEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
+			if ( verbose ) connection.removeEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
 			
 			client.removeEventListener( Event.COMPLETE, onClientComplete );
 			
-			//stream.removeEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
+			if ( verbose ) stream.removeEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -80,7 +86,7 @@ package video
 			
 			client.addEventListener( Event.COMPLETE, onClientComplete );
 			
-			//stream.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
+			if ( verbose ) stream.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
 			
 			vdo = new Video();
 			vdo.attachNetStream( stream );
@@ -96,6 +102,7 @@ package video
 		{
 			this._vWidth = e.currentTarget.vWidth;
 			this._vHeight = e.currentTarget.vHeight;
+			this._vDuration = e.currentTarget.vDuration;
 		}
 		
 		private function onLoadComplete(e:Event):void 
@@ -113,12 +120,6 @@ package video
 		// PRIVATE
 		
 		// PUBLIC
-		
-		public function config( sound:Object, timeline:Object ):void
-		{
-			if ( sound.exist ) ;// new SoundConfig
-			if ( timeline.exist ) ;// new TimelineConfig
-		}
 		
 		/**
 		 * Preload la vidéo.
@@ -169,6 +170,37 @@ package video
 			stream.close();
 		}
 		
+		/**
+		 * Permet d'aller à un temps T de la vidéo.
+		 * @param	second	int	L'instant de la vidéo en secondes auquel nous voulons accéder.
+		 */
+		public function toSecond( second:int ):void
+		{
+			stream.seek( second );
+		}
+		
+		/**
+		 * Permet d'aller à un temps T de la vidéo en prenant comme référentiel une scrollbar.
+		 * @param	px	Number	La position x du clic souris
+		 * @param	width	Number	La largeur de la scrollbar
+		 */
+		public function clickToSecond( posX:Number, width:Number ):void
+		{			
+			var percent:Number = ( 100 * posX ) / width;
+			var second:int = ( percent * _vDuration ) / 100;
+			
+			stream.seek( second );
+		}
+		
+		public function dragToSecond( mouseX:Number, posX:Number, timelineWidth:Number, cursorWidth:Number = 0 ):Number
+		{
+			temp = mouseX - ( cursorWidth + ( cursorWidth >> 1 ) );
+			
+			if ( temp <= posX ) return posX;
+			else if ( temp >= posX + (timelineWidth - cursorWidth) ) return ( posX + timelineWidth - cursorWidth );
+			else return temp;
+		}
+		
 		// GETTERS & SETTERS
 		
 		/** The real video width */
@@ -176,6 +208,9 @@ package video
 		
 		/** The real video height */
 		public function get vHeight():Number { return _vHeight; }
+		
+		/** The video duration */	
+		public function get vDuration():Number { return _vDuration; }
 	}
 }
 
@@ -188,6 +223,7 @@ class Client extends EventDispatcher
 {
 	public var vWidth:Number;
 	public var vHeight:Number;
+	public var vDuration:Number;
 	
 	public function onMetaData( infos:Object ):void
 	{
@@ -195,6 +231,7 @@ class Client extends EventDispatcher
 		
 		vWidth = infos.width;
 		vHeight = infos.height;
+		vDuration = infos.duration;
 		
 		dispatchEvent( new Event( Event.COMPLETE ) );
 	}
