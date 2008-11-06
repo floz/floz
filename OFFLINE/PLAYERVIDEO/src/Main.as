@@ -23,16 +23,18 @@ package
 		
 		private var temp:Number;
 		private var loadBar:Sprite;
+		private var playbar:Sprite;
 		
 		public function Main():void 
 		{
+			trace( "Main.Main" );
 			p = new VideoPlayer02();
 			addChild( p );
 			
 			p.preload( "siera duel_40_4.flv", true );
 			
 			timeline = new Sprite();
-			timeline.x = 20;
+			timeline.x = 60;
 			timeline.y = 400;
 			addChild( timeline );
 			createTimeLine();
@@ -44,8 +46,8 @@ package
 			
 			var bg:Shape = new Shape();
 			g = bg.graphics;
-			g.beginFill( 0x333333 );
-			g.drawRect( 0, 0, 200, 5 );
+			g.lineStyle( 1, 0x444444 );
+			g.drawRect( -2.5, -2.5, 205, 10 );
 			g.endFill();
 			
 			loadBar = new Sprite();
@@ -53,6 +55,18 @@ package
 			g.beginFill( 0x000000 );
 			g.drawRect( 0, 0, 200, 5 );
 			g.endFill();
+			
+			playbar = new Sprite();
+			g = playbar.graphics;
+			g.beginFill( 0x0000FF );
+			g.drawRect( 0, 0, 200, 5 );
+			g.endFill();
+			
+			trace ( playbar.width );
+			
+			var bar:Sprite = new Sprite();
+			bar.addChild( loadBar );
+			bar.addChild( playbar );
 			
 			cursor = new Sprite();
 			g = cursor.graphics;
@@ -63,23 +77,34 @@ package
 			cursor.y = -2.5;
 			
 			timeline.addChild( bg );
-			timeline.addChild( loadBar );
+			timeline.addChild( bar );
 			timeline.addChild( cursor );
 			
-			loadBar.addEventListener( MouseEvent.CLICK, onClick );
+			bar.addEventListener( MouseEvent.CLICK, onClick );
+			bar.addEventListener( MouseEvent.ROLL_OVER, onOver );
+			
+			p.configTimeline( loadBar, playbar, bar, cursor );
 			
 			cursor.addEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
 		}
 		
+		private function onOver(e:MouseEvent):void 
+		{
+			trace( "Main.onOver > e : " + e );
+		}
+		
 		private function onClick(e:MouseEvent):void 
 		{
+			trace( "Main.onClick > e : " + e );
 			cursor.x = e.localX - ( cursor.width * .5 );
 			
-			p.clickToSecond( e.localX, 200 );
+			p.clickToSecond( e.localX );
 		}
 		
 		private function onMouseDown(e:MouseEvent):void 
 		{
+			p.pause();
+			
 			stage.addEventListener( MouseEvent.MOUSE_UP, onMouseUp );
 			addEventListener( Event.ENTER_FRAME, onFrame );
 		}
@@ -88,25 +113,13 @@ package
 		{
 			stage.removeEventListener( MouseEvent.MOUSE_UP, onMouseUp );
 			removeEventListener( Event.ENTER_FRAME, onFrame );
+			
+			p.resume();
 		}
 		
 		private function onFrame(e:Event):void 
 		{
-			//temp = stage.mouseX - ( cursor.width + cursor.width * .5 );
-//
-			//if ( temp <= ( loadBar.x ) )
-			//{
-				//cursor.x = loadBar.x;
-			//}
-			//else if ( temp >= (loadBar.x + loadBar.width - cursor.width) )
-			//{
-				//cursor.x = loadBar.x + loadBar.width - cursor.width;
-			//}
-			//else
-			//{
-				//cursor.x = temp;
-			//}
-			cursor.x =  p.dragToSecond( stage.mouseX, loadBar.x, loadBar.width, cursor.width );
+			cursor.x =  p.dragToSecond( stage.mouseX );
 		}
 		
 	}
