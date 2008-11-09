@@ -41,6 +41,8 @@ package video
 		private var url:String;
 		private var playAfter:Boolean;
 		
+		private var volume:Number = 1;
+		
 		private var temp:Number;
 		
 		public function VideoPlayer03( connectParam:String = null, verbose:Boolean = false ) 
@@ -179,6 +181,16 @@ package video
 		public function close():void // stop() ? 
 		{
 			stream.close();
+		}
+		
+		public function mute():void
+		{
+			stream.soundTransform = new SoundTransform( 0 );
+		}
+		
+		public function unmute():void
+		{
+			stream.soundTransform = new SoundTransform( volume );
 		}
 		
 		/**
