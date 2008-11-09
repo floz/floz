@@ -19,7 +19,7 @@ package video
 	import flash.net.URLRequest;
 	import video.components.Timeline;
 	
-	public class VideoPlayer02 extends Sprite
+	public class VideoPlayer03 extends Sprite
 	{
 		public static const INFOS_LOADED:String = "infos_loaded";
 		
@@ -43,7 +43,7 @@ package video
 		
 		private var temp:Number;
 		
-		public function VideoPlayer02( connectParam:String = null, verbose:Boolean = false ) 
+		public function VideoPlayer03( connectParam:String = null, verbose:Boolean = false ) 
 		{
 			this.verbose = verbose;
 			
@@ -110,7 +110,7 @@ package video
 		
 		private function onLoadComplete(e:Event):void 
 		{
-			dispatchEvent( new Event( VideoPlayer02.INFOS_LOADED ) );
+			dispatchEvent( new Event( VideoPlayer03.INFOS_LOADED ) );
 			
 			if ( playAfter ) play();
 		}
@@ -181,11 +181,6 @@ package video
 			stream.close();
 		}
 		
-		public function configTimeline( timeline:Sprite ):void
-		{
-			timeline = { loadedBar: loadedBar, playedBar: playedBar, bar: bar, cursor: cursor };
-		}
-		
 		/**
 		 * Permet d'aller à un temps T de la vidéo.
 		 * @param	second	int	L'instant de la vidéo en secondes auquel nous voulons accéder.
@@ -193,51 +188,6 @@ package video
 		public function toSecond( second:int ):void
 		{
 			stream.seek( second );
-		}
-		
-		/**
-		 * Permet d'aller à un temps T de la vidéo en prenant comme référentiel la timeline de 
-		 * la vidéo.
-		 * @param	px	Number	La position x du clic souris
-		 * @param	width	Number	La largeur de la timeline
-		 */
-		public function clickToSecond( posX:Number ):void
-		{			
-			var percent:Number = ( 100 * posX ) / timeline.bar.width;
-			var second:int = ( percent * _vDuration ) / 100;
-			
-			stream.seek( second );
-		}
-		
-		/**
-		 * Permet de calculer la position du curseur, et d'aller à un temps T de la vidéo en 
-		 * prenant comme référentiel la timeline de la vidéo.
-		 * Cette méthode est particulièrement adaptée en cas de 'drag' du curseur.
-		 * @param	mouseX	Number	La position x de la souris.
-		 * @param	posX	Number	La position x de la timeline.
-		 * @param	timelineWidth	Number	
-		 * @param	cursorWidth
-		 * @return
-		 */
-		public function dragToSecond( mouseX:Number ):Number
-		{
-			// if ( cursor == null ) ?
-			temp = (mouseX - 50) - ( timeline.cursor.width + ( timeline.cursor.width >> 1 ) );
-			
-			if ( temp <= timeline.bar.x ) temp = timeline.bar.x;
-			else if ( temp >= timeline.bar.x + (timeline.bar.width - timeline.cursor.width) ) temp = timeline.bar.x + (timeline.bar.width - timeline.cursor.width);
-			
-			clickToSecond( temp );
-			return temp;
-		}
-		
-		public override function addChild( child:DisplayObject ):void
-		{
-			if ( child is Timeline )
-			{
-				
-			}
-			else throw new Error( "L'enfant ne peut être ajouté car n'est pas de type compatible avec le VideoPlayer - VideoPlayer: addChild" );
 		}
 		
 		// GETTERS & SETTERS
