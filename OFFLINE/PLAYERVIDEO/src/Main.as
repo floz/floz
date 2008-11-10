@@ -44,40 +44,6 @@ package
 		{
 			var bar:Bar = new Bar( p );
 			addChild( bar );
-			
-			//bar.addEventListener( MouseEvent.CLICK, onClick );
-			
-			//p.configTimeline( bar );
-			
-			//cursor.addEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
-		}
-		
-		private function onClick(e:MouseEvent):void 
-		{
-			cursor.x = e.localX - ( cursor.width * .5 );
-			
-			//p.clickToSecond( e.localX );
-		}
-		
-		private function onMouseDown(e:MouseEvent):void 
-		{
-			p.pause();
-			
-			stage.addEventListener( MouseEvent.MOUSE_UP, onMouseUp );
-			addEventListener( Event.ENTER_FRAME, onFrame );
-		}
-		
-		private function onMouseUp(e:MouseEvent):void 
-		{
-			stage.removeEventListener( MouseEvent.MOUSE_UP, onMouseUp );
-			removeEventListener( Event.ENTER_FRAME, onFrame );
-			
-			p.resume();
-		}
-		
-		private function onFrame(e:Event):void 
-		{
-			//cursor.x =  p.dragToSecond( stage.mouseX );
 		}
 		
 	}
