@@ -22,6 +22,12 @@ package video
 	public class VideoPlayer03 extends Sprite
 	{
 		public static const INFOS_LOADED:String = "infos_loaded";
+		public static const PLAY:String = "play";
+		public static const PAUSE:String = "pause";
+		public static const RESUME:String = "resume";
+		public static const CLOSE:String = "close";
+		public static const MUTE:String = "mute";
+		public static const UNMUTE:String = "unmute";
 		
 		private var verbose:Boolean;
 		private var cnt:Sprite;
@@ -43,6 +49,7 @@ package video
 		
 		private var volume:Number = 1;
 		
+		private var event:Event;
 		private var temp:Number;
 		
 		public function VideoPlayer03( connectParam:String = null, verbose:Boolean = false ) 
@@ -162,35 +169,53 @@ package video
 			stream.play( this.url );
 			stream.seek( 0 );
 			
-			stream.soundTransform = new SoundTransform( 0 );
+			event = new Event( VideoPlayer03.PLAY );
+			dispatchEvent( event );
+			
+			stream.soundTransform = new SoundTransform( 0 ); ////////////////////////////////////////////////////////// A DELETE
 		}
 		
 		/** Met en pause la vidéo */
 		public function pause():void
 		{
 			stream.pause();
+			
+			event = new Event( VideoPlayer03.PAUSE );
+			dispatchEvent( event );
 		}
 		
 		/** Relance la vidéo. */
 		public function resume():void
 		{
 			stream.resume();
+			
+			event = new Event( VideoPlayer03.RESUME );
+			dispatchEvent( event );
 		}
 		
 		/** Stop la vidéo, et ferme les connexions à celle ci. */
 		public function close():void // stop() ? 
 		{
 			stream.close();
+			
+			event = new Event( VideoPlayer03.CLOSE );
+			dispatchEvent( event );
 		}
 		
 		public function mute():void
 		{
 			stream.soundTransform = new SoundTransform( 0 );
+			
+			event = new Event( VideoPlayer03.MUTE );
+			dispatchEvent( event );
 		}
 		
 		public function unmute():void
 		{
 			stream.soundTransform = new SoundTransform( volume );
+			
+			event = new Event( VideoPlayer03.UNMUTE );
+			dispatchEvent( event );
 		}
 		
 		/**
@@ -203,6 +228,9 @@ package video
 		}
 		
 		// GETTERS & SETTERS
+		
+		/** The actual video time. READ ONLY */
+		public function get time():Number { return stream.time };
 		
 		/** The real video width */
 		public function get vWidth():Number { return _vWidth; }

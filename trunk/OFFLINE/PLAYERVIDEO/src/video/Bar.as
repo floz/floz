@@ -58,9 +58,6 @@ package video
 			
 			tl.x = 50;
 			tl.y = 400
-			
-			trace ( tl.x );
-			trace ( tl.y );
 		}
 		
 		// EVENTS

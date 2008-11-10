@@ -24,6 +24,7 @@ package video.components
 		private var player:VideoPlayer03;
 		
 		private var activated:Boolean;
+		private var dragging:Boolean;
 		
 		private var temp:Number;
 		
@@ -52,6 +53,11 @@ package video.components
 				bar.removeEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
 				bar.removeEventListener( MouseEvent.CLICK, onClick );
 				
+				player.removeEventListener( VideoPlayer03.PLAY, onPlay );
+				player.removeEventListener( VideoPlayer03.RESUME, onPlay );
+				player.removeEventListener( VideoPlayer03.PAUSE, onStop );
+				player.removeEventListener( VideoPlayer03.CLOSE, onStop );
+				
 				if ( hasEventListener( Event.ENTER_FRAME ) ) removeEventListener( Event.ENTER_FRAME, onFrame );
 				if ( stage.hasEventListener( MouseEvent.MOUSE_UP ) ) stage.removeEventListener( MouseEvent.MOUSE_UP, onMouseUp );
 			}
@@ -65,6 +71,8 @@ package video.components
 		private function onMouseDown(e:MouseEvent):void 
 		{
 			player.pause();
+			
+			dragging = true;
 			
 			stage.addEventListener( MouseEvent.MOUSE_UP, onMouseUp );
 			addEventListener( Event.ENTER_FRAME, onFrame );
@@ -81,12 +89,25 @@ package video.components
 			removeEventListener( Event.ENTER_FRAME, onFrame );
 			stage.removeEventListener( MouseEvent.MOUSE_UP, onMouseUp );
 			
+			dragging = false;
+			
 			player.resume();
 		}
 		
 		private function onFrame(e:Event):void 
 		{
-			cursor.x = dragToSecond( stage.mouseX - ( this.x + bar.x ) );
+			if ( dragging ) cursor.x = dragToSecond( stage.mouseX - ( this.x + bar.x ) );
+			else cursor.x = getCursorPosition();
+		}
+		
+		private function onPlay(e:Event):void 
+		{
+			addEventListener( Event.ENTER_FRAME, onFrame );
+		}
+		
+		private function onStop(e:Event):void 
+		{
+			removeEventListener( Event.ENTER_FRAME, onFrame );
 		}
 		
 		// PRIVATE	
@@ -104,6 +125,11 @@ package video.components
 				cursor.addEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
 				bar.addEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
 				bar.addEventListener( MouseEvent.CLICK, onClick );
+				
+				player.addEventListener( VideoPlayer03.PLAY, onPlay );
+				player.addEventListener( VideoPlayer03.RESUME, onPlay );
+				player.addEventListener( VideoPlayer03.PAUSE, onStop );
+				player.addEventListener( VideoPlayer03.CLOSE, onStop );
 			}
 		}
 		
@@ -165,7 +191,13 @@ package video.components
 			clickToSecond( temp );
 			
 			return temp;
-		}		
+		}
+		
+		public function getCursorPosition():Number
+		{
+			var position:Number = ( player.time * bar.width ) / player.vDuration;  // attention le curseur sort de la timeline a la fin de la vidéo
+			return ( position >= 0 ) ? position : 0;
+		}
 		
 	}
 	
