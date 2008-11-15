@@ -15,17 +15,20 @@ package video.components
 	
 	public class Timeline extends Sprite 
 	{
-		protected var background:Shape;
-		public var loadedBar:Sprite;
-		public var playedBar:Sprite;
-		public var bar:Sprite;
-		public var cursor:MovieClip;
+		public static const CURSOR_OVER:String = "cursor_over";
+		public static const CURSOR_DOWN:String = "cursor_down";
+		public static const CURSOR_UP:String = "cursor_up";
+		
+		private var background:Shape;
+		private var loadedBar:Sprite;
+		private var playedBar:Sprite;
+		private var bar:Sprite;
+		private var cursor:MovieClip;
 		
 		private var xMax:Number;
 		
 		private var player:VideoPlayer;
 		
-		private var activated:Boolean;
 		private var dragging:Boolean;
 		
 		private var temp:Number;
@@ -49,20 +52,18 @@ package video.components
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			if ( activated )
-			{
-				cursor.removeEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
-				bar.removeEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
-				bar.removeEventListener( MouseEvent.CLICK, onClick );
-				
-				player.removeEventListener( VideoPlayer.PLAY, onPlay );
-				player.removeEventListener( VideoPlayer.RESUME, onPlay );
-				player.removeEventListener( VideoPlayer.PAUSE, onStop );
-				player.removeEventListener( VideoPlayer.CLOSE, onStop );
-				
-				if ( hasEventListener( Event.ENTER_FRAME ) ) removeEventListener( Event.ENTER_FRAME, onFrame );
-				if ( stage.hasEventListener( MouseEvent.MOUSE_UP ) ) stage.removeEventListener( MouseEvent.MOUSE_UP, onMouseUp );
-			}
+			cursor.removeEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
+			cursor.removeEventListener( MouseEvent.MOUSE_OVER, onMouseOver );
+			bar.removeEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
+			bar.removeEventListener( MouseEvent.CLICK, onClick );
+			
+			player.removeEventListener( VideoPlayer.PLAY, onPlay );
+			player.removeEventListener( VideoPlayer.RESUME, onPlay );
+			player.removeEventListener( VideoPlayer.PAUSE, onStop );
+			player.removeEventListener( VideoPlayer.CLOSE, onStop );
+			
+			if ( hasEventListener( Event.ENTER_FRAME ) ) removeEventListener( Event.ENTER_FRAME, onFrame );
+			if ( stage.hasEventListener( MouseEvent.MOUSE_UP ) ) stage.removeEventListener( MouseEvent.MOUSE_UP, onMouseUp );
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -72,12 +73,19 @@ package video.components
 		
 		private function onMouseDown(e:MouseEvent):void 
 		{
+			dispatchEvent( new Event( Timeline.CURSOR_DOWN ) );
+			
 			player.pause();
 			
 			dragging = true;
 			
 			stage.addEventListener( MouseEvent.MOUSE_UP, onMouseUp );
 			addEventListener( Event.ENTER_FRAME, onFrame );
+		}
+		
+		private function onMouseOver(e:MouseEvent):void 
+		{
+			dispatchEvent( new Event( Timeline.CURSOR_OVER ) );
 		}
 		
 		private function onClick(e:MouseEvent):void 
@@ -88,6 +96,8 @@ package video.components
 		
 		private function onMouseUp(e:MouseEvent):void 
 		{
+			dispatchEvent( new Event( Timeline.CURSOR_UP ) );
+			
 			removeEventListener( Event.ENTER_FRAME, onFrame );
 			stage.removeEventListener( MouseEvent.MOUSE_UP, onMouseUp );
 			
@@ -128,17 +138,15 @@ package video.components
 			xMax = ( bar.width - cursor.width );
 			playedBar.width = 0;
 			
-			if ( activated )
-			{
-				cursor.addEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
-				bar.addEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
-				bar.addEventListener( MouseEvent.CLICK, onClick );
-				
-				player.addEventListener( VideoPlayer.PLAY, onPlay );
-				player.addEventListener( VideoPlayer.RESUME, onPlay );
-				player.addEventListener( VideoPlayer.PAUSE, onStop );
-				player.addEventListener( VideoPlayer.CLOSE, onStop );
-			}
+			cursor.addEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
+			cursor.addEventListener( MouseEvent.MOUSE_OVER, onMouseOver );
+			bar.addEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
+			bar.addEventListener( MouseEvent.CLICK, onClick );
+			
+			player.addEventListener( VideoPlayer.PLAY, onPlay );
+			player.addEventListener( VideoPlayer.RESUME, onPlay );
+			player.addEventListener( VideoPlayer.PAUSE, onStop );
+			player.addEventListener( VideoPlayer.CLOSE, onStop );
 		}
 		
 		// PUBLIC
@@ -150,17 +158,14 @@ package video.components
 		 * @param	bar
 		 * @param	cursor
 		 * @param	background
-		 * @param	activated
 		 */
-		public function config( loadedBar:Sprite, playedBar:Sprite, bar:Sprite, cursor:MovieClip, background:Shape = null, activated:Boolean = false ):void
+		public function config( loadedBar:Sprite, playedBar:Sprite, bar:Sprite, cursor:MovieClip, background:Shape = null ):void
 		{
 			this.loadedBar = loadedBar;
 			this.playedBar = playedBar;
 			this.bar = bar;
 			this.cursor = cursor;
 			this.background = background;
-			
-			this.activated = activated;
 			
 			init();
 		}
@@ -205,11 +210,6 @@ package video.components
 		/** Récupère la position du curseur en fonction du temps de lecture */
 		public function getCursorPosition():Number
 		{
-			//var position:Number = ( player.time * xMax ) / player.vDuration;
-			//return ( position >= 0 ) ? position : 0;
-			
-			//
-			
 			var position:Number = ( player.time * bar.width ) / player.vDuration;
 			
 			if ( position >= 0 ) return ( position < xMax ) ? position : xMax;
