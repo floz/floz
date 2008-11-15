@@ -56,7 +56,7 @@ package video
 			this.verbose = verbose;
 			
 			connection = new NetConnection();
-			if ( verbose ) connection.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus )
+			connection.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus )
 			connection.connect( connectParam );
 			
 			client = new Client();
@@ -70,7 +70,7 @@ package video
 		
 		private function onNetStatus(e:NetStatusEvent):void 
 		{
-			trace ( "status info : " + e.info.code );
+			if ( verbose ) trace ( "status info : " + e.info.code );
 		}
 		
 		private function onRemovedFromStage(e:Event):void 
@@ -78,11 +78,11 @@ package video
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			if ( verbose ) connection.removeEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
+			connection.removeEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
 			
 			client.removeEventListener( Event.COMPLETE, onClientComplete );
 			
-			if ( verbose ) stream.removeEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
+			stream.removeEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -91,7 +91,7 @@ package video
 			
 			client.addEventListener( Event.COMPLETE, onClientComplete );
 			
-			if ( verbose ) stream.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
+			stream.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
 			
 			vdo = new Video();
 			vdo.attachNetStream( stream );
@@ -162,15 +162,12 @@ package video
 				return;				
 			}
 			
+			stream.bufferTime = 3;
 			stream.play( this.url );
 			stream.seek( 0 );
 			
 			event = new Event( VideoPlayer.PLAY );
 			dispatchEvent( event );
-			
-			////////////////////////////////////////////////////////////////////////////////////////////////// A DELETE
-			sound.volume = 0;
-			stream.soundTransform = sound;
 		}
 		
 		/** Met en pause la vidéo */
@@ -202,7 +199,8 @@ package video
 		
 		public function mute():void
 		{
-			stream.soundTransform = new SoundTransform( 0 );
+			sound.volume = 0;
+			stream.soundTransform = sound;
 			
 			event = new Event( VideoPlayer.MUTE );
 			dispatchEvent( event );
@@ -210,7 +208,8 @@ package video
 		
 		public function unmute():void
 		{
-			stream.soundTransform = new SoundTransform( volume );
+			sound.volume = volume;
+			stream.soundTransform = sound;
 			
 			event = new Event( VideoPlayer.UNMUTE );
 			dispatchEvent( event );
@@ -227,10 +226,7 @@ package video
 		
 		// GETTERS & SETTERS
 		
-		public function get bytesPercent():Number
-		{
-			return ( stream.bytesLoaded * 100 / stream.bytesTotal ) / 100;
-		}
+		public function get bytesPercent():Number {	return ( stream.bytesLoaded * 100 / stream.bytesTotal ) / 100; }
 		
 		/** The actual video time. READ ONLY */
 		public function get time():Number { return stream.time; };

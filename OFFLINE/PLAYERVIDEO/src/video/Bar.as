@@ -53,7 +53,7 @@ package video
 			cursor.y = -2.5;
 			
 			var tl:Timeline = new Timeline( p );
-			tl.config( loadedBar, playedBar, bar, cursor, background, true );
+			tl.config( loadedBar, playedBar, bar, cursor, background );
 			addChild( tl );
 			
 			tl.x = 50;
