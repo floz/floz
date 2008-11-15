@@ -15,7 +15,7 @@ package video
 	public class Bar extends Sprite
 	{
 		
-		public function Bar( p:VideoPlayer03 ) 
+		public function Bar( p:VideoPlayer ) 
 		{			
 			var g:Graphics;
 			
