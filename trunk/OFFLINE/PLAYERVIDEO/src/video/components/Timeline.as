@@ -11,7 +11,7 @@ package video.components
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import video.VideoPlayer03;
+	import video.VideoPlayer;
 	
 	public class Timeline extends Sprite 
 	{
@@ -21,14 +21,16 @@ package video.components
 		public var bar:Sprite;
 		public var cursor:MovieClip;
 		
-		private var player:VideoPlayer03;
+		private var xMax:Number;
+		
+		private var player:VideoPlayer;
 		
 		private var activated:Boolean;
 		private var dragging:Boolean;
 		
 		private var temp:Number;
 		
-		public function Timeline( player:VideoPlayer03, loadedBar:Sprite = null, playedBar:Sprite = null, bar:Sprite = null, cursor:MovieClip = null, background:Shape = null ) 
+		public function Timeline( player:VideoPlayer, loadedBar:Sprite = null, playedBar:Sprite = null, bar:Sprite = null, cursor:MovieClip = null, background:Shape = null ) 
 		{
 			this.player = player;
 			this.loadedBar = loadedBar;
@@ -53,10 +55,10 @@ package video.components
 				bar.removeEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
 				bar.removeEventListener( MouseEvent.CLICK, onClick );
 				
-				player.removeEventListener( VideoPlayer03.PLAY, onPlay );
-				player.removeEventListener( VideoPlayer03.RESUME, onPlay );
-				player.removeEventListener( VideoPlayer03.PAUSE, onStop );
-				player.removeEventListener( VideoPlayer03.CLOSE, onStop );
+				player.removeEventListener( VideoPlayer.PLAY, onPlay );
+				player.removeEventListener( VideoPlayer.RESUME, onPlay );
+				player.removeEventListener( VideoPlayer.PAUSE, onStop );
+				player.removeEventListener( VideoPlayer.CLOSE, onStop );
 				
 				if ( hasEventListener( Event.ENTER_FRAME ) ) removeEventListener( Event.ENTER_FRAME, onFrame );
 				if ( stage.hasEventListener( MouseEvent.MOUSE_UP ) ) stage.removeEventListener( MouseEvent.MOUSE_UP, onMouseUp );
@@ -98,6 +100,9 @@ package video.components
 		{
 			if ( dragging ) cursor.x = dragToSecond( stage.mouseX - ( this.x + bar.x ) );
 			else cursor.x = getCursorPosition();
+			
+			playedBar.width = cursor.x;
+			loadedBar.scaleX = player.bytesPercent;
 		}
 		
 		private function onPlay(e:Event):void 
@@ -120,16 +125,19 @@ package video.components
 			addChild( bar );
 			addChild( cursor );
 			
+			xMax = ( bar.width - cursor.width );
+			playedBar.width = 0;
+			
 			if ( activated )
 			{
 				cursor.addEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
 				bar.addEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
 				bar.addEventListener( MouseEvent.CLICK, onClick );
 				
-				player.addEventListener( VideoPlayer03.PLAY, onPlay );
-				player.addEventListener( VideoPlayer03.RESUME, onPlay );
-				player.addEventListener( VideoPlayer03.PAUSE, onStop );
-				player.addEventListener( VideoPlayer03.CLOSE, onStop );
+				player.addEventListener( VideoPlayer.PLAY, onPlay );
+				player.addEventListener( VideoPlayer.RESUME, onPlay );
+				player.addEventListener( VideoPlayer.PAUSE, onStop );
+				player.addEventListener( VideoPlayer.CLOSE, onStop );
 			}
 		}
 		
@@ -193,10 +201,19 @@ package video.components
 			return temp;
 		}
 		
+		// Problème : on ne va pas au bout de la timeline.
+		/** Récupère la position du curseur en fonction du temps de lecture */
 		public function getCursorPosition():Number
 		{
-			var position:Number = ( player.time * bar.width ) / player.vDuration;  // attention le curseur sort de la timeline a la fin de la vidéo
-			return ( position >= 0 ) ? position : 0;
+			//var position:Number = ( player.time * xMax ) / player.vDuration;
+			//return ( position >= 0 ) ? position : 0;
+			
+			//
+			
+			var position:Number = ( player.time * bar.width ) / player.vDuration;
+			
+			if ( position >= 0 ) return ( position < xMax ) ? position : xMax;
+			else return 0;
 		}
 		
 	}

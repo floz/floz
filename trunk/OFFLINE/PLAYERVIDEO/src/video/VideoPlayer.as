@@ -19,7 +19,7 @@ package video
 	import flash.net.URLRequest;
 	import video.components.Timeline;
 	
-	public class VideoPlayer03 extends Sprite
+	public class VideoPlayer extends Sprite
 	{
 		public static const INFOS_LOADED:String = "infos_loaded";
 		public static const PLAY:String = "play";
@@ -29,14 +29,13 @@ package video
 		public static const MUTE:String = "mute";
 		public static const UNMUTE:String = "unmute";
 		
-		private var verbose:Boolean;
-		private var cnt:Sprite;
-		private var menu:Sprite;		
+		private var verbose:Boolean;	
 		private var connection:NetConnection;
 		private var client:Client;
 		private var stream:NetStream;
 		
 		private var vdo:Video;
+		private var sound:SoundTransform;
 		private var request:URLRequest;
 		private var loader:URLLoader;
 		
@@ -52,15 +51,9 @@ package video
 		private var event:Event;
 		private var temp:Number;
 		
-		public function VideoPlayer03( connectParam:String = null, verbose:Boolean = false ) 
+		public function VideoPlayer( connectParam:String = null, verbose:Boolean = false ) 
 		{
 			this.verbose = verbose;
-			
-			cnt = new Sprite();
-			addChild( cnt );
-			
-			menu = new Sprite();
-			addChild( menu );
 			
 			connection = new NetConnection();
 			if ( verbose ) connection.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus )
@@ -102,7 +95,10 @@ package video
 			
 			vdo = new Video();
 			vdo.attachNetStream( stream );
-			cnt.addChild( vdo );
+			addChild( vdo );
+			
+			sound = new SoundTransform( 1 ); ///////////////////////////////////////////////////// A reprendre
+			stream.soundTransform = sound;
 			
 			request = new URLRequest();
 			loader = new URLLoader();
@@ -115,12 +111,12 @@ package video
 			this._vWidth = e.currentTarget.vWidth;
 			this._vHeight = e.currentTarget.vHeight;
 			this._vDuration = e.currentTarget.vDuration;
+			
+			dispatchEvent( new Event( VideoPlayer.INFOS_LOADED ) );
 		}
 		
 		private function onLoadComplete(e:Event):void 
 		{
-			dispatchEvent( new Event( VideoPlayer03.INFOS_LOADED ) );
-			
 			if ( playAfter ) play();
 		}
 		
@@ -169,10 +165,12 @@ package video
 			stream.play( this.url );
 			stream.seek( 0 );
 			
-			event = new Event( VideoPlayer03.PLAY );
+			event = new Event( VideoPlayer.PLAY );
 			dispatchEvent( event );
 			
-			stream.soundTransform = new SoundTransform( 0 ); ////////////////////////////////////////////////////////// A DELETE
+			////////////////////////////////////////////////////////////////////////////////////////////////// A DELETE
+			sound.volume = 0;
+			stream.soundTransform = sound;
 		}
 		
 		/** Met en pause la vidéo */
@@ -180,7 +178,7 @@ package video
 		{
 			stream.pause();
 			
-			event = new Event( VideoPlayer03.PAUSE );
+			event = new Event( VideoPlayer.PAUSE );
 			dispatchEvent( event );
 		}
 		
@@ -189,7 +187,7 @@ package video
 		{
 			stream.resume();
 			
-			event = new Event( VideoPlayer03.RESUME );
+			event = new Event( VideoPlayer.RESUME );
 			dispatchEvent( event );
 		}
 		
@@ -198,7 +196,7 @@ package video
 		{
 			stream.close();
 			
-			event = new Event( VideoPlayer03.CLOSE );
+			event = new Event( VideoPlayer.CLOSE );
 			dispatchEvent( event );
 		}
 		
@@ -206,7 +204,7 @@ package video
 		{
 			stream.soundTransform = new SoundTransform( 0 );
 			
-			event = new Event( VideoPlayer03.MUTE );
+			event = new Event( VideoPlayer.MUTE );
 			dispatchEvent( event );
 		}
 		
@@ -214,7 +212,7 @@ package video
 		{
 			stream.soundTransform = new SoundTransform( volume );
 			
-			event = new Event( VideoPlayer03.UNMUTE );
+			event = new Event( VideoPlayer.UNMUTE );
 			dispatchEvent( event );
 		}
 		
@@ -229,8 +227,13 @@ package video
 		
 		// GETTERS & SETTERS
 		
+		public function get bytesPercent():Number
+		{
+			return ( stream.bytesLoaded * 100 / stream.bytesTotal ) / 100;
+		}
+		
 		/** The actual video time. READ ONLY */
-		public function get time():Number { return stream.time };
+		public function get time():Number { return stream.time; };
 		
 		/** The real video width */
 		public function get vWidth():Number { return _vWidth; }
