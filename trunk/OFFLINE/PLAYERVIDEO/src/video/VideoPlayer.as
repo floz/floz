@@ -51,7 +51,7 @@ package video
 		private var event:Event;
 		private var temp:Number;
 		
-		public function VideoPlayer( connectParam:String = null, verbose:Boolean = false ) 
+		public function VideoPlayer( width:Number = 320, height:Number = 240, connectParam:String = null, verbose:Boolean = false ) 
 		{
 			this.verbose = verbose;
 			
@@ -62,6 +62,11 @@ package video
 			client = new Client();
 			stream = new NetStream( connection );
 			stream.client = client;
+			
+			vdo = new Video();
+			vdo.attachNetStream( stream );
+			vdo.width = width;
+			vdo.height = vdo.height;
 			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
@@ -93,11 +98,9 @@ package video
 			
 			stream.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
 			
-			vdo = new Video();
-			vdo.attachNetStream( stream );
 			addChild( vdo );
 			
-			sound = new SoundTransform( 1 ); ///////////////////////////////////////////////////// A reprendre
+			sound = new SoundTransform( 1 );
 			stream.soundTransform = sound;
 			
 			request = new URLRequest();
@@ -224,6 +227,12 @@ package video
 			stream.seek( second );
 		}
 		
+		public function resize( width:Number, Height:Number ):void
+		{
+			vdo.width = width;
+			vdo.height = height;
+		}
+		
 		// GETTERS & SETTERS
 		
 		public function get bytesPercent():Number {	return ( stream.bytesLoaded * 100 / stream.bytesTotal ) / 100; }
@@ -255,7 +264,7 @@ class Client extends EventDispatcher
 	
 	public function onMetaData( infos:Object ):void
 	{
-		//for ( var o:Object in infos ) trace ( o + " : " + infos[ o ] );
+		for ( var o:Object in infos ) trace ( o + " : " + infos[ o ] );
 		
 		vWidth = infos.width;
 		vHeight = infos.height;
