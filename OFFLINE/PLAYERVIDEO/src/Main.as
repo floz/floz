@@ -31,7 +31,7 @@ package
 		
 		public function Main():void 
 		{
-			p = new VideoPlayer( );
+			p = new VideoPlayer( 400, 240 );
 			addChild( p );
 			
 			timeline = new Sprite();
