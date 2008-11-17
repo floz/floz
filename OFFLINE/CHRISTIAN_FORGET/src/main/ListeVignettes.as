@@ -14,7 +14,6 @@ package main
 	
 	public class ListeVignettes extends MovieClip 
 	{
-		public var strk:MovieClip;
 		public var msk:MovieClip;
 		public var cnt:MovieClip;
 		
@@ -33,7 +32,6 @@ package main
 		
 		private function onAddedToStage(e:Event):void 
 		{
-			strk.visible = false;
 			msk.visible = false;
 			
 			_main = getAncestor( this, Main ) as Main;
@@ -80,9 +78,12 @@ package main
 			{
 				o = a[ i ];
 				v = new Vignette( o.name, o.preview, o.film );
-				v.y = i * 5 + v.height * i;
+				v.y = i * 3.63 + v.height * i;
 				cnt.addChild( v );
 			}
+			
+			trace (cnt.height );
+			trace (cnt.width );
 			
 			o = null;
 			a = null;
