@@ -23,7 +23,7 @@ package main
 			this.film = film;
 			
 			var g:Graphics = this.graphics;
-			g.lineStyle( 3, 0xffffff, 1, true );
+			g.lineStyle( 2, 0xffffff, 1, true );
 			g.drawRect( 0, 0, 125, 35 );
 			g.endFill();
 			
