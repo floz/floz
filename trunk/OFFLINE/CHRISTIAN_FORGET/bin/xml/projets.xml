@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<works>
+		<item name="siera" preview="siera.jpg" film="siera.flv" />		
+		<item name="siera" preview="siera.jpg" film="siera.flv" />		
+	</works>
+	<archives>
+		<item name="siera" preview="siera.jpg" film="siera.flv" />
+	</archives>
+	<contact mail="christian.forget@libertysurf.fr" skype="Sfx_61" tel="+33 607013760" />
+</data>

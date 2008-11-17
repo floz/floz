@@ -6,21 +6,18 @@
  */
 package main 
 {
-	import flash.display.MovieClip;
 	
-	public class Main extends MovieClip
+	public class Datas 
 	{
 		
-		public function Main() 
+		public function Datas() 
 		{
-			/**
-			 * 
-			 */
+			
 		}
 		
 		// EVENTS
 		
-		// PRIVATE
+		// PRIVATE	
 		
 		// PUBLIC
 		
