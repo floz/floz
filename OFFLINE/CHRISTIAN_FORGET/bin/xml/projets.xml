@@ -2,10 +2,26 @@
 <data>
 	<works>
 		<item name="siera" preview="siera.jpg" film="siera.flv" />		
-		<item name="siera" preview="siera.jpg" film="siera.flv" />		
+		<item name="nissan micra" preview="nissan_micra.jpg" film="nissan_micra.flv" />
+		<item name="nissan primera" preview="nissan_primera.jpg" film="nissan_primera.flv" />
+		<item name="paco rabanne" preview="paco_rabanne.jpg" film="paco_rabanne.flv" />
+		<item name="decathlon" preview="decathlon.jpg" film="decathlon.flv" />
+		<item name="fiat idea" preview="fiat_idea.jpg" film="fiat_idea.flv" />
+		<item name="la poste" preview="la_poste.jpg" film="la_poste.flv" />
+		<item name="oriflame" preview="oriflame.jpg" film="oriflame.flv" />
+		<item name="skip" preview="skip.jpg" film="skip.flv" />
 	</works>
 	<archives>
-		<item name="siera" preview="siera.jpg" film="siera.flv" />
+		<item name="la poste" preview="la_poste.jpg" film="la_poste.flv" />
+		<item name="siera" preview="siera.jpg" film="siera.flv" />		
+		<item name="nissan micra" preview="nissan_micra.jpg" film="nissan_micra.flv" />
+		<item name="nissan primera" preview="nissan_primera.jpg" film="nissan_primera.flv" />
+		<item name="paco rabanne" preview="paco_rabanne.jpg" film="paco_rabanne.flv" />
+		<item name="decathlon" preview="decathlon.jpg" film="decathlon.flv" />
+		<item name="fiat idea" preview="fiat_idea.jpg" film="fiat_idea.flv" />
+		<item name="la poste" preview="la_poste.jpg" film="la_poste.flv" />
+		<item name="oriflame" preview="oriflame.jpg" film="oriflame.flv" />
+		<item name="skip" preview="skip.jpg" film="skip.flv" />
 	</archives>
 	<contact mail="christian.forget@libertysurf.fr" skype="Sfx_61" tel="+33 607013760" />
 </data>
