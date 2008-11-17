@@ -8,19 +8,17 @@ package main
 {
 	import flash.display.MovieClip;
 	
-	public class Main extends MovieClip
+	public class Vignette extends MovieClip 
 	{
 		
-		public function Main() 
+		public function Vignette() 
 		{
-			/**
-			 * 
-			 */
+			
 		}
 		
 		// EVENTS
 		
-		// PRIVATE
+		// PRIVATE	
 		
 		// PUBLIC
 		
