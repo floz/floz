@@ -6,6 +6,7 @@
  */
 package main 
 {
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	
@@ -18,6 +19,9 @@ package main
 		public static const CONTACT:String = "contact";
 		
 		public var section:String = WORKS;
+		
+		public var screen:Screen;
+		public var listeVignettes:ListeVignettes;
 		
 		private var datas:Datas;
 		
@@ -40,13 +44,34 @@ package main
 			this.contact = datas.getContactInfos();
 			
 			dispatchEvent( new Event( Main.READY ) );
+			
+			listeVignettes.addEventListener( Vignette.VIGNETTE_OVER, onVignetteOver );
+			listeVignettes.addEventListener( Vignette.VIGNETTE_OUT, onVignetteOut );
+			listeVignettes.addEventListener( Vignette.VIGNETTE_PRESS, onVignettePress );
 		}
 		
 		// EVENTS
 		
+		private function onVignetteOver(e:Event):void 
+		{
+			screen.display( e.target.preview );
+		}
+		
+		private function onVignetteOut(e:Event):void 
+		{
+			screen.clear();
+		}
+		
+		private function onVignettePress(e:Event):void 
+		{
+			screen.select( e.target.film );		
+		}
+		
 		// PRIVATE
 		
 		// PUBLIC
+		
+		public function getPathImages():String { return "images/" };
 		
 	}
 	

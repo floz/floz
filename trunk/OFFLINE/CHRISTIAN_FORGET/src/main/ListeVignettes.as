@@ -54,13 +54,14 @@ package main
 		
 		private function onDown(e:MouseEvent):void 
 		{
-			trace ( e.target.name + " : DOWN" );
+			e.target.down();
 			stage.addEventListener( MouseEvent.MOUSE_UP, onUp );
 		}
 		
 		private function onUp(e:MouseEvent):void 
 		{
 			trace ( e.target.name + " : UP" );
+			if ( e.target is Vignette ) e.target.up();
 		}
 		
 		// PRIVATE
