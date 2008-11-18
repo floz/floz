@@ -6,12 +6,27 @@
  */
 package main 
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.geom.Matrix;
+	import flash.text.AntiAliasType;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	public class Vignette extends Sprite 
 	{
+		public static const VIGNETTE_OVER:String = "vignette_over";
+		public static const VIGNETTE_OUT:String = "vignette_out";
+		public static const VIGNETTE_PRESS:String = "vignette_press";
+		
+		private var status:String = "out";
+		
 		public var preview:String;
 		public var film:String;
 		private var voile:Shape;
@@ -27,8 +42,33 @@ package main
 			g.drawRect( 0, 0, 125, 35 );
 			g.endFill();
 			
+			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
+		}
+		
+		// EVENTS
+		
+		private function onAddedToStage(e:Event):void 
+		{
+			var cnt:Sprite = new Sprite();
+			
+			var format:TextFormat = new TextFormat( "Arial Rounded MT Bold", 14, 0xffffff );
+			format.align = TextFormatAlign.CENTER;
+			
+			var text:TextField = new TextField();
+			text.width = 125;
+			text.multiline = true;
+			text.wordWrap = true;
+			text.autoSize = TextFieldAutoSize.LEFT;
+			text.text = this.name.toUpperCase();
+			text.setTextFormat( format );
+			cnt.addChild( text );
+			
+			var bd:BitmapData = new BitmapData( 125, 35, true, 0x00 );
+			bd.draw( cnt, new Matrix( 1, 0, 0, 1, 0, this.height / 2 - cnt.height / 2 - 1 ) );
+			addChild( new Bitmap( bd ) );
+			
 			voile = new Shape();
-			g = voile.graphics;
+			var g:Graphics = voile.graphics;
 			g.beginFill( 0xffffff, 1 );
 			g.drawRect( 0, 0, 125, 35 );
 			g.endFill();
@@ -37,31 +77,38 @@ package main
 			voile.alpha = 0;
 		}
 		
-		// EVENTS
-		
 		// PRIVATE
 		
 		// PUBLIC
 		
 		public function over():void
 		{
+			status = "over";
+			
 			voile.alpha = .20;
+			dispatchEvent( new Event( Vignette.VIGNETTE_OVER, true ) );
 		}
 		
 		public function out():void
 		{
+			status = "out";
+			
 			voile.alpha = 0;
+			dispatchEvent( new Event( Vignette.VIGNETTE_OUT, true ) );
 		}
 		
 		public function down():void
 		{
-			
+			voile.alpha = .40
 		}
 		
 		public function up():void
 		{
-			
+			voile.alpha = status == "over" ? .20 : 0;
+			dispatchEvent( new Event( Vignette.VIGNETTE_PRESS, true ) );
 		}
+		
+		public function get infos():Object { return { name: this.name, preview: this.preview, film: this.film } };
 		
 	}
 	
