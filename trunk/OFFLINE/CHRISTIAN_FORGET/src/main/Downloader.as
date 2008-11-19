@@ -18,15 +18,17 @@ package main
 	public class Downloader extends EventDispatcher
 	{
 		private var list:Array;
+		private var downloadedList:Array;
 		
 		private var request:URLRequest;
 		private var loader:Loader;
 		
 		private var image:BitmapData;
 		
-		public function Downloader() 
+		public function Downloader( length:int ) 
 		{
 			list = [];
+			downloadedList = [];
 			
 			request = new URLRequest();
 			loader = new Loader();
@@ -37,11 +39,15 @@ package main
 		// EVENTS
 		
 		private function onLoadComplete(e:Event):void 
-		{
+		{			
 			image = Bitmap( e.currentTarget.content ).bitmapData;
 			list.shift();
 			
+			downloadedList.push( { url: request.url, image: image } );
+			
 			dispatchEvent( new Event( Event.COMPLETE ) );
+			
+			downloadNext();
 		}
 		
 		private function onIOError(e:IOErrorEvent):void 
@@ -51,6 +57,11 @@ package main
 		
 		// PRIVATE
 		
+		/**
+		 * Permet d'organiser la liste d'images à télécharger.
+		 * @param	url	String	L'url du fichier à télécharger.
+		 * @return
+		 */
 		private function check( url:String ):Boolean
 		{
 			var idx:int = -1;
@@ -67,14 +78,34 @@ package main
 			return true;
 		}
 		
+		/**
+		 * Download l'élement suivant de la liste, s'il en existe un.
+		 */
+		private function downloadNext():void
+		{
+			if ( !hasNext() ) return;
+			
+			request.url = list[ 0 ];
+			loader.load( request );
+		}
+		
 		// PUBLIC
 		
+		/**
+		 * Ajoute un élement à la liste, et le download s'il l'est demandé.
+		 * @param	url	String	L'url du fichier à télécharger.
+		 * @param	download	Boolean	Si oui ou non on lance le téléchargement du fichier, après l'avoir ajouté à la liste.
+		 */
 		public function add( url:String, download:Boolean ):void
 		{
 			list.push( url );
 			if ( download ) load( url );
 		}
 		
+		/**
+		 * Charge le fichier demandé.
+		 * @param	url	String	L'url du fichier à télécharger.
+		 */
 		public function load( url:String ):void
 		{
 			if ( check( url ) ) list.unshift( url );
@@ -83,12 +114,40 @@ package main
 			loader.load( request );
 		}
 		
+		/**
+		 * Vérifie s'il existe encore des élément à télécharger dans la liste. Renvoie True ou False.
+		 * @return
+		 */
 		public function hasNext():Boolean
 		{ 
 			if ( list[ 0 ] ) return true;
 			return false;
 		}
 		
+		/**
+		 * Vérifie si le fichier demandé a déjà été téléchargé.
+		 * Si c'est le cas, ajoute l'image télécharger dans la variable image, afin d'être pouvoir récupérée via getImage();
+		 * @param	url
+		 * @return
+		 */
+		public function checkIfDownloaded( url:String ):Boolean
+		{
+			for each( var o:Object in downloadedList ) 
+			{
+				if ( o.url == url ) 
+				{
+					image = o.image;
+					return true;
+				} 
+				continue;
+			}
+			return false;
+		}
+		
+		/**
+		 * Récupère la dernier image téléchargée, ou sélectionnée.
+		 * @return
+		 */
 		public function getImage():BitmapData
 		{
 			return image;

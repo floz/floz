@@ -18,45 +18,70 @@ package main
 	import video.VideoPlayer;
 	
 	public class Screen extends MovieClip
-	{
+	{		
 		private var screen:BitmapData;
-		private var bScreen:Bitmap;
 		
-		private var downloader:Downloader;
 		private var _main:Main;
 		private var player:VideoPlayer;
+		
+		private var downloaderWorks:Downloader;
+		private var downloaderArchives:Downloader;
+		private var downloader:Downloader;
+		
+		private var over:Boolean;
+		private var loading:Loading;
 		
 		public function Screen() 
 		{
 			screen = new BitmapData( 640, 360, true, 0x00ffffff );
-			bScreen = new Bitmap( screen )
-			addChild( bScreen );
+			addChild( new Bitmap( screen ) );
 			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
+		// EVENTS
+		
 		private function onAddedToStage(e:Event):void 
-		{
-			downloader = new Downloader();
-			downloader.addEventListener( Event.COMPLETE, onLoadComplete );
-			
+		{			
 			_main = getAncestor( this, Main ) as Main;
+			_main.addEventListener( Main.READY, onReady );
+			
+			loading = new Loading();
+			loading.x = (screen.width >> 1) - loading.width;
+			loading.y = (screen.height >> 1) - loading.height;
+			addChild( loading );
 			
 			player = new VideoPlayer( 640, 360 );
 			addChild( player );
 		}
 		
-		// EVENTS
+		private function onReady(e:Event):void 
+		{
+			downloaderWorks = new Downloader( _main.works.length );
+			downloaderWorks.addEventListener( Event.COMPLETE, onLoadComplete );
+			
+			downloaderArchives = new Downloader( _main.archives.length );
+			downloaderArchives.addEventListener( Event.COMPLETE, onLoadComplete );
+			
+			downloader = downloaderWorks;
+		}
 		
 		private function onLoadComplete(e:Event):void 
+		{
+			loading.stop();
+			
+			show();
+		}
+		
+		// PRIVATE
+		
+		private function show():void
 		{
 			var bd:BitmapData = downloader.getImage();			
 			if ( bd.width != 640 || bd.height != 360 ) bd = resize( bd );
 			
-			screen.draw( bd );
+			if ( over ) screen.draw( bd );
 		}
-		
-		// PRIVATE
 		
 		private function resize( image:BitmapData )
 		{
@@ -82,21 +107,39 @@ package main
 		
 		// PUBLIC
 		
+		public function change( section:String ):void
+		{
+			switch( section )
+			{
+				case Main.WORKS : downloader = downloaderWorks; break;
+				case Main.ARCHIVES : downloader = downloaderArchives; break;
+			}
+		}
+		
 		public function display( url:String ):void
 		{
-			downloader.load( _main.getPathImages() + url );
-			bScreen.alpha = 1;
+			over = true;
+			
+			if ( downloader.checkIfDownloaded( _main.getPathImages() + url ) )
+			{
+				show();
+			}
+			else
+			{
+				downloader.load( _main.getPathImages() + url );			
+				loading.play();
+			}			
 		}
 		
 		public function clear():void
 		{
-			bScreen.alpha = 0;
+			over = false;
 			screen.fillRect( screen.rect, 0x00ffffff );
 		}
 		
 		public function select( url:String ):void
 		{
-			
+			player.play( "flv/siera duel_40.flv" );
 		}
 		
 	}
