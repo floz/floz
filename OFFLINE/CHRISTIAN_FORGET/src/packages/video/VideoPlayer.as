@@ -66,7 +66,7 @@ package video
 			vdo = new Video();
 			vdo.attachNetStream( stream );
 			vdo.width = width;
-			vdo.height = vdo.height;
+			vdo.height = height;
 			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
@@ -264,7 +264,7 @@ class Client extends EventDispatcher
 	
 	public function onMetaData( infos:Object ):void
 	{
-		for ( var o:Object in infos ) trace ( o + " : " + infos[ o ] );
+		//for ( var o:Object in infos ) trace ( o + " : " + infos[ o ] );
 		
 		vWidth = infos.width;
 		vHeight = infos.height;

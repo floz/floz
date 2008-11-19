@@ -14,6 +14,7 @@ package main
 	import flash.events.Event;
 	import flash.geom.Matrix;
 	import flash.text.AntiAliasType;
+	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
@@ -51,13 +52,15 @@ package main
 		{
 			var cnt:Sprite = new Sprite();
 			
-			var format:TextFormat = new TextFormat( "Arial Rounded MT Bold", 14, 0xffffff );
+			var format:TextFormat = new TextFormat( "Arial", 12, 0xffffff );
 			format.align = TextFormatAlign.CENTER;
 			
 			var text:TextField = new TextField();
 			text.width = 125;
 			text.multiline = true;
 			text.wordWrap = true;
+			text.embedFonts = true;
+			text.antiAliasType = AntiAliasType.ADVANCED;
 			text.autoSize = TextFieldAutoSize.LEFT;
 			text.text = this.name.toUpperCase();
 			text.setTextFormat( format );
