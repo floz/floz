@@ -22,7 +22,7 @@ package main
 		private var screen:BitmapData;
 		
 		private var _main:Main;
-		private var player:VideoPlayer;
+		private var player:Player;
 		
 		private var downloaderWorks:Downloader;
 		private var downloaderArchives:Downloader;
@@ -51,7 +51,7 @@ package main
 			loading.y = (screen.height >> 1) - loading.height;
 			addChild( loading );
 			
-			player = new VideoPlayer( 640, 360 );
+			player = new Player( 640, 360 );
 			addChild( player );
 		}
 		
@@ -126,7 +126,7 @@ package main
 			}
 			else
 			{
-				downloader.load( _main.getPathImages() + url );			
+				downloader.load( url );			
 				loading.play();
 			}			
 		}
@@ -139,7 +139,8 @@ package main
 		
 		public function select( url:String ):void
 		{
-			player.play( "flv/siera duel_40.flv" );
+			downloader.stop();
+			player.play( url );
 		}
 		
 	}

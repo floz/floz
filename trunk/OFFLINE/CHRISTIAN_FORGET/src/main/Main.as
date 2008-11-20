@@ -54,7 +54,7 @@ package main
 		
 		private function onVignetteOver(e:Event):void 
 		{
-			screen.display( e.target.preview );
+			screen.display( getPathImages() + e.target.preview );
 		}
 		
 		private function onVignetteOut(e:Event):void 
@@ -64,7 +64,7 @@ package main
 		
 		private function onVignettePress(e:Event):void 
 		{
-			screen.select( e.target.film );		
+			screen.select( getPathFLV() + e.target.film );		
 		}
 		
 		// PRIVATE
@@ -72,6 +72,8 @@ package main
 		// PUBLIC
 		
 		public function getPathImages():String { return "images/" };
+		
+		public function getPathFLV():String { return "flv/" };
 		
 	}
 	
