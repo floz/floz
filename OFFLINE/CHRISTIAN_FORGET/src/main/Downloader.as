@@ -145,6 +145,16 @@ package main
 		}
 		
 		/**
+		 * Stop tous les download qui pourraient suivre.
+		 */
+		public function stop():void
+		{
+			list = [];
+			trace ( "unload ! a surveiller !" );
+			loader.unload(); // A surveiller
+		}
+		
+		/**
 		 * Récupère la dernier image téléchargée, ou sélectionnée.
 		 * @return
 		 */
