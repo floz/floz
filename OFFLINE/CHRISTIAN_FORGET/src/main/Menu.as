@@ -39,7 +39,7 @@ package main
 			var cnt:Sprite = new Sprite ();
 			addChild( cnt );
 			
-			works = new Tab( Main.WORKS );
+			works = new Tab( Main.WORKS, true );
 			cnt.addChild( works );
 			
 			archives = new Tab( Main.ARCHIVES );
