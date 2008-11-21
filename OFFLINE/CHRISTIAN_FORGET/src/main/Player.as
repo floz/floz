@@ -61,6 +61,7 @@ package main
 		{
 			show();
 			videoPlayer.play( url );
+			videoPlayer.seek( 1 );
 			
 			dispatchEvent( new Event( Event.INIT, true ) );
 		}

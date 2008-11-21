@@ -13,6 +13,11 @@ package main
 	
 	public class Menu extends MovieClip 
 	{
+		private var works:Tab;
+		private var archives:Tab;
+		private var contact:Tab;
+		
+		public var selected:Tab;
 		
 		public function Menu() 
 		{
@@ -34,14 +39,14 @@ package main
 			var cnt:Sprite = new Sprite ();
 			addChild( cnt );
 			
-			var works:Tab = new Tab( Main.WORKS );
+			works = new Tab( Main.WORKS );
 			cnt.addChild( works );
 			
-			var archives:Tab = new Tab( Main.ARCHIVES );
+			archives = new Tab( Main.ARCHIVES );
 			archives.x = works.width + 5;
 			cnt.addChild( archives );
 			
-			var contact:Tab = new Tab( Main.CONTACT );
+			contact = new Tab( Main.CONTACT );
 			contact.x = works.width + archives.width + 10;
 			cnt.addChild( contact );
 			
@@ -53,12 +58,19 @@ package main
 		private function onDown(e:MouseEvent):void 
 		{
 			e.target.down();
+			
 			stage.addEventListener( MouseEvent.MOUSE_UP, onUp );
 		}
 		
 		private function onUp(e:MouseEvent):void 
 		{
-			if ( e.target is Tab ) e.target.up();
+			if ( e.target is Tab ) 
+			{
+				e.target.up();
+				selected = e.target as Tab;
+				
+				dispatchEvent( new Event( Event.SELECT ) );
+			}
 		}
 		
 		private function onOver(e:Event):void 

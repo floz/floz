@@ -8,6 +8,7 @@ package main
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
@@ -26,9 +27,10 @@ package main
 		public static const TAB_PRESS:String = "tab_press";
 		
 		private var status:String = "out";
-		private var activated:Boolean;
+		public var activated:Boolean;
 		
 		private var voile:Shape;
+		private var menu:Menu;
 		
 		public function Tab( name:String ) 
 		{
@@ -62,7 +64,7 @@ package main
 			format.align = TextFormatAlign.CENTER;
 			
 			var text:TextField = new TextField();
-			text.width = 125;
+			text.width = 80;
 			text.multiline = true;
 			text.wordWrap = true;
 			text.embedFonts = true;
@@ -73,7 +75,7 @@ package main
 			cnt.addChild( text );
 			
 			var bd:BitmapData = new BitmapData( 80, 30, true, 0x00 );
-			bd.draw( cnt, new Matrix( 1, 0, 0, 1, -this.width / 2, this.height / 2 - cnt.height / 2 - 1 ) );
+			bd.draw( cnt, new Matrix( 1, 0, 0, 1, this.width / 2 - cnt.width / 2 - 1, this.height / 2 - cnt.height / 2 - 1 ) );
 			addChild( new Bitmap( bd ) );
 			
 			voile = new Shape();
@@ -84,9 +86,34 @@ package main
 			addChild( voile );
 			
 			voile.alpha = 0;
+			
+			menu = getAncestor( this, Menu ) as Menu;
+			menu.addEventListener( Event.SELECT, onSelect );
+			
+			parent.addEventListener( Event.SELECT, onSelect );
 		}
 		
-		// PRIVATE	
+		private function onSelect(e:Event):void 
+		{
+			activated = ( e.currentTarget.selected == this ) ? true : false;
+			
+			if ( !activated ) voile.alpha = 0;
+		}
+		
+		// PRIVATE
+		
+		private function getAncestor( child:DisplayObject, type:* ):*
+		{
+			var c:DisplayObject = child;
+			
+			while ( c.parent )
+			{
+				if ( c.parent is type ) return c.parent;
+				c = c.parent;
+			}
+			
+			return null;
+		}
 		
 		// PUBLIC
 		
@@ -102,19 +129,18 @@ package main
 		{
 			status = "out";
 			
-			voile.alpha = 0;
+			if ( !activated ) voile.alpha = 0;
 			dispatchEvent( new Event( Tab.TAB_OUT, true ) );
 		}
 		
 		public function down():void
 		{
-			voile.alpha = .40
-			activated = true;
+			voile.alpha = .40;
 		}
 		
 		public function up():void
 		{
-			voile.alpha = status == ( "over" || activated ) ? .20 : 0;
+			voile.alpha = ( status == "over" ) || activated ? .20 : 0;
 			dispatchEvent( new Event( Tab.TAB_PRESS, true ) );
 		}
 		
