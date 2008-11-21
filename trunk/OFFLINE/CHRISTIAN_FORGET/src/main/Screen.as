@@ -119,7 +119,7 @@ package main
 		{
 			over = true;
 			
-			if ( downloader.checkIfDownloaded( _main.getPathImages() + url ) )
+			if ( downloader.checkIfDownloaded( url ) )
 			{
 				show();
 			}

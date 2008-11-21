@@ -179,7 +179,7 @@ package main
 		
 		private function showContact():void
 		{			
-			contact.alpha = .6;			
+			rContact.alpha = .6;			
 			addChild( rContact );
 			
 			Tweener.addTween( rContact, { alpha: 1, time: .25, transition: "easeInOutQuad" } );

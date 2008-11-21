@@ -47,6 +47,8 @@ package main
 			videoPlayer.skinFadeTime = 300;
 			
 			videoPlayer.bufferTime = 3;
+			
+			videoPlayer.visible = false;
 		}
 		
 		private function close():void
