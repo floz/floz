@@ -22,6 +22,7 @@ package main
 		
 		private var request:URLRequest;
 		private var loader:Loader;
+		private var needToDispatch:Boolean;
 		
 		private var image:BitmapData;
 		
@@ -43,9 +44,10 @@ package main
 			image = Bitmap( e.currentTarget.content ).bitmapData;
 			list.shift();
 			
-			downloadedList.push( { url: request.url, image: image } );
+			if ( !checkIfDownloaded( request.url, false ) ) downloadedList.push( { url: request.url, image: image } );
+			trace ( downloadedList.length );
 			
-			dispatchEvent( new Event( Event.COMPLETE ) );
+			if ( needToDispatch ) dispatchEvent( new Event( Event.COMPLETE ) );
 			
 			downloadNext();
 		}
@@ -84,9 +86,32 @@ package main
 		private function downloadNext():void
 		{
 			if ( !hasNext() ) return;
+			if ( !checkIfDownloadedAndAjust() ) return;
+			
+			needToDispatch = false;
 			
 			request.url = list[ 0 ];
 			loader.load( request );
+		}
+		
+		public function checkIfDownloadedAndAjust():Boolean
+		{
+			var i:int;
+			var n:int = list.length;
+			for ( i; i < n; i++ )
+			{
+				for each( var o:Object in downloadedList ) 
+				{
+					if ( o.url == list[ i ] ) 
+					{
+						list.splice( i, 1 );
+						continue;
+					} 					
+				}
+			}
+			
+			if ( hasNext() ) return true;
+			return false;
 		}
 		
 		// PUBLIC
@@ -110,6 +135,8 @@ package main
 		{
 			if ( check( url ) ) list.unshift( url );
 			
+			needToDispatch = true;
+			
 			request.url = url;
 			loader.load( request );
 		}
@@ -130,15 +157,15 @@ package main
 		 * @param	url
 		 * @return
 		 */
-		public function checkIfDownloaded( url:String ):Boolean
+		public function checkIfDownloaded( url:String, setImg:Boolean = true ):Boolean
 		{
 			for each( var o:Object in downloadedList ) 
 			{
 				if ( o.url == url ) 
 				{
-					image = o.image;
+					if ( setImg ) image = o.image;
 					return true;
-				} 
+				}
 				continue;
 			}
 			return false;

@@ -9,6 +9,7 @@ package main
 	import caurina.transitions.Tweener;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -17,6 +18,8 @@ package main
 	{
 		public var msk:MovieClip;
 		public var cnt:MovieClip;
+		public var zUp:SimpleButton;
+		public var zDown:SimpleButton;
 		
 		private var _main:Main;
 		
@@ -25,6 +28,7 @@ package main
 		public var status:Boolean;
 		private var scrollVal:int;
 		private var nbrLignes:int = 9;
+		private var idxMax:int;
 		private var aVignettes:Array;
 		
 		public function ListeVignettes() 
@@ -38,7 +42,7 @@ package main
 		
 		private function onAddedToStage(e:Event):void 
 		{
-			msk.visible = false;
+			//msk.visible = false;
 			
 			_main = getAncestor( this, Main ) as Main;
 			_main.addEventListener( Main.READY, load );
@@ -46,6 +50,9 @@ package main
 			cnt.addEventListener( MouseEvent.MOUSE_DOWN, onDown );
 			cnt.addEventListener( MouseEvent.MOUSE_OVER, onOver );
 			cnt.addEventListener( MouseEvent.MOUSE_OUT, onOut );
+			
+			zUp.addEventListener( MouseEvent.MOUSE_UP, onUpPressed );
+			zDown.addEventListener( MouseEvent.MOUSE_UP, onDownPressed );
 		}
 		
 		private function onOver(e:MouseEvent):void 
@@ -69,6 +76,24 @@ package main
 			if ( e.target is Vignette ) e.target.up();
 		}
 		
+		private function onDownPressed(e:MouseEvent):void 
+		{
+			if ( scrollVal + 1 <= idxMax ) scrollVal++;
+			else return;
+			
+			affiche( scrollVal );
+			setButtonsStatus();
+		}
+		
+		private function onUpPressed(e:MouseEvent):void 
+		{
+			if ( scrollVal - 1 >= 0 ) scrollVal--;
+			else return;
+			
+			affiche( scrollVal );
+			setButtonsStatus();
+		}
+		
 		// PRIVATE
 		
 		private function load( e:Event = null ):void
@@ -77,9 +102,11 @@ package main
 			
 			status = true;
 			scrollVal = 0;
+			aVignettes = [];
+			
+			Tweener.removeTweens( this );
 			
 			var a:Array = ( _main.section == Main.WORKS ) ? _main.works : _main.archives;
-			aVignettes = [];
 			
 			var o:Object;
 			var v:Vignette;
@@ -88,14 +115,17 @@ package main
 			{
 				o = a[ i ];
 				v = new Vignette( o.name, o.preview, o.film );
-				v.y = i * 3.63 + v.height * i;
-				trace( "v.y : " + v.y );
+				v.y = -200;
 				cnt.addChild( v );
 			}
 			
-			nbrLignes = n;
+			cnt.mask = msk;
 			
-			trace ( getPositions( 0 ) );
+			nbrLignes = n;
+			idxMax = nbrLignes - 9;
+			
+			affiche( 0 );
+			setButtonsStatus();
 			
 			o = null;
 			a = null;
@@ -114,15 +144,26 @@ package main
 			return null;
 		}
 		
-		private function disable():void
+		private function affiche( idx:int ):void
 		{
-			this.visible = false;
-			Tweener.removeTweens( this );
+			var a:Array = [];
+			var pos:Array = getPositions( idx );
+			
+			var v:Vignette;
+			
+			var i:int;
+			var n:int = cnt.numChildren;
+			for ( i; i < n; i++ )
+			{
+				v = cnt.getChildAt( i ) as Vignette;
+				if ( pos[ i ] == -200 || pos[ i ] == 525 ) v.y = pos[ i ];
+				else Tweener.addTween( v, { y: pos[ i ], time: .3, transition: "easeInOutQuad" } );
+			}
 		}
 		
 		private function getPositions( idx:int ):Array
 		{				
-			var idxMax:int = Math.max( 0, nbrLignes - 9 );
+			//var idxMax:int = Math.max( 0, nbrLignes - 9 );
 			var idxAct:int = Math.min( idx, idxMax );
 			
 			var a:Array = [];
@@ -143,6 +184,37 @@ package main
 			while ( a.length > nbrLignes ) a.push( 525 );
 			
 			return a;
+		}
+		
+		private function setButtonsStatus():void
+		{
+			if ( scrollVal == 0 )
+			{
+				zUp.alpha = .5;
+				zUp.enabled = false;
+			}
+			else
+			{
+				zUp.alpha = 1;
+				zUp.enabled = true;
+			}
+			
+			if ( scrollVal == idxMax )
+			{
+				zDown.alpha = .5;
+				zDown.enabled = false;
+			}			
+			else
+			{
+				zDown.alpha = 1;
+				zDown.enabled = true;
+			}
+		}
+		
+		private function disable():void
+		{
+			this.visible = false;
+			Tweener.removeTweens( this );
 		}
 		
 		// PUBLIC
