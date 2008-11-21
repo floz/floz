@@ -15,18 +15,17 @@ package main
 	import flash.geom.Matrix;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import video.VideoPlayer;
 	
 	public class Screen extends MovieClip
 	{		
 		private var screen:BitmapData;
 		
 		private var _main:Main;
-		private var player:Player;
 		
 		private var downloaderWorks:Downloader;
 		private var downloaderArchives:Downloader;
 		private var downloader:Downloader;
+		private var player:Player;
 		
 		private var over:Boolean;
 		private var loading:Loading;
@@ -42,7 +41,7 @@ package main
 		// EVENTS
 		
 		private function onAddedToStage(e:Event):void 
-		{			
+		{
 			_main = getAncestor( this, Main ) as Main;
 			_main.addEventListener( Main.READY, onReady );
 			
@@ -50,13 +49,10 @@ package main
 			loading.x = (screen.width >> 1) - loading.width;
 			loading.y = (screen.height >> 1) - loading.height;
 			addChild( loading );
-			
-			player = new Player( 640, 360 );
-			addChild( player );
 		}
 		
 		private function onReady(e:Event):void 
-		{
+		{			
 			downloaderWorks = new Downloader( _main.works.length );
 			downloaderWorks.addEventListener( Event.COMPLETE, onLoadComplete );
 			
@@ -64,6 +60,9 @@ package main
 			downloaderArchives.addEventListener( Event.COMPLETE, onLoadComplete );
 			
 			downloader = downloaderWorks;
+			
+			player = new Player();
+			addChild( player );
 		}
 		
 		private function onLoadComplete(e:Event):void 
@@ -140,7 +139,12 @@ package main
 		public function select( url:String ):void
 		{
 			downloader.stop();
-			player.play( url );
+			player.load( url );
+		}
+		
+		public function close():void
+		{
+			player.hide();
 		}
 		
 	}
