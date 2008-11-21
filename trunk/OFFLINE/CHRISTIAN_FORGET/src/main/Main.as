@@ -7,12 +7,20 @@
 package main 
 {
 	import caurina.transitions.Tweener;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Matrix;
+	import flash.text.AntiAliasType;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	public class Main extends MovieClip
 	{
@@ -35,6 +43,8 @@ package main
 		public var contact:Object; // { mail, skype, tel }
 		private var cloud:Sprite;
 		
+		private var rContact:Sprite;
+		
 		public function Main() 
 		{
 			datas = new Datas( "xml/projets.xml" );
@@ -48,6 +58,8 @@ package main
 			this.works = datas.getInfos( WORKS );
 			this.archives = datas.getInfos( ARCHIVES );
 			this.contact = datas.getContactInfos();
+			
+			initContact();
 			
 			cloud = new Sprite();
 			var g:Graphics = cloud.graphics;
@@ -109,8 +121,20 @@ package main
 		
 		private function onMenuSelect(e:Event):void 
 		{
+			if ( section == e.currentTarget.selected.name ) return;			
 			section = e.currentTarget.selected.name;
-			listeVignettes.refresh();
+			
+			if ( section == WORKS || section == ARCHIVES ) 
+			{
+				hideContact();
+				listeVignettes.status ? listeVignettes.refresh() : listeVignettes.show();
+			}
+			else if ( section == CONTACT )
+			{
+				listeVignettes.hide();
+				showContact();
+			}
+			else throw new Error( "Section invalide : Main.onMenuSelect" );
 		}
 		
 		// PRIVATE
@@ -119,6 +143,58 @@ package main
 		{
 			cloud.visible = false;
 			Tweener.removeTweens( cloud );
+		}
+		
+		private function initContact():void
+		{
+			rContact = new Sprite();
+			
+			var cnt:Sprite = new Sprite();
+			
+			var format:TextFormat = new TextFormat( "Arial", 20, 0xffffff, true );
+			format.align = TextFormatAlign.CENTER;
+			
+			var text:TextField = new TextField();
+			text.width = stage.stageWidth;
+			text.text = "email : " + contact.mail + "\n\nskype : " + contact.skype + "\n\ntel : " + contact.tel;
+			text.setTextFormat( format );
+			text.multiline = true;
+			text.wordWrap = true;
+			text.embedFonts = true;
+			text.antiAliasType = AntiAliasType.ADVANCED;
+			text.autoSize = TextFieldAutoSize.LEFT;
+			
+			cnt.addChild( text );
+			
+			var bd:BitmapData = new BitmapData( cnt.width, stage.stageHeight - 80, true, 0x66000000 );
+			bd.draw( cnt, new Matrix( 1, 0, 0, 1, 0, ( bd.height >> 1 ) - (cnt.height >> 1) ) );
+			
+			cnt = null;
+			text = null;
+			
+			rContact.addChild( new Bitmap( bd ) );
+			
+			rContact.y = 79;
+		}
+		
+		private function showContact():void
+		{			
+			contact.alpha = .6;			
+			addChild( rContact );
+			
+			Tweener.addTween( rContact, { alpha: 1, time: .25, transition: "easeInOutQuad" } );
+		}
+		
+		private function hideContact():void
+		{
+			if ( !rContact.parent ) return;
+			
+			Tweener.addTween( rContact, { alpha: .6, time: .25, transition: "easeInOutQuad", onComplete: removeContact } );
+		}
+		
+		private function removeContact():void
+		{
+			removeChild( rContact );
 		}
 		
 		// PUBLIC

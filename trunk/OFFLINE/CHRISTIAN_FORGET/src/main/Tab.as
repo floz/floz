@@ -26,15 +26,17 @@ package main
 		public static const TAB_OUT:String = "tab_out";
 		public static const TAB_PRESS:String = "tab_press";
 		
-		private var status:String = "out";
 		public var activated:Boolean;
+		
+		private var status:String = "out";
 		
 		private var voile:Shape;
 		private var menu:Menu;
 		
-		public function Tab( name:String ) 
+		public function Tab( name:String, activated:Boolean = false ) 
 		{
 			this.name = name;
+			this.activated = activated;
 			
 			this.buttonMode = true;
 			
@@ -85,7 +87,7 @@ package main
 			g.endFill();
 			addChild( voile );
 			
-			voile.alpha = 0;
+			voile.alpha = activated ? .20 : 0;
 			
 			menu = getAncestor( this, Menu ) as Menu;
 			menu.addEventListener( Event.SELECT, onSelect );
