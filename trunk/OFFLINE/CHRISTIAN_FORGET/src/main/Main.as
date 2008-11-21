@@ -69,6 +69,8 @@ package main
 			listeVignettes.addEventListener( Vignette.VIGNETTE_PRESS, onVignettePress );
 			
 			screen.addEventListener( Event.INIT, onVideoInit );
+			
+			menu.addEventListener( Event.SELECT, onMenuSelect );
 		}
 		
 		// EVENTS
@@ -103,6 +105,12 @@ package main
 			Tweener.addTween( cloud, { alpha: 0,  time: .5, transition: "easeInOutquad", onComplete: reset } );
 			
 			cloud.removeEventListener( MouseEvent.CLICK, onClick );
+		}
+		
+		private function onMenuSelect(e:Event):void 
+		{
+			section = e.currentTarget.selected.name;
+			listeVignettes.refresh();
 		}
 		
 		// PRIVATE

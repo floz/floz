@@ -67,6 +67,7 @@ package main
 		
 		private function load( e:Event = null ):void
 		{
+			trace( "ListeVignettes.load > e : " + e );
 			if ( _main.section == Main.CONTACT ) return;
 			
 			var a:Array = ( _main.section == Main.WORKS ) ? _main.works : _main.archives;
@@ -103,7 +104,7 @@ package main
 		
 		public function refresh():void
 		{
-			while ( cnt.getChildAt( 0 ) ) cnt.removeChildAt( 0 );
+			while ( cnt.numChildren ) cnt.removeChildAt( 0 );
 			
 			load();
 		}
