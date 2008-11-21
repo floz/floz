@@ -60,7 +60,6 @@ package main
 		
 		private function onUp(e:MouseEvent):void 
 		{
-			trace ( e.target.name + " : UP" );
 			if ( e.target is Vignette ) e.target.up();
 		}
 		
@@ -82,9 +81,6 @@ package main
 				v.y = i * 3.63 + v.height * i;
 				cnt.addChild( v );
 			}
-			
-			trace (cnt.height );
-			trace (cnt.width );
 			
 			o = null;
 			a = null;

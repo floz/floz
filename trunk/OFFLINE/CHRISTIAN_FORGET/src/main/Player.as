@@ -6,21 +6,17 @@
  */
 package main 
 {
-	import fl.video.VideoPlayer;
-	import flash.display.Sprite;
+	import caurina.transitions.Tweener;
+	import fl.video.FLVPlayback;
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	
-	public class Player extends Sprite
+	public class Player extends MovieClip 
 	{
-		private var vWidth:Number;
-		private var vHeight:Number;
-		private var player:VideoPlayer;
+		public var videoPlayer:FLVPlayback;
 		
-		public function Player( vWidth:Number, vHeight:Number ) 
+		public function Player() 
 		{
-			this.vWidth = vWidth;
-			this.vHeight = vHeight;
-			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
@@ -28,32 +24,59 @@ package main
 		
 		private function onRemovedFromStage(e:Event):void 
 		{
-			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			
+			Tweener.removeTweens( videoPlayer );
 		}
 		
 		private function onAddedToStage(e:Event):void 
 		{
+			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			player = new VideoPlayer( vWidth, vHeight );
-			addChild( player );
-			
-			
+			init();
 		}
 		
 		// PRIVATE
 		
-		// PUBLIC
-		
-		public function play():void
+		private function init():void
 		{
-			player.play();
+			videoPlayer.setSize( 640, 360 );
+			videoPlayer.skinAutoHide = true;
+			videoPlayer.skinBackgroundAlpha = .9;
+			videoPlayer.skinFadeTime = 300;
+			
+			videoPlayer.bufferTime = 3;
 		}
 		
-		public function close():void
+		private function close():void
 		{
-			player.close();
+			videoPlayer.stop();
+			videoPlayer.visible = false;
+		}
+		
+		// PUBLIC
+		
+		public function load( url:String ):void
+		{
+			show();
+			videoPlayer.play( url );
+			
+			dispatchEvent( new Event( Event.INIT, true ) );
+		}
+		
+		public function show():void
+		{
+			videoPlayer.alpha = .4;
+			videoPlayer.volume = .4;
+			videoPlayer.visible = true;
+			Tweener.addTween( videoPlayer, { alpha: 1, volume: 1, transition: "easeInOutQuad", time: .8 } );
+		}
+		
+		public function hide():void
+		{
+			Tweener.addTween( videoPlayer, { alpha: .6, volume: .4, transition: "easeInOutQuad", time: .4, onComplete: close } );
+			videoPlayer.visible = false;
 		}
 		
 	}
