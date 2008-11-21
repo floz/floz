@@ -104,8 +104,6 @@ package main
 			scrollVal = 0;
 			aVignettes = [];
 			
-			Tweener.removeTweens( this );
-			
 			var a:Array = ( _main.section == Main.WORKS ) ? _main.works : _main.archives;
 			
 			var o:Object;
@@ -221,7 +219,11 @@ package main
 		
 		public function refresh():void
 		{
-			while ( cnt.numChildren ) cnt.removeChildAt( 0 );
+			while ( cnt.numChildren ) 
+			{
+				Tweener.removeTweens( cnt.getChildAt( 0 ) );
+				cnt.removeChildAt( 0 );
+			}
 			
 			load();
 		}
