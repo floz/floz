@@ -112,7 +112,7 @@ package main
 			for ( var i:int; i < n; i++ )
 			{
 				o = a[ i ];
-				v = new Vignette( o.name, o.preview, o.film );
+				v = new Vignette( o.name, o.preview, o.film, o.director, o.production, o.postproduction );
 				v.y = -200;
 				cnt.addChild( v );
 			}

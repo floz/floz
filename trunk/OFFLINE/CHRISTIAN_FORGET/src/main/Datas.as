@@ -62,7 +62,13 @@ package main
 			var a:Array = [];
 			
 			var x:XML;
-			for each( x in xml[ categorie ].item ) a.push( { name: x.@name, preview: x.@preview, film: x.@film } );
+			for each( x in xml[ categorie ].item ) a.push( { 
+				name: x.@name, 
+				preview: x.@preview, 
+				film: x.@film, 
+				director: x.@director, 
+				production: x.@production, 
+				postproduction: x.@postproduction } );
 			
 			return a;
 		}

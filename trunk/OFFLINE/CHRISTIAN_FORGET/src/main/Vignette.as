@@ -30,13 +30,19 @@ package main
 		
 		public var preview:String;
 		public var film:String;
+		public var director:String;
+		public var production:String;
+		public var postProduction:String;
 		private var voile:Shape;
 		
-		public function Vignette( name:String, preview:String, film:String )
+		public function Vignette( name:String, preview:String, film:String, director:String, production:String, postProduction:String )
 		{
 			this.name = name;
 			this.preview = preview;
 			this.film = film;
+			this.director = director;
+			this.production = production;
+			this.postProduction = postProduction;
 			
 			var g:Graphics = this.graphics;
 			g.lineStyle( 2, 0xffffff, 1, true );
@@ -60,7 +66,8 @@ package main
 			
 			var cnt:Sprite = new Sprite();
 			
-			var format:TextFormat = new TextFormat( "Arial", 12, 0xffffff );
+			var font:Font = new Myriad();
+			var format:TextFormat = new TextFormat( font.fontName, 12, 0xffffff );
 			format.align = TextFormatAlign.CENTER;
 			
 			var text:TextField = new TextField();
