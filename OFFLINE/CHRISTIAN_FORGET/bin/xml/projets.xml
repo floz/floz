@@ -1,27 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data>
 	<works>	
-		<item name="siera" preview="siera.jpg" film="siera.flv" />		
-		<item name="nissan micra" preview="nissan_micra.jpg" film="nissan_micra.flv" />
-		<item name="nissan primera" preview="nissan_primera.jpg" film="nissan_primera.flv" />
-		<item name="paco rabanne" preview="paco_rabanne.jpg" film="paco_rabanne.flv" />
-		<item name="decathlon" preview="decathlon.jpg" film="decathlon.flv" />
-		<item name="fiat idea" preview="fiat_idea.jpg" film="fiat_idea.flv" />
-		<item name="la poste" preview="la_poste.jpg" film="la_poste.flv" />
-		<item name="oriflame" preview="oriflame.jpg" film="oriflame.flv" />
-		<item name="skip" preview="skip.jpg" film="skip.flv" />
+		<item name="siera" preview="siera.jpg" film="siera.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />		
+		<item name="nissan micra" preview="nissan_micra.jpg" film="nissan_micra.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="nissan primera" preview="nissan_primera.jpg" film="nissan_primera.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="paco rabanne" preview="paco_rabanne.jpg" film="paco_rabanne.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="decathlon" preview="decathlon.jpg" film="decathlon.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="fiat idea" preview="fiat_idea.jpg" film="fiat_idea.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="la poste" preview="la_poste.jpg" film="la_poste.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="oriflame" preview="oriflame.jpg" film="oriflame.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="skip" preview="skip.jpg" film="skip.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
 	</works>
 	<archives>
-		<item name="la poste" preview="la_poste.jpg" film="la_poste.flv" />
-		<item name="siera" preview="siera.jpg" film="siera.flv" />		
-		<item name="nissan micra" preview="nissan_micra.jpg" film="nissan_micra.flv" />
-		<item name="nissan primera" preview="nissan_primera.jpg" film="nissan_primera.flv" />
-		<item name="paco rabanne" preview="paco_rabanne.jpg" film="paco_rabanne.flv" />
-		<item name="decathlon" preview="decathlon.jpg" film="decathlon.flv" />
-		<item name="fiat idea" preview="fiat_idea.jpg" film="fiat_idea.flv" />
-		<item name="la poste" preview="la_poste.jpg" film="la_poste.flv" />
-		<item name="oriflame" preview="oriflame.jpg" film="oriflame.flv" />
-		<item name="skip" preview="skip.jpg" film="skip.flv" />
+		<item name="la poste" preview="la_poste.jpg" film="la_poste.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="siera" preview="siera.jpg" film="siera.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />		
+		<item name="nissan micra" preview="nissan_micra.jpg" film="nissan_micra.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="nissan primera" preview="nissan_primera.jpg" film="nissan_primera.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="paco rabanne" preview="paco_rabanne.jpg" film="paco_rabanne.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="decathlon" preview="decathlon.jpg" film="decathlon.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="fiat idea" preview="fiat_idea.jpg" film="fiat_idea.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="la poste" preview="la_poste.jpg" film="la_poste.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="oriflame" preview="oriflame.jpg" film="oriflame.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="skip" preview="skip.jpg" film="skip.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
 	</archives>
 	<contact mail="christian.forget@libertysurf.fr" skype="Sfx_61" tel="+33 607013760" />
 </data>

@@ -136,10 +136,10 @@ package main
 			screen.fillRect( screen.rect, 0x00ffffff );
 		}
 		
-		public function select( url:String ):void
+		public function select( url:String, director:String, production:String, postProduction:String ):void
 		{
 			downloader.stop();
-			player.load( url );
+			player.load( url, director, production, postProduction );
 		}
 		
 		public function close():void

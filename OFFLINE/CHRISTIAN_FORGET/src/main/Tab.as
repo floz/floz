@@ -15,6 +15,7 @@ package main
 	import flash.events.Event;
 	import flash.geom.Matrix;
 	import flash.text.AntiAliasType;
+	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
@@ -62,7 +63,8 @@ package main
 			
 			var cnt:Sprite = new Sprite();
 			
-			var format:TextFormat = new TextFormat( "Arial", 14, 0xffffff );
+			var font:Font = new Myriad();
+			var format:TextFormat = new TextFormat( font.fontName, 14, 0xffffff );
 			format.align = TextFormatAlign.CENTER;
 			
 			var text:TextField = new TextField();

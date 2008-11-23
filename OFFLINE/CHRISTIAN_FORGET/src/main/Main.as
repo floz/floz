@@ -16,7 +16,10 @@ package main
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Matrix;
+	import flash.net.navigateToURL;
+	import flash.net.URLRequest;
 	import flash.text.AntiAliasType;
+	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
@@ -38,8 +41,8 @@ package main
 		
 		private var datas:Datas;
 		
-		public var works:Array; // [ { name, preview, film }, { name, preview, film }, ... } ]
-		public var archives:Array; // [ { name, preview, film }, { name, preview, film }, ... } ]
+		public var works:Array; // [ { name, preview, film, director, production, postproduction }, { name, preview, film, director, production, postproduction }, ... } ]
+		public var archives:Array; // [ { name, preview, film, director, production, postproduction }, { name, preview, film, director, production, postproduction }, ... } ]
 		public var contact:Object; // { mail, skype, tel }
 		private var cloud:Sprite;
 		
@@ -99,7 +102,7 @@ package main
 		
 		private function onVignettePress(e:Event):void 
 		{
-			screen.select( getPathFLV() + e.target.film );		
+			screen.select( getPathFLV() + e.target.film, e.target.director, e.target.production, e.target.postProduction );		
 		}
 		
 		private function onVideoInit(e:Event):void 
@@ -137,6 +140,19 @@ package main
 			else throw new Error( "Section invalide : Main.onMenuSelect" );
 		}
 		
+		private function onMailClick(e:MouseEvent):void 
+		{
+			var request:URLRequest = new URLRequest( "mailTo:" + contact.mail );
+			try
+			{
+				navigateToURL( request );
+			}
+			catch ( e:Error )
+			{
+				trace ( "navigateToURL error : " + e.message );
+			}
+		}
+		
 		// PRIVATE
 		
 		private function reset():void
@@ -151,12 +167,13 @@ package main
 			
 			var cnt:Sprite = new Sprite();
 			
-			var format:TextFormat = new TextFormat( "Arial", 20, 0xffffff, true );
+			var font:Font = new Myriad();
+			var format:TextFormat = new TextFormat( font.fontName, 20, 0xffffff, true );
 			format.align = TextFormatAlign.CENTER;
 			
 			var text:TextField = new TextField();
 			text.width = stage.stageWidth;
-			text.text = "email : " + contact.mail + "\n\nskype : " + contact.skype + "\n\ntel : " + contact.tel;
+			text.htmlText = "email : " + contact.mail + "\n\nskype : " + contact.skype + "\n\ntel : " + contact.tel;
 			text.setTextFormat( format );
 			text.multiline = true;
 			text.wordWrap = true;
@@ -169,12 +186,23 @@ package main
 			var bd:BitmapData = new BitmapData( cnt.width, stage.stageHeight - 80, true, 0x66000000 );
 			bd.draw( cnt, new Matrix( 1, 0, 0, 1, 0, ( bd.height >> 1 ) - (cnt.height >> 1) ) );
 			
-			cnt = null;
-			text = null;
-			
 			rContact.addChild( new Bitmap( bd ) );
 			
 			rContact.y = 79;
+			
+			var zMail:Sprite = new Sprite();
+			var g:Graphics = zMail.graphics;
+			g.beginFill( 0xff00ff, 0 );
+			g.drawRect( 0, ( bd.height >> 1 ) - (cnt.height >> 1), bd.width, 30 );
+			g.endFill();
+			
+			zMail.buttonMode = true;
+			rContact.addChild( zMail );
+			
+			zMail.addEventListener( MouseEvent.CLICK, onMailClick );
+			
+			cnt = null;
+			text = null;
 		}
 		
 		private function showContact():void
