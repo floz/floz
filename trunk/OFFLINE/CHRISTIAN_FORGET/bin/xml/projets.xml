@@ -3,7 +3,7 @@
 	<works>	
 		<item name="siera" preview="siera.jpg" film="siera.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />		
 		<item name="nissan micra" preview="nissan_micra.jpg" film="nissan_micra.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="nissan primera" preview="nissan_primera.jpg" film="nissan_primera.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="nissan primera" preview="nissan_primera.jpg" film="easydef2.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
 		<item name="paco rabanne" preview="paco_rabanne.jpg" film="paco_rabanne.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
 		<item name="decathlon" preview="decathlon.jpg" film="decathlon.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
 		<item name="fiat idea" preview="fiat_idea.jpg" film="fiat_idea.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
