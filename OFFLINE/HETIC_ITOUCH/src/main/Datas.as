@@ -44,8 +44,7 @@ package main
 		
 		private function onIOError(e:IOErrorEvent):void 
 		{
-			trace( "Datas.onIOError > e : " + request.url );
-			
+			trace( "Datas.onIOError > e : " + request.url );			
 		}
 		
 		// PRIVATE	
@@ -65,7 +64,8 @@ package main
 			for each( x in xml.rubrique ) a.push( {
 				name: x.@name,
 				tooltip: x.@tooltip,
-				screenshot: x.@screeshot } );
+				preview: "img/" + x.@preview,
+				swf: "swf/" + x.@swf } );
 			
 			return a;
 		}
