@@ -32,8 +32,8 @@ package main
 			stage.align = StageAlign.TOP_LEFT;
 			
 			_loading = new Loading( 0x7a7a7a, 24, 10 );
-			_loading.x = ( 980 >> 1 ) - ( _loading.width >> 1 );
-			_loading.y = ( 560 >> 1 ) - ( _loading.height >> 1 );
+			_loading.x = ( stage.stageWidth >> 1 ) - ( _loading.width >> 1 );
+			_loading.y = ( stage.stageHeight >> 1 ) - ( _loading.height >> 1 );
 			addChild( _loading );
 			
 			_loading.play();
