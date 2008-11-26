@@ -28,6 +28,7 @@ package main
 		private var _loading:Loading;
 		private var _swfs:Array;
 		private var _datas:Datas;
+		private var _mask:Sprite;
 		
 		public function Main() // bcbcbc ffffff
 		{
@@ -55,14 +56,15 @@ package main
 			container.zClose.buttonMode = true;
 			container.background.visible = false;
 			
-			var s:Sprite = new Sprite();
-			var g:Graphics = s.graphics;
+			_mask = new Sprite();
+			var g:Graphics = _mask.graphics;
 			g.beginFill( 0x00FF00 );
-			g.drawRect( container.x, container.y, container.background.width, container.background.height );
+			g.drawRect( container.x - 2, container.y, container.background.width + 4, container.background.height );
 			g.endFill();
-			addChild( s );
 			
-			container.cnt.mask = s;
+			addChild( _mask );
+			
+			container.cnt.mask = _mask;
 			
 			container.zClose.addEventListener( MouseEvent.CLICK, onCloseClick );
 			
