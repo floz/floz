@@ -33,6 +33,7 @@ package main
 		public function kill():void
 		{
 			_loading.kill();
+			removeChild( _loading );
 		}
 		
 	}

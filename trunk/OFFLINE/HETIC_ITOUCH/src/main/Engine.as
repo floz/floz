@@ -22,6 +22,8 @@ package main
 	
 	public class Engine extends MovieClip 
 	{
+		public static const READY_TO_LOAD:String = "ready_to_load";
+		
 		private const _positions:Array = [ 
 			{ x: 680, y: -100, z: 1300, rotationX: 0, rotationY: 70, rotationZ: 0 }, // Applis
 			{ x: -800, y: -100, z: 1800, rotationX: 0, rotationY: -60, rotationZ: 0 }, // Vidéo
@@ -42,7 +44,8 @@ package main
 		private var _rendering:Boolean;
 		private var _index:int;
 		
-		private var target:Plane;
+		private var _target:Plane;
+		private var _focused:Boolean;
 		
 		private var padding:Number;
 		
@@ -133,20 +136,42 @@ package main
 		}
 		
 		private function onObjectClick(e:InteractiveScene3DEvent):void 
-		{
+		{			
 			var p:Plane = _container.getChildByName( e.currentTarget.name ) as Plane;
-			//target = p;
 			
-			switch ( p.name )
+			if ( p == _target ) 
+				return;
+			
+			_target = p;
+			
+			prepare();
+			move();
+		}
+		
+		private function onFrame(e:Event):void 
+		{
+			_view.singleRender();
+		}
+		
+		// PRIVATE
+		
+		private function playIntro():void
+		{
+			trace ( "here" );
+		}
+		
+		private function prepare():void
+		{
+			switch ( _target.name )
 			{
 				case "Applications" :
-					trace ("Applications");
+				{
 					_to.x = 989.1;
 					_to.z = -1081.3;
 					break;
+				}
 				case "Vidéo" :
 				{
-					trace ("Vidéo");
 					_to.x = -1159;
 					_to.z = -1592.2;
 					break;
@@ -166,27 +191,29 @@ package main
 			}
 			
 			_to.y = 71.4;
-			_to.rotationX = p.rotationX;
-			_to.rotationY = -1 * p.rotationY;
-			_to.rotationZ = p.rotationZ;
-			
-			trace ( _to.x );
-			trace ( _to.y );
-			trace ( _to.z );
-			
-			move();
+			_to.rotationX = _target.rotationX;
+			_to.rotationY = -1 * _target.rotationY;
+			_to.rotationZ = _target.rotationZ;
 		}
 		
-		private function onFrame(e:Event):void 
+		private function back():void
 		{
-			_view.singleRender();
-		}
-		
-		// PRIVATE
-		
-		private function playIntro():void
-		{
-			trace ( "here" );
+			Tweener.addTween( _container, {
+					x: 0,
+					y: 0,
+					z: -400,
+					rotationX: 0,
+					rotationY: 0,
+					rotationZ: 0,
+					
+					time: .5,
+					transition: "easeInOutQuad",
+					
+					onComplete: function():void {
+						_focused = false;
+						move();
+					}
+				} );
 		}
 		
 		// PUBLIC
@@ -194,7 +221,6 @@ package main
 		public function init( listInfos:Array, intro:Boolean = false ):void
 		{			
 			_listInfos = listInfos;
-			
 			_loadingMaterial = new LoadingMaterial();
 			var mam:MovieMaterial = new MovieMaterial( _loadingMaterial, true, true );
 			mam.smooth = true;
@@ -253,11 +279,6 @@ package main
 			_view.scene.addChild( _container );
 			_downloader.load();
 			
-			trace ( _container );
-			trace ( _container.rotationX );
-			trace ( _container.rotationY );
-			trace ( _container.rotationZ );
-			
 			startRendering();
 			
 			p = null;
@@ -284,34 +305,86 @@ package main
 		}
 		
 		public function move():void
-		{			
-			Tweener.addTween( _container, {
-				x: _to.x,
-				y: _to.y,
-				z: _to.z,
-				rotationX: _to.rotationX,
-				rotationY: _to.rotationY,
-				rotationZ: _to.rotationZ,
-				
-				time: .5,
-				transition: "easeInOutQuad"
-			} );
+		{
+			if ( !_focused )
+			{
+				Tweener.addTween( _container, {
+					x: _to.x,
+					y: _to.y,
+					z: _to.z,
+					rotationX: _to.rotationX,
+					rotationY: _to.rotationY,
+					rotationZ: _to.rotationZ,
+					
+					time: .5,
+					transition: "easeInOutQuad",
+					onComplete: function():void
+					{
+						_focused = true;
+						
+						dispatchEvent( new Event( Engine.READY_TO_LOAD ) );
+					}
+				} );
+			}
+			else
+			{
+				back();
+			}
 		}
 		
 		public function reset():void
 		{
-			_to.x = 0;
-			_to.y = 0;
-			_to.z = -1000;
+			Tweener.addTween( _container, {
+					x: 0,
+					y: 0,
+					z: 0,
+					rotationX: 0,
+					rotationY: 0,
+					rotationZ: 0,
+					
+					time: .5,
+					transition: "easeInOutQuad"
+				} );
 			
-			_to.rotationX = 0;
-			_to.rotationY = 0;
-			_to.rotationZ = 0;
+			_focused = false;
+			_target = null;
+		}
+		
+		public function setTarget( name:String ):void
+		{
+			if ( name != "Index" )
+			{
+				_target = _container.getChildByName( name ) as Plane;
+				
+				prepare();
+				move();
+			}
+			else reset();			
+		}
+		
+		public function getTargetName():String
+		{
+			if ( _target ) return _target.name;
+			return "Index";
+		}
+		
+		public function isFocused():Boolean { return _focused };
+		
+		public function show():void
+		{
+			_container.visible = true;
+		}
+		
+		public function hide():void
+		{
+			_container.visible = false;
+			_view.singleRender();
+			_view.singleRender();
 		}
 		
 		// GETTERS & SETTERS
 		
-		public function get rendering():Boolean { return _rendering; }		
+		public function get rendering():Boolean { return _rendering; }
 	}
 	
 }
