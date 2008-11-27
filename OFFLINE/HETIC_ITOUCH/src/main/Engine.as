@@ -22,6 +22,8 @@ package main
 	public class Engine extends MovieClip 
 	{
 		public static const READY_TO_LOAD:String = "ready_to_load";
+		public static const MOVING:String = "moving";
+		public static const ENABLE:String = "enable";
 		
 		private const _positions:Array = [ 
 			{ x: 680, y: -100, z: 1300, rotationX: 0, rotationY: 70, rotationZ: 0 }, // Applis
@@ -46,7 +48,9 @@ package main
 		private var _target:Plane;
 		private var _focused:Boolean;
 		
-		private var padding:Number;
+		private var _planes:Array;
+		private var _enabled:Boolean;
+		private var _count:int;
 		
 		public function Engine( width:Number, heigh:Number ) 
 		{
@@ -85,7 +89,9 @@ package main
 		{
 			var p:Plane = _container.getChildByName( e.currentTarget.lastItemDownloaded.name ) as Plane;
 			
-			var bd:BitmapData = Bitmap( e.currentTarget.lastItemDownloaded.content ).bitmapData;
+			var bd:BitmapData = new BitmapData( 928, 455, true, 0xffffff );
+			bd.draw( new GradientBackground() );
+			bd.draw( Bitmap( e.currentTarget.lastItemDownloaded.content ) );
 			var material:BitmapMaterial = new BitmapMaterial( bd );
 			material.interactive = true;
 			material.smooth = true;
@@ -103,7 +109,9 @@ package main
 		private function onObjectOut(e:InteractiveScene3DEvent):void { _view.buttonMode = false; }
 		
 		private function onObjectClick(e:InteractiveScene3DEvent):void 
-		{			
+		{
+			if ( !_enabled ) return;
+			
 			var p:Plane = _container.getChildByName( e.currentTarget.name ) as Plane;
 			
 			if ( p == _target ) 
@@ -124,7 +132,38 @@ package main
 		
 		private function playIntro():void
 		{
-			trace ( "here" );
+			var p:Plane;
+			
+			var i:int;
+			var n:int = _container.numChildren;
+			for ( i; i < n; i++ )
+			{
+				p = _planes[ i ];
+				Tweener.addTween( p, 
+				{
+					x: _positions[ i ].x,
+					y: _positions[ i ].y,
+					z: _positions[ i ].z,
+					rotationX: _positions[ i ].rotationX,
+					rotationY: _positions[ i ].rotationY,
+					rotationZ: _positions[ i ].rotationZ,
+					
+					time: .35,
+					delay: i * .1,
+					transition: "easeInOutQuad",
+					onComplete: endIntro
+				});				
+			}
+		}
+		
+		private function endIntro():void
+		{
+			_count++;
+			if ( _count < 4 ) 
+			{
+				_enabled = true;
+				dispatchEvent( new Event( Engine.ENABLE ) );
+			}
 		}
 		
 		private function prepare():void
@@ -168,7 +207,7 @@ package main
 			Tweener.addTween( _container, {
 					x: 0,
 					y: 0,
-					z: -400,
+					z: 0,
 					rotationX: 0,
 					rotationY: 0,
 					rotationZ: 0,
@@ -186,12 +225,12 @@ package main
 		// PUBLIC
 		
 		public function init( listInfos:Array, intro:Boolean = false ):void
-		{			
+		{
 			_listInfos = listInfos;
 			_loadingMaterial = new LoadingMaterial();
 			var mam:MovieMaterial = new MovieMaterial( _loadingMaterial, true, true );
 			mam.smooth = true;
-			mam.interactive = true;
+			//mam.interactive = true;
 			
 			var p:Plane;
 			_container = new DisplayObject3D( "container" );
@@ -199,50 +238,31 @@ package main
 			var i:int;
 			var n:int = _listInfos.length;
 			
-			if ( intro ) 
+			_planes = [];
+			for ( i; i < n; i++ )
 			{
-				for ( i; i < n; i++ )
-				{
-					p = new Plane( mam, 928, 455, 2, 2 ); // 	
-					p.x = 0;
-					p.y = 0;
-					p.z = 0;
-					p.rotationX = 0;
-					p.rotationY = 0;
-					p.rotationZ = 0;
-					p.name = _listInfos[ i ].name;
-					
-					_container.addChild( p );
-					
-					p.addEventListener( InteractiveScene3DEvent.OBJECT_OVER, onObjetOver );
-					p.addEventListener( InteractiveScene3DEvent.OBJECT_OUT, onObjectOut );
-					p.addEventListener( InteractiveScene3DEvent.OBJECT_CLICK, onObjectClick );
-					
-					_downloader.add( { name: listInfos[ i ].name, url: listInfos[ i ].preview } );
-				}
+				p = new Plane( mam, 928, 455, 2, 2 ); // 	
+				p.x = 0;
+				p.y = 2000;
+				p.z = _positions[ i ].z;
+				p.rotationX = 0;
+				p.rotationY = 0;
+				p.rotationZ = 0;
+				p.name = _listInfos[ i ].name;
+				
+				_container.addChild( p );
+				
+				p.addEventListener( InteractiveScene3DEvent.OBJECT_OVER, onObjetOver );
+				p.addEventListener( InteractiveScene3DEvent.OBJECT_OUT, onObjectOut );
+				p.addEventListener( InteractiveScene3DEvent.OBJECT_CLICK, onObjectClick );
+				
+				_downloader.add( { name: listInfos[ i ].name, url: listInfos[ i ].preview } );
+				
+				_planes.push( p );
 			}
-			else 
-			{			
-				for ( i; i < n; i++ )
-				{
-					p = new Plane( mam, 928, 455, 2, 2 ); // 928x455 
-					p.x = _positions[ i ].x;
-					p.y = _positions[ i ].y;
-					p.z = _positions[ i ].z;
-					p.rotationX = _positions[ i ].rotationX;
-					p.rotationY = _positions[ i ].rotationY;
-					p.rotationZ = _positions[ i ].rotationZ;				
-					p.name = _listInfos[ i ].name;
-					
-					_container.addChild( p );
-					
-					p.addEventListener( InteractiveScene3DEvent.OBJECT_OVER, onObjetOver );
-					p.addEventListener( InteractiveScene3DEvent.OBJECT_OUT, onObjectOut );
-					p.addEventListener( InteractiveScene3DEvent.OBJECT_CLICK, onObjectClick );
-					
-					_downloader.add( { name: listInfos[ i ].name, url: listInfos[ i ].preview } );
-				}
-			}
+			
+			playIntro();
+			
 			_view.scene.addChild( _container );
 			_downloader.load();
 			
@@ -292,6 +312,7 @@ package main
 						dispatchEvent( new Event( Engine.READY_TO_LOAD ) );
 					}
 				} );
+				dispatchEvent( new Event( Engine.MOVING ) );
 			}
 			else
 			{
