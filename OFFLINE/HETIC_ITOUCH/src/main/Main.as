@@ -59,9 +59,8 @@ package main
 			_mask = new Sprite();
 			var g:Graphics = _mask.graphics;
 			g.beginFill( 0x00FF00 );
-			g.drawRect( container.x - 2, container.y, container.background.width + 4, container.background.height );
-			g.endFill();
-			
+			g.drawRect( container.x, container.y, container.background.width, container.background.height );
+			g.endFill();			
 			addChild( _mask );
 			
 			container.cnt.mask = _mask;

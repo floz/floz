@@ -11,7 +11,6 @@ package main
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	import flash.events.Event;
-	import flash.events.KeyboardEvent;
 	import org.papervision3d.cameras.CameraType;
 	import org.papervision3d.events.InteractiveScene3DEvent;
 	import org.papervision3d.materials.BitmapMaterial;
@@ -80,32 +79,6 @@ package main
 			
 			_to = { };
 			reset();
-			
-			//stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
-		}
-		
-		private function onKeyDown(e:KeyboardEvent):void 
-		{
-			switch( e.keyCode )
-			{
-				case 37 : _container.x -= padding; break;
-				case 38 : _container.y += padding; break;
-				case 39 : _container.x += padding; break;
-				case 40 : _container.y -= padding; break;
-				case 32 : _container.z += padding; break;
-				case 17 : _container.z -= padding; break;
-				case 109: padding = .1; break;
-				case 107: padding = .1; break;
-				case 73 : padding = 1; break;
-				case 79 : padding = 10; break;
-				case 80 : padding = 100; break;
-			}
-			
-			trace ( "padding : " + padding );
-			
-			trace ( "_container.x : " + _container.x );
-			trace ( "_container.y : " + _container.y );
-			trace ( "_container.z : " + _container.z );
 		}
 		
 		private function onImgLoaded(e:Event):void 
@@ -125,15 +98,9 @@ package main
 				_loadingMaterial.kill();
 		}
 		
-		private function onObjetOver(e:InteractiveScene3DEvent):void 
-		{
-			_view.buttonMode = true;
-		}
+		private function onObjetOver(e:InteractiveScene3DEvent):void { _view.buttonMode = true; }
 		
-		private function onObjectOut(e:InteractiveScene3DEvent):void 
-		{
-			_view.buttonMode = false;
-		}
+		private function onObjectOut(e:InteractiveScene3DEvent):void { _view.buttonMode = false; }
 		
 		private function onObjectClick(e:InteractiveScene3DEvent):void 
 		{			
@@ -370,10 +337,7 @@ package main
 		
 		public function isFocused():Boolean { return _focused };
 		
-		public function show():void
-		{
-			_container.visible = true;
-		}
+		public function show():void	{ _container.visible = true; }
 		
 		public function hide():void
 		{
