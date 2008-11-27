@@ -9,6 +9,7 @@ package main
 	import caurina.transitions.Tweener;
 	import flash.display.Graphics;
 	import flash.display.MovieClip;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -22,6 +23,7 @@ package main
 		
 		public var menu:Menu;
 		public var container:MovieClip;
+		public var logo:MovieClip;
 		
 		private var _engine:Engine;
 		private var _downloader:Downloader;
@@ -29,6 +31,9 @@ package main
 		private var _swfs:Array;
 		private var _datas:Datas;
 		private var _mask:Sprite;
+		
+		private var _anim:Sprite;
+		private var _count:int;
 		
 		public function Main() // bcbcbc ffffff
 		{
@@ -43,7 +48,11 @@ package main
 			
 			_engine = new Engine( 980, 560 );
 			_engine.addEventListener( Engine.READY_TO_LOAD, onReadyToLoad );
+			_engine.addEventListener( Engine.MOVING, onMoving );
+			_engine.addEventListener( Engine.ENABLE, onEnable );
 			addChild( _engine );
+			
+			setChildIndex( _engine, getChildIndex( menu ) );			
 			
 			var _fps:FPS = new FPS();
 			//addChild( _fps );
@@ -74,6 +83,8 @@ package main
 			
 			setChildIndex( container, numChildren - 1 );
 			
+			menu.enabled = false;
+			
 			_swfs = [];
 			
 			_datas = new Datas( "xml/files.xml" );
@@ -83,6 +94,8 @@ package main
 		
 		private function onReadyToLoad(e:Event):void 
 		{
+			menu.rubriqueName = _engine.getTargetName();
+			
 			_loading.play();
 			
 			var o:Object;
@@ -95,24 +108,38 @@ package main
 				
 			if ( o == null ) return;
 			
+			//var index:int = -1;			
+			//n = _swfs.length;
+			//for ( i = 0; i < n; i++ )
+				//if ( _swfs[ i ].name == o.name ) index = i;
+			//
+			//if ( index >= 0 ) 
+			//{
+				//display( _swfs[ index ].content as MovieClip );
+				//return;
+			//}
+			
 			_downloader.add( { name: o.name, url: o.swf } );
 			_downloader.load();
 		}
 		
+		private function onMoving(e:Event):void 
+		{
+			Tweener.addTween( logo, { alpha: 0, time: .30, transition: "easeInOutQuad" } );
+		}
+		
 		private function onSWFLoaded(e:Event):void 
 		{
-			_engine.hide();
-			_engine.stopRendering();
-			_loading.stop();
+			if ( _downloader.lastItemDownloaded.name != menu.rubriqueName ) return;
 			
-			container.zClose.visible = true;
-			container.zClose.alpha = 1;
-			container.background.visible = true;
-			
-			while ( container.cnt.numChildren ) container.cnt.removeChildAt( 0 );
 			_swfs.push( _downloader.lastItemDownloaded );
 			
-			container.cnt.addChild( _downloader.lastItemDownloaded.content as MovieClip );
+			display( _downloader.lastItemDownloaded.content as MovieClip );
+		}
+		
+		private function onEnable(e:Event):void 
+		{
+			menu.enabled = true;
 		}
 		
 		private function onCloseClick(e:MouseEvent):void 
@@ -125,7 +152,7 @@ package main
 		private function onComplete(e:Event):void 
 		{
 			dispatchEvent( new Event( Main.READY ) );
-			_engine.init( _datas.getInfos() );
+			intro();
 			
 			menu.addEventListener( Menu.SELECTED, onSelected );
 		}
@@ -142,6 +169,33 @@ package main
 		
 		// PRIVATE
 		
+		private function intro():void
+		{
+			var b:SlideBlur;
+			_anim = new Sprite();
+			addChild( _anim );
+			for ( var i:int; i < 4; i++ )
+			{
+				b = new SlideBlur();
+				b.y = logo.y - 87;
+				b.x = logo.x + (logo.width >> 1) - (b.width >> 1);
+				_anim.addChild( b );
+				
+				Tweener.addTween( b, { y: -500, time: .35, delay: i * .1, transition: "easeInOutQuad", onComplete: deleteIntro } );
+			}
+		}
+		
+		private function deleteIntro():void
+		{
+			_count++
+			if ( _count < 4 ) return;
+			
+			removeChild( _anim );
+			_anim = null;
+			
+			_engine.init( _datas.getInfos(), true );
+		}
+		
 		private function removeSWF():void
 		{
 			if ( !container.cnt.numChildren ) return;
@@ -152,8 +206,24 @@ package main
 			container.zClose.alpha = 0;
 			container.background.visible = false;
 			
+			Tweener.addTween( logo, { alpha: 1, time: .30, delay: .20, transition: "easeInOutQuad" } );
+			
 			_engine.startRendering();
 			_engine.show();
+		}
+		
+		private function display( mc:MovieClip ):void
+		{
+			_engine.hide();
+			_engine.stopRendering();
+			_loading.stop();
+			
+			container.zClose.visible = true;
+			container.zClose.alpha = 1;
+			container.background.visible = true;
+			
+			while ( container.cnt.numChildren ) container.cnt.removeChildAt( 0 );
+			container.cnt.addChild( mc );
 		}
 		
 		// PUBLIC

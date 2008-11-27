@@ -6,6 +6,7 @@
  */
 package main 
 {
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.Event;
@@ -23,7 +24,9 @@ package main
 		
 		private var _event:Event;
 		
-		public var rubriqueName:String;
+		private var _rubriqueName:String;
+		private var _zActivated:SimpleButton
+		private var _saveState:DisplayObject;
 		
 		public function Menu() 
 		{
@@ -53,26 +56,83 @@ package main
 		
 		private function onDown(e:MouseEvent):void 
 		{
+			if ( !enabled ) return;
 			stage.addEventListener( MouseEvent.MOUSE_UP, onUp );
 		}
 		
 		private function onUp(e:MouseEvent):void 
-		{
+		{			
+			if ( !enabled ) return;
 			stage.removeEventListener( MouseEvent.MOUSE_UP, onUp );
 			
 			switch( e.target )
 			{
-				case zIndex : rubriqueName = "Index"; break;
-				case zApplications : rubriqueName = "Applications"; break;
-				case zCaracteristiques : rubriqueName = "Caractéristiques"; break;
-				case zVideo : rubriqueName = "Vidéo"; break;
-				case zSon : rubriqueName = "Son"; break;
+				case zIndex : 
+					_rubriqueName = "Index"; 
+					
+					if ( _saveState ) _zActivated.upState = _saveState;
+					break;
+				case zApplications : 
+					_rubriqueName = "Applications";
+					
+					state( zApplications );
+					break;
+				case zCaracteristiques : 
+					_rubriqueName = "Caractéristiques"; 
+					
+					state( zCaracteristiques );
+					break;
+				case zVideo : 
+					_rubriqueName = "Vidéo";
+					
+					state( zVideo );
+					break;
+				case zSon : 
+					_rubriqueName = "Son";
+					
+					state( zSon );
+					break;
 			}
 			
 			dispatchEvent( _event );
 		}
 		
 		// PRIVATE
+		
+		private function state( z:SimpleButton ):void
+		{
+			if ( _saveState ) _zActivated.upState = _saveState;
+			
+			_zActivated = z;
+			_saveState = z.upState;
+			z.upState = z.overState;
+		}
+		
+		public function get rubriqueName():String { return _rubriqueName; }
+		
+		public function set rubriqueName(value:String):void 
+		{
+			_rubriqueName = value;
+			
+			switch( value )
+			{
+				case "Index" :					
+					if ( _saveState ) _zActivated.upState = _saveState;
+					break;
+				case "Applications" : 					
+					state( zApplications );
+					break;
+				case "Caractéristiques" : 					
+					state( zCaracteristiques );
+					break;
+				case "Vidéo" : 					
+					state( zVideo );
+					break;
+				case "Son" : 					
+					state( zSon );
+					break;
+			}
+		}
 		
 		// PUBLIC
 		

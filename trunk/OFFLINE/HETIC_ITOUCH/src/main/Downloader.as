@@ -31,9 +31,9 @@ package main
 			_list = [];
 			
 			_request = new URLRequest();
-			_loader = new Loader();
-			_loader.contentLoaderInfo.addEventListener( Event.COMPLETE, onLoadComplete );
-			_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			//_loader = new Loader();
+			//_loader.contentLoaderInfo.addEventListener( Event.COMPLETE, onLoadComplete );
+			//_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
 		}
 		
 		// EVENTS
@@ -46,13 +46,17 @@ package main
 			
 			if ( e.currentTarget.content is Bitmap )
 			{				
-				dispatchEvent( new Event( Downloader.IMG_LOADED ) );				
+				dispatchEvent( new Event( Downloader.IMG_LOADED ) );
 				if ( hasNext() ) load();
 			}
 			else if ( e.currentTarget.content is MovieClip )
 			{				
 				dispatchEvent( new Event( Downloader.SWF_LOADED ) );				
 				if ( hasNext() ) load();
+			}
+			else
+			{
+				trace ("fin du monde");
 			}
 		}
 		
@@ -67,6 +71,17 @@ package main
 		
 		public function load():void
 		{
+			if ( _loader )
+			{
+				_loader.contentLoaderInfo.removeEventListener( Event.COMPLETE, onLoadComplete );
+				_loader.contentLoaderInfo.removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
+				_loader = null;
+			}
+			
+			_loader = new Loader();
+			_loader.contentLoaderInfo.addEventListener( Event.COMPLETE, onLoadComplete );
+			_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			
 			_request.url = _list[ 0 ].url;
 			_loader.load( _request );
 		}
