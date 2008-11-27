@@ -146,6 +146,8 @@ package main
 		{
 			removeSWF();
 			
+			menu.rubriqueName = "Index";
+			
 			_engine.setTarget( "Index" );
 		}
 		
