@@ -108,16 +108,18 @@ package main
 				
 			if ( o == null ) return;
 			
-			//var index:int = -1;			
-			//n = _swfs.length;
-			//for ( i = 0; i < n; i++ )
-				//if ( _swfs[ i ].name == o.name ) index = i;
-			//
-			//if ( index >= 0 ) 
-			//{
-				//display( _swfs[ index ].content as MovieClip );
-				//return;
-			//}
+			var index:int = -1;			
+			n = _swfs.length;
+			for ( i = 0; i < n; i++ )
+				if ( _swfs[ i ].name == o.name ) index = i;
+			
+			if ( index >= 0 ) 
+			{
+				display( _swfs[ index ].content as MovieClip );
+				return;
+			}
+			
+			trace ( "jamais downloadé" );
 			
 			_downloader.add( { name: o.name, url: o.swf } );
 			_downloader.load();
@@ -226,6 +228,8 @@ package main
 			
 			while ( container.cnt.numChildren ) container.cnt.removeChildAt( 0 );
 			container.cnt.addChild( mc );
+			
+			mc.gotoAndPlay( 1 );
 		}
 		
 		// PUBLIC
