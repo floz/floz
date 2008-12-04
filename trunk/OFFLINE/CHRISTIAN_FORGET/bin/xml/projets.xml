@@ -1,27 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data>
 	<works>	
-		<item name="siera" preview="siera.jpg" film="siera.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />		
-		<item name="nissan micra" preview="nissan_micra.jpg" film="nissan_micra.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="nissan primera" preview="nissan_primera.jpg" film="easydef2.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="paco rabanne" preview="paco_rabanne.jpg" film="paco_rabanne.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="decathlon" preview="decathlon.jpg" film="decathlon.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="fiat idea" preview="fiat_idea.jpg" film="fiat_idea.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="la poste" preview="la_poste.jpg" film="la_poste.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="oriflame" preview="oriflame.jpg" film="oriflame.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="skip" preview="skip.jpg" film="skip.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="RBA" preview="orange.jpg" film="RBA.f4v" director="Henri Bargès" production="2332 (Kiev)" postproduction="Copirate" />		
 	</works>
 	<archives>
-		<item name="la poste" preview="la_poste.jpg" film="la_poste.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="siera" preview="siera.jpg" film="siera.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />		
-		<item name="nissan micra" preview="nissan_micra.jpg" film="nissan_micra.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="nissan primera" preview="nissan_primera.jpg" film="nissan_primera.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="paco rabanne" preview="paco_rabanne.jpg" film="paco_rabanne.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="decathlon" preview="decathlon.jpg" film="decathlon.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="fiat idea" preview="fiat_idea.jpg" film="fiat_idea.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="la poste" preview="la_poste.jpg" film="la_poste.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="oriflame" preview="oriflame.jpg" film="oriflame.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
-		<item name="skip" preview="skip.jpg" film="skip.flv" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="canal+" preview="la_poste.jpg" film="CANAL+.f4v" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="chivas" preview="siera.jpg" film="CHIVAS.f4v" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />		
+		<item name="dizzy" preview="nissan_micra.jpg" film="DIZZY.f4v" director="Kasper Wedendhal" production="The Gang Films (Paris)" postproduction="Digital District" />
+		<item name="rossignol" preview="nissan_micra.jpg" film="ROSSIGNOL.f4v" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
+		<item name="wana" preview="nissan_primera.jpg" film="WANA.f4v" director="DirectorName" production="ProductionInfos" postproduction="PostProductionInfos" />
 	</archives>
 	<contact mail="christian.forget@libertysurf.fr" skype="Sfx_61" tel="+33 607013760" />
 </data>
