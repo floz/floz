@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<path img="img/" />
+	<homme>
+		<accessoires>
+			<file src="accessoire_h_1.png" />
+			<file src="accessoire_h_2.png" />
+			<file src="accessoire_h_3.png" />
+		</accessoires>
+		<cheveux>
+			<file src="cheveux_h_1.png" />
+			<file src="cheveux_h_2.png" />
+			<file src="cheveux_h_3.png" />			
+		</cheveux>
+		<nez>
+			<file src="accessoire_h_1.png" />
+			<file src="accessoire_h_2.png" />
+			<file src="accessoire_h_3.png" />				
+		</nez>
+		<yeux>
+			<file src="accessoire_h_1.png" />
+			<file src="accessoire_h_2.png" />
+			<file src="accessoire_h_3.png" />	
+		</yeux>
+		<boucle>
+			<file src="accessoire_h_1.png" />
+			<file src="accessoire_h_2.png" />
+			<file src="accessoire_h_3.png" />
+		</boucle>
+		<gabarit>
+			<file src="cheveux_h_1.png" />
+			<file src="cheveux_h_2.png" />
+			<file src="cheveux_h_3.png" />			
+		</gabarit>
+	</homme>
+	<femme>
+		<accessoires>
+			<file src="accessoire_h_1.png" />
+			<file src="accessoire_h_2.png" />
+			<file src="accessoire_h_3.png" />
+		</accessoires>
+		<cheveux>
+			<file src="cheveux_h_1.png" />
+			<file src="cheveux_h_2.png" />
+			<file src="cheveux_h_3.png" />			
+		</cheveux>
+		<nez>
+			<file src="accessoire_h_1.png" />
+			<file src="accessoire_h_2.png" />
+			<file src="accessoire_h_3.png" />				
+		</nez>
+		<yeux>
+			<file src="accessoire_h_1.png" />
+			<file src="accessoire_h_2.png" />
+			<file src="accessoire_h_3.png" />	
+		</yeux>
+		<boucle>
+			<file src="accessoire_h_1.png" />
+			<file src="accessoire_h_2.png" />
+			<file src="accessoire_h_3.png" />
+		</boucle>
+		<gabarit>
+			<file src="cheveux_h_1.png" />
+			<file src="cheveux_h_2.png" />
+			<file src="cheveux_h_3.png" />			
+		</gabarit>	
+	</femme>
+
+</data>
