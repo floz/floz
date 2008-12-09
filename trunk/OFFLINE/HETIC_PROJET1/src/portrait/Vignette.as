@@ -4,21 +4,21 @@
  * @author Floz - Florian Zumbrunn
  * www.floz.fr || www.minuit-4.fr
  */
-package mail 
+package portrait 
 {
 	import flash.display.MovieClip;
 	
-	public class Mail extends MovieClip 
+	public class Vignette extends MovieClip
 	{
 		
-		public function Mail() 
+		public function Vignette() 
 		{
 			
 		}
 		
 		// EVENTS
 		
-		// PRIVATE	
+		// PRIVATE
 		
 		// PUBLIC
 		
