@@ -36,6 +36,8 @@ package portrait
 		{
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			
+			item0
 		}
 		
 		// PRIVATE

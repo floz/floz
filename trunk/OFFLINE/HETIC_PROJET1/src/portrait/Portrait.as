@@ -21,6 +21,8 @@ package portrait
 		public var zEraseAll:SimpleButton;
 		public var zValid:SimpleButton;
 		
+		private var datas:Datas;
+		
 		public function Portrait() 
 		{
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
@@ -37,6 +39,15 @@ package portrait
 		{
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			
+			datas = new Datas( "xml/portrait.xml" );
+			datas.addEventListener( Event.COMPLETE, onDatasComplete );
+			datas.load();
+		}
+		
+		private function onDatasComplete(e:Event):void 
+		{
+			
 			
 			zValid.addEventListener( MouseEvent.CLICK, onClick );
 			zEraseAll.addEventListener( MouseEvent.CLICK, onClick );

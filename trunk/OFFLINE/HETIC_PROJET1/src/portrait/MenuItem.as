@@ -35,7 +35,7 @@ package portrait
 		
 		// PUBLIC
 		
-		public function initialize( categorie:String ):void
+		public function init( categorie:String ):void
 		{
 			this.categorie = categorie;
 		}
