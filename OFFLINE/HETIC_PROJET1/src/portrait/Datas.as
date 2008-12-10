@@ -58,7 +58,7 @@ package portrait
 			var a:Array = [];
 			
 			var x:XML;
-			for each( x in xml[ sexe ][ categorie ].file ) a.push( xml.path.@img, x.@src );
+			for each( x in xml[ sexe ][ categorie ].file ) a.push( xml.path.@img + x.@src );
 			
 			return a;
 		}

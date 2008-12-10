@@ -179,7 +179,7 @@ package main
 				var i:int;
 				for ( i; i < idxAct; i++ ) a.unshift( -200 );
 			}
-			while ( a.length > nbrLignes ) a.push( 525 );
+			while ( a.length < nbrLignes ) a.push( 525 );
 			
 			return a;
 		}

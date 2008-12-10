@@ -98,14 +98,14 @@ package main
 		
 		public function search( name:String ):MovieClip
 		{
-			if ( !loadedCount ) return;
+			if ( !loadedCount ) return null;
 			
 			var i:int;
 			var n:int = loadedCount;
 			for ( i; i < n; i++ )
-				if ( aItemsLoaded[ i ].name == name ) return aItemsLoaded[ i ];
+				if ( aBitmapDatasLoaded[ i ].name == name ) return aBitmapDatasLoaded[ i ];
 			
-			trace ( "Le nom indiqué ne correspond à aucun fichier téléchargé : SWFLoader.search()" );
+			trace ( "Le nom indiqué ne correspond à aucun fichier téléchargé : BitmapDataLibrary.search()" );
 			return null;
 		}
 		

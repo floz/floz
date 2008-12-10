@@ -23,6 +23,8 @@ package portrait
 		private var request:URLRequest;
 		private var loader:Loader;
 		
+		private var alreadyUsed:Boolean;
+		
 		public function BitmapDataLibrary() 
 		{
 			aBitmapDatasToLoad = [];
@@ -44,6 +46,8 @@ package portrait
 			
 			aBitmapDatasLoaded.push( b );
 			
+			alreadyUsed = true;
+			
 			dispatchEvent( new Event( BitmapDataLibrary.BITMAPDATA_LOADED ) );
 		}
 		
@@ -56,9 +60,15 @@ package portrait
 		
 		// PUBLIC
 		
-		public function add( url:String, name:String ):void
+		public function add( url:String ):void
 		{
-			aBitmapDatasToLoad.push( { url: url, name: name } );
+			aBitmapDatasToLoad.push( url );
+		}
+		
+		public function addItems( urls:Array ):void
+		{
+			var a:Array = urls;
+			while ( a.length ) aBitmapDatasToLoad.push( a.shift() );
 		}
 		
 		public function clear( renew:Boolean = false ):void
@@ -76,39 +86,36 @@ package portrait
 			}
 		}
 		
-		public function load():void
+		public function dispose():void
 		{
+			var i:int;
+			var n:int = aBitmapDatasLoaded.length;
+			for ( i; i < n; i++ )
+				BitmapData( aBitmapDatasLoaded[ i ] ).dispose();
+		}
+		
+		public function loadNext():void
+		{
+			if ( !hasNext() ) return;
+			
 			if ( alreadyUsed ) clear( true );
 			
-			request.url = aBitmapDatasToLoad[ 0 ];
+			request.url = aBitmapDatasToLoad[ loadedCount ];
 			loader.load( request) ;
 		}
 		
 		public function hasNext():Boolean
 		{
-			if ( toLoadCount ) return true;
-			return false;
-		}
-		
-		public function loadNext():void
-		{
-			if ( hasNext() ) load();
-		}
-		
-		public function search( name:String ):BitmapData
-		{
-			if ( !loadedCount ) return;
-			
-			var i:int;
-			var n:int = loadedCount;
-			for ( i; i < n; i++ )
-				if ( aBitmapDatasLoaded[ i ].name == name ) return aBitmapDatasLoaded[ i ];
-			
-			trace ( "Le nom indiqué ne correspond à aucun fichier téléchargé : BitmapDataLibrary.search()" );
-			return null;
+			if ( !toLoadCount || toLoadCount == loadedCount ) return false;
+			return true;
 		}
 		
 		// GETTERS & SETTERS
+		
+		public function getLastBitmapData():BitmapData
+		{
+			return aBitmapDatasLoaded[ loadedCount - 1 ];
+		}
 		
 		public function get toLoadCount():int
 		{
