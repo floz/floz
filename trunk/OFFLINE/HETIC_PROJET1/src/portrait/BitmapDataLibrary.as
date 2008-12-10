@@ -4,62 +4,61 @@
  * @author Floz - Florian Zumbrunn
  * www.floz.fr || www.minuit-4.fr
  */
-package main 
+package portrait 
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Loader;
-	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLRequest;
 	
-	public class SWFLoader extends MovieClip 
+	public class BitmapDataLibrary extends EventDispatcher
 	{
-		private var aItemsToLoad:Array;
-		private var aItemsLoaded:Array;
+		public static const BITMAPDATA_LOADED:String = "bitmapdata_loaded";
+		
+		private var aBitmapDatasToLoad:Array;
+		private var aBitmapDatasLoaded:Array;
 		private var request:URLRequest;
 		private var loader:Loader;
 		
-		private var alreadyUsed:Boolean;
-		
-		public function SWFLoader() 
+		public function BitmapDataLibrary() 
 		{
-			aItemsToLoad = [];
-			aItemsLoaded = [];
+			aBitmapDatasToLoad = [];
+			aBitmapDatasLoaded = [];
 			
 			request = new URLRequest();
 			loader = new Loader();
 			loader.contentLoaderInfo.addEventListener( Event.COMPLETE, onLoadComplete );
-			loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			loader.contentLoaderInfo.removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
 		}
 		
 		// EVENTS
 		
 		private function onLoadComplete(e:Event):void 
 		{
-			if ( e.currentTarget.content is MovieClip )
-			{
-				var o:Object = aItemsToLoad.shift();
-				aItemsLoaded = { swf: e.currentTarget.content, name: o.name };
-				
-				dispatchEvent( new Event( Event.COMPLETE ) );
-				
-				o = null;
-			}
-			else throw new TypeError( "Le fichier téléchargé n'est pas un SWF : SWFLoader.onLoadComplete" );
+			var b:BitmapData;
+			if ( e.currentTarget.content is Bitmap ) b = Bitmap( e.currentTarget.content ).bitmapData.clone();
+			else b = new BitmapData( 0, 0 );
+			
+			aBitmapDatasLoaded.push( b );
+			
+			dispatchEvent( new Event( BitmapDataLibrary.BITMAPDATA_LOADED ) );
 		}
 		
 		private function onIOError(e:IOErrorEvent):void 
 		{
-			trace ( "onIOError : " + request.url );
+			trace( "BitmapDataLibrary.onIOError : " + request.url );
 		}
 		
-		// PRIVATE	
+		// PRIVATE
 		
 		// PUBLIC
 		
 		public function add( url:String, name:String ):void
 		{
-			aItemsToLoad.push( { url: url, name: name } );
+			aBitmapDatasToLoad.push( { url: url, name: name } );
 		}
 		
 		public function clear( renew:Boolean = false ):void
@@ -81,7 +80,7 @@ package main
 		{
 			if ( alreadyUsed ) clear( true );
 			
-			request.url = aItemsToLoad[ 0 ];
+			request.url = aBitmapDatasToLoad[ 0 ];
 			loader.load( request) ;
 		}
 		
@@ -96,16 +95,16 @@ package main
 			if ( hasNext() ) load();
 		}
 		
-		public function search( name:String ):MovieClip
+		public function search( name:String ):BitmapData
 		{
 			if ( !loadedCount ) return;
 			
 			var i:int;
 			var n:int = loadedCount;
 			for ( i; i < n; i++ )
-				if ( aItemsLoaded[ i ].name == name ) return aItemsLoaded[ i ];
+				if ( aBitmapDatasLoaded[ i ].name == name ) return aBitmapDatasLoaded[ i ];
 			
-			trace ( "Le nom indiqué ne correspond à aucun fichier téléchargé : SWFLoader.search()" );
+			trace ( "Le nom indiqué ne correspond à aucun fichier téléchargé : BitmapDataLibrary.search()" );
 			return null;
 		}
 		
@@ -113,12 +112,12 @@ package main
 		
 		public function get toLoadCount():int
 		{
-			return aItemsToLoad.length;
+			return aBitmapDatasToLoad.length;
 		}
 		
 		public function get loadedCount():int
 		{
-			return aItemsLoaded.length;
+			return aBitmapDatasLoaded.length;
 		}
 		
 	}

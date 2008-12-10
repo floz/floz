@@ -16,6 +16,7 @@ package portrait
 	{
 		public static const SUPPRESSION:String = "suppression";
 		public static const VALIDATION:String = "validation";
+		public static const CHANGEMENT_SEXE:String = "changement_sexe";
 		public static const YES:String = "yes";
 		public static const NO:String = "no";
 		
@@ -35,6 +36,11 @@ package portrait
 		private function onRemovedFromStage(e:Event):void 
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			
+			zYes.removeEventListener( MouseEvent.CLICK, onClick );
+			zNo.removeEventListener( MouseEvent.CLICK, onClick );
+			
+			this.visible = false;
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -65,6 +71,7 @@ package portrait
 		{
 			if( state == Confirmation.SUPPRESSION )	msg.text = "Êtes vous sûr de vouloir tout supprimer ?";
 			else if ( state == Confirmation.VALIDATION ) msg.text = "Êtes vous sûr de vouloir valider ?";
+			else if ( state == Confirmation.CHANGEMENT_SEXE ) msg.text = "Êtes vous sûr de vouloir changer de sexe ?";
 			else throw new Error( "L'état transmis n'est pas valide : Confirmation.show" );
 			
 			_state = state;
