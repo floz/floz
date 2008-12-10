@@ -62,6 +62,8 @@ package portrait
 			sexe = ItemSexe.HOMME;
 			categorie = ItemCategorie.GABARIT;
 			
+			bibliotheque.load();
+			
 			menuCtrl.init( sexe, categorie );			
 			menuCtrl.addEventListener( MenuCtrl.SEXE_SELECTED, onSexeSelected );
 			menuCtrl.addEventListener( MenuCtrl.SEXE_CONFIRMATION, onSexeConfirmation );
@@ -78,7 +80,7 @@ package portrait
 			var sexeItem:SexeItem = menuCtrl.getSexeSelected();
 			sexe = sexeItem.sexe;
 			
-			bibliotheque.load( sexe, categorie );
+			bibliotheque.load();
 		}
 		
 		private function onSexeConfirmation(e:Event):void 
@@ -91,7 +93,7 @@ package portrait
 			var menuItem:MenuItem = menuCtrl.getCategorieSelected();
 			categorie = menuItem.categorie;
 			
-			bibliotheque.load( sexe, categorie );
+			bibliotheque.load();
 		}
 		
 		private function onClick(e:MouseEvent):void 
@@ -121,6 +123,15 @@ package portrait
 		// PRIVATE	
 		
 		// PUBLIC
+		
+		// GETTERS & SETTERS
+		
+		public function getInfos():Array
+		{
+			return datas.getInfos( sexe, categorie );
+		}
+		
+		public function getCategorie():String { return categorie; }
 		
 	}
 	
