@@ -6,12 +6,16 @@
  */
 package portrait 
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	
 	public class Sketch extends MovieClip
 	{
-		public var inte:Interface;
+		public var cnt:MovieClip;
+		
+		private var bitmap:Bitmap;
 		
 		public function Sketch() 
 		{
@@ -37,7 +41,22 @@ package portrait
 		
 		public function clean():void
 		{
-			inte.clean();
+			while ( cnt.numChildren ) cnt.removeChildAt( 0 );
+		}
+		
+		public function saveAsBitmap():void
+		{
+			var bd:BitmapData = new BitmapData( cnt.width, cnt.height, true, 0xff00ff );
+			bd.draw( cnt );
+			
+			bitmap = new Bitmap( bd );
+		}
+		
+		// GETTERS & SETTERS
+		
+		public function getBitmap():Bitmap
+		{
+			return bitmap;
 		}
 		
 	}
