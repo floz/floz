@@ -16,15 +16,20 @@ package portrait
 	
 	public class Vignette extends MovieClip
 	{
+		public static const VIGNETTE_SELECTED:String = "vignette_selected";
+		
 		public var z:SimpleButton;
 		
 		private var small:Boolean;
 		private var bitmapData:BitmapData;
+		private var event:Event;
 		
 		public function Vignette( small:Boolean, bitmapData:BitmapData ) 
 		{
 			this.small = small;
 			this.bitmapData = bitmapData;
+			
+			event = new Event( Vignette.VIGNETTE_SELECTED );
 			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
@@ -52,7 +57,7 @@ package portrait
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			trace( "Vignette.onClick > e : " + e );			
+			dispatchEvent( event );
 		}
 		
 		// PRIVATE
