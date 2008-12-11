@@ -6,6 +6,7 @@
  */
 package portrait 
 {
+	import com.carlcalderon.arthropod.Debug;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.Event;
@@ -63,6 +64,7 @@ package portrait
 			categorie = ItemCategorie.GABARIT;
 			
 			bibliotheque.load();
+			bibliotheque.addEventListener( Vignette.VIGNETTE_SELECTED, onVignetteSelected, true );
 			
 			menuCtrl.init( sexe, categorie );			
 			menuCtrl.addEventListener( MenuCtrl.SEXE_SELECTED, onSexeSelected );
@@ -70,9 +72,17 @@ package portrait
 			menuCtrl.addEventListener( MenuCtrl.CATEGORIE_SELECTED, onCategorieSelected );
 			
 			zValid.addEventListener( MouseEvent.CLICK, onClick );
+			zErase.addEventListener( MouseEvent.CLICK, onClick );
 			zEraseAll.addEventListener( MouseEvent.CLICK, onClick );
 			confirmation.addEventListener( Confirmation.YES, onRespond );
 			confirmation.addEventListener( Confirmation.NO, onRespond );
+			
+			sketch.init();
+		}
+		
+		private function onVignetteSelected(e:Event):void 
+		{
+			sketch.selectItem( Vignette( e.target ).getBitmapData() );
 		}
 		
 		private function onSexeSelected(e:Event):void 
@@ -101,6 +111,7 @@ package portrait
 			switch( e.currentTarget )
 			{
 				case zValid : confirmation.show( Confirmation.VALIDATION ); break;
+				case zErase : sketch.cleanItemSelected(); break;
 				case zEraseAll : confirmation.show( Confirmation.SUPPRESSION ); break;
 			}
 		}

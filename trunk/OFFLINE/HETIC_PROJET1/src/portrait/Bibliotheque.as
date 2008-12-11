@@ -94,11 +94,23 @@ package portrait
 			
 			if ( !displayed ) 
 			{
-				if ( cnt.numChildren >= ( small ? 4 : 2 ) ) 
+				if ( library.toLoadCount >= ( small ? 4 : 2 ) )
 				{
-					scrollVal = 0;
-					affiche( scrollVal );
-					displayed = true;
+					if ( cnt.numChildren >= ( small ? 4 : 2 ) ) 
+					{
+						scrollVal = 0;
+						affiche( scrollVal );
+						displayed = true;
+					}
+				}
+				else
+				{
+					if ( cnt.numChildren == library.toLoadCount ) 
+					{
+						scrollVal = 0;
+						affiche( scrollVal );
+						displayed = true;
+					}
 				}
 			}
 			

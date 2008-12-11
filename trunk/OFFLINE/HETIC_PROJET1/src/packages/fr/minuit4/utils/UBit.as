@@ -34,7 +34,7 @@ package fr.minuit4.utils
 		 * @param	keepAspectRatio	Boolean	Si oui ou non l'aspect de l'image est conservé.
 		 * @param	pixel	Boolean		Si oui ou non les pixels grossissent, et donc que l'image est déformée lorsque la largeur et la hauteur voulue sont plus grandes que la taille de l'image.
 		 */
-		public static function resize( bmpd:BitmapData, width:Number, height:Number, keepAspectRatio:Boolean = true , pixel:Boolean = false ):BitmapData
+		public static function resize( bmpd:BitmapData, width:Number, height:Number, keepAspectRatio:Boolean = true, pixel:Boolean = false ):BitmapData
 		{
 			var m:Matrix;
 			
@@ -51,7 +51,7 @@ package fr.minuit4.utils
 				m = new Matrix( width/bmpd.width, 0, 0, height/bmpd.height );
 			}
 			
-			var bd:BitmapData = new BitmapData( width, height );
+			var bd:BitmapData = new BitmapData( width, height, true, 0xff00ff );
 			bd.draw( bmpd, m );
 			
 			return bd;
