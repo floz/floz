@@ -123,6 +123,7 @@ package portrait
 		private function setButtonsStatus():void
 		{
 			var vMax:int = small ? int( idxMax - 4 ) : int( idxMax - 2 );
+			if ( vMax < 0 ) vMax = 0;
 			
 			if ( scrollVal == 0 )
 			{

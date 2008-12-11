@@ -103,28 +103,61 @@ package portrait
 					b.push( getMiddleRectPoint( e.getRect( stage ) ) );
 				});
 			
-			var idx:int = getClosetPoint( b, stage.mouseX, stage.mouseY );
-			
-			// closest element
-			var ce:MovieClip = MovieClip( a[ idx ] );
-			if ( itemToSelect == null ) itemToSelect = new MovieClip();
-			if ( ce != itemToSelect )
+			var idx:int
+			var ct:int;
+			var c:Array = [];
+			var i:int;
+			var n:int = a.length;
+			for ( i; i < n; i++ ) 
 			{
-				// nouvelle vérification afin de savoir si l'élément est bien celui le plus proche
-				var r:Rectangle = itemToSelect.getRect( stage );
-				
-				var c:Array = [ getMiddleRectPoint( ce.getRect( stage ) ),
-								new Point( r.x, r.y ),
-								new Point( r.right, r.y ),
-								new Point( r.x, r.top ),
-								new Point( r.x, r.bottom ) ];
-				
-				var idx2:int = getClosetPoint( c, stage.mouseX, stage.mouseY );
-				
-				if ( idx2 == 0 )
+				if ( isMouseOver( a[ i ] ) ) c.push( a[ i ] );
+				if ( a[ i ] == cntCheveux || a[ i ] == cntGabarit ) ct++;
+			}
+			
+			if ( c.length == 1 ) // si juste gabarit sous la souris
+			{
+				itemToSelect = c[ 0 ];
+			}
+			else if ( c.length == ct && c.length != 1 ) // Différence cheveux/gabarit
+			{
+				n = c.length;
+				if ( e.localY > 235 )
 				{
-					itemToSelect = ce;
-					//setOverState();
+					for ( i = 0; i < n; i++ ) if ( c[ i ] == cntGabarit ) idx = i;
+				}
+				else
+				{
+					for ( i = 0; i < n; i++ ) if ( c[ i ] == cntCheveux ) idx = i;
+				}
+				
+				itemToSelect = c[ idx ];
+			}
+			else
+			{
+				// on va chercher le point central des éléments, le plus proche de la souris
+				idx = getClosetPoint( b, stage.mouseX, stage.mouseY );
+				
+				// closest element
+				var ce:MovieClip = MovieClip( a[ idx ] );
+				if ( itemToSelect == null ) itemToSelect = new MovieClip();
+				if ( ce != itemToSelect )
+				{
+					// nouvelle vérification afin de savoir si l'élément est bien celui le plus proche
+					var r:Rectangle = itemToSelect.getRect( stage );
+					
+					c = [ getMiddleRectPoint( ce.getRect( stage ) ),
+									new Point( r.x, r.y ),
+									new Point( r.right, r.y ),
+									new Point( r.x, r.top ),
+									new Point( r.x, r.bottom ) ];
+					
+					var idx2:int = getClosetPoint( c, stage.mouseX, stage.mouseY );
+					
+					if ( idx2 == 0 )
+					{
+						itemToSelect = ce;
+						//setOverState();
+					}
 				}
 			}
 			
@@ -133,9 +166,8 @@ package portrait
 			if ( dragging || !a.length ) return;
 			
 			b = [];
-			var i:int;
-			var n:int = a.length;
-			for ( i; i < n; i++ ) if ( isMouseOver( a[ i ] ) ) b.push( a[ i ] );
+			n = a.length;
+			for ( i = 0; i < n; i++ ) if ( isMouseOver( a[ i ] ) ) b.push( a[ i ] );
 			
 			if ( b.length )	setOverState();
 			else setOutState();
@@ -146,8 +178,8 @@ package portrait
 			dragging = true;
 			itemSelected = itemToSelect;
 			
-			baseX = e.localX;
-			baseY = e.localY;
+			baseX = e.stageX - this.x - cnt.x - itemSelected.x;
+			baseY = e.stageY - this.y - cnt.y - itemSelected.y;
 			
 			stage.addEventListener( MouseEvent.MOUSE_UP, onUp );
 			stage.addEventListener( MouseEvent.MOUSE_MOVE, onStageMove );
@@ -163,8 +195,10 @@ package portrait
 		
 		private function onStageMove(e:MouseEvent):void 
 		{
-			itemSelected.x = e.stageX - cnt.x - this.x - baseX;
-			itemSelected.y = e.stageY - cnt.y - this.y - baseY;
+			var temp:Number = e.stageX - cnt.x - this.x - baseX;
+			if ( temp >= 0 && ( temp + itemSelected.width ) <= 392 ) itemSelected.x = temp;
+			temp = e.stageY - cnt.y - this.y - baseY
+			if ( temp >= 0 && ( temp + itemSelected.height ) <= 446 ) itemSelected.y = temp;
 			
 			strk.x = cnt.x + itemSelected.x;
 			strk.y = cnt.y + itemSelected.y;			
@@ -181,12 +215,36 @@ package portrait
 			strk.y = cnt.y + itemToSelect.y;
 			strk.width = itemToSelect.width;
 			strk.height = itemToSelect.height;
+			
+			darken();
 		}
 		
 		private function setOutState():void
 		{
 			strk.visible = false;
 			itemToSelect = null;
+			
+			lighten();
+		}
+		
+		private function lighten():void
+		{
+			var a:Array = getChildrenAvailable();
+			var i:int;
+			var n:int = a.length;
+			for ( i; i < n; i++ ) a[ i ].alpha = 1;
+		}
+		
+		private function darken():void
+		{
+			var a:Array = getChildrenAvailable();
+			var i:int;
+			var n:int = a.length;
+			for ( i; i < n; i++ )
+			{
+				if ( a[ i ] == itemToSelect ) a[ i ].alpha = 1;
+				else a[ i ].alpha = .3;
+			}
 		}
 		
 		private function cleanContainer( m:MovieClip ):void
