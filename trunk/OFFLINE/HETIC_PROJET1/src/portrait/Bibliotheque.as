@@ -112,11 +112,6 @@ package portrait
 		{
 			var vMax:int = small ? int( idxMax - 4 ) : int( idxMax - 2 );
 			
-			trace ( "//////////////////////////////" );
-			trace ( "scrollVal : " + scrollVal );
-			trace ( "vMax : " + vMax );
-			trace ( "idxMax : " + idxMax );
-			
 			if ( scrollVal == 0 )
 			{
 				zUp.alpha = .5;
@@ -152,7 +147,6 @@ package portrait
 			setButtonsStatus();
 			
 			var pos:Array = getPositions( idx );
-			trace( "pos : " + pos );
 			
 			var v:Vignette;
 			
@@ -161,6 +155,7 @@ package portrait
 			for ( i; i < n; i++ )
 			{
 				v = cnt.getChildAt( i ) as Vignette;
+				
 				if ( pos[ i ][ 1 ] ) Tweener.addTween( v, { y: pos[ i ][ 0 ], time: .3, transition: "easeInOutQuad" } );
 				else v.y = pos[ i ][ 0 ];
 			}
@@ -178,8 +173,7 @@ package portrait
 				if ( idxMax > 1 ) a.push( [ 80 + 16, true ] );
 				if ( idxMax > 2 ) a.push( [ 160 + 32, true ] );
 				if ( idxMax > 3 ) a.push( [ 240 + 48, true ] );
-				if ( idxMax > 4 ) a.push( [ 320 + 64, true ] );
-				if ( idxMax > 5 )
+				if ( idxMax > 4 )
 				{
 					if (idxAct > 0 ) a.unshift( [ -200, true ] );
 					for ( i; i < int( idxAct - 1 ); i++ ) a.unshift( [ -200, false ] );
