@@ -122,7 +122,7 @@ package portrait
 			{
 				switch( confirmation.state )
 				{
-					case Confirmation.VALIDATION : trace( "validation du portrait" ); break;
+					case Confirmation.VALIDATION : sketch.saveAsBitmap(); break;
 					case Confirmation.SUPPRESSION : sketch.clean(); break;
 					case Confirmation.CHANGEMENT_SEXE : sketch.clean(); menuCtrl.validSexe(); break;
 				}
