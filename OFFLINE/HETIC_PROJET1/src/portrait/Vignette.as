@@ -9,11 +9,15 @@ package portrait
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
+	import flash.display.SimpleButton;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import fr.minuit4.utils.UBit;
 	
 	public class Vignette extends MovieClip
 	{
+		public var z:SimpleButton;
+		
 		private var small:Boolean;
 		private var bitmapData:BitmapData;
 		
@@ -39,6 +43,16 @@ package portrait
 			
 			var b:Bitmap = new Bitmap( small ? UBit.resize( bitmapData, 180, 80, true, true ) : UBit.resize( bitmapData, 180, 180, true, true ) );
 			addChild( b );
+			
+			z.width = b.width;
+			z.height = b.height;
+			
+			z.addEventListener( MouseEvent.CLICK, onClick );
+		}
+		
+		private function onClick(e:MouseEvent):void 
+		{
+			trace( "Vignette.onClick > e : " + e );			
 		}
 		
 		// PRIVATE
