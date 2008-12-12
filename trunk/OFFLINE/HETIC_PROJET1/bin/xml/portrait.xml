@@ -1,8 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data>
-	<path img="img/" />
+	<path img="img/portrait/" />
 	<homme>
 		<accessoires>
+			<file src="accessoire_h_1.png" />
+			<file src="accessoire_h_2.png" />
+			<file src="accessoire_h_3.png" />
+			<file src="accessoire_h_4.png" />
+			<file src="accessoire_h_5.png" />
+			<file src="accessoire_h_6.png" />
+			<file src="accessoire_h_7.png" />
+			<file src="accessoire_h_8.png" />
+			<file src="accessoire_h_9.png" />
+			<file src="accessoire_h_10.png" />
+			<file src="accessoire_h_11.png" />
+			<file src="accessoire_h_12.png" />
+			<file src="accessoire_h_13.png" />
+			<file src="accessoire_h_14.png" />
+			<file src="accessoire_h_15.png" />
+			<file src="accessoire_h_16.png" />
+			<file src="accessoire_h_17.png" />
+			<file src="accessoire_h_18.png" />
 		</accessoires>
 		<cheveux>
 			<file src="cheveux_h_1.png" />
@@ -10,6 +28,7 @@
 			<file src="cheveux_h_3.png" />
 			<file src="cheveux_h_4.png" />
 			<file src="cheveux_h_5.png" />
+			<file src="cheveux_h_6.png" />
 		</cheveux>
 		<nez>
 			<file src="nez_h_1.png" />
@@ -19,6 +38,8 @@
 			<file src="nez_h_5.png" />
 			<file src="nez_h_6.png" />
 			<file src="nez_h_7.png" />
+			<file src="nez_h_8.png" />
+			<file src="nez_h_9.png" />
 		</nez>
 		<yeux>
 			<file src="yeux_h_1.png" />
@@ -28,6 +49,13 @@
 			<file src="yeux_h_5.png" />
 		</yeux>
 		<bouche>
+			<file src="bouche_h_1.png" />
+			<file src="bouche_h_2.png" />
+			<file src="bouche_h_3.png" />
+			<file src="bouche_h_4.png" />
+			<file src="bouche_h_5.png" />
+			<file src="bouche_h_6.png" />
+			<file src="bouche_h_7.png" />
 		</bouche>
 		<gabarit>
 			<file src="gabarit_h_1.png" />
@@ -35,38 +63,64 @@
 	</homme>
 	<femme>
 		<accessoires>
+			<file src="accessoire_f_1.png" />
+			<file src="accessoire_f_2.png" />
+			<file src="accessoire_f_3.png" />
+			<file src="accessoire_f_4.png" />
+			<file src="accessoire_f_5.png" />
+			<file src="accessoire_f_6.png" />
+			<file src="accessoire_f_7.png" />
+			<file src="accessoire_f_8.png" />
+			<file src="accessoire_f_9.png" />
+			<file src="accessoire_f_10.png" />
 		</accessoires>
 		<cheveux>
-			<file src="cheveux_h_1.png" />
-			<file src="cheveux_h_2.png" />
-			<file src="cheveux_h_3.png" />
-			<file src="cheveux_h_4.png" />
-			<file src="cheveux_h_5.png" />
+			<file src="cheveux_f_1.png" />
+			<file src="cheveux_f_2.png" />
+			<file src="cheveux_f_3.png" />
+			<file src="cheveux_f_4.png" />
+			<file src="cheveux_f_5.png" />
+			<file src="cheveux_f_6.png" />
+			<file src="cheveux_f_7.png" />
+			<file src="cheveux_f_8.png" />
+			<file src="cheveux_f_9.png" />
+			<file src="cheveux_f_10.png" />
+			<file src="cheveux_f_11.png" />
+			<file src="cheveux_f_12.png" />
+			<file src="cheveux_f_13.png" />
+			<file src="cheveux_f_14.png" />
 		</cheveux>
 		<nez>
-			<file src="nez_h_1.png" />
-			<file src="nez_h_2.png" />
-			<file src="nez_h_3.png" />				
-			<file src="nez_h_4.png" />				
-			<file src="nez_h_5.png" />
-			<file src="nez_h_6.png" />
-			<file src="nez_h_7.png" />
+			<file src="nez_f_1.png" />
+			<file src="nez_f_2.png" />
+			<file src="nez_f_3.png" />
+			<file src="nez_f_4.png" />				
+			<file src="nez_f_5.png" />
+			<file src="nez_f_6.png" />
+			<file src="nez_f_7.png" />
+			<file src="nez_f_8.png" />
+			<file src="nez_f_9.png" />
+			<file src="nez_f_10.png" />
 		</nez>
 		<yeux>
-			<file src="accessoire_h_1.png" />
-			<file src="accessoire_h_2.png" />
-			<file src="accessoire_h_3.png" />	
-			<file src="accessoire_h_3.png" />	
-			<file src="accessoire_h_3.png" />	
-			<file src="accessoire_h_3.png" />	
-			<file src="accessoire_h_3.png" />	
-			<file src="accessoire_h_3.png" />	
-			<file src="accessoire_h_3.png" />	
+			<file src="yeux_f_1.png" />
+			<file src="yeux_f_2.png" />
+			<file src="yeux_f_3.png" />
+			<file src="yeux_f_4.png" />
+			<file src="yeux_f_5.png" />
+			<file src="yeux_f_6.png" />
 		</yeux>
 		<bouche>
+			<file src="bouche_f_1.png" />
+			<file src="bouche_f_2.png" />
+			<file src="bouche_f_3.png" />
+			<file src="bouche_f_4.png" />
+			<file src="bouche_f_5.png" />
+			<file src="bouche_f_6.png" />
+			<file src="bouche_f_7.png" />
 		</bouche>
 		<gabarit>
-			<file src="gabarit_h_1.png" />
+			<file src="gabarit_f_1.png" />
 		</gabarit>
 	</femme>
 
