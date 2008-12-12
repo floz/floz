@@ -79,11 +79,17 @@ package portrait
 			strk.visible = false;
 			
 			cntAccessoires = cnt.accessoires;
+			cntAccessoires.x = 21; cntAccessoires.y = 131;
 			cntCheveux = cnt.cheveux;
+			cntCheveux.x = 16; cntCheveux.y = 1;
 			cntNez = cnt.nez;
+			cntNez.x = 21; cntNez.y = 150;
 			cntYeux = cnt.yeux;
+			cntYeux.x = 16; cntYeux.y = 99;
 			cntBouche = cnt.bouche;
+			cntBouche.x = 20; cntBouche.y = 203;
 			cntGabarit = cnt.gabarit;
+			cntGabarit.x = 19; cntGabarit.y = 19;
 			
 			addEventListener( MouseEvent.MOUSE_MOVE, onMove );
 		}
@@ -197,8 +203,10 @@ package portrait
 		{
 			var temp:Number = e.stageX - cnt.x - this.x - baseX;
 			if ( temp >= 0 && ( temp + itemSelected.width ) <= 392 ) itemSelected.x = temp;
+			trace( "itemSelected.x : " + itemSelected.x );
 			temp = e.stageY - cnt.y - this.y - baseY
 			if ( temp >= 0 && ( temp + itemSelected.height ) <= 446 ) itemSelected.y = temp;
+			trace( "itemSelected.y : " + itemSelected.y );
 			
 			strk.x = cnt.x + itemSelected.x;
 			strk.y = cnt.y + itemSelected.y;			
