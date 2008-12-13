@@ -335,7 +335,7 @@ package portrait
 			bd.draw( cnt );
 			
 			bitmap = new Bitmap( bd );
-			Debug.bitmap( bitmap );
+			//Debug.bitmap( bitmap );
 		}
 		
 		public function selectItem( bd:BitmapData ):void

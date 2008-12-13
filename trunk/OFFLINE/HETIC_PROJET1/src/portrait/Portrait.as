@@ -7,6 +7,7 @@
 package portrait 
 {
 	import com.carlcalderon.arthropod.Debug;
+	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.Event;
@@ -143,6 +144,8 @@ package portrait
 		}
 		
 		public function getCategorie():String { return categorie; }
+		
+		public function getPortrait():Bitmap { return null/*sketch.getBitmap()*/ }
 		
 	}
 	

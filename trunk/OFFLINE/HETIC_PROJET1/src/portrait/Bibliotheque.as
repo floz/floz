@@ -44,8 +44,8 @@ package portrait
 		private function onRemovedFromStage(e:Event):void 
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
-			zUp.removeEventListener( MouseEvent.CLICK, onClik );
-			zDown.removeEventListener( MouseEvent.CLICK, onClik );
+			zUp.removeEventListener( MouseEvent.CLICK, onClick );
+			zDown.removeEventListener( MouseEvent.CLICK, onClick );
 		}		
 		
 		private function onAddedToStage(e:Event):void 

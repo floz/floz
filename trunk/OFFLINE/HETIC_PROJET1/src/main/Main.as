@@ -6,10 +6,13 @@
  */
 package main 
 {
+	import flash.display.Bitmap;
 	import flash.display.MovieClip;
+	import portrait.Portrait;
 	
 	public class Main extends MovieClip 
 	{
+		private var por:Portrait;
 		
 		public function Main() 
 		{
@@ -21,6 +24,11 @@ package main
 		// PRIVATE	
 		
 		// PUBLIC
+		
+		public function getPortrait():Bitmap
+		{
+			return por.getPortrait();
+		}
 		
 	}
 	
