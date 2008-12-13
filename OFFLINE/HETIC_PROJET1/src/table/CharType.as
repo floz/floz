@@ -7,7 +7,7 @@
 package table 
 {
 	
-	public class CharCategorie 
+	public class CharType 
 	{
 		public static const ETRANGER:String = "etranger";
 		public static const HUMOURGRAS:String = "humourgras";
