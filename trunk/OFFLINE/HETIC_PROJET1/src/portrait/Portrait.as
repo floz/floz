@@ -6,7 +6,6 @@
  */
 package portrait 
 {
-	import com.carlcalderon.arthropod.Debug;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;

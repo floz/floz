@@ -55,12 +55,22 @@ package table
 			loader.load( request );
 		}
 		
+		public function getUrls():Array
+		{
+			var a:Array = [];
+			
+			var x:XML;
+			for each( x in xml.file ) a.push( xml.path.@swf + x.@src );
+			
+			return a;
+		}
+		
 		public function getInfos():Array
 		{
 			var a:Array = [];
 			
 			var x:XML;
-			for each( x in xml.file ) a.push( { src: xml.path.@img + x.@src, type: x.@type } );
+			for each( x in xml.file ) a.push( { type: x.@type, desc: x.@desc } );
 			
 			return a;
 		}
