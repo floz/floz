@@ -12,10 +12,22 @@ package table
 	
 	public class Guest extends MovieClip
 	{
+		public static const ETRANGER:String = "etranger";
+		public static const CULTIVE:String = "cultive";
+		public static const HUMOURGRAS:String = "humourgras";
+		public static const DECALE:String = "decale";
+		public static const INCLASSABLE:String = "inclassable";
+		
 		public var cnt:MovieClip;
 		
-		public function Guest() 
+		//private var defined:Boolean;
+		
+		private var bPortrait:Bitmap;
+		
+		public function Guest( bPortrait:Bitmap = null ) 
 		{
+			this.bPortrait = bPortrait;
+			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
@@ -31,14 +43,21 @@ package table
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			this.buttonMode = true;
-			
-			cnt.addChild( new Bitmap( new Default( 0, 0 ) ) );
+			cnt.addChild( bPortrait ? bPortrait : new Bitmap( new Default( 0, 0 ) ) );
 		}
 		
 		// PRIVATE
 		
 		// PUBLIC
+		
+		public function choose( m:MovieClip ):void
+		{
+			while ( cnt.numChildren ) cnt.removeChildAt( 0 );
+			
+			cnt.addChild( m );
+			
+			//defined = true;
+		}
 		
 	}
 	

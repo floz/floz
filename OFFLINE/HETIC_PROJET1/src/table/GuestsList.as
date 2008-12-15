@@ -6,6 +6,7 @@
  */
 package table 
 {
+	import caurina.transitions.Tweener;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -20,6 +21,12 @@ package table
 		private var document:Table;
 		
 		private var list:Array;
+		private var pos:Array;
+		
+		private var currentGuest:Guest;
+		
+		private var scrollValue:int;
+		private var idxMax:int;
 		
 		public function GuestsList() 
 		{
@@ -43,10 +50,17 @@ package table
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			dispatchEvent( new Event( GuestsList.CLICK ) );
+			currentGuest = Guest( e.currentTarget );
+			dispatchEvent( new Event( Event.ACTIVATE ) );
 		}
 		
 		// PRIVATE
+		
+		private function affiche():void
+		{			
+			Tweener.removeTweens( this );
+			Tweener.addTween( this, { x: pos[ scrollValue ], time: .5, transition: "linear" } );
+		}
 		
 		private function getAncestor( child:DisplayObject, type:* ):*
 		{
@@ -70,16 +84,61 @@ package table
 			var g:Guest;
 			
 			var i:int;
-			var n:int = 5;
+			var n:int = 6;
 			for ( i; i < n; i++ )
 			{
-				g = new Guest();
+				g = i ? new Guest() : new Guest( document.getPortrait() );
 				g.x = g.width * i + i * 50;
 				cnt.addChild( g );
 				
-				g.addEventListener( MouseEvent.CLICK, onClick );
+				if ( i )
+				{
+					g.addEventListener( MouseEvent.CLICK, onClick );
+					g.buttonMode = true;
+				}
+			}
+			
+			idxMax = 3;
+			
+			pos = [ 50, 50 - ( 50 + 261 ), 50 - ( 50 * 2 + 261 * 2 ), 50 - ( 50 * 3 + 261 * 3 ) ];
+		}
+		
+		public function toRight():void
+		{
+			if ( scrollValue + 1 <= idxMax ) 
+			{
+				scrollValue++;				
+				affiche();
 			}
 		}
+		
+		public function toLeft():void
+		{
+			if ( scrollValue - 1 >= 0 ) 
+			{
+				scrollValue--;			
+				affiche();
+			}			
+		}
+		
+		public function select( m:MovieClip ):void
+		{
+			currentGuest.choose( m );
+		}
+		
+		// GETTERS & SETTERS
+		
+		public function getIdxMax():int
+		{
+			return this.idxMax;
+		}
+		
+		public function getScrollValue():int
+		{
+			return this.scrollValue;
+		}
+		
+		public function getSelectedIdx():int { return cnt.getChildIndex( currentGuest ); }
 		
 	}
 	

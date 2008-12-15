@@ -15,6 +15,7 @@ package table
 	public class Confirmation extends MovieClip
 	{
 		public static const VALIDATION:String = "validation";
+		public static const SELECTION:String = "selection";
 		public static const YES:String = "yes";
 		public static const NO:String = "no";
 		
@@ -65,17 +66,17 @@ package table
 		
 		// PUBLIC
 		
-		public function show():void
+		public function show( state:String ):void
 		{
 			msg.text = "Êtes vous sûr de vouloir valider la table ?";
 			
-			//_state = state;
+			_state = state;
 			this.visible = true;
 		}
 		
 		public function hide():void
 		{
-			//_state = "";
+			_state = "";
 			this.visible = false;
 		}
 		

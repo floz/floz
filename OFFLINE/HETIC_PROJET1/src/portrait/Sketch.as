@@ -6,7 +6,6 @@
  */
 package portrait 
 {
-	import com.carlcalderon.arthropod.Debug;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -203,10 +202,10 @@ package portrait
 		{
 			var temp:Number = e.stageX - cnt.x - this.x - baseX;
 			if ( temp >= 0 && ( temp + itemSelected.width ) <= 392 ) itemSelected.x = temp;
-			trace( "itemSelected.x : " + itemSelected.x );
+			else setOutState();
 			temp = e.stageY - cnt.y - this.y - baseY
 			if ( temp >= 0 && ( temp + itemSelected.height ) <= 446 ) itemSelected.y = temp;
-			trace( "itemSelected.y : " + itemSelected.y );
+			else setOutState();
 			
 			strk.x = cnt.x + itemSelected.x;
 			strk.y = cnt.y + itemSelected.y;			
@@ -321,6 +320,8 @@ package portrait
 			for ( i; i < n; i++ ) cleanContainer( MovieClip( cnt.getChildAt( i ) ) );
 			
 			empty = true;
+			
+			setOutState();
 		}
 		
 		public function cleanItemSelected():void
@@ -335,7 +336,6 @@ package portrait
 			bd.draw( cnt );
 			
 			bitmap = new Bitmap( bd );
-			//Debug.bitmap( bitmap );
 		}
 		
 		public function selectItem( bd:BitmapData ):void

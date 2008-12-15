@@ -92,6 +92,9 @@ package portrait
 			var n:int = aBitmapDatasLoaded.length;
 			for ( i; i < n; i++ )
 				BitmapData( aBitmapDatasLoaded[ i ] ).dispose();
+			
+			aBitmapDatasLoaded = null;
+			aBitmapDatasToLoad = null;
 		}
 		
 		public function loadNext():void

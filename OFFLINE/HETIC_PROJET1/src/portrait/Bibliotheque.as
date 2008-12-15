@@ -7,7 +7,6 @@
 package portrait 
 {
 	import caurina.transitions.Tweener;
-	import com.carlcalderon.arthropod.Debug;
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
