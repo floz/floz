@@ -38,6 +38,19 @@ package table
 		private function onRemovedFromStage(e:Event):void 
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			
+			Tweener.removeTweens( this );
+			
+			var g:Guest;
+			var n:int = cnt.numChildren;
+			for ( var i:int; i < n; i++ )
+			{
+				if ( i )
+				{
+					g = cnt.getChildAt( i ) as Guest;
+					g.removeEventListener( MouseEvent.CLICK, onClick );
+				}
+			}
 		}
 		
 		private function onAddedToStage(e:Event):void 

@@ -53,6 +53,10 @@ package table
 		{
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			datas.removeEventListener( Event.COMPLETE, onLoadComplete );
+			
+			Tweener.removeTweens( curtain );
+			
+			endMessage.zRetour.removeEventListener( MouseEvent.CLICK, onRetourClick );
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -223,6 +227,9 @@ package table
 		
 		private function showResult():void
 		{
+			guestsList.removeEventListener( Event.ACTIVATE, onGuestClick );
+			gcMenu.removeEventListener( GuestsChoiceMenu.SELECTION, onSelection );
+			
 			curtain.removeEventListener( MouseEvent.CLICK, onCurtainClick );
 			curtain.visible = true;
 			curtain.x = document ? -document.getX() : 0;
