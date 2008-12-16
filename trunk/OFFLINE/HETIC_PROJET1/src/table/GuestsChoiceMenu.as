@@ -47,6 +47,17 @@ package table
 		private function onRemovedFromStage(e:Event):void 
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			zLeft.removeEventListener( MouseEvent.CLICK, onClick );
+			zRight.removeEventListener( MouseEvent.CLICK, onClick );
+			zValid.removeEventListener( MouseEvent.CLICK, onClick );
+			
+			library.dispose();
+			library.clear();
+			library.removeEventListener( ItemsLibrary.ITEM_LOADED, onItemLoaded );
+			library = null;
+			
+			var n:int = list.length;
+			for ( var i:int; i < n; i++ ) Tweener.removeTweens( GuestInfos( list[ i ] ) );
 		}
 		
 		private function onAddedToStage(e:Event):void 

@@ -33,8 +33,8 @@ package portrait
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
 			z.removeEventListener( MouseEvent.CLICK, onClick );
-			z.removeEventListener( MouseEvent.ROLL_OVER, onOver );
-			z.removeEventListener( MouseEvent.ROLL_OUT, onOut );
+			//z.removeEventListener( MouseEvent.ROLL_OVER, onOver );
+			//z.removeEventListener( MouseEvent.ROLL_OUT, onOut );
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -43,8 +43,8 @@ package portrait
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
 			z.addEventListener( MouseEvent.CLICK, onClick );
-			z.addEventListener( MouseEvent.ROLL_OVER, onOver );
-			z.addEventListener( MouseEvent.ROLL_OUT, onOut );
+			//z.addEventListener( MouseEvent.ROLL_OVER, onOver );
+			//z.addEventListener( MouseEvent.ROLL_OUT, onOut );
 		}
 		
 		private function onClick(e:Event):void 
@@ -52,15 +52,15 @@ package portrait
 			dispatchEvent( new MouseEvent( SexeItem.CLICK ) );
 		}
 		
-		private function onOver(e:Event):void 
-		{
-			
-		}
-		
-		private function onOut(e:Event):void 
-		{
-			
-		}
+		//private function onOver(e:Event):void 
+		//{
+			//
+		//}
+		//
+		//private function onOut(e:Event):void 
+		//{
+			//
+		//}
 		
 		// PRIVATE
 		

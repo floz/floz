@@ -199,6 +199,7 @@ package portrait
 		private function onUp(e:MouseEvent):void 
 		{
 			dragging = false;
+			setOutState();
 			
 			stage.removeEventListener( MouseEvent.MOUSE_UP, onUp );
 			stage.removeEventListener( MouseEvent.MOUSE_MOVE, onStageMove );

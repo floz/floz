@@ -45,6 +45,13 @@ package portrait
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			zUp.removeEventListener( MouseEvent.CLICK, onClick );
 			zDown.removeEventListener( MouseEvent.CLICK, onClick );
+			
+			removeAllTweens();
+			
+			library.dispose();
+			library.clear();
+			library.removeEventListener( BitmapDataLibrary.BITMAPDATA_LOADED, onBitmapDataLoaded );
+			library = null;
 		}		
 		
 		private function onAddedToStage(e:Event):void 
