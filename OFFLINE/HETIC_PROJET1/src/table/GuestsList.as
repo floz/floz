@@ -84,7 +84,7 @@ package table
 			var g:Guest;
 			
 			var i:int;
-			var n:int = 6;
+			var n:int = 5;
 			for ( i; i < n; i++ )
 			{
 				g = i ? new Guest() : new Guest( document.getPortrait() );
@@ -98,7 +98,7 @@ package table
 				}
 			}
 			
-			idxMax = 3;
+			idxMax = 2;
 			
 			pos = [ 50, 50 - ( 50 + 261 ), 50 - ( 50 * 2 + 261 * 2 ), 50 - ( 50 * 3 + 261 * 3 ) ];
 		}

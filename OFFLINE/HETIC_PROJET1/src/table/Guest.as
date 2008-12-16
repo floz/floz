@@ -12,7 +12,7 @@ package table
 	
 	public class Guest extends MovieClip
 	{
-		public static const ETRANGER:String = "etranger";
+		//public static const ETRANGER:String = "etranger";
 		public static const CULTIVE:String = "cultive";
 		public static const HUMOURGRAS:String = "humourgras";
 		public static const DECALE:String = "decale";
