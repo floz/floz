@@ -11,9 +11,12 @@ package portrait
 	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import main.Main;
 	
 	public class Portrait extends MovieClip 
 	{
+		//public static const STEP_COMPLETE:String = "step_complete";
+		
 		public var sketch:Sketch;
 		public var menuCtrl:MenuCtrl;
 		public var bibliotheque:Bibliotheque;
@@ -122,7 +125,7 @@ package portrait
 			{
 				switch( confirmation.state )
 				{
-					case Confirmation.VALIDATION : sketch.saveAsBitmap(); break;
+					case Confirmation.VALIDATION : validationPortrait(); break;
 					case Confirmation.SUPPRESSION : sketch.clean(); break;
 					case Confirmation.CHANGEMENT_SEXE : sketch.clean(); menuCtrl.validSexe(); break;
 				}
@@ -132,6 +135,12 @@ package portrait
 		}
 		
 		// PRIVATE	
+		
+		private function validationPortrait():void
+		{
+			sketch.saveAsBitmap();
+			dispatchEvent( new Event( Main.STEP_COMPLETE ) );
+		}
 		
 		// PUBLIC
 		
@@ -144,7 +153,7 @@ package portrait
 		
 		public function getCategorie():String { return categorie; }
 		
-		public function getPortrait():Bitmap { return null/*sketch.getBitmap()*/ }
+		public function getPortraitInfos():Object { return { bitmap: sketch.getBitmap(), sexe: sexe }; }
 		
 	}
 	

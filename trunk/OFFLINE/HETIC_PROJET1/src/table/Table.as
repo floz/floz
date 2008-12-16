@@ -16,7 +16,10 @@ package table
 	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Matrix;
+	import fr.minuit4.utils.UBit;
 	import main.Main;
+	import portrait.ItemSexe;
 	
 	public class Table extends MovieClip 
 	{
@@ -186,7 +189,12 @@ package table
 		
 		private function showGuestMenu():void
 		{
+			////////////////////////////////////////////// NEW CURTAIN
 			curtain.visible = true;
+			curtain.x = -this.x;
+			curtain.y = -this.y;
+			curtain.width = stage.stageWidth;
+			curtain.height = stage.stageHeight;
 			Tweener.addTween( curtain, { alpha: 1, time: .3, transition: "easeInOutQuad" } );
 			gcMenu.show();
 		}
@@ -254,7 +262,25 @@ package table
 		
 		public function getPortrait():Bitmap
 		{
-			return ( document ? document.getPortrait() : new Bitmap( new BitmapData( 261, 297, false, 0xFF0000 ) ) );
+			if ( !document ) return new Bitmap( new BitmapData( 261, 297, false, 0xFF0000 ) );
+			
+			Debug.allowLog = true;
+			
+			var o:Object = document.getPortraitInfos();
+			var b:Bitmap = o.bitmap;
+			var bd:BitmapData = b.bitmapData.clone();
+			
+			var bdPortrait:BitmapData = new BitmapData( 261, 297, true, 0x000000 );
+			bdPortrait.draw( o.sexe == ItemSexe.HOMME ? new BusteH( 0, 0 ) : new BusteF( 0, 0 ) );
+			bdPortrait.draw( UBit.resize( bd, 250, 170, true  ), new Matrix( 1, 0, 0, 1, -5 ) );
+			
+			var bPortrait:Bitmap = new Bitmap( bdPortrait );
+			
+			Debug.bitmap( b );
+			
+			return bPortrait;
+			
+			//return ( document ? document.getPortraitInfos() : { bitmap: new Bitmap( new BitmapData( 261, 297, false, 0xFF0000 ) ), sexe: ItemSexe.HOMME } );
 		}
 		
 	}

@@ -53,6 +53,12 @@ package portrait
 		private function onRemovedFromStage(e:Event):void 
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			removeEventListener( MouseEvent.MOUSE_MOVE, onMove );
+			stage.removeEventListener( MouseEvent.MOUSE_MOVE, onStageMove );
+			
+			var i:int;
+			var n:int = cnt.numChildren
+			for ( i; i < n; i++ ) MovieClip( cnt.getChildAt( i ) ).removeEventListener( MouseEvent.MOUSE_DOWN, onDown );
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -332,6 +338,8 @@ package portrait
 		
 		public function saveAsBitmap():void
 		{
+			setOutState();
+			
 			var bd:BitmapData = new BitmapData( cnt.width, cnt.height, true, 0xff00ff );
 			bd.draw( cnt );
 			
