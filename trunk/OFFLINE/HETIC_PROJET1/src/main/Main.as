@@ -132,6 +132,9 @@ package main
 			return por.getPortraitInfos();
 		}
 		
+		public function getX():Number { return cnt.x };
+		public function getY():Number { return cnt.y };
+		
 	}
 	
 }

@@ -35,6 +35,7 @@ package table
 		public var gcMenu:GuestsChoiceMenu;
 		public var guestsList:GuestsList;
 		public var curtain:MovieClip;
+		public var endMessage:MovieClip;
 		
 		private var aCompo:Array;
 		
@@ -68,6 +69,8 @@ package table
 		
 		private function onLoadComplete(e:Event):void 
 		{
+			endMessage.visible = false;
+			
 			zValid.alpha = .5;
 			zValid.enabled = false;
 			zValid.useHandCursor = false;
@@ -87,7 +90,7 @@ package table
 			curtain.addEventListener( MouseEvent.CLICK, onCurtainClick );
 			
 			aCompo = [];
-			for ( var i:int; i < 5; i++ ) aCompo.push( null );
+			for ( var i:int; i < 4; i++ ) aCompo.push( null );
 			
 			guestsList.init();
 			guestsList.addEventListener( Event.ACTIVATE, onGuestClick );
@@ -143,6 +146,11 @@ package table
 			}
 		}
 		
+		private function onEndClick(e:MouseEvent):void 
+		{
+			trace( "fin !" );
+		}
+		
 		// PRIVATE
 		
 		private function moveTo( sens:String ):void
@@ -189,10 +197,9 @@ package table
 		
 		private function showGuestMenu():void
 		{
-			////////////////////////////////////////////// NEW CURTAIN
 			curtain.visible = true;
-			curtain.x = -this.x;
-			curtain.y = -this.y;
+			curtain.x = document ? -document.getX() : 0;
+			curtain.y = document ? -document.getY() : 0;
 			curtain.width = stage.stageWidth;
 			curtain.height = stage.stageHeight;
 			Tweener.addTween( curtain, { alpha: 1, time: .3, transition: "easeInOutQuad" } );
@@ -216,9 +223,74 @@ package table
 		
 		private function showResult():void
 		{
+			curtain.removeEventListener( MouseEvent.CLICK, onCurtainClick );
+			curtain.addEventListener( MouseEvent.CLICK, onEndClick );
+			curtain.visible = true;
+			curtain.x = document ? -document.getX() : 0;
+			curtain.y = document ? -document.getY() : 0;
+			curtain.width = stage.stageWidth;
+			curtain.height = stage.stageHeight;
+			Tweener.addTween( curtain, { alpha: 1, time: .3, transition: "easeInOutQuad" } );
+			
+			var humourgras:int;
+			var cultive:int;
+			var decale:int;
+			var inclassable:int;
+			
 			var i:int;
 			var n:int = aCompo.length
-			for ( i; i < n; i++ ) trace ( aCompo[ i ].type );
+			for ( i; i < n; i++ ) 
+			{
+				switch( aCompo[ i ].type )
+				{
+					case CharType.HUMOURGRAS: humourgras++;
+					case CharType.CULTIVE: cultive++;
+					case CharType.DECALE: decale++;
+					case CharType.INCLASSABLE: inclassable++;
+				}
+			}
+			
+			var s:String;
+			if ( humourgras == 1 && cultive == 1 && decale == 1 && inclassable == 1 ) 
+			{
+				s = "Bravo ! Votre table est... Parfaite ! Et votre diner l'est aussi, du coup. \n Peut être viendrez vous voir 'Le diner des illustres' en avant première ?é";
+			}
+			else
+			{			
+				var idx:int;
+				var type:String;
+				if ( humourgras > idx )
+				{
+					idx = humourgras;
+					type = CharType.HUMOURGRAS;
+				}
+				if ( cultive > idx )
+				{
+					idx = cultive;
+					type = CharType.CULTIVE;
+				}
+				if ( decale > idx )
+				{
+					idx = decale;
+					type = CharType.DECALE;
+				}
+				if ( inclassable > idx )
+				{
+					idx = inclassable;
+					type = CharType.INCLASSABLE;
+				}
+				
+				switch ( type )
+				{
+					case CharType.CULTIVE: s = "Apparemment, vos invités sont trop cultivés pour... Vous. Peut être auriez du faire plus attentifs lors de vos invitations ?"; break;
+					case CharType.DECALE: s = "On ne peut dire qu'une chose, c'est que l'humour baigne à cette table. A tel point que vous aussi, vous êtes marrants."; break;
+					case CharType.HUMOURGRAS: s = "L'humour noir ou lourd, c'est marrant deux minutes, mais quand toute la table s'y met... On devient vite mauvais public, non ?"; break;
+					case CharType.INCLASSABLE: s = "Bravo, vous avez réussi à réunir du bon monde pour le prochain cirque de Zavatta"; break;
+				}
+			}
+			
+			endMessage.texte.text = s;
+			endMessage.visible = true;
 		}
 		
 		private function getAncestor( child:DisplayObject, type:* ):*
@@ -276,11 +348,8 @@ package table
 			
 			var bPortrait:Bitmap = new Bitmap( bdPortrait );
 			
-			Debug.bitmap( b );
-			
+			Debug.bitmap( b );			
 			return bPortrait;
-			
-			//return ( document ? document.getPortraitInfos() : { bitmap: new Bitmap( new BitmapData( 261, 297, false, 0xFF0000 ) ), sexe: ItemSexe.HOMME } );
 		}
 		
 	}
