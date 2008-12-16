@@ -146,9 +146,9 @@ package table
 			}
 		}
 		
-		private function onEndClick(e:MouseEvent):void 
+		private function onRetourClick(e:MouseEvent):void 
 		{
-			trace( "fin !" );
+			dispatchEvent( new Event( Main.STEP_COMPLETE ) );
 		}
 		
 		// PRIVATE
@@ -224,12 +224,12 @@ package table
 		private function showResult():void
 		{
 			curtain.removeEventListener( MouseEvent.CLICK, onCurtainClick );
-			curtain.addEventListener( MouseEvent.CLICK, onEndClick );
 			curtain.visible = true;
 			curtain.x = document ? -document.getX() : 0;
 			curtain.y = document ? -document.getY() : 0;
 			curtain.width = stage.stageWidth;
 			curtain.height = stage.stageHeight;
+			
 			Tweener.addTween( curtain, { alpha: 1, time: .3, transition: "easeInOutQuad" } );
 			
 			var humourgras:int;
@@ -243,17 +243,17 @@ package table
 			{
 				switch( aCompo[ i ].type )
 				{
-					case CharType.HUMOURGRAS: humourgras++;
-					case CharType.CULTIVE: cultive++;
-					case CharType.DECALE: decale++;
-					case CharType.INCLASSABLE: inclassable++;
+					case CharType.HUMOURGRAS: humourgras++; break;
+					case CharType.CULTIVE: cultive++; break;
+					case CharType.DECALE: decale++; break;
+					case CharType.INCLASSABLE: inclassable++; break;
 				}
 			}
 			
 			var s:String;
 			if ( humourgras == 1 && cultive == 1 && decale == 1 && inclassable == 1 ) 
 			{
-				s = "Bravo ! Votre table est... Parfaite ! Et votre diner l'est aussi, du coup. \n Peut être viendrez vous voir 'Le diner des illustres' en avant première ?é";
+				s = "Bravo ! Votre table est... Parfaite ! Et votre diner l'est aussi, du coup. \n Peut être viendrez vous voir 'Le diner des illustres' en avant première ?";
 			}
 			else
 			{			
@@ -291,6 +291,8 @@ package table
 			
 			endMessage.texte.text = s;
 			endMessage.visible = true;
+			
+			endMessage.zRetour.addEventListener( MouseEvent.CLICK, onRetourClick );
 		}
 		
 		private function getAncestor( child:DisplayObject, type:* ):*
