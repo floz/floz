@@ -60,7 +60,7 @@ package table
 		{			
 			this.guest = m;
 			
-			var bmd:BitmapData = new BitmapData( m.width, m.height );
+			var bmd:BitmapData = new BitmapData( m.width, m.height, true, 0x000000 );
 			bmd.draw( m );
 			
 			bmd = UBit.resize( bmd, 261, 297, true );

@@ -116,22 +116,29 @@ package table
 			pos = [ 50, 50 - ( 50 + 261 ), 50 - ( 50 * 2 + 261 * 2 ), 50 - ( 50 * 3 + 261 * 3 ) ];
 		}
 		
-		public function toRight():void
+		public function toRight():Boolean
 		{
 			if ( scrollValue + 1 <= idxMax ) 
 			{
 				scrollValue++;				
 				affiche();
+				
+				return true;
 			}
+			
+			return false;
 		}
 		
-		public function toLeft():void
+		public function toLeft():Boolean
 		{
 			if ( scrollValue - 1 >= 0 ) 
 			{
 				scrollValue--;			
 				affiche();
-			}			
+				
+				return true;
+			}
+			return false;
 		}
 		
 		public function select( m:MovieClip ):void

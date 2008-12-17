@@ -12,7 +12,9 @@ package portrait
 	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Matrix;
 	import fr.minuit4.utils.UBit;
+	import portrait.bmpd.Separation;
 	
 	public class Vignette extends MovieClip
 	{
@@ -48,7 +50,13 @@ package portrait
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
 			var b:Bitmap = new Bitmap( small ? UBit.resize( bitmapData, 180, 80, true, true ) : UBit.resize( bitmapData, 180, 180, true, true ) );
-			addChild( b );
+			
+			var b2:Bitmap = new Bitmap( new BitmapData( 180, small ? 90 : 190, true, 0x000000 ) );
+			b2.bitmapData.draw( b, new Matrix( 1, 0, 0, 1, 0, small ? 5 : 10 ) );
+			var separation:BitmapData = new Separation();
+			b2.bitmapData.draw( separation, new Matrix( 1, 0, 0, 1, 12 ) );
+			b2.bitmapData.draw( separation, new Matrix( 1, 0, 0, 1, 12, b.height - separation.height ) );			
+			addChild( b2 );
 			
 			z.width = b.width;
 			z.height = b.height;

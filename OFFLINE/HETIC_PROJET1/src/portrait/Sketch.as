@@ -54,6 +54,7 @@ package portrait
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			removeEventListener( MouseEvent.MOUSE_MOVE, onMove );
+			removeEventListener( MouseEvent.MOUSE_OUT, onOut );
 			stage.removeEventListener( MouseEvent.MOUSE_MOVE, onStageMove );
 			
 			var i:int;
@@ -71,14 +72,10 @@ package portrait
 			empty = true;
 			
 			strk = new Shape();
-			strk.graphics.lineStyle( 2 );
+			strk.graphics.lineStyle( 2, 0x333333 );
 			strk.graphics.beginFill( 0, 0 );
 			strk.graphics.drawRect( 0, 0, 360, 360 );
-			strk.graphics.endFill();
-			
-			strk.graphics.beginFill( 0, 1 );
-			strk.graphics.drawCircle( 360/2 - 5, 360/2 - 5, 10 );
-			strk.graphics.endFill();
+			strk.graphics.endFill();			
 			addChild( strk );
 			
 			strk.visible = false;
@@ -97,6 +94,13 @@ package portrait
 			cntGabarit.x = 19; cntGabarit.y = 19;
 			
 			addEventListener( MouseEvent.MOUSE_MOVE, onMove );
+			addEventListener( MouseEvent.ROLL_OUT, onOut );
+		}
+		
+		private function onOut(e:MouseEvent):void 
+		{
+			if ( dragging ) return;
+			setOutState();			
 		}
 		
 		private function onMove(e:MouseEvent):void 
@@ -189,8 +193,11 @@ package portrait
 			dragging = true;
 			itemSelected = itemToSelect;
 			
-			baseX = e.stageX - this.x - cnt.x - itemSelected.x;
-			baseY = e.stageY - this.y - cnt.y - itemSelected.y;
+			if ( itemSelected )
+			{
+				baseX = e.stageX - this.x - cnt.x - itemSelected.x;
+				baseY = e.stageY - this.y - cnt.y - itemSelected.y;
+			}
 			
 			stage.addEventListener( MouseEvent.MOUSE_UP, onUp );
 			stage.addEventListener( MouseEvent.MOUSE_MOVE, onStageMove );
@@ -199,7 +206,7 @@ package portrait
 		private function onUp(e:MouseEvent):void 
 		{
 			dragging = false;
-			setOutState();
+			//setOutState();
 			
 			stage.removeEventListener( MouseEvent.MOUSE_UP, onUp );
 			stage.removeEventListener( MouseEvent.MOUSE_MOVE, onStageMove );
@@ -209,10 +216,10 @@ package portrait
 		{
 			var temp:Number = e.stageX - cnt.x - this.x - baseX;
 			if ( temp >= 0 && ( temp + itemSelected.width ) <= 392 ) itemSelected.x = temp;
-			else setOutState();
+			//else setOutState();
 			temp = e.stageY - cnt.y - this.y - baseY
 			if ( temp >= 0 && ( temp + itemSelected.height ) <= 446 ) itemSelected.y = temp;
-			else setOutState();
+			//else setOutState();
 			
 			strk.x = cnt.x + itemSelected.x;
 			strk.y = cnt.y + itemSelected.y;			
@@ -295,6 +302,12 @@ package portrait
 			return child.getRect( stage ).contains( stage.mouseX, stage.mouseY );
 		}
 		
+		private function setValidState():void
+		{
+			if ( cntGabarit.numChildren && cntBouche.numChildren && cntYeux.numChildren && cntNez.numChildren ) document.setValidStatus( true );
+			else document.setValidStatus( false );
+		}
+		
 		// PUBLIC
 		
 		public function init():void
@@ -335,6 +348,8 @@ package portrait
 		{
 			if ( !itemSelected ) return;
 			cleanContainer( itemSelected );
+			
+			setValidState();
 		}
 		
 		public function saveAsBitmap():void
@@ -386,6 +401,7 @@ package portrait
 					break;
 			}
 			
+			setValidState();
 			empty = false;
 		}
 		

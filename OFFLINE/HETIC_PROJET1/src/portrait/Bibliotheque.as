@@ -137,22 +137,26 @@ package portrait
 			{
 				zUp.alpha = .5;
 				zUp.enabled = false;
+				//zUp.useHandCursor = false;
 			}
 			else
 			{
 				zUp.alpha = 1;
 				zUp.enabled = true;
+				//zUp.useHandCursor = true;
 			}
 			
 			if ( scrollVal == vMax )
 			{
 				zDown.alpha = .5;
 				zDown.enabled = false;
+				//zUp.useHandCursor = false;
 			}			
 			else
 			{
 				zDown.alpha = 1;
 				zDown.enabled = true;
+				//zUp.useHandCursor = true;
 			}
 		}
 		

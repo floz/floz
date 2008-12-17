@@ -84,14 +84,14 @@ package table
 				case zLeft:
 				{
 					if ( scrollVal - 1 >= 0 ) scrollVal--;
-					else return;
+					else scrollVal = idxMax - 1; // else return;
 					
 					break;
 				}
 				case zRight: 
 				{
 					if ( scrollVal + 1 < idxMax ) scrollVal++;
-					else return;
+					else scrollVal = 0; // else return;
 					
 					break;
 				}
@@ -169,24 +169,24 @@ package table
 		{
 			if ( scrollVal == 0 )
 			{
-				zLeft.alpha = .5;
-				zLeft.enabled = false;
+				//zLeft.alpha = .5;
+				//zLeft.enabled = false;
 			}
 			else
 			{
-				zLeft.alpha = 1;
-				zLeft.enabled = true;
+				//zLeft.alpha = 1;
+				//zLeft.enabled = true;
 			}
 			
 			if ( scrollVal == idxMax - 1 )
 			{
-				zRight.alpha = .5;
-				zRight.enabled = false;
+				//zRight.alpha = .5;
+				//zRight.enabled = false;
 			}			
 			else
 			{
-				zRight.alpha = 1;
-				zRight.enabled = true;
+				//zRight.alpha = 1;
+				//zRight.enabled = true;
 			}
 			
 			if ( checkDispo() )
