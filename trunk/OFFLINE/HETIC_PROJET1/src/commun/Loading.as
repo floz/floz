@@ -11,6 +11,7 @@ package commun
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.events.Event;
+	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -34,7 +35,7 @@ package commun
 		
 		private var _playing:Boolean;
 		
-		public function Loading( color:uint = 0xffffff, distance:Number = 8, size:Number = 4, speed:Number = 10, eraseTime:Number = .9 ) 
+		public function Loading( color:uint = 0xffffff, distance:Number = 8, size:Number = 4, speed:Number = 10, blur:Boolean = true, eraseTime:Number = .9 ) 
 		{
 			this.color = color;
 			this.distance = distance;
@@ -46,6 +47,8 @@ package commun
 										   0, 0, 0, eraseTime, 0 ] );
 			
 			
+			this.smoothing = true;
+			if ( blur ) this.filters = [ new BlurFilter( 2, 2, 4 ) ];
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		

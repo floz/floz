@@ -8,15 +8,19 @@ package table
 {
 	import accueil.Accueil;
 	import caurina.transitions.Tweener;
-	import com.carlcalderon.arthropod.Debug;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.Event;
+	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Matrix;
+	import flash.net.sendToURL;
+	import flash.net.URLRequest;
+	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	import fr.minuit4.utils.UBit;
 	import main.Main;
 	import portrait.ItemSexe;
@@ -25,6 +29,8 @@ package table
 	{
 		public static const LEFT:String = "left";
 		public static const RIGHT:String = "right";
+		
+		public static const SUCCES:String = "succes";
 		
 		public var zLeft:SimpleButton;
 		public var zRight:SimpleButton;
@@ -36,11 +42,18 @@ package table
 		public var guestsList:GuestsList;
 		public var curtain:MovieClip;
 		public var endMessage:MovieClip;
+		public var wallpaper:MovieClip;
+		public var frontItems:MovieClip;
 		
 		private var aCompo:Array;
 		
 		private var document:Main;		
 		private var datas:Datas;
+		
+		private var status:String;
+		
+		private var pos:Array = [ 0, -261, -261 * 2, -261 * 3 ];
+		private var pos2:Array = [ 50, 50 - ( 50 + 261 ), 50 - ( 50 * 2 + 261 * 2 ), 50 - ( 50 * 3 + 261 * 3 ) ];
 		
 		public function Table() 
 		{
@@ -57,6 +70,10 @@ package table
 			Tweener.removeTweens( curtain );
 			
 			endMessage.zRetour.removeEventListener( MouseEvent.CLICK, onRetourClick );
+			endMessage.succes.saisie.removeEventListener( FocusEvent.FOCUS_OUT, onFocusOut );
+			
+			Tweener.removeTweens( frontItems );
+			Tweener.removeTweens( wallpaper );
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -66,19 +83,22 @@ package table
 			
 			document = getAncestor( this, Main ) as Main;
 			
+			endMessage.visible = false;
+			endMessage.succes.visible = false;
+			
+			zValid.alpha = .5;
+			zValid.enabled = false;
+			zValid.useHandCursor = false;
+			
+			UBit.strechIn( new Nappe( 0, 0 ), front, front.width, front.height );
+			
 			datas = new Datas( "xml/invites.xml" );
 			datas.addEventListener( Event.COMPLETE, onLoadComplete );
 			datas.load();
 		}
 		
 		private function onLoadComplete(e:Event):void 
-		{
-			endMessage.visible = false;
-			
-			zValid.alpha = .5;
-			zValid.enabled = false;
-			zValid.useHandCursor = false;
-				
+		{				
 			zValid.addEventListener( MouseEvent.CLICK, onClick );
 			confirmation.addEventListener( Confirmation.YES, onRespond );
 			confirmation.addEventListener( Confirmation.NO, onRespond );
@@ -152,20 +172,73 @@ package table
 		
 		private function onRetourClick(e:MouseEvent):void 
 		{
-			dispatchEvent( new Event( Main.STEP_COMPLETE ) );
+			if ( status == Table.SUCCES ) 
+			{
+				if ( !isTextIsMail() ) 
+				{
+					endMessage.succes.fondSaisie.gotoAndStop( 2 );
+					return;
+				}
+				
+				endMessage.succes.fondSaisie.gotoAndStop( 1 );
+				
+				var s:String = endMessage.succes.saisie.text;
+				trace( "s : " + s );
+				
+				var variables:URLVariables = new URLVariables();
+				variables.mail = s;
+				
+				var request:URLRequest = new URLRequest( "inc/ajoutmail.php" );
+				request.method = URLRequestMethod.POST;
+				request.data = variables;
+				trace( "request.data : " + request.data );
+				trace( "variables : " + variables );
+				
+				try
+				{
+					sendToURL( request );
+				}
+				catch ( e:Error )
+				{
+					trace ( "erreur lors de l'envoie" );
+				}
+				
+				dispatchEvent( new Event( Main.STEP_COMPLETE ) );
+			}
+			else 
+			{
+				dispatchEvent( new Event( Main.STEP_COMPLETE ) );
+			}
+		}
+		
+		private function onFocusOut(e:FocusEvent):void 
+		{
+			endMessage.succes.fondSaisie.gotoAndStop( isTextIsMail() ? 1 : 2 );
 		}
 		
 		// PRIVATE
 		
 		private function moveTo( sens:String ):void
 		{
+			var scrollVal:int = guestsList.getScrollValue();
+			
 			if ( sens == Table.LEFT )
 			{
-				guestsList.toLeft();
+				if ( guestsList.toLeft() )
+				{
+					scrollVal--;
+					Tweener.addTween( wallpaper, { x: pos[ scrollVal ], time: .5, transition: "linear" } );
+					Tweener.addTween( frontItems, { x: pos2[ scrollVal ], time: .5, transition: "linear" } );
+				}
 			}
 			else
 			{
-				guestsList.toRight();
+				if ( guestsList.toRight() )
+				{
+					scrollVal++;
+					Tweener.addTween( wallpaper, { x: pos[ scrollVal ], time: .5, transition: "linear" } );
+					Tweener.addTween( frontItems, { x: pos2[ scrollVal ], time: .5, transition: "linear" } );
+				}
 			}
 			
 			setButtonsStatus();
@@ -231,6 +304,7 @@ package table
 			gcMenu.removeEventListener( GuestsChoiceMenu.SELECTION, onSelection );
 			
 			curtain.removeEventListener( MouseEvent.CLICK, onCurtainClick );
+			curtain.useHandCursor = false;
 			curtain.visible = true;
 			curtain.x = document ? -document.getX() : 0;
 			curtain.y = document ? -document.getY() : 0;
@@ -260,7 +334,15 @@ package table
 			var s:String;
 			if ( humourgras == 1 && cultive == 1 && decale == 1 && inclassable == 1 ) 
 			{
+				status = Table.SUCCES;
+				
 				s = "Bravo ! Votre table est... Parfaite ! Et votre diner l'est aussi, du coup. \n Peut être viendrez vous voir 'Le diner des illustres' en avant première ?";
+				endMessage.fond.gotoAndPlay( 2 );
+				endMessage.img.gotoAndPlay( 2 );
+				endMessage.succes.fondSaisie.gotoAndStop( 2 );
+				endMessage.succes.visible = true;
+				endMessage.succes.saisie.text = "Saisissez votre mail";
+				endMessage.succes.saisie.addEventListener( FocusEvent.FOCUS_OUT, onFocusOut );
 			}
 			else
 			{			
@@ -315,6 +397,20 @@ package table
 			return null;
 		}
 		
+		private function isTextIsMail():Boolean
+		{
+			var s:String = endMessage.succes.saisie.text;
+			if ( !s || s == " " ) return false;
+			
+			var i:int = s.search( /[@]/g );
+			if ( i < 0 ) return false;
+			
+			i = s.search( /[.]/g );
+			if ( i < 0 ) return false;
+			
+			return true;
+		}
+		
 		// PUBLIC
 		
 		public function checkDispo( idx:int ):Boolean
@@ -345,8 +441,6 @@ package table
 		{
 			if ( !document ) return new Bitmap( new BitmapData( 261, 297, false, 0xFF0000 ) );
 			
-			Debug.allowLog = true;
-			
 			var o:Object = document.getPortraitInfos();
 			var b:Bitmap = o.bitmap;
 			var bd:BitmapData = b.bitmapData.clone();
@@ -356,8 +450,7 @@ package table
 			bdPortrait.draw( UBit.resize( bd, 250, 170, true  ), new Matrix( 1, 0, 0, 1, -5 ) );
 			
 			var bPortrait:Bitmap = new Bitmap( bdPortrait );
-			
-			Debug.bitmap( b );			
+					
 			return bPortrait;
 		}
 		

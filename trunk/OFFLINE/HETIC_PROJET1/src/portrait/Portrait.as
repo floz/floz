@@ -56,6 +56,8 @@ package portrait
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
+			zValid.visible = false;
+			
 			datas = new Datas( "xml/portrait.xml" );
 			datas.addEventListener( Event.COMPLETE, onDatasComplete );
 			datas.load();
@@ -143,6 +145,11 @@ package portrait
 		}
 		
 		// PUBLIC
+		
+		public function setValidStatus( b:Boolean )
+		{
+			zValid.visible = b;
+		}
 		
 		// GETTERS & SETTERS
 		
