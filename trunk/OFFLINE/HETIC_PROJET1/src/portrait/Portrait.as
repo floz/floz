@@ -6,6 +6,7 @@
  */
 package portrait 
 {
+	import caurina.transitions.Tweener;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
@@ -56,7 +57,10 @@ package portrait
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			zValid.visible = false;
+			//zValid.visible = false;
+			//setValidStatus( false );
+			zValid.alpha = .5
+			zValid.enabled = false;
 			
 			datas = new Datas( "xml/portrait.xml" );
 			datas.addEventListener( Event.COMPLETE, onDatasComplete );
@@ -148,7 +152,19 @@ package portrait
 		
 		public function setValidStatus( b:Boolean )
 		{
-			zValid.visible = b;
+			//zValid.visible = b;
+			if ( b ) 
+			{
+				zValid.enabled = true;
+				zValid.useHandCursor = true;
+				Tweener.addTween( zValid, { alpha: 1, time: .2, transition: "easeInCubic" } );
+			}
+			else
+			{
+				zValid.enabled = false;
+				zValid.useHandCursor = false;
+				Tweener.addTween( zValid, { alpha: .3, time: .2, transition: "easeInCubic" } );
+			}
 		}
 		
 		// GETTERS & SETTERS

@@ -6,6 +6,7 @@
  */
 package table 
 {
+	import caurina.transitions.Tweener;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.Event;
@@ -51,6 +52,8 @@ package table
 			zNo.addEventListener( MouseEvent.CLICK, onClick );
 			
 			this.visible = false;
+			this.y = 0;
+			this.alpha = .6;
 		}
 		
 		private function onClick(e:MouseEvent):void 
@@ -72,12 +75,15 @@ package table
 			
 			_state = state;
 			this.visible = true;
+			
+			Tweener.addTween( this, { y: ( 560 * .5 ) - ( this.height * .5 ), alpha: 1, time: .5, transition: "easeInOutQuad" } );
 		}
 		
 		public function hide():void
 		{
 			_state = "";
-			this.visible = false;
+			//this.visible = false;
+			Tweener.addTween( this, { y: 0, alpha: .6, time: .5, transition: "easeInOutQuad", onComplete: function():void { this.visible = false; } } );
 		}
 		
 		// GETTERS & SETTERS

@@ -44,6 +44,8 @@ package table
 		public var endMessage:MovieClip;
 		public var wallpaper:MovieClip;
 		public var frontItems:MovieClip;
+		public var zRightGrand:MovieClip;
+		public var zLeftGrand:MovieClip;
 		
 		private var aCompo:Array;
 		
@@ -74,6 +76,7 @@ package table
 			
 			Tweener.removeTweens( frontItems );
 			Tweener.removeTweens( wallpaper );
+			Tweener.removeTweens( endMessage );
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -117,7 +120,7 @@ package table
 			for ( var i:int; i < 4; i++ ) aCompo.push( null );
 			
 			guestsList.init();
-			guestsList.addEventListener( Event.ACTIVATE, onGuestClick );
+			guestsList.addEventListener( GuestsList.SHOW, onGuestClick );
 			
 			setButtonsStatus();
 			
@@ -183,7 +186,6 @@ package table
 				endMessage.succes.fondSaisie.gotoAndStop( 1 );
 				
 				var s:String = endMessage.succes.saisie.text;
-				trace( "s : " + s );
 				
 				var variables:URLVariables = new URLVariables();
 				variables.mail = s;
@@ -191,8 +193,6 @@ package table
 				var request:URLRequest = new URLRequest( "inc/ajoutmail.php" );
 				request.method = URLRequestMethod.POST;
 				request.data = variables;
-				trace( "request.data : " + request.data );
-				trace( "variables : " + variables );
 				
 				try
 				{
@@ -251,23 +251,27 @@ package table
 			
 			if ( scrollVal == 0 )
 			{
-				zLeft.alpha = .5;
+				//zLeft.alpha = .5;
+				zLeftGrand.gotoAndStop( 1 );
 				zLeft.enabled = false;
 			}
 			else
 			{
-				zLeft.alpha = 1;
+				//zLeft.alpha = 1;
+				zLeftGrand.gotoAndStop( 2 );
 				zLeft.enabled = true;
 			}
 			
 			if ( scrollVal == idxMax )
 			{
-				zRight.alpha = .5;
+				//zRight.alpha = .5;
+				zRightGrand.gotoAndStop( 1 );
 				zRight.enabled = false;
 			}			
 			else
 			{
-				zRight.alpha = 1;
+				//zRight.alpha = 1;
+				zRightGrand.gotoAndStop( 2 );
 				zRight.enabled = true;
 			}
 		}
@@ -380,6 +384,7 @@ package table
 			
 			endMessage.texte.text = s;
 			endMessage.visible = true;
+			Tweener.addTween( endMessage, { y: 0, time: .5, transition: "easeInOutQuad" } );
 			
 			endMessage.zRetour.addEventListener( MouseEvent.CLICK, onRetourClick );
 		}

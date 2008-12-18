@@ -56,6 +56,8 @@ package table
 			library.removeEventListener( ItemsLibrary.ITEM_LOADED, onItemLoaded );
 			library = null;
 			
+			Tweener.removeTweens( this );
+			
 			var n:int = list.length;
 			for ( var i:int; i < n; i++ ) Tweener.removeTweens( GuestInfos( list[ i ] ) );
 		}
@@ -277,14 +279,17 @@ package table
 		
 		public function show():void
 		{
+			this.y = 0;
+			this.alpha = .6;
 			zValid.enabled = true;
 			visible = true;
+			Tweener.addTween( this, { y: 66, alpha: 1, time: .3, transition: "easeInOutQuad" } );
 		}
 		
 		public function hide():void
 		{
 			zValid.enabled = false;
-			visible = false;
+			Tweener.addTween( this, { y: 0, alpha: .6, time: .3, transition: "easeInOutQuad", onComplete: function():void { visible = false; } } );
 		}
 		
 		public function desactivate( idx:int ):void

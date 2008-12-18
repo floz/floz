@@ -7,6 +7,7 @@
 package table 
 {
 	import caurina.transitions.Tweener;
+	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -14,7 +15,7 @@ package table
 	
 	public class GuestsList extends MovieClip
 	{
-		public static const CLICK:String = "click";
+		public static const SHOW:String = "show";
 		
 		public var cnt:MovieClip;
 		
@@ -64,7 +65,7 @@ package table
 		private function onClick(e:MouseEvent):void 
 		{
 			currentGuest = Guest( e.currentTarget );
-			dispatchEvent( new Event( Event.ACTIVATE ) );
+			dispatchEvent( new Event( GuestsList.SHOW ) );
 		}
 		
 		// PRIVATE
@@ -141,7 +142,7 @@ package table
 			return false;
 		}
 		
-		public function select( m:MovieClip ):void
+		public function select( m:Bitmap ):void
 		{
 			currentGuest.choose( m );
 		}

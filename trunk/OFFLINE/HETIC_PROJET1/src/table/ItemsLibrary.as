@@ -41,9 +41,9 @@ package table
 		
 		private function onLoadComplete(e:Event):void 
 		{
-			var m:MovieClip
-			if ( e.currentTarget.content is MovieClip ) m = MovieClip ( e.currentTarget.content );
-			else m = new MovieClip();
+			var m:Bitmap;
+			if ( e.currentTarget.content is Bitmap ) m = Bitmap( e.currentTarget.content )//MovieClip ( e.currentTarget.content );
+			else m = new Bitmap( new BitmapData( 0, 0 ) );//m = new MovieClip();
 			
 			aItemsLoaded.push( m );
 			
@@ -117,7 +117,7 @@ package table
 		
 		// GETTERS & SETTERS
 		
-		public function getLastItem():MovieClip
+		public function getLastItem():Bitmap
 		{
 			return aItemsLoaded[ loadedCount - 1 ];
 		}

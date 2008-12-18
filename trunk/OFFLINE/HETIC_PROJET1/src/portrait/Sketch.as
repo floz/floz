@@ -342,6 +342,7 @@ package portrait
 			empty = true;
 			
 			setOutState();
+			document.setValidStatus( false )
 		}
 		
 		public function cleanItemSelected():void
