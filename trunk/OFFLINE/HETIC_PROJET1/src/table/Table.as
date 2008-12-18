@@ -378,7 +378,7 @@ package table
 				{
 					case CharType.CULTIVE: s = "On s'ennuie dans votre dîner ! Les livres c'est bien, mais là c'est le réveillon de Noël, il faut s'amuser ! Mettez-y un peu de piment la prochaine fois."; break;
 					case CharType.DECALE: s = "A force de vouloir être différent des autres, on finit par ne plus se comprendre du tout. Faites preuve de plus de cohérence dans le choix de vos invités la prochaine fois."; break;
-					case CharType.HUMOURGRAS: s = "L'humour noir ou lourd, c'est marrant deux minutes, mais quand toute la table s'y met... On devient vite mauvais public, nan ? Conviez des invités un peu pus fins la prochaine fois."; break;
+					case CharType.HUMOURGRAS: s = "L'humour noir ou lourd, c'est marrant deux minutes, mais quand toute la table s'y met... On devient vite mauvais public, nan ? Conviez des invités un peu plus fins la prochaine fois."; break;
 					case CharType.INCLASSABLE: s = "C'est triste mais certaines personnes ne sont pas intéressantes ou en tout cas ce ne sont pas elles qui animeront les débats du dîner. Pensez à ceux qui pourraient lancer les débats la prochaine fois."; break;
 				}
 			}

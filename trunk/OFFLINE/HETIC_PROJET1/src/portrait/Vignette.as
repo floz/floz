@@ -55,7 +55,7 @@ package portrait
 			b2.bitmapData.draw( b, new Matrix( 1, 0, 0, 1, 0, small ? 5 : 10 ) );
 			var separation:BitmapData = new Separation();
 			b2.bitmapData.draw( separation, new Matrix( 1, 0, 0, 1, 12 ) );
-			b2.bitmapData.draw( separation, new Matrix( 1, 0, 0, 1, 12, b.height - separation.height ) );			
+			//b2.bitmapData.draw( separation, new Matrix( 1, 0, 0, 1, 12, b.height - separation.height ) );			
 			addChild( b2 );
 			
 			z.width = b.width;
