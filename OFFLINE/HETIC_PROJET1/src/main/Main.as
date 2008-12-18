@@ -117,7 +117,7 @@ package main
 			{
 				case top.zValid: top.texte.text = ""; break;
 				case bottom.zLogo: loadURL( "http://www.diaphana.fr/index.php" ); break;
-				case bottom.zLink: loadURL( "http://www.antoineetsondinerdenoel-lefilm.com" ); break;
+				case bottom.zLink: loadURL( "http://www.ledinerdesillustres-lefilm.com" ); break;
 			}
 		}
 		
@@ -183,6 +183,9 @@ package main
 		public function getX():Number { return cnt.x };
 		public function getY():Number { return cnt.y };
 		
+		public function get path_swf():String { return loaderInfo.parameters["path_flv"] || ""; }
+		public function get path_xml():String { return loaderInfo.parameters["path_xml"] || "xml/"; }
+		public function get path_php():String { return loaderInfo.parameters["path_php"] || "php/"; }
 	}
 	
 }
