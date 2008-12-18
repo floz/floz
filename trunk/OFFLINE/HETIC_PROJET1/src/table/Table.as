@@ -8,6 +8,7 @@ package table
 {
 	import accueil.Accueil;
 	import caurina.transitions.Tweener;
+	import fl.motion.Motion;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -375,16 +376,16 @@ package table
 				
 				switch ( type )
 				{
-					case CharType.CULTIVE: s = "Apparemment, vos invités sont trop cultivés pour... Vous. Peut être auriez du faire plus attentifs lors de vos invitations ?"; break;
-					case CharType.DECALE: s = "On ne peut dire qu'une chose, c'est que l'humour baigne à cette table. A tel point que vous aussi, vous êtes marrants."; break;
-					case CharType.HUMOURGRAS: s = "L'humour noir ou lourd, c'est marrant deux minutes, mais quand toute la table s'y met... On devient vite mauvais public, non ?"; break;
-					case CharType.INCLASSABLE: s = "Bravo, vous avez réussi à réunir du bon monde pour le prochain cirque de Zavatta"; break;
+					case CharType.CULTIVE: s = "On s'ennuie dans votre dîner ! Les livres c'est bien, mais là c'est le réveillon de Noël, il faut s'amuser ! Mettez-y un peu de piment la prochaine fois."; break;
+					case CharType.DECALE: s = "A force de vouloir être différent des autres, on finit par ne plus se comprendre du tout. Faites preuve de plus de cohérence dans le choix de vos invités la prochaine fois."; break;
+					case CharType.HUMOURGRAS: s = "L'humour noir ou lourd, c'est marrant deux minutes, mais quand toute la table s'y met... On devient vite mauvais public, nan ? Conviez des invités un peu pus fins la prochaine fois."; break;
+					case CharType.INCLASSABLE: s = "C'est triste mais certaines personnes ne sont pas intéressantes ou en tout cas ce ne sont pas elles qui animeront les débats du dîner. Pensez à ceux qui pourraient lancer les débats la prochaine fois."; break;
 				}
 			}
 			
 			endMessage.texte.text = s;
 			endMessage.visible = true;
-			Tweener.addTween( endMessage, { y: 0, time: .5, transition: "easeInOutQuad" } );
+			Tweener.addTween( endMessage, { y: 40, time: .5, transition: "easeInOutQuad" } );
 			
 			endMessage.zRetour.addEventListener( MouseEvent.CLICK, onRetourClick );
 		}

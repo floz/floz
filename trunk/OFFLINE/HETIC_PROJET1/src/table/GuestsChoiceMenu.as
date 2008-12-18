@@ -22,6 +22,8 @@ package table
 		public var zRight:SimpleButton;
 		public var zValid:SimpleButton;
 		public var cnt:MovieClip;
+		public var zLeftOn:MovieClip;
+		public var zRightOn:MovieClip;
 		
 		private var document:Table;
 		private var desactivateList:Array;
@@ -86,14 +88,14 @@ package table
 				case zLeft:
 				{
 					if ( scrollVal - 1 >= 0 ) scrollVal--;
-					else scrollVal = idxMax - 1; // else return;
+					else return//scrollVal = idxMax - 1; // else return;
 					
 					break;
 				}
 				case zRight: 
 				{
 					if ( scrollVal + 1 < idxMax ) scrollVal++;
-					else scrollVal = 0; // else return;
+					else return//scrollVal = 0; // else return;
 					
 					break;
 				}
@@ -172,23 +174,27 @@ package table
 			if ( scrollVal == 0 )
 			{
 				//zLeft.alpha = .5;
-				//zLeft.enabled = false;
+				zLeftOn.visible = false;
+				zLeft.enabled = false;
 			}
 			else
 			{
 				//zLeft.alpha = 1;
-				//zLeft.enabled = true;
+				zLeftOn.visible = true;
+				zLeft.enabled = true;
 			}
 			
 			if ( scrollVal == idxMax - 1 )
 			{
 				//zRight.alpha = .5;
-				//zRight.enabled = false;
+				zRightOn.visible = false;
+				zRight.enabled = false;
 			}			
 			else
 			{
 				//zRight.alpha = 1;
-				//zRight.enabled = true;
+				zRightOn.visible = true,
+				zRight.enabled = true;
 			}
 			
 			if ( checkDispo() )

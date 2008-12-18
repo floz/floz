@@ -86,6 +86,7 @@ package main
 		private function onAccueilComplete(e:Event):void 
 		{
 			loading.stop();
+			top.visible = true;
 			
 			acc = swfLoader.getLastItem() as Accueil;
 			swfLoader.reset();
@@ -123,6 +124,7 @@ package main
 		private function onPortraitComplete(e:Event):void 
 		{
 			loading.stop();
+			top.visible = false;
 			
 			por = swfLoader.getLastItem() as Portrait;
 			swfLoader.reset();
