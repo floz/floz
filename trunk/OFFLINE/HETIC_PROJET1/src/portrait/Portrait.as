@@ -8,6 +8,7 @@ package portrait
 {
 	import caurina.transitions.Tweener;
 	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.Event;
@@ -62,7 +63,9 @@ package portrait
 			zValid.alpha = .5
 			zValid.enabled = false;
 			
-			datas = new Datas( "xml/portrait.xml" );
+			var document:Main = getAncestor( this, Main ) as Main;
+			
+			datas = new Datas( document ? document.path_xml + "portrait.xml" : "xml/portrait.xml" );
 			datas.addEventListener( Event.COMPLETE, onDatasComplete );
 			datas.load();
 		}
@@ -165,6 +168,19 @@ package portrait
 				zValid.useHandCursor = false;
 				Tweener.addTween( zValid, { alpha: .3, time: .2, transition: "easeInCubic" } );
 			}
+		}
+		
+		public function getAncestor( child:DisplayObject, type:* ):*
+		{
+			var c:DisplayObject = child;
+			
+			while ( c.parent )
+			{
+				if ( c.parent is type ) return c.parent;
+				c = c.parent;
+			}
+			
+			return null;
 		}
 		
 		// GETTERS & SETTERS

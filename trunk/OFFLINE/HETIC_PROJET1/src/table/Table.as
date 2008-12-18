@@ -96,7 +96,7 @@ package table
 			
 			UBit.strechIn( new Nappe( 0, 0 ), front, front.width, front.height );
 			
-			datas = new Datas( "xml/invites.xml" );
+			datas = new Datas( document ? document.path_xml + "invites.xml" : "xml/invites.xml" );
 			datas.addEventListener( Event.COMPLETE, onLoadComplete );
 			datas.load();
 		}
@@ -191,7 +191,7 @@ package table
 				var variables:URLVariables = new URLVariables();
 				variables.mail = s;
 				
-				var request:URLRequest = new URLRequest( "inc/ajoutmail.php" );
+				var request:URLRequest = new URLRequest( document ? document.path_php + "ajoutmail.php" : "inc/ajoutmail.php" );
 				request.method = URLRequestMethod.POST;
 				request.data = variables;
 				
