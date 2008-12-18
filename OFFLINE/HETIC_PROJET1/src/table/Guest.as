@@ -50,7 +50,7 @@ package table
 		
 		// PUBLIC
 		
-		public function choose( m:MovieClip ):void
+		public function choose( m:Bitmap ):void
 		{
 			while ( cnt.numChildren ) cnt.removeChildAt( 0 );
 			

@@ -19,6 +19,8 @@ package portrait
 		public var zUp:SimpleButton;
 		public var zDown:SimpleButton;
 		public var cnt:MovieClip;
+		public var mcUp:MovieClip;
+		public var mcDown:MovieClip;
 		
 		private var document:Portrait;
 		
@@ -135,27 +137,31 @@ package portrait
 			
 			if ( scrollVal == 0 )
 			{
-				zUp.alpha = .5;
+				//zUp.alpha = .5;
 				zUp.enabled = false;
+				mcUp.gotoAndStop( 1 );
 				//zUp.useHandCursor = false;
 			}
 			else
 			{
-				zUp.alpha = 1;
+				//zUp.alpha = 1;
 				zUp.enabled = true;
+				mcUp.gotoAndStop( 2 );
 				//zUp.useHandCursor = true;
 			}
 			
 			if ( scrollVal == vMax )
 			{
-				zDown.alpha = .5;
+				//zDown.alpha = .5;
 				zDown.enabled = false;
+				mcDown.gotoAndStop( 1 );
 				//zUp.useHandCursor = false;
 			}			
 			else
 			{
-				zDown.alpha = 1;
+				//zDown.alpha = 1;
 				zDown.enabled = true;
+				mcDown.gotoAndStop( 2 );
 				//zUp.useHandCursor = true;
 			}
 		}

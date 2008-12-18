@@ -24,7 +24,7 @@ package table
 		
 		private var loading:Loading;
 		
-		private var guest:MovieClip;
+		private var guest:Bitmap;
 		private var _loaded:Boolean;
 		
 		public function GuestInfos() 
@@ -56,12 +56,11 @@ package table
 		
 		// PUBLIC
 		
-		public function display( m:MovieClip ):void
+		public function display( m:Bitmap ):void
 		{			
 			this.guest = m;
 			
-			var bmd:BitmapData = new BitmapData( m.width, m.height, true, 0x000000 );
-			bmd.draw( m );
+			var bmd:BitmapData = m.bitmapData;
 			
 			bmd = UBit.resize( bmd, 261, 297, true );
 			var b:Bitmap = new Bitmap( bmd );
@@ -77,7 +76,7 @@ package table
 		
 		// GETTERS & SETTERS
 		
-		public function getGuest():MovieClip
+		public function getGuest():Bitmap
 		{
 			return this.guest;
 		}
