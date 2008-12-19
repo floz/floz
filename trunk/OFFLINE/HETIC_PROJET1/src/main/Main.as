@@ -13,6 +13,7 @@ package main
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;
 	import flash.net.navigateToURL;
 	import flash.net.URLRequest;
@@ -60,6 +61,7 @@ package main
 			request = new URLRequest();
 			
 			top.zValid.addEventListener( MouseEvent.CLICK, onClick );
+			top.texte.addEventListener( FocusEvent.FOCUS_IN, onFocus );
 			bottom.zLogo.addEventListener( MouseEvent.CLICK, onClick );
 			bottom.zLink.addEventListener( MouseEvent.CLICK, onClick );
 			
@@ -86,7 +88,7 @@ package main
 		private function onAccueilComplete(e:Event):void 
 		{
 			loading.stop();
-			top.visible = true;
+			top.visible = false;
 			
 			acc = swfLoader.getLastItem() as Accueil;
 			swfLoader.reset();
@@ -115,10 +117,15 @@ package main
 		{
 			switch( e.currentTarget )
 			{
-				case top.zValid: top.texte.text = ""; break;
+				case top.zValid: sendMail(); top.texte.text = ""; break;
 				case bottom.zLogo: loadURL( "http://www.diaphana.fr/index.php" ); break;
 				case bottom.zLink: loadURL( "http://www.ledinerdesillustres-lefilm.com" ); break;
 			}
+		}
+		
+		private function onFocus(e:FocusEvent):void
+		{
+			if ( top.texte.text == "Faire connaître le site à un ami" ) top.texte.text = "";
 		}
 		
 		private function onPortraitComplete(e:Event):void 
@@ -171,6 +178,12 @@ package main
 			
 			swfLoader.add( url, "temp" );
 			swfLoader.load();
+		}
+		
+		private function sendMail():void
+		{
+			trace( "Main.sendMail" );
+			
 		}
 		
 		// PUBLIC
