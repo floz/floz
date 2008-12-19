@@ -344,10 +344,11 @@ package table
 				s = "Bravo ! Votre table est... Parfaite ! Et votre diner l'est aussi, du coup. \n Peut être viendrez vous voir 'Le diner des illustres' en avant première ?";
 				endMessage.fond.gotoAndPlay( 2 );
 				endMessage.img.gotoAndPlay( 2 );
-				endMessage.succes.fondSaisie.gotoAndStop( 2 );
+				endMessage.succes.fondSaisie.gotoAndStop( 1 );
 				endMessage.succes.visible = true;
 				endMessage.succes.saisie.text = "Saisissez votre mail";
 				endMessage.succes.saisie.addEventListener( FocusEvent.FOCUS_OUT, onFocusOut );
+				endMessage.succes.saisie.addEventListener( FocusEvent.FOCUS_IN, onFocusIn );
 			}
 			else
 			{			
@@ -388,6 +389,11 @@ package table
 			Tweener.addTween( endMessage, { y: 40, time: .5, transition: "easeInOutQuad" } );
 			
 			endMessage.zRetour.addEventListener( MouseEvent.CLICK, onRetourClick );
+		}
+		
+		private function onFocusIn(e:FocusEvent):void 
+		{
+			if ( endMessage.succes.saisie.text == "Saisissez votre mail" ) endMessage.succes.saisie.text = "";
 		}
 		
 		private function getAncestor( child:DisplayObject, type:* ):*
