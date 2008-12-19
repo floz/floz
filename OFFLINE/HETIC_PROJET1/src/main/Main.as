@@ -60,6 +60,8 @@ package main
 			
 			request = new URLRequest();
 			
+			//top.visible = false;
+			
 			top.zValid.addEventListener( MouseEvent.CLICK, onClick );
 			top.texte.addEventListener( FocusEvent.FOCUS_IN, onFocus );
 			bottom.zLogo.addEventListener( MouseEvent.CLICK, onClick );
@@ -88,7 +90,9 @@ package main
 		private function onAccueilComplete(e:Event):void 
 		{
 			loading.stop();
-			top.visible = false;
+			top.visible = true;
+			top.texte.text = "Faire connaître le site à un ami";
+			top.fondImage.gotoAndStop( 1 );
 			
 			acc = swfLoader.getLastItem() as Accueil;
 			swfLoader.reset();
@@ -117,7 +121,7 @@ package main
 		{
 			switch( e.currentTarget )
 			{
-				case top.zValid: sendMail(); top.texte.text = ""; break;
+				case top.zValid: sendMail(); break;
 				case bottom.zLogo: loadURL( "http://www.diaphana.fr/index.php" ); break;
 				case bottom.zLink: loadURL( "http://www.ledinerdesillustres-lefilm.com" ); break;
 			}
@@ -182,8 +186,29 @@ package main
 		
 		private function sendMail():void
 		{
-			trace( "Main.sendMail" );
+			if ( isTextIsMail() ) 
+			{
+				top.texte.text = "Faire connaître le site à un ami";
+				top.fondImage.gotoAndStop( 1 );
+			}
+			else
+			{
+				top.fondImage.gotoAndStop( 2 );
+			}			
+		}
+		
+		private function isTextIsMail():Boolean
+		{
+			var s:String = top.texte.text;
+			if ( !s || s == " " ) return false;
 			
+			var i:int = s.search( /[@]/g );
+			if ( i < 0 ) return false;
+			
+			i = s.search( /[.]/g );
+			if ( i < 0 ) return false;
+			
+			return true;
 		}
 		
 		// PUBLIC
