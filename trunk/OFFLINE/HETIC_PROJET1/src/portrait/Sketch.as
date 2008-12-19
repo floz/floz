@@ -14,9 +14,11 @@ package portrait
 	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import fr.minuit4.utils.UBit;
+	import main.SWFLoader;
 	
 	public class Sketch extends MovieClip
 	{
@@ -357,10 +359,17 @@ package portrait
 		{
 			setOutState();
 			
-			var bd:BitmapData = new BitmapData( cnt.width, cnt.height, true, 0xff00ff );
-			bd.draw( cnt );
+			var baseY:Number = 9999;
+			var n:int = cnt.numChildren;
+			for ( var i:int; i < n; i++ ) 
+			{
+				if ( cnt.getChildAt( i ).y < baseY && MovieClip( cnt.getChildAt( i ) ).numChildren ) baseY = cnt.getChildAt( i ).y;
+			}
 			
-			bitmap = new Bitmap( bd );
+			var bd:BitmapData = new BitmapData( cnt.width, cnt.height, true, 0xff00ff );
+			bd.draw( cnt, new Matrix( 1, 0, 0, 1, 0, - baseY + 20 ) );
+			
+			bitmap = new Bitmap( bd, "auto", true );
 		}
 		
 		public function selectItem( bd:BitmapData ):void
