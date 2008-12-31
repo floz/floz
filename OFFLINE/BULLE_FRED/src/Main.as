@@ -33,16 +33,28 @@
 			
 			b.addEventListener( MouseEvent.MOUSE_OVER, onOver );
 			b.addEventListener( MouseEvent.MOUSE_OUT, onOut );
+			
+			b = new Bulle();
+			b.x = stage.stageWidth * .5 + b.width;
+			b.y = stage.stageHeight * .5 + b.height;
+			addChild( b );
+			
+			b.appear();
+			
+			b.addEventListener( MouseEvent.MOUSE_OVER, onOver );
+			b.addEventListener( MouseEvent.MOUSE_OUT, onOut );
 		}
 		
 		private function onOver(e:MouseEvent):void 
 		{
-			b.enlarge();
+			Bulle( e.currentTarget ).enlarge();
+			//b.bubble();
 		}
 		
 		private function onOut(e:MouseEvent):void 
 		{
-			b.normalize();
+			Bulle( e.currentTarget ).normalize();
+			//b.killBubbles();
 		}
 		
 	}
