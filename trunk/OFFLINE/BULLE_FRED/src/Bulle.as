@@ -15,9 +15,9 @@ package
 	public class Bulle extends Sprite
 	{
 		private var size:Number;
-		private var shape:Sprite;		
-		private var particles:Sprite;		
-		private var aParticles:Array;
+		private var shape:Sprite;
+		private var normalSize:Number;
+		private var enlargedSize:Number;
 		
 		private var ready:Boolean;
 		private var running:Boolean;
@@ -26,9 +26,6 @@ package
 		{
 			this.size = size;
 			
-			particles = new Sprite();
-			addChild( particles );
-			
 			shape = new Sprite();
 			var g:Graphics = shape.graphics;
 			g.beginFill( 0x000000 );
@@ -36,7 +33,12 @@ package
 			g.endFill();
 			addChild( shape );
 			
-			//addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
+			normalSize = this.width;
+			enlargedSize = this.width * 1.2;
+			
+			this.buttonMode = true;
+			
+			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
 		// EVENTS
@@ -44,10 +46,6 @@ package
 		private function onRemovedFromStage(e:Event):void 
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
-			
-			var n:int = aParticles.length;
-			for ( var i:int; i < n; i++ ) aParticles[ i ] = null;
-			aParticles = null;
 			
 			Tweener.removeTweens( shape );
 		}
@@ -59,30 +57,6 @@ package
 			
 			shape.scaleX =
 			shape.scaleY = 0;
-		}
-		
-		private function onFrame(e:Event):void 
-		{
-			var p:Particle;
-			
-			var n:int = aParticles.length;
-			for ( var i:int; i < n; i++ )
-				Particle( aParticles[ i ] ).move();
-			
-			p = new Particle( n, randRange( 8, 15 ) );
-			p.xVel = randRange( -8, 8 );
-			p.yVel = randRange( -8, 8 );
-			particles.addChild( p );
-			
-			aParticles.push( p );
-			
-			if ( ( n + 1 ) >= 30 ) 
-			{
-				removeEventListener( Event.ENTER_FRAME, onFrame );
-				
-				for ( i = 0; i < ( n + 1 ); i++ )
-					Particle( aParticles[ i ] ).destroy();
-			}
 		}
 		
 		// PRIVATE
@@ -111,35 +85,12 @@ package
 		
 		public function enlarge():void
 		{
-			Tweener.addTween( shape, { scaleX: 1.2, scaleY: 1.2, time: .3, transition: "easeInOutQuad", onComplete: bubble() } );
+			Tweener.addTween( shape, { width: enlargedSize, height: enlargedSize, time: .3, transition: "easeInOutExpo" } );
 		}
 		
 		public function normalize():void
 		{
-			Tweener.addTween( shape, { scaleX: 1, scaleY: 1, time: .3, transition: "easeInOutQuad", onComplete: killBubbles() } );
-		}
-		
-		public function bubble():void
-		{
-			if ( !ready || running ) return;
-			running = true;
-			
-			aParticles = [];			
-			//while ( particles.numChildren ) particles.removeChildAt( 0 );
-			
-			addEventListener( Event.ENTER_FRAME, onFrame );
-		}
-		
-		public function killBubbles():void
-		{
-			removeEventListener( Event.ENTER_FRAME, onFrame );
-			
-			var n:int = aParticles.length;
-			for ( var i:int; i < n; i++ ) Particle( aParticles[ i ] ).destroy();
-			
-			aParticles = null;
-			
-			running = false;
+			Tweener.addTween( shape, { width: normalSize, height: normalSize, time: .3, transition: "easeInOutBack" } );
 		}
 	}
 	
