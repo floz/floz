@@ -13,7 +13,6 @@ package
 	public class Particle extends Shape
 	{
 		private var size:Number;
-		private var index:int;
 		private var color:uint;
 		
 		public var xVel:Number = 0;
@@ -24,10 +23,11 @@ package
 		
 		private var enabled:Boolean;
 		
-		public function Particle( index:int, size:Number = 5, color:uint = 0x000000 ) 
+		public function Particle( x:Number, y:Number, size:Number = 5, color:uint = 0x000000 ) 
 		{
+			this.x = x;
+			this.y = y;
 			this.size = size;
-			this.index = index;
 			this.color = color;
 			
 			var g:Graphics = this.graphics;
@@ -47,8 +47,6 @@ package
 				removeEventListener( Event.ENTER_FRAME, onFrame );				
 				if ( this.parent ) this.parent.removeChild( this );
 			}
-			
-			//this.alpha -= fade * 3;
 			
 			this.x += xVel;
 			this.y += yVel;
@@ -77,9 +75,7 @@ package
 			this.scaleX =
 			this.scaleY -= shrink;
 			
-			//this.alpha -= fade;
-			
-			if ( this.alpha < 0 || this.scaleX < 0 ) enabled = false;
+			if ( this.scaleX < 0 ) enabled = false;
 		}
 		
 		public function destroy():void
