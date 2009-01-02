@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<path img="img/" flv="flv/" />
+	<pub>
+		<vignette img="01.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+		<vignette img="02.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+		<vignette img="03.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+		<vignette img="04.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+		<vignette img="05.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+	</pub>
+	<clip>
+		<vignette img="01.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+		<vignette img="02.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+		<vignette img="03.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+		<vignette img="04.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+		<vignette img="05.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+	</clip>
+	<short>
+		<vignette img="01.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+		<vignette img="02.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+		<vignette img="03.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+		<vignette img="04.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+		<vignette img="05.jpg" flv="film.flv" name="Nom Film" director="directeur" sound="sound" />
+	</short>
+</data>
