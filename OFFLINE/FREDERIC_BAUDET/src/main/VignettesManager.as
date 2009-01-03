@@ -12,10 +12,15 @@ package main
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	public class VignettesManager extends Sprite
 	{
 		private var downloader:Downloader;
+		
+		private var infosVignettes:Array;
+		
+		private var currentVignette:Vignette;
 		
 		public function VignettesManager() 
 		{
@@ -34,34 +39,78 @@ package main
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
+			infosVignettes = [];
+			
+			addEventListener( MouseEvent.ROLL_OVER, onOver );
+			addEventListener( MouseEvent.ROLL_OUT, onOut );
+			addEventListener( MouseEvent.CLICK, onClick );
+			
 			downloader = new Downloader();
 			downloader.addEventListener( Downloader.ITEM_LOADED, onItemLoaded );
 		}
 		
+		private function onOver(e:MouseEvent):void 
+		{
+			currentVignette = Vignette( e.target );
+			currentVignette.enlarge();
+		}
+		
+		private function onOut(e:MouseEvent):void 
+		{
+			currentVignette.normalize();
+		}
+		
+		private function onClick(e:MouseEvent):void 
+		{
+			
+		}
+		
 		private function onItemLoaded(e:Event):void 
 		{
-			Debug.bitmap( new Bitmap( downloader.getLastItem() ) );
+			var o:Object = infosVignettes[ downloader.currentCount - 1 ];
+			var v:Vignette = new Vignette( downloader.getLastItem(), o.flv, o.title, o.director, o.sound, randRange( 30, 60 ) );
+			v.x = randRange( 50, 930 );
+			v.y = randRange( 50, 510 );
+			addChild( v );
+			
+			v.init();
 			
 			downloader.loadNext();
 		}
 		
 		// PRIVATE
 		
+		private function randRange( min:Number, max:Number, plus:Number = 0 ):Number
+		{
+			var n:Number = ( Math.random() * ( max - min ) + min )
+			return  n = ( n < 0 ) ? n - plus : n + plus;
+		}
+		
 		// PUBLIC
 		
 		public function load( infos:Array ):void
 		{
-			var a:Array;
+			var a:Array = [];
+			infosVignettes = infos;
+			
+			downloader.clear();
+			clear();
 			
 			var n:int = infos.length;
 			for ( var i:int; i < n; i++ ) a.push( infos[ i ].img );
 			
-			trace( a );
+			downloader.addURLs( a );
+			downloader.loadNext();
 		}
 		
-		public function clean():void
+		public function clear():void
 		{
-			while ( this.numChildren ) removeChildAt( 0 );
+			var a:Array = [];
+			
+			var i:int;
+			var n:int = numChildren;
+			for ( i; i < n; i++ ) a.push( getChildAt( i ) );
+			for ( i = 0; i < n; i++ ) a[ i ].destroy();			
 		}
 		
 	}

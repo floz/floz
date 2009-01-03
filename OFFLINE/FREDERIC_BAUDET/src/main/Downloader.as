@@ -62,13 +62,26 @@ package main
 		
 		public function addURLs( urls:Array ):void
 		{
+			aUrls = [];
+			
 			var a:Array = urls;
-			while ( a.length ) aUrls.push( a.shift );
+			while ( a.length ) aUrls.push( a.shift() );
+		}
+		
+		public function clear():void
+		{
+			var n:int = aDownloaded.length;
+			for ( var i:int; i < n; i++ )
+			{
+				aDownloaded[ i ].dispose;
+				aDownloaded[ i ] = null;
+			}
+			aDownloaded = [];
 		}
 		
 		public function load():void
-		{
-			request = aUrls[ currentCount ];
+		{			
+			request.url = aUrls[ currentCount ];
 			loader.load( request );
 		}
 		
