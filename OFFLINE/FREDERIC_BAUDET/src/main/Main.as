@@ -35,7 +35,7 @@ package main
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
 			vignettesManager = new VignettesManager();
-			addChild( vignettesManager );
+			cnt.addChild( vignettesManager );
 			
 			menu.addEventListener( Menu.RUBRIQUE_CHANGE, onRubriqueChange );
 			
