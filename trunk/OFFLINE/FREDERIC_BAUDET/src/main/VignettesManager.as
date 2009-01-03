@@ -9,18 +9,21 @@ package main
 	import com.carlcalderon.arthropod.Debug;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	public class VignettesManager extends Sprite
 	{
+		private var bubbles:Bubbles;
+		private var cnt:Sprite;
 		private var downloader:Downloader;
 		
 		private var infosVignettes:Array;
 		
 		private var currentVignette:Vignette;
+		
+		// Default var
 		
 		public function VignettesManager() 
 		{
@@ -39,39 +42,46 @@ package main
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			infosVignettes = [];
+			bubbles = new Bubbles();
+			addChild( bubbles );
 			
-			addEventListener( MouseEvent.ROLL_OVER, onOver );
-			addEventListener( MouseEvent.ROLL_OUT, onOut );
-			addEventListener( MouseEvent.CLICK, onClick );
+			cnt = new Sprite();
+			cnt.addEventListener( Vignette.VIGNETTE_OVER, onVignetteOver );
+			cnt.addEventListener( Vignette.VIGNETTE_OUT, onVignetteOut );
+			addChild( cnt );
+			
+			infosVignettes = [];
 			
 			downloader = new Downloader();
 			downloader.addEventListener( Downloader.ITEM_LOADED, onItemLoaded );
 		}
 		
-		private function onOver(e:MouseEvent):void 
+		private function onVignetteOver(e:Event):void 
 		{
-			currentVignette = Vignette( e.target );
-			currentVignette.enlarge();
+			currentVignette = e.target as Vignette;
+			currentVignette.addEventListener( MouseEvent.MOUSE_MOVE, onMove );
+			bubbles.bubble( currentVignette.x, currentVignette.y );
 		}
 		
-		private function onOut(e:MouseEvent):void 
+		private function onMove(e:MouseEvent):void 
 		{
-			currentVignette.normalize();
+			bubbles.xVel = int( e.localX / 5 );
+			bubbles.yVel = int( e.localY / 5 );
 		}
 		
-		private function onClick(e:MouseEvent):void 
+		private function onVignetteOut(e:Event):void 
 		{
-			
+			currentVignette.removeEventListener( MouseEvent.MOUSE_MOVE, onMove );
+			bubbles.killBubbles();			
 		}
 		
 		private function onItemLoaded(e:Event):void 
 		{
 			var o:Object = infosVignettes[ downloader.currentCount - 1 ];
-			var v:Vignette = new Vignette( downloader.getLastItem(), o.flv, o.title, o.director, o.sound, randRange( 30, 60 ) );
-			v.x = randRange( 50, 930 );
-			v.y = randRange( 50, 510 );
-			addChild( v );
+			var v:Vignette = new Vignette( downloader.getLastItem(), o.flv, o.title, o.director, o.sound, randRange( 40, 90 ) );
+			v.x = randRange( 120, 640 );
+			v.y = randRange( 120, 460 );
+			cnt.addChild( v );
 			
 			v.init();
 			
@@ -108,8 +118,8 @@ package main
 			var a:Array = [];
 			
 			var i:int;
-			var n:int = numChildren;
-			for ( i; i < n; i++ ) a.push( getChildAt( i ) );
+			var n:int = cnt.numChildren;
+			for ( i; i < n; i++ ) a.push( cnt.getChildAt( i ) );
 			for ( i = 0; i < n; i++ ) a[ i ].destroy();			
 		}
 		

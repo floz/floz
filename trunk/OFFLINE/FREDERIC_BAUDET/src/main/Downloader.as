@@ -98,7 +98,7 @@ package main
 		
 		public function getLastItem():BitmapData
 		{
-			return aDownloaded[ totalCount - 1 ];
+			return aDownloaded[ currentCount - 1 ];
 		}
 		
 		public function get currentCount():int
