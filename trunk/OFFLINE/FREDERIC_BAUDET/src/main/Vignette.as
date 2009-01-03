@@ -7,6 +7,7 @@
 package main 
 {
 	import caurina.transitions.Tweener;
+	import flash.display.BitmapData;
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
@@ -14,7 +15,13 @@ package main
 	
 	public class Vignette extends Sprite
 	{
+		private var preview:BitmapData;
+		private var flv:String;
+		private var title:String;
+		private var director:String;
+		private var sound:String;
 		private var size:Number;
+		//
 		private var shape:Sprite;
 		private var normalSize:Number;
 		private var enlargedSize:Number;
@@ -22,8 +29,11 @@ package main
 		private var ready:Boolean;
 		private var running:Boolean;
 		
-		public function Vignette( size:Number = 50 )
+		public function Vignette( preview:BitmapData, flv:String, title:String, director:String, sound:String, size:Number = 50 )
 		{
+			this.preview = preview;
+			this.flv = flv;
+			this.title = title;
 			this.size = size;
 			
 			shape = new Sprite();
@@ -73,14 +83,14 @@ package main
 		
 		// PUBLIC
 		
-		public function appear():void
+		public function init():void
 		{
-			Tweener.addTween( shape, { scaleX: 1, scaleY: 1, time: .35, transition: "easeInOutQuad", onComplete: setReadyOn() } );
+			Tweener.addTween( shape, { scaleX: 1, scaleY: 1, time: .35, transition: "easeInOutQuad", onComplete: setReadyOn } );
 		}
 		
 		public function destroy():void
 		{
-			Tweener.addTween( shape, { scaleX: 0, scaleY: 0, time: .35, transition: "easeInOutQuad", onComplete: setReadyOff() } );
+			Tweener.addTween( shape, { scaleX: 0, scaleY: 0, time: .35, transition: "easeInOutQuad", onComplete: setReadyOff } );
 		}
 		
 		public function enlarge():void

@@ -52,6 +52,8 @@ package main
 		private function onComplete(e:Event):void 
 		{
 			datas.removeEventListener( Event.COMPLETE, onComplete );
+			
+			onRubriqueChange( null );
 		}
 		
 		// PRIVATE

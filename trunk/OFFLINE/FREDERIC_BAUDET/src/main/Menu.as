@@ -41,7 +41,7 @@ package main
 			
 			activateRubrique( Const.PUB, zPub );
 			
-			this.addEventListener( MouseEvent.CLICK, onClick );
+			addEventListener( MouseEvent.CLICK, onClick );
 		}
 		
 		private function onClick(e:MouseEvent):void 
@@ -56,17 +56,21 @@ package main
 		
 		// PRIVATE
 		
-		private function desactivate( button:SimpleButton ):void
+		private function desactivate():void
 		{
-			// desactiver button
+			currentButton.enabled = true;
+			currentButton.useHandCursor = true;
 		}
 		
 		private function activateRubrique( rubriqueName:String, button:SimpleButton ):void
 		{
-			if ( currentButton ) desactivate( currentButton );
+			if ( button == currentButton ) return;
+			if ( currentButton ) desactivate();
 			
 			this.rubriqueName = rubriqueName;
-			currentButton = button;
+			currentButton = button;			
+			currentButton.enabled = false;
+			currentButton.useHandCursor = false;
 			
 			dispatchEvent( new Event( Menu.RUBRIQUE_CHANGE ) );
 		}
