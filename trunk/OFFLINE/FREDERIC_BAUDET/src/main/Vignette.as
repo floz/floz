@@ -10,6 +10,7 @@ package main
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Graphics;
+	import flash.display.PixelSnapping;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -47,7 +48,7 @@ package main
 			g.drawCircle( 0, 0, size );
 			g.endFill();
 			
-			var b:Bitmap = new Bitmap( UBit.resize( preview, size * 3, size * 3, true ), "auto", true );
+			var b:Bitmap = new Bitmap( UBit.resize( preview, size * 3, size * 3, true ), PixelSnapping.ALWAYS, true );
 			b.x =
 			b.y = - size - size * .5;
 			addChild( b );
