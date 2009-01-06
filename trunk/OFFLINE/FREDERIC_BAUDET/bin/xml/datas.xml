@@ -2,38 +2,30 @@
 <data>
 	<path img="img/" flv="flv/" />
 	<pub>
-		<vignette img="01.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="02.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="03.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="04.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="05.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="05.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="05.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="05.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="05.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="05.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="05.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/1000_enfants.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/aides.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/amnesty_international.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/canal_sat.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/e_plus.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/haagen_dazs.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/lee_cooper.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/lumina.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/mennen.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/mercedes.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/opel_corsa.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/opel_zafira.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/seat.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/trailblazer.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="commercial/volvic.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
 	</pub>
 	<clip>
-		<vignette img="01.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="01.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="01.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="02.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="03.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="04.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="05.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="clip/de_palmas.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="clip/kyo.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="clip/pleymo.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
 	</clip>
 	<short>
-		<vignette img="01.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="02.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="02.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="02.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="02.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="02.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="02.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="02.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="03.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="04.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
-		<vignette img="05.jpg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="short/easy_monay.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="short/old_dog.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
+		<vignette img="short/tad_pict.jpeg" flv="film.flv" title="Nom Film" director="directeur" sound="sound" />
 	</short>
 </data>

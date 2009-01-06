@@ -7,59 +7,41 @@
 package main 
 {
 	import caurina.transitions.Tweener;
+	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	
-	public class ToolTip extends Sprite 
+	public class Tooltip extends Sprite 
 	{
+		public var title:TextField;
+		public var director:TextField;
+		public var sound:TextField;
+		
 		private var vx:Number = 0;
 		private var vy:Number = 0;
 		private var xVel:Number = 2;
 		private var yVel:Number = 2;
 		private var friction:Number = .98;
 		
-		public function ToolTip( width:Number, height:Number, ellipse:Number = 10, color:uint = 0x000000 ) 
-		{
-			var g:Graphics = this.graphics;
-			g.beginFill( color );
-			g.drawRoundRect( 0, -height, width, height, ellipse, ellipse );
-			g.endFill();
-			
+		public function Tooltip() 
+		{			
+			this.mouseChildren = false;
+			this.mouseEnabled = false;
 			this.visible = false;
-			this.scaleX = 0;
 		}
 		
 		// EVENTS
 		
 		private function onMove(e:MouseEvent):void 
 		{
-			this.x = e.stageX + 10;
-			this.y = e.stageY - 10;
-			
-			//Tweener.addTween( this, { x: e.stageX + 10, y: e.stageY - 10, time: .1, transition: "linear"  } )
-			//
-			//vx = e.stageX + 10;
-			//vy = e.stageY - 10;
-			//
-			//xVel = ( e.stageX - this.x ) / 10;
-			//yVel = ( e.stageY - this.y ) / 10;
-			//
-			//if ( !hasEventListener( Event.ENTER_FRAME ) ) addEventListener( Event.ENTER_FRAME, onFrame );
+			this.x = e.stageX - 30;
+			this.y = e.stageY - this.height - 10;
 			
 			e.updateAfterEvent();
-		}
-		
-		private function onFrame(e:Event):void 
-		{
-			if ( this.x == vx && this.y == vy ) removeEventListener( Event.ENTER_FRAME, onFrame );
-			
-			if ( this.x >= vx + 1 || this.x <= vx - 1 ) this.x += xVel;
-			if ( this.y >= vy + 1 || this.y <= vy - 1 ) this.y += yVel;
-			
-			xVel *= friction;
-			yVel *= friction;
 		}
 		
 		// PRIVATE
@@ -69,26 +51,32 @@ package main
 			friction = 1;
 			
 			this.visible = false;
-			stage.removeEventListener( MouseEvent.MOUSE_MOVE, onMove );
+			parent.removeChild( this );
 		}
 		
 		// PUBLIC
 		
-		public function activate():void
+		public function activate( target:DisplayObject, title:String, director:String, sound:String ):void
 		{
-			this.x = stage.mouseX + 10;
-			this.y = stage.mouseY - 10;
+			this.x = target.x;
+			this.y = target.y - target.height / 4 + 10;
 			
-			stage.addEventListener( MouseEvent.MOUSE_MOVE, onMove );
+			this.title.text = title;
+			this.director.text = "Director : " + director;
+			this.sound.text = "Sound : " + sound;
+			
+			var tf:TextFormat = new TextFormat();
+			tf.bold = true;
+			this.title.setTextFormat( tf );
 			
 			this.visible = true;
-			Tweener.addTween( this, { alpha: 1, scaleX: 1, time: .4, transition: "easeInOutExpo" } );
+			Tweener.addTween( this, { alpha: 1, y: this.y + 10, time: .2, transition: "easeOutQuad" } );
 		}
 		
 		public function desactivate():void
 		{
 			friction = .95;
-			Tweener.addTween( this, { alpha: 0, scaleX: 0, time: .4, transition: "easeInOutExpo", onComplete: disable } );
+			Tweener.addTween( this, { alpha: 0, y: this.y - 10, time: .2, transition: "easeOutQuad", onComplete: disable } );
 		}
 		
 	}

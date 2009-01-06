@@ -6,6 +6,7 @@
  */
 package main 
 {
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	
@@ -13,9 +14,12 @@ package main
 	{
 		public var cnt:MovieClip;
 		public var menu:MovieClip;
+		public var background:MovieClip;
 		
 		private var vignettesManager:VignettesManager;
 		private var datas:Datas;
+		private var toolTip:Tooltip;
+		private var toolTips:Array;
 		
 		public function Main() 
 		{
@@ -35,13 +39,32 @@ package main
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
 			vignettesManager = new VignettesManager();
+			vignettesManager.addEventListener( Vignette.VIGNETTE_OVER, onVignetteOver );
+			vignettesManager.addEventListener( Vignette.VIGNETTE_OUT, onVignetteOut );
 			cnt.addChild( vignettesManager );
 			
 			menu.addEventListener( Menu.RUBRIQUE_CHANGE, onRubriqueChange );
 			
+			toolTips = [];
+			
 			datas = new Datas( "xml/" + "datas.xml" );
 			datas.addEventListener( Event.COMPLETE, onComplete );
 			datas.load();
+		}
+		
+		private function onVignetteOver(e:Event):void 
+		{
+			toolTip = new Tooltip();
+			addChild( toolTip );
+			
+			toolTips.push( toolTip );
+			
+			toolTip.activate( e.target as DisplayObject, Vignette( e.target ).getTitle(), Vignette( e.target ).getDirector(), Vignette( e.target ).getSound() );
+		}
+		
+		private function onVignetteOut(e:Event):void 
+		{
+			Tooltip( toolTips.shift() ).desactivate();		
 		}
 		
 		private function onRubriqueChange(e:Event):void 
