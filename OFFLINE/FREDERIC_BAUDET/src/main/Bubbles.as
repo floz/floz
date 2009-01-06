@@ -109,6 +109,8 @@ package main
 			running = false;
 		}
 		
+		public function isRunning():Boolean { return running; }
+		
 	}
 	
 }

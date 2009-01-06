@@ -22,6 +22,7 @@ package main
 		private var infosVignettes:Array;
 		
 		private var currentVignette:Vignette;
+		//private var dispToSwap:Sprite;
 		
 		// Default var
 		
@@ -48,6 +49,8 @@ package main
 			cnt = new Sprite();
 			cnt.addEventListener( Vignette.VIGNETTE_OVER, onVignetteOver );
 			cnt.addEventListener( Vignette.VIGNETTE_OUT, onVignetteOut );
+			cnt.addEventListener( Vignette.VIGNETTE_TO_FRONT, onVignetteToFront );
+			cnt.addEventListener( Vignette.VIGNETTE_TO_BACK, onVignetteToBack );
 			addChild( cnt );
 			
 			infosVignettes = [];
@@ -59,6 +62,7 @@ package main
 		private function onVignetteOver(e:Event):void 
 		{
 			currentVignette = e.target as Vignette;
+			
 			currentVignette.addEventListener( MouseEvent.MOUSE_MOVE, onMove );
 			bubbles.bubble( currentVignette.x, currentVignette.y );
 		}
@@ -71,29 +75,41 @@ package main
 		
 		private function onVignetteOut(e:Event):void 
 		{
-			currentVignette.removeEventListener( MouseEvent.MOUSE_MOVE, onMove );
-			bubbles.killBubbles();			
+			if ( currentVignette ) currentVignette.removeEventListener( MouseEvent.MOUSE_MOVE, onMove );
+			if ( bubbles.isRunning() ) bubbles.killBubbles();
 		}
+		
+		private function onVignetteToFront(e:Event):void { cnt.setChildIndex( e.target as Sprite, cnt.numChildren - 1 ); }
+		
+		private function onVignetteToBack(e:Event):void { cnt.setChildIndex( e.target as Sprite, e.target.getIndex() ); }
 		
 		private function onItemLoaded(e:Event):void 
 		{
 			var o:Object = infosVignettes[ downloader.currentCount - 1 ];
 			var v:Vignette = new Vignette( downloader.getLastItem(), o.flv, o.title, o.director, o.sound, randRange( 40, 90 ) );
-			v.x = randRange( 120, 640 );
-			v.y = randRange( 120, 460 );
-			cnt.addChild( v );
+			v.x = Const.POSITIONS[ downloader.currentCount - 1 ].x + 60;
+			v.y = Const.POSITIONS[ downloader.currentCount - 1 ].y + 50;
 			
-			v.init();
+			v.name = "Vignette" + downloader.currentCount.toString();
+			cnt.addChild( v );
+			cnt.setChildIndex( v, downloader.currentCount - 1 );
+			v.setIndex( downloader.currentCount - 1 );
+			v.init();			
 			
 			downloader.loadNext();
 		}
 		
 		// PRIVATE
 		
-		private function randRange( min:Number, max:Number, plus:Number = 0 ):Number
+		private function randRange( min:Number, max:Number ):Number
 		{
 			var n:Number = ( Math.random() * ( max - min ) + min )
-			return  n = ( n < 0 ) ? n - plus : n + plus;
+			return n;
+		}
+		
+		private function getRadians( degres:Number ):Number
+		{
+			return ( Math.PI * degres ) / 180;	
 		}
 		
 		// PUBLIC
@@ -108,6 +124,8 @@ package main
 			
 			var n:int = infos.length;
 			for ( var i:int; i < n; i++ ) a.push( infos[ i ].img );
+			
+			currentVignette = null;
 			
 			downloader.addURLs( a );
 			downloader.loadNext();

@@ -15,12 +15,12 @@ package main
 	{
 		public static const RUBRIQUE_CHANGE:String = "rubrique_change";
 		
-		public var zPub:SimpleButton;
-		public var zClip:SimpleButton;
-		public var zShort:SimpleButton;
+		public var pub:MovieClip;
+		public var clip:MovieClip;
+		public var short:MovieClip;
 		
 		private var rubriqueName:String;
-		private var currentButton:SimpleButton;
+		private var currentButton:MovieClip;
 		
 		public function Menu() 
 		{
@@ -39,7 +39,7 @@ package main
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			activateRubrique( Const.PUB, zPub );
+			activateRubrique( Const.PUB, pub );
 			
 			addEventListener( MouseEvent.CLICK, onClick );
 		}
@@ -48,9 +48,9 @@ package main
 		{
 			switch( e.target )
 			{
-				case zPub: activateRubrique( Const.PUB, zPub ); break;
-				case zClip: activateRubrique( Const.CLIP, zClip ); break;
-				case zShort: activateRubrique( Const.SHORT, zShort ); break;
+				case pub.z: activateRubrique( Const.PUB, pub ); break;
+				case clip.z: activateRubrique( Const.CLIP, clip ); break;
+				case short.z: activateRubrique( Const.SHORT, short ); break;
 			}
 		}
 		
@@ -58,19 +58,21 @@ package main
 		
 		private function desactivate():void
 		{
-			currentButton.enabled = true;
-			currentButton.useHandCursor = true;
+			currentButton.z.enabled = true;
+			currentButton.z.useHandCursor = true;
+			currentButton.mc.gotoAndStop( "deselect" );
 		}
 		
-		private function activateRubrique( rubriqueName:String, button:SimpleButton ):void
+		private function activateRubrique( rubriqueName:String, button:MovieClip ):void
 		{
 			if ( button == currentButton ) return;
 			if ( currentButton ) desactivate();
 			
 			this.rubriqueName = rubriqueName;
 			currentButton = button;			
-			currentButton.enabled = false;
-			currentButton.useHandCursor = false;
+			currentButton.z.enabled = false;
+			currentButton.z.useHandCursor = false;
+			currentButton.mc.gotoAndStop( "select" );
 			
 			dispatchEvent( new Event( Menu.RUBRIQUE_CHANGE ) );
 		}

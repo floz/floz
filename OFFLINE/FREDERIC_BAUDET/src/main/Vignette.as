@@ -22,6 +22,8 @@ package main
 		public static const VIGNETTE_OVER:String = "vignette_over";
 		public static const VIGNETTE_OUT:String = "vignette_out";
 		public static const VIGNETTE_CLICK:String = "vignette_click";
+		public static const VIGNETTE_TO_FRONT:String = "vignette_to_front";
+		public static const VIGNETTE_TO_BACK:String = "vignette_to_back";
 		
 		private var preview:BitmapData;
 		private var flv:String;
@@ -33,14 +35,18 @@ package main
 		private var normalSize:Number;
 		private var enlargedSize:Number;
 		
+		private var index:int;
+		
 		private var ready:Boolean;
-		private var running:Boolean;
+		private var dispatchable:Boolean;
 		
 		public function Vignette( preview:BitmapData, flv:String, title:String, director:String, sound:String, size:Number = 50 )
 		{			
 			this.preview = preview;
 			this.flv = flv;
 			this.title = title;
+			this.director = director;
+			this.sound = sound;
 			this.size = size;
 			
 			var g:Graphics = this.graphics;
@@ -94,6 +100,8 @@ package main
 			this.scaleX =
 			this.scaleY = 0;
 			
+			//index = parent.getChildIndex( this );
+			
 			addEventListener( MouseEvent.MOUSE_OVER, onOver );
 			addEventListener( MouseEvent.MOUSE_OUT, onOut );
 			addEventListener( MouseEvent.CLICK, onClick );
@@ -101,26 +109,52 @@ package main
 		
 		private function onOver(e:MouseEvent):void 
 		{
+			if ( !ready ) return;
+			
 			enlarge();
 			dispatchEvent( new Event( Vignette.VIGNETTE_OVER, true ) );
 		}
 		
 		private function onOut(e:MouseEvent):void 
 		{
+			if ( !ready ) return;
+			
 			normalize();
 			dispatchEvent( new Event( Vignette.VIGNETTE_OUT, true ) );
 		}
 		
 		private function onClick(e:MouseEvent):void 
 		{
+			if ( !ready ) return;
+			
 			dispatchEvent( new Event( Vignette.VIGNETTE_CLICK, true ) );
 		}
 		
 		// PRIVATE
 		
-		private function setReadyOn():void { this.ready = true; }
+		private function setReadyOn():void { this.ready = true; dispatchable = true; }
 		
 		private function setReadyOff():void { this.ready = false; this.parent.removeChild( this ); }
+		
+		private function onUpdateTween( firstStep:Boolean ):void
+		{
+			if ( firstStep )
+			{
+				if ( this.width >= ( normalSize + ( enlargedSize - normalSize ) * .5 ) && dispatchable )
+				{
+					dispatchable = false;
+					dispatchEvent( new Event( Vignette.VIGNETTE_TO_FRONT, true ) );
+				}
+			}
+			else
+			{
+				if ( this.width <= ( normalSize + ( enlargedSize - normalSize ) * .5 ) && !dispatchable ) 
+				{
+					dispatchable = true;
+					dispatchEvent( new Event( Vignette.VIGNETTE_TO_BACK, true ) );
+				}
+			}
+		}
 		
 		private function randRange( min:Number, max:Number, plus:Number = 0 ):Number
 		{
@@ -137,18 +171,25 @@ package main
 		
 		public function destroy():void
 		{
+			ready = false;
 			Tweener.addTween( this, { scaleX: 0, scaleY: 0, time: .35, transition: "easeInOutQuad", onComplete: setReadyOff } );
 		}
 		
 		public function enlarge():void
 		{
-			Tweener.addTween( this, { width: enlargedSize, height: enlargedSize, time: .3, transition: "easeInOutExpo" } );
+			Tweener.addTween( this, { width: enlargedSize, height: enlargedSize, time: .3, transition: "easeInOutExpo", onUpdate: onUpdateTween, onUpdateParams: [ true ] } );
 		}
 		
 		public function normalize():void
 		{
-			Tweener.addTween( this, { width: normalSize, height: normalSize, time: .3, transition: "easeInOutBack" } );
+			Tweener.addTween( this, { width: normalSize, height: normalSize, time: .3, transition: "easeInOutBack", onUpdate: onUpdateTween, onUpdateParams: [ false ] } );
 		}
+		
+		public function setIndex( index:int ):void { this.index = index };
+		public function getIndex():int { return this.index; }		
+		public function getTitle():String { return this.title; }
+		public function getDirector():String { return this.director; }
+		public function getSound():String { return this.sound; }
 	}
 	
 }
