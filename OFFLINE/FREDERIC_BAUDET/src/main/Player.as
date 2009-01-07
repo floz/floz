@@ -39,8 +39,8 @@ package main
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			this.x = stage.stageWidth * .5;
-			this.y = stage.stageHeight * .5;
+			this.x = 980 * .5;
+			this.y = 560 * .5;
 			this.scaleX =
 			this.scaleY = 0;
 		}

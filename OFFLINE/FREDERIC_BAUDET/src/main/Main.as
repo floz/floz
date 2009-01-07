@@ -12,6 +12,8 @@ package main
 	import flash.display.Graphics;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
@@ -31,7 +33,7 @@ package main
 		// Vidéo taille : 768 * 576 // 512 * 384 // 426 * 320
 		
 		public function Main() 
-		{
+		{			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
@@ -44,6 +46,9 @@ package main
 		
 		private function onAddedToStage(e:Event):void 
 		{
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
+			
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
@@ -53,7 +58,7 @@ package main
 			vignettesManager.addEventListener( Vignette.VIGNETTE_CLICK, onVignetteClick );
 			cnt.addChild( vignettesManager );
 			
-			menu.addEventListener( Menu.RUBRIQUE_CHANGE, onRubriqueChange );
+			//menu.addEventListener( Menu.RUBRIQUE_CHANGE, onRubriqueChange );
 			
 			toolTips = [];
 			
@@ -93,10 +98,12 @@ package main
 		
 		private function onVignetteClick(e:Event):void 
 		{
-			curtain.y = stage.stageHeight;
+			curtain.x = -this.x;
+			curtain.y = stage.stageHeight - this.y;
+			curtain.height = 0;
 			curtain.visible = true;
 			curtain.scaleY = 0;
-			Tweener.addTween( curtain, { scaleY: 1, time: .4, transition: "easeOutQuad" } );
+			Tweener.addTween( curtain, { height: stage.stageHeight, time: .4, transition: "easeOutQuad" } );
 			
 			player = new Player( Vignette( e.target ).getFLV() );
 			addChild( player );
@@ -106,13 +113,16 @@ package main
 		private function onCurtainClick(e:MouseEvent):void 
 		{
 			player.destroy();
-			Tweener.addTween( curtain, { scaleY: 0, time: .4, transition: "easeOutQuad", onComplete: reactivate } );
+			Tweener.addTween( curtain, { height: 0, time: .4, transition: "easeOutQuad", onComplete: reactivate } );
 		}
 		
 		private function onResize(e:Event):void 
 		{
+			curtain.x = - this.x;
+			curtain.y = stage.stageHeight - this.y;
+			background.x = -this.x;
+			background.y = -this.y;
 			curtain.width = stage.stageWidth;
-			curtain.height = stage.stageHeight;
 		}
 		
 		private function onRubriqueChange(e:Event):void 
@@ -133,6 +143,7 @@ package main
 			datas.removeEventListener( Event.COMPLETE, onComplete );
 			
 			onRubriqueChange( null );
+			menu.addEventListener( Menu.RUBRIQUE_CHANGE, onRubriqueChange );
 		}
 		
 		// PRIVATE

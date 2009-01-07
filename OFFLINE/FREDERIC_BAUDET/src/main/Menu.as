@@ -39,6 +39,7 @@ package main
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
+			trace( "toto" );
 			activateRubrique( Const.PUB, pub );
 			
 			addEventListener( MouseEvent.CLICK, onClick );
