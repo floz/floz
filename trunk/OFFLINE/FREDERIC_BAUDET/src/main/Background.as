@@ -44,6 +44,14 @@ package main
 			g.endFill();
 			
 			ColorShortcuts.init();
+			
+			stage.addEventListener( Event.RESIZE, onResize );
+		}
+		
+		private function onResize(e:Event):void 
+		{
+			bg.width = stage.stageWidth;
+			bg.height = stage.stageHeight;
 		}
 		
 		// PRIVATE
