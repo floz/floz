@@ -8,27 +8,18 @@ package main
 {
 	import caurina.transitions.Tweener;
 	import flash.display.DisplayObject;
-	import flash.display.Graphics;
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
+	import flash.display.MovieClip;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
-	public class Tooltip extends Sprite 
+	public class Tooltip extends MovieClip
 	{
 		public var title:TextField;
 		public var director:TextField;
 		public var sound:TextField;
 		
-		private var vx:Number = 0;
-		private var vy:Number = 0;
-		private var xVel:Number = 2;
-		private var yVel:Number = 2;
-		private var friction:Number = .98;
-		
 		public function Tooltip() 
-		{			
+		{
 			this.mouseChildren = false;
 			this.mouseEnabled = false;
 			this.visible = false;
@@ -36,20 +27,12 @@ package main
 		
 		// EVENTS
 		
-		private function onMove(e:MouseEvent):void 
-		{
-			this.x = e.stageX - 30;
-			this.y = e.stageY - this.height - 10;
-			
-			e.updateAfterEvent();
-		}
-		
 		// PRIVATE
 		
+		// PUBLIC
+		
 		private function disable():void
-		{
-			friction = 1;
-			
+		{			
 			this.visible = false;
 			parent.removeChild( this );
 		}
@@ -75,7 +58,6 @@ package main
 		
 		public function desactivate():void
 		{
-			friction = .95;
 			Tweener.addTween( this, { alpha: 0, y: this.y - 10, time: .2, transition: "easeOutQuad", onComplete: disable } );
 		}
 		

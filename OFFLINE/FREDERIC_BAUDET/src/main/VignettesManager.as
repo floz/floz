@@ -116,6 +116,8 @@ package main
 		
 		public function load( infos:Array ):void
 		{
+			currentVignette = null;
+			
 			var a:Array = [];
 			infosVignettes = infos;
 			
@@ -124,8 +126,6 @@ package main
 			
 			var n:int = infos.length;
 			for ( var i:int; i < n; i++ ) a.push( infos[ i ].img );
-			
-			currentVignette = null;
 			
 			downloader.addURLs( a );
 			downloader.loadNext();
@@ -140,7 +140,6 @@ package main
 			for ( i; i < n; i++ ) a.push( cnt.getChildAt( i ) );
 			for ( i = 0; i < n; i++ ) a[ i ].destroy();			
 		}
-		
 	}
 	
 }
