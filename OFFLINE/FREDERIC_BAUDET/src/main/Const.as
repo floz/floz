@@ -13,6 +13,10 @@ package main
 		public static const CLIP:String = "clip";
 		public static const SHORT:String = "short";
 		
+		public static const PUB_COLOR:uint = 0x694828;
+		public static const CLIP_COLOR:uint = 0x979467;
+		public static const SHORT_COLOR:uint = 0x2c6a92;
+		
 		public static const POSITIONS:Array = 
 			[ { x: 70, y: 413 }, // 1
 			{ x: 50, y: 330 }, // 2

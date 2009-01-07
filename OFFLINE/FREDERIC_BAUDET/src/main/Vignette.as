@@ -190,6 +190,7 @@ package main
 		public function getTitle():String { return this.title; }
 		public function getDirector():String { return this.director; }
 		public function getSound():String { return this.sound; }
+		public function getFLV():String { return this.flv; }
 	}
 	
 }

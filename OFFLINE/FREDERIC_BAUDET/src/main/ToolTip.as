@@ -46,7 +46,7 @@ package main
 			
 			this.title.text = title;
 			this.director.text = "Director : " + director;
-			this.sound.text = "Sound : " + sound;
+			this.sound.text = sound == "" ? sound : "Sound : " + sound;
 			
 			var tf:TextFormat = new TextFormat();
 			tf.bold = true;
