@@ -18,8 +18,10 @@ package main
 		
 		private var vignettesManager:VignettesManager;
 		private var datas:Datas;
-		private var toolTip:Tooltip;
+		private var toolTip:Tooltip
 		private var toolTips:Array;
+		
+		// Vidéo taille : 768 * 576 // 512 * 384 // 426 * 320
 		
 		public function Main() 
 		{
@@ -64,7 +66,7 @@ package main
 		
 		private function onVignetteOut(e:Event):void 
 		{
-			Tooltip( toolTips.shift() ).desactivate();		
+			if ( toolTips.length ) Tooltip( toolTips.shift() ).desactivate();		
 		}
 		
 		private function onRubriqueChange(e:Event):void 
