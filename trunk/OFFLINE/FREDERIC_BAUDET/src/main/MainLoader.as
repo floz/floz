@@ -58,6 +58,8 @@ package main
 		{
 			if ( e.currentTarget.content is MovieClip ) site = e.currentTarget.content;
 			
+			site.x = stage.stageWidth * .5 - 980 * .5;
+			site.y = stage.stageHeight * .5 - 560 * .5;
 			addChild( site );
 			removeChild( loadingMsg );
 		}
