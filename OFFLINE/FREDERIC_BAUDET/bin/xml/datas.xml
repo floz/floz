@@ -4,7 +4,7 @@
 	<pub>
 		<vignette img="1000_enfants.jpeg" flv="1000_enfants.flv" title="1000 enfants" director="F.RUGGIERI" sound="M. Pothier" />
 		<vignette img="aides.jpeg" flv="aids.flv" title="A.I.D.S" director="A. BOWYN" sound="BOD" />
-		<vignette img="amnesty_international.jpeg" flv="amnesty_international.flv" title="Amnesty" director="S. SEVERI" sound="" />
+		<vignette img="amnesty_international.jpeg" flv="amnesty_international.flv" title="Amnesty International" director="S. SEVERI" sound="" />
 		<vignette img="canal_sat.jpeg" flv="canalsat.flv" title="Canal sat" director="J. BACK" sound="" />
 		<vignette img="e_plus.jpeg" flv="e_plus.flv" title="E plus" director="F & R CARAZZO" sound="BOD" />
 		<vignette img="haagen_dazs.jpeg" flv="haagen_dazs.flv" title="Haagen Dazs" director="JP. ROUX" sound="" />
@@ -16,14 +16,15 @@
 		<vignette img="seat.jpeg" flv="film.flv" title="Seat" director="F & R CARAZZO" sound="BOD" />
 		<vignette img="volvic.jpeg" flv="Volvic Zidane.swf.flv" title="Volvic" director="JP. ROUX" sound="" />
 		<vignette img="gini.jpg" flv="gini.flv" title="Gini" director="C. LYNGBYE" sound="M. Pothier" />
-		<vignette img="trailblazer.jpeg" flv="trailblazer.flv" title="Trailblazer" director="" sound="" />
+		<vignette img="trailblazer.jpeg" flv="trailblazer.flv" title="Trailblazer" director="F. Vroegop" sound="" />
 	</pub>
 	<clip>
 		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS" director="F. VROEGOP" sound="" />
 		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI" sound="" />
+		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI" sound="" />
 	</clip>
 	<short>
 		<vignette img="easy_monay.jpeg" flv="easy_money.flv" title="EASY MONEY" director="P. DUSSOL" sound="" />
-		<vignette img="old_dog.jpeg" flv="old_dog.flv" title="OLD DOG" director="A. BOWYN" sound="" />
+		<vignette img="old_dog.jpeg" flv="pleymo1.flv" title="OLD DOG" director="A. BOWYN" sound="" />
 	</short>
 </data>
