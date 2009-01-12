@@ -37,8 +37,10 @@ package main
 			{ x: 700, y: 397 }, //17
 			{ x: 240, y: 30 }, //18
 			{ x: 263, y: 257 }, //19
-			{ x: 578, y: 270 } ];//20
+			{ x: 578, y: 270 }
+			];
 			
+		public static const COLORS:Array = [ 0xb3da41, 0x7ba31e, 0xdf48d3, 0xb56df3, 0xd42d09, 0xfbed2c, 0xf98613, 0xed3801, 0x0165ed, 0x01b8ed ];
 	}
 	
 }

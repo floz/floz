@@ -42,7 +42,7 @@ package main
 		public function activate( target:DisplayObject, title:String, director:String, sound:String ):void
 		{
 			this.x = target.x;
-			this.y = target.y - target.height / 4 + 10;
+			this.y = target.y - target.height / 4 - 10;
 			
 			this.title.text = title;
 			this.director.text = "Director : " + director;
@@ -53,7 +53,7 @@ package main
 			this.title.setTextFormat( tf );
 			
 			this.visible = true;
-			Tweener.addTween( this, { alpha: 1, y: this.y + 10, time: .2, transition: "easeOutQuad" } );
+			Tweener.addTween( this, { alpha: .9, y: this.y + 10, time: .2, transition: "easeOutQuad" } );
 		}
 		
 		public function desactivate():void

@@ -55,18 +55,35 @@ package main
 			g.endFill();
 			
 			var b:Bitmap = new Bitmap( UBit.resize( preview, size * 3, size * 3, true ), PixelSnapping.ALWAYS, true );
-			b.x =
+			b.x = - size - size * .5 + 10;
 			b.y = - size - size * .5;
-			addChild( b );
 			
 			var ns:Number = randRange( size - size / 4, size- size / 5 );
 			var dist:Number = size - ns - 5; // -5 pour corriger le placement
 			
 			var msk:Sprite = new Sprite();
+			var px:Number = randRange( -dist, dist );
+			var py:Number = randRange( -dist, dist );
 			g = msk.graphics;
 			g.beginFill( 0xFF0000 );
-			g.drawCircle( randRange( -dist, dist ), randRange( -dist, dist ), ns );
+			g.drawCircle( px, py, ns );
 			g.endFill();
+			
+			var t:int = int( Math.random() * 2 );
+			if ( t )
+			{
+				var s:Shape = new Shape();
+				var vx:Number = randRange( 0, 3 );
+				var vy:Number = randRange( 0, 3 );
+				g = s.graphics;
+				g.beginFill( Const.COLORS[ int( Math.random() * Const.COLORS.length ) ] );
+				g.drawCircle( px < 0 ? px + vx : px - vx, py < 0 ? py + vy : py - vy, ns + randRange( 0, 7.5 ) );
+				g.endFill();
+				
+				addChild( s );
+			}
+			
+			addChild( b );
 			addChild( msk );
 			
 			b.mask = msk;
@@ -99,8 +116,6 @@ package main
 			
 			this.scaleX =
 			this.scaleY = 0;
-			
-			//index = parent.getChildIndex( this );
 			
 			addEventListener( MouseEvent.MOUSE_OVER, onOver );
 			addEventListener( MouseEvent.MOUSE_OUT, onOut );
