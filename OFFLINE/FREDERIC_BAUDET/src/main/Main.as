@@ -18,6 +18,8 @@ package main
 	import flash.events.MouseEvent;
 	import flash.net.navigateToURL;
 	import flash.net.URLRequest;
+	import gs.easing.Quad;
+	import gs.TweenLite;
 	
 	public class Main extends MovieClip
 	{
@@ -113,7 +115,8 @@ package main
 			curtain.height = 0;
 			curtain.visible = true;
 			curtain.scaleY = 0;
-			Tweener.addTween( curtain, { height: stage.stageHeight, time: .4, transition: "easeOutQuad" } );
+			//Tweener.addTween( curtain, { height: stage.stageHeight, time: .4, transition: "easeOutQuad" } );
+			TweenLite.to( curtain, .4, { height: stage.stageHeight, ease: Quad.easeOut } );
 			
 			player = new Player( Vignette( e.target ).getFLV() );
 			addChild( player );
@@ -123,7 +126,8 @@ package main
 		private function onCurtainClick(e:MouseEvent):void 
 		{
 			player.destroy();
-			Tweener.addTween( curtain, { height: 0, time: .4, transition: "easeOutQuad", onComplete: reactivate } );
+			//Tweener.addTween( curtain, { height: 0, time: .4, transition: "easeOutQuad", onComplete: reactivate } );
+			TweenLite.to( curtain, .4, { height: 0, ease: Quad.easeOut, onComplete: reactivate } );
 		}
 		
 		private function onMailClick(e:MouseEvent):void 

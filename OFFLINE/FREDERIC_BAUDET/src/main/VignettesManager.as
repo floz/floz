@@ -17,6 +17,7 @@ package main
 	{
 		private var bubbles:Bubbles;
 		private var cnt:Sprite;
+		private var fcnt:Sprite;
 		private var downloader:Downloader;
 		
 		private var infosVignettes:Array;
@@ -45,6 +46,9 @@ package main
 			
 			bubbles = new Bubbles();
 			addChild( bubbles );
+			
+			fcnt = new Sprite();
+			addChild( fcnt );
 			
 			cnt = new Sprite();
 			cnt.addEventListener( Vignette.VIGNETTE_OVER, onVignetteOver );
@@ -112,6 +116,20 @@ package main
 			return ( Math.PI * degres ) / 180;	
 		}
 		
+		private function initFakeVignettes():void
+		{
+			var fv:FakeVignette;
+			var i:int = downloader.totalCount;
+			for ( i; i < 20; i++ )
+			{
+				fv = new FakeVignette( randRange( 40, 90 ) );
+				fv.x = Const.POSITIONS[ i ].x + 60;
+				fv.y = Const.POSITIONS[ i ].y + 50;
+				fcnt.addChild( fv );
+				fv.init();
+			}
+		}
+		
 		// PUBLIC
 		
 		public function load( infos:Array ):void
@@ -128,6 +146,9 @@ package main
 			for ( var i:int; i < n; i++ ) a.push( infos[ i ].img );
 			
 			downloader.addURLs( a );
+			
+			initFakeVignettes();
+			
 			downloader.loadNext();
 		}
 		
@@ -138,6 +159,11 @@ package main
 			var i:int;
 			var n:int = cnt.numChildren;
 			for ( i; i < n; i++ ) a.push( cnt.getChildAt( i ) );
+			for ( i = 0; i < n; i++ ) a[ i ].destroy();		
+			
+			a = [];
+			n = fcnt.numChildren;
+			for ( i = 0; i < n; i++ ) a.push( fcnt.getChildAt( i ) );
 			for ( i = 0; i < n; i++ ) a[ i ].destroy();			
 		}
 	}

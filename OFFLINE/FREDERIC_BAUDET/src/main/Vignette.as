@@ -16,6 +16,10 @@ package main
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import fr.minuit4.utils.UBit;
+	import gs.easing.Back;
+	import gs.easing.Expo;
+	import gs.easing.Quad;
+	import gs.TweenLite;
 	
 	public class Vignette extends Sprite
 	{
@@ -106,7 +110,8 @@ package main
 			removeEventListener( MouseEvent.MOUSE_OUT, onOut, true );
 			removeEventListener( MouseEvent.CLICK, onClick, true );
 			
-			Tweener.removeTweens( this );
+			//Tweener.removeTweens( this );
+			TweenLite.killTweensOf( this );
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -181,7 +186,8 @@ package main
 		
 		public function init():void
 		{
-			Tweener.addTween( this, { scaleX: 1, scaleY: 1, time: .35, transition: "easeInOutQuad", onComplete: setReadyOn } );
+			//Tweener.addTween( this, { scaleX: 1, scaleY: 1, time: .35, transition: "easeInOutQuad", onComplete: setReadyOn } );
+			TweenLite.to( this, .35, { scaleX: 1, scaleY: 1, ease: Quad.easeInOut, onComplete: setReadyOn } );
 		}
 		
 		public function destroy():void
@@ -192,12 +198,14 @@ package main
 		
 		public function enlarge():void
 		{
-			Tweener.addTween( this, { width: enlargedSize, height: enlargedSize, time: .3, transition: "easeInOutExpo", onUpdate: onUpdateTween, onUpdateParams: [ true ] } );
+			//Tweener.addTween( this, { width: enlargedSize, height: enlargedSize, time: .3, transition: "easeInOutExpo", onUpdate: onUpdateTween, onUpdateParams: [ true ] } );
+			TweenLite.to( this, .3, { width: enlargedSize, height: enlargedSize, ease: Expo.easeInOut, onUpdate: onUpdateTween, onUpdateParams: [ true ] } );
 		}
 		
 		public function normalize():void
 		{
-			Tweener.addTween( this, { width: normalSize, height: normalSize, time: .3, transition: "easeInOutBack", onUpdate: onUpdateTween, onUpdateParams: [ false ] } );
+			//Tweener.addTween( this, { width: normalSize, height: normalSize, time: .3, transition: "easeInOutBack", onUpdate: onUpdateTween, onUpdateParams: [ false ] } );
+			TweenLite.to( this, .3, { width: normalSize, height: normalSize, ease: Back.easeInOut, onUpdate: onUpdateTween, onUpdateParams: [ false ] } );
 		}
 		
 		public function setIndex( index:int ):void { this.index = index };
