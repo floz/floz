@@ -2,21 +2,21 @@
 <data>
 	<path img="img/" flv="flv/" />
 	<pub>
-		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS" director="F. VROEGOP" sound="" />
-		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI" sound="" />
-		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI" sound="" />
-		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS" director="F. VROEGOP" sound="" />
-		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI" sound="" />
-		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI" sound="" />
-		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS" director="F. VROEGOP" sound="" />
-		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI" sound="" />
-		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI" sound="" />
-		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS" director="F. VROEGOP" sound="" />
-		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI" sound="" />
-		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI" sound="" />
-		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS" director="F. VROEGOP" sound="" />
-		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI" sound="" />
-		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI" sound="" />
+		<vignette img="1000_enfants.jpeg" flv="1000_enfants.flv" title="1000 enfants" director="F.RUGGIERI" sound="M. Pothier" />
+		<vignette img="aides.jpeg" flv="aids.flv" title="A.I.D.S" director="A. BOWYN" sound="BOD" />
+		<vignette img="amnesty_international.jpeg" flv="amnesty_international.flv" title="Amnesty International" director="S. SEVERI" sound="" />
+		<vignette img="canal_sat.jpeg" flv="canalsat.flv" title="Canal sat" director="J. BACK" sound="" />
+		<vignette img="e_plus.jpeg" flv="e_plus.flv" title="E plus" director="F & R CARAZZO" sound="BOD" />
+		<vignette img="haagen_dazs.jpeg" flv="haagen_dazs.flv" title="Haagen Dazs" director="JP. ROUX" sound="" />
+		<vignette img="lee_cooper.jpeg" flv="lee_cooper.flv" title="Lee Cooper" director="F & R CARAZZO" sound="BOD" />
+		<vignette img="lumina.jpeg" flv="lumina_ss.flv" title="Lumina SS" director="C. LYNGBYE" sound="BOD" />
+		<vignette img="mercedes.jpeg" flv="mercedes_theroad.flv" title="Mercedes " director="F & R CARAZZO" sound="BOD" />
+		<vignette img="opel_corsa.jpeg" flv="opelcorsa_the routine.flv" title="Opel Corsa" director="F & R CARAZZO" sound="BOD" />
+		<vignette img="opel_zafira.jpeg" flv="opel_zafira.flv" title="Opel Zafira" director="F. VROEGOP" sound="" />
+		<vignette img="seat.jpeg" flv="seat_fresh.flv" title="Seat" director="F & R CARAZZO" sound="BOD" />
+		<vignette img="volvic.jpeg" flv="Volvic Zidane.swf.flv" title="Volvic" director="JP. ROUX" sound="" />
+		<vignette img="gini.jpg" flv="gini.flv" title="Gini" director="C. LYNGBYE" sound="M. Pothier" />
+		<vignette img="trailblazer.jpeg" flv="trailblazer.flv" title="Trailblazer" director="F. Vroegop" sound="" />
 	</pub>
 	<clip>
 		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS" director="F. VROEGOP" sound="" />
