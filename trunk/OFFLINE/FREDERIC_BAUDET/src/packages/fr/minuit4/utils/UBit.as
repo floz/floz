@@ -74,14 +74,13 @@ package fr.minuit4.utils
 			
 			var i:int;
 			var j:int;
-			var n:int = width / bmpdWidth;
-			var m:int = height / bmpdHeight;
+			var n:int = width / bmpdWidth + bmpdWidth;
+			var m:int = height / bmpdHeight + bmpdHeight;
 			for ( i; i < n; i++ )
 			{
 				for ( j; j < m; j++ )
-				{
 					b.copyPixels( bmpd, bmpd.rect, new Point( i * bmpdWidth, j * bmpdHeight ) );
-				}
+				
 				j = 0;
 			}
 			

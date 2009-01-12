@@ -8,15 +8,24 @@ package main
 {
 	import caurina.transitions.properties.ColorShortcuts;
 	import caurina.transitions.Tweener;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Graphics;
 	import flash.display.MovieClip;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import fr.minuit4.utils.UBit;
+	import gs.easing.Quad;
+	import gs.TweenLite;
 	
 	public class Background extends MovieClip 
 	{
 		private var bg:MovieClip;
+		private var background:Bitmap;
+		private var tempBitmap:Bitmap;
+		
+		private var pattern:BitmapData;
 		
 		public function Background() 
 		{
@@ -45,6 +54,13 @@ package main
 			
 			ColorShortcuts.init();
 			
+			pattern = new Pattern2( 0, 0 );
+			background = new Bitmap( getPatternAsBitmapData() );
+			addChild( background );
+			
+			tempBitmap = new Bitmap();
+			addChild( tempBitmap );
+			
 			stage.addEventListener( Event.RESIZE, onResize );
 		}
 		
@@ -52,15 +68,51 @@ package main
 		{
 			bg.width = stage.stageWidth;
 			bg.height = stage.stageHeight;
+			
+			background.bitmapData.dispose();
+			background.bitmapData = getPatternAsBitmapData();
+			tempBitmap.bitmapData.dispose();
+			tempBitmap.bitmapData = getPatternAsBitmapData();
 		}
 		
 		// PRIVATE
+		
+		private function getPatternAsBitmapData():BitmapData
+		{
+			return UBit.strech( pattern, stage.stageWidth, stage.stageHeight );
+		}
 		
 		// PUBLIC
 		
 		public function changeColor( color:uint ):void
 		{
-			Tweener.addTween( bg, { _color: color, time: .4, transition: "easeOutQuad" } );
+			switch( color )
+			{
+				case Const.PUB_COLOR: pattern = new Pattern2( 0, 0 ); break;
+				case Const.SHORT_COLOR: pattern = new Pattern1( 0, 0 ); break;
+				case Const.CLIP_COLOR: pattern = new Pattern3( 0, 0 ); break;
+			}			
+			
+			var bmpd:BitmapData;
+			bmpd = getPatternAsBitmapData(); 
+			
+			if ( tempBitmap.bitmapData )
+			{
+				background.bitmapData.dispose();
+				background.bitmapData = tempBitmap.bitmapData.clone();
+				background.alpha = 1;
+				
+				tempBitmap.bitmapData.dispose();
+			}
+			
+			tempBitmap = new Bitmap( bmpd );
+			tempBitmap.alpha = 0;
+			addChild( tempBitmap );
+			
+			TweenLite.killTweensOf( tempBitmap );
+			TweenLite.killTweensOf( background );
+			TweenLite.to( tempBitmap, .5, { alpha: 1, ease: Quad.easeOut } );
+			TweenLite.to( background, .5, { alpha: 0, ease: Quad.easeOut } );
 		}
 		
 	}
