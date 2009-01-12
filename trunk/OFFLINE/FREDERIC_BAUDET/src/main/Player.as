@@ -11,6 +11,9 @@ package main
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import gs.easing.Expo;
+	import gs.easing.Quad;
+	import gs.TweenLite;
 	
 	public class Player extends Sprite 
 	{
@@ -30,8 +33,10 @@ package main
 		private function onRemovedFromStage(e:Event):void 
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
-			Tweener.removeTweens( this );
-			Tweener.removeTweens( vdo );
+			//Tweener.removeTweens( this );
+			//Tweener.removeTweens( vdo );
+			TweenLite.killTweensOf( this );
+			TweenLite.killTweensOf( vdo );
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -57,13 +62,16 @@ package main
 		
 		public function init():void
 		{			
-			Tweener.addTween( this, { scaleX: 1, scaleY:1, time: .4, transition: "easeInOutExpo", onComplete: play } );
+			//Tweener.addTween( this, { scaleX: 1, scaleY:1, time: .4, transition: "easeInOutExpo", onComplete: play } );
+			TweenLite.to( this, .4, { scaleX: 1, scaleY: 1, ease: Expo.easeInOut, onComplete: play } );
 		}
 		
 		public function destroy():void
 		{
-			Tweener.addTween( vdo, { volume: 0, time: .4, transition: "easeOutQuad" } );
-			Tweener.addTween( this, { scaleX: 0, scaleY:0, time: .4, transition: "easeInOutExpo", onComplete: deleting } );
+			//Tweener.addTween( vdo, { volume: 0, time: .4, transition: "easeOutQuad" } );
+			//Tweener.addTween( this, { scaleX: 0, scaleY:0, time: .4, transition: "easeInOutExpo", onComplete: deleting } );
+			TweenLite.to( vdo, .4, { volume: 0, ease: Quad.easeOut } );
+			TweenLite.to( this, .4, { scaleX: 0, scaleY: 0, ease: Expo.easeInOut, onComplete: deleting } );
 		}
 		
 		public function play():void
