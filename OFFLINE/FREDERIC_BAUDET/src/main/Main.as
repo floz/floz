@@ -30,7 +30,7 @@ package main
 		
 		private var vignettesManager:VignettesManager;
 		private var datas:Datas;
-		private var toolTip:Tooltip
+		private var toolTip:Tooltip;
 		private var toolTips:Array;
 		private var curtain:Sprite;
 		private var player:Player;
@@ -38,7 +38,13 @@ package main
 		// Vidéo taille : 768 * 576 // 512 * 384 // 426 * 320
 		
 		public function Main() 
-		{			
+		{
+			trace( "/*" );
+			trace( "* Floz - Florian Zumbrunn : http://www.floz.fr" );
+			trace( "* Flash developper" );
+			trace( "* http://www.minuit4.fr" );
+			trace( "*/" );
+			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
@@ -83,7 +89,7 @@ package main
 			addChild( curtain );
 			
 			contact.zMail.addEventListener( MouseEvent.CLICK, onMailClick );
-			contact.x = stage.stageWidth - contact.width - 30 - this.x;
+			contact.x = stage.stageWidth - contact.width - 80 - this.x;
 			contact.y = stage.stageHeight - this.y - 25;
 			
 			stage.addEventListener( Event.RESIZE, onResize );
@@ -152,7 +158,7 @@ package main
 			background.x = -this.x;
 			background.y = -this.y;
 			
-			contact.x = stage.stageWidth - contact.width - 30 - this.x;
+			contact.x = stage.stageWidth - contact.width - 80 - this.x;
 			contact.y = stage.stageHeight - this.y - 25;
 		}
 		

@@ -53,6 +53,8 @@ package main
 			g.endFill();
 			addChild( msk );
 			
+			//this.alpha = .9;
+			
 			normalSize = this.width;
 			enlargedSize = this.width * 1.2;
 			
