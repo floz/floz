@@ -45,7 +45,6 @@ package main
 			list.shift();
 			
 			if ( !checkIfDownloaded( request.url, false ) ) downloadedList.push( { url: request.url, image: image } );
-			trace ( downloadedList.length );
 			
 			if ( needToDispatch ) dispatchEvent( new Event( Event.COMPLETE ) );
 			
@@ -177,7 +176,6 @@ package main
 		public function stop():void
 		{
 			list = [];
-			trace ( "unload ! a surveiller !" );
 			loader.unload(); // A surveiller
 		}
 		
