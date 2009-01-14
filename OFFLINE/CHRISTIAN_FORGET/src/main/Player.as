@@ -54,6 +54,7 @@ package main
 			videoPlayer.skinAutoHide = true;
 			videoPlayer.skinBackgroundAlpha = .9;
 			videoPlayer.skinFadeTime = 300;
+			videoPlayer.bitrate = 2000;
 			
 			videoPlayer.bufferTime = .5;
 			
@@ -86,7 +87,7 @@ package main
 		{
 			show();
 			videoPlayer.play( url );
-			videoPlayer.seek( 0 );
+			//videoPlayer.seek( 0 );
 			
 			infos.text = "Director : " + director + "\nProduction : " + production + "\nPostProduction : " + postProduction;
 			infos.setTextFormat( format );

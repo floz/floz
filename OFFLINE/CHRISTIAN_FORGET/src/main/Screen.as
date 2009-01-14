@@ -15,6 +15,7 @@ package main
 	import flash.geom.Matrix;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import fr.minuit4.utils.UBit;
 	
 	public class Screen extends MovieClip
 	{		
@@ -77,7 +78,9 @@ package main
 		private function show():void
 		{
 			var bd:BitmapData = downloader.getImage();			
-			if ( bd.width != 640 || bd.height != 360 ) bd = resize( bd );
+			//if ( bd.width != 640 || bd.height != 360 ) bd = resize( bd );
+			//if ( bd.height > 360 || bd.width > 640 ) bd = resize( bd );
+			bd = UBit.resize( bd, 640, 360, true );
 			
 			if ( over ) screen.draw( bd );
 		}

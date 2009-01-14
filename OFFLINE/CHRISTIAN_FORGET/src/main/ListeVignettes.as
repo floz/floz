@@ -176,9 +176,11 @@ package main
 			if ( nbrLignes > 8 ) a.push( 325 );
 			if ( nbrLignes > 9 && idxAct > 0 )
 			{
-				var i:int;
-				for ( i; i < idxAct; i++ ) a.unshift( -200 );
+				a.unshift( -198 );
+				for ( var i:int; i < int( idxAct - 1 ); i++ ) a.unshift( -200 );
 			}
+			
+			if ( a.length < nbrLignes ) a.push( 520 );
 			while ( a.length < nbrLignes ) a.push( 525 );
 			
 			return a;
