@@ -23,6 +23,7 @@ package main
 		private var infosVignettes:Array;
 		
 		private var currentVignette:Vignette;
+		private var ableToLoad:Boolean;
 		//private var dispToSwap:Sprite;
 		
 		// Default var
@@ -89,6 +90,8 @@ package main
 		
 		private function onItemLoaded(e:Event):void 
 		{
+			if ( !ableToLoad ) return;
+			
 			var o:Object = infosVignettes[ downloader.currentCount - 1 ];
 			var v:Vignette = new Vignette( downloader.getLastItem(), o.flv, o.title, o.director, o.sound, randRange( 40, 90 ) );
 			v.x = Const.POSITIONS[ downloader.currentCount - 1 ].x + 60;
@@ -117,7 +120,9 @@ package main
 		}
 		
 		private function initFakeVignettes():void
-		{
+		{			
+			if ( !ableToLoad ) return;
+			
 			var fv:FakeVignette;
 			var i:int = downloader.totalCount;
 			for ( i; i < 20; i++ )
@@ -137,9 +142,8 @@ package main
 			currentVignette = null;
 			
 			var a:Array = [];
-			infosVignettes = infos;
+			infosVignettes = infos;			
 			
-			downloader.clear();
 			clear();
 			
 			var n:int = infos.length;
@@ -147,13 +151,17 @@ package main
 			
 			downloader.addURLs( a );
 			
-			initFakeVignettes();
+			ableToLoad = true;
 			
+			initFakeVignettes();
 			downloader.loadNext();
 		}
 		
 		public function clear():void
 		{
+			ableToLoad = false;
+			downloader.clear();
+			
 			var a:Array = [];
 			
 			var i:int;

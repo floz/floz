@@ -8,6 +8,7 @@ package main
 {
 	import caurina.transitions.properties.ColorShortcuts;
 	import caurina.transitions.Tweener;
+	import fl.motion.easing.Back;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Graphics;
@@ -21,11 +22,12 @@ package main
 	
 	public class Background extends MovieClip 
 	{
-		private var bg:MovieClip;
-		private var background:Bitmap;
-		private var tempBitmap:Bitmap;
+		private var color:Array;
 		
-		private var pattern:BitmapData;
+		private var bg:Sprite;
+		private var currentBackground:Sprite;
+		private var newBackground:Sprite;
+		private var line:Sprite;		
 		
 		public function Background() 
 		{
@@ -44,75 +46,91 @@ package main
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			bg = new MovieClip();
+			bg = new Sprite();
 			addChild( bg );
 			
-			var g:Graphics = bg.graphics;
-			g.beginFill( Const.PUB_COLOR );
-			g.drawRect( 0, 0, stage.stageWidth, stage.stageHeight );
-			g.endFill();
+			this.color = Const.PUB_COLOR;
+			currentBackground = new Sprite();
+			addChild( currentBackground );
+			currentBackground.addChild( getNewBackground() );
 			
-			ColorShortcuts.init();
+			newBackground = new Sprite();
+			addChild( newBackground );
 			
-			pattern = new Pattern2( 0, 0 );
-			background = new Bitmap( getPatternAsBitmapData() );
-			addChild( background );
-			
-			tempBitmap = new Bitmap();
-			addChild( tempBitmap );
+			line = new Sprite();
+			addChild( line );
+			line.addChild( getLine() );
 			
 			stage.addEventListener( Event.RESIZE, onResize );
 		}
 		
 		private function onResize(e:Event):void 
 		{
-			bg.width = stage.stageWidth;
-			bg.height = stage.stageHeight;
+			while ( line.numChildren ) line.removeChildAt( 0 );
+			line.addChild( getLine() );
 			
-			background.bitmapData.dispose();
-			background.bitmapData = getPatternAsBitmapData();
-			tempBitmap.bitmapData.dispose();
-			tempBitmap.bitmapData = getPatternAsBitmapData();
+			while ( currentBackground.numChildren ) currentBackground.removeChildAt( 0 );
+			currentBackground.addChild( getNewBackground() );
+			
+			while ( newBackground.numChildren ) newBackground.removeChildAt( 0 );
+			newBackground.addChild( getNewBackground() );
 		}
 		
 		// PRIVATE
 		
-		private function getPatternAsBitmapData():BitmapData
+		private function getNewBackground():Sprite
 		{
-			return UBit.strech( pattern, stage.stageWidth, stage.stageHeight );
+			var sp:Sprite = new Sprite();
+			
+			var g:Graphics = sp.graphics;
+			g.beginFill( color[ 1 ] );
+			g.drawRect( 0, 0, stage.stageWidth, stage.stageHeight );
+			g.endFill();
+			
+			var s:Shape = new Shape();
+			g = s.graphics;
+			g.beginFill( color[ 0 ] );
+			g.drawCircle( 0, 0, stage.stageHeight + ( stage.stageHeight * 110 / 100 ) * .5 );
+			g.endFill();
+			sp.addChild( s );
+			
+			return sp;
+		}
+		
+		private function getLine():Shape
+		{
+			var s:Shape = new Shape();
+			var g:Graphics = s.graphics;
+			g.lineStyle( 50, 0x000000 );
+			g.beginFill( 0x000000, 0 );
+			g.drawCircle( 0, 0, stage.stageHeight + ( stage.stageHeight * 110 / 100 ) * .5 );
+			g.endFill();
+			
+			return s;
 		}
 		
 		// PUBLIC
 		
-		public function changeColor( color:uint ):void
+		public function changeColor( color:Array ):void
 		{
-			switch( color )
-			{
-				case Const.PUB_COLOR: pattern = new Pattern2( 0, 0 ); break;
-				case Const.SHORT_COLOR: pattern = new Pattern1( 0, 0 ); break;
-				case Const.CLIP_COLOR: pattern = new Pattern3( 0, 0 ); break;
-			}			
+			this.color = color;
 			
-			var bmpd:BitmapData;
-			bmpd = getPatternAsBitmapData(); 
-			
-			if ( tempBitmap.bitmapData )
+			if ( newBackground.numChildren ) 
 			{
-				background.bitmapData.dispose();
-				background.bitmapData = tempBitmap.bitmapData.clone();
-				background.alpha = 1;
+				while ( currentBackground.numChildren ) currentBackground.removeChildAt( 0 );
+				currentBackground.addChild( newBackground.getChildAt( 0 ) );
+				currentBackground.alpha = 1;
 				
-				tempBitmap.bitmapData.dispose();
+				while ( newBackground.numChildren ) newBackground.removeChildAt( 0 );
 			}
 			
-			tempBitmap = new Bitmap( bmpd );
-			tempBitmap.alpha = 0;
-			addChild( tempBitmap );
+			newBackground.alpha = 0;
+			newBackground.addChild( getNewBackground() );
 			
-			TweenLite.killTweensOf( tempBitmap );
-			TweenLite.killTweensOf( background );
-			TweenLite.to( tempBitmap, .5, { alpha: 1, ease: Quad.easeOut } );
-			TweenLite.to( background, .5, { alpha: 0, ease: Quad.easeOut } );
+			TweenLite.killTweensOf( currentBackground );
+			TweenLite.killTweensOf( newBackground );
+			TweenLite.to( currentBackground, .5, { alpha: 0, ease: Quad.easeOut } );
+			TweenLite.to( newBackground, .5, { alpha: 1, ease: Quad.easeOut } );
 		}
 		
 	}

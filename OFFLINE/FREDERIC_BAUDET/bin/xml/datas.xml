@@ -27,4 +27,11 @@
 		<vignette img="easy_monay.jpeg" flv="easy_money.flv" title="EASY MONEY" director="P. DUSSOL" sound="" />
 		<vignette img="old_dog.jpeg" flv="old_dog.flv" title="OLD DOG" director="A. BOWYN" sound="" />
 	</short>
+	<links>
+		<link nom="Nom" prenom="Prenom" url="http://www.google.com" />
+		<link nom="Nom" prenom="Prenom" url="http://www.google.com" />
+		<link nom="Nom" prenom="Prenom" url="http://www.google.com" />
+		<link nom="Nom" prenom="Prenom" url="http://www.google.com" />
+		<link nom="Nom" prenom="Prenom" url="http://www.google.com" />
+	</links>
 </data>

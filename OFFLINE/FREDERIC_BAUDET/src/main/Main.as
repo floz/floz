@@ -28,6 +28,7 @@ package main
 		public var background:Background;
 		public var contact:MovieClip;
 		public var soundManager:SoundManager;
+		private var linksManager:LinksManager;
 		
 		private var vignettesManager:VignettesManager;
 		private var datas:Datas;
@@ -73,8 +74,6 @@ package main
 			vignettesManager.addEventListener( Vignette.VIGNETTE_CLICK, onVignetteClick );
 			cnt.addChild( vignettesManager );
 			
-			//menu.addEventListener( Menu.RUBRIQUE_CHANGE, onRubriqueChange );
-			
 			toolTips = [];
 			
 			curtain = new Sprite();
@@ -90,8 +89,11 @@ package main
 			addChild( curtain );
 			
 			contact.zMail.addEventListener( MouseEvent.CLICK, onMailClick );
-			contact.x = stage.stageWidth * .5 - contact.width * .5; //- 80 - this.x;
+			contact.x = 960 * .5 - contact.width * .5;
 			contact.y = stage.stageHeight - this.y - 25;
+			
+			soundManager.x = 960 * .5 + stage.stageWidth * .5 - soundManager.width;
+			soundManager.y = 560 * .5 + stage.stageHeight * .5 - 50;
 			
 			stage.addEventListener( Event.RESIZE, onResize );
 			
@@ -122,8 +124,9 @@ package main
 			curtain.height = 0;
 			curtain.visible = true;
 			curtain.scaleY = 0;
-			//Tweener.addTween( curtain, { height: stage.stageHeight, time: .4, transition: "easeOutQuad" } );
 			TweenLite.to( curtain, .4, { height: stage.stageHeight, ease: Quad.easeOut } );
+			
+			if ( soundManager.isActivated() ) soundManager.pause();
 			
 			player = new Player( Vignette( e.target ).getFLV() );
 			addChild( player );
@@ -133,8 +136,9 @@ package main
 		private function onCurtainClick(e:MouseEvent):void 
 		{
 			player.destroy();
-			//Tweener.addTween( curtain, { height: 0, time: .4, transition: "easeOutQuad", onComplete: reactivate } );
 			TweenLite.to( curtain, .4, { height: 0, ease: Quad.easeOut, onComplete: reactivate } );
+			
+			if ( soundManager.isActivated() ) soundManager.resume();
 		}
 		
 		private function onMailClick(e:MouseEvent):void 
@@ -159,26 +163,44 @@ package main
 			background.x = -this.x;
 			background.y = -this.y;
 			
-			contact.x = stage.stageWidth * .5 - contact.width * .5;
+			contact.x = 960 * .5 - contact.width * .5;
 			contact.y = stage.stageHeight - this.y - 25;
+			
+			soundManager.x = 960 * .5 + stage.stageWidth * .5 - soundManager.width;
+			soundManager.y = 560 * .5 + stage.stageHeight * .5 - 50;
 		}
 		
 		private function onRubriqueChange(e:Event):void 
 		{
+			if ( linksManager.numChildren ) linksManager.clear();
+			
 			var rubName:String = Menu( menu ).getRubriqueName();
-			vignettesManager.load( datas.getInfos( rubName ) );
 			
 			switch( rubName )
 			{
 				case Const.CLIP: background.changeColor( Const.CLIP_COLOR ); break;
 				case Const.PUB: background.changeColor( Const.PUB_COLOR ); break;
 				case Const.SHORT: background.changeColor( Const.SHORT_COLOR ); break;
+				case Const.LINKS: background.changeColor( Const.LINKS_COLOR ); break;
 			}
+			
+			if ( rubName != Const.LINKS )
+			{
+				vignettesManager.load( datas.getInfos( rubName ) );
+				return;
+			}
+			
+			vignettesManager.clear();
+			
+			linksManager.init();
 		}
 		
 		private function onComplete(e:Event):void 
 		{
 			datas.removeEventListener( Event.COMPLETE, onComplete );
+			
+			linksManager = new LinksManager( datas.getLinks() );
+			addChild( linksManager );
 			
 			onRubriqueChange( null );
 			menu.addEventListener( Menu.RUBRIQUE_CHANGE, onRubriqueChange );
