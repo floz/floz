@@ -27,6 +27,7 @@ package main
 		public var menu:MovieClip;
 		public var background:Background;
 		public var contact:MovieClip;
+		public var soundManager:SoundManager;
 		
 		private var vignettesManager:VignettesManager;
 		private var datas:Datas;
@@ -89,7 +90,7 @@ package main
 			addChild( curtain );
 			
 			contact.zMail.addEventListener( MouseEvent.CLICK, onMailClick );
-			contact.x = stage.stageWidth - contact.width - 80 - this.x;
+			contact.x = stage.stageWidth * .5 - contact.width * .5; //- 80 - this.x;
 			contact.y = stage.stageHeight - this.y - 25;
 			
 			stage.addEventListener( Event.RESIZE, onResize );
@@ -158,7 +159,7 @@ package main
 			background.x = -this.x;
 			background.y = -this.y;
 			
-			contact.x = stage.stageWidth - contact.width - 80 - this.x;
+			contact.x = stage.stageWidth * .5 - contact.width * .5;
 			contact.y = stage.stageHeight - this.y - 25;
 		}
 		
