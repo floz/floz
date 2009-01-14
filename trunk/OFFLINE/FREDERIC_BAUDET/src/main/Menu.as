@@ -18,6 +18,7 @@ package main
 		public var pub:MovieClip;
 		public var clip:MovieClip;
 		public var short:MovieClip;
+		public var links:MovieClip;
 		
 		private var rubriqueName:String;
 		private var currentButton:MovieClip;
@@ -51,6 +52,7 @@ package main
 				case pub.z: activateRubrique( Const.PUB, pub ); break;
 				case clip.z: activateRubrique( Const.CLIP, clip ); break;
 				case short.z: activateRubrique( Const.SHORT, short ); break;
+				case links.z: activateRubrique( Const.LINKS, links ); break;
 			}
 		}
 		

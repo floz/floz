@@ -192,8 +192,10 @@ package main
 		
 		public function destroy():void
 		{
-			ready = false;
-			Tweener.addTween( this, { scaleX: 0, scaleY: 0, time: .35, transition: "easeInOutQuad", onComplete: setReadyOff } );
+			//ready = false;
+			TweenLite.killTweensOf( this );
+			TweenLite.to( this, .35, { scaleX: 0, scaleY: 0, ease: Quad.easeInOut, onComplete: setReadyOff } );
+			//Tweener.addTween( this, { scaleX: 0, scaleY: 0, time: .35, transition: "easeInOutQuad", onComplete: setReadyOff } );
 		}
 		
 		public function enlarge():void

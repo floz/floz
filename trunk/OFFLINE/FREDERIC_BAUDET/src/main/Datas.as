@@ -63,6 +63,16 @@ package main
 			return a
 		}
 		
+		public function getLinks():Array
+		{
+			var a:Array = [];
+			
+			var x:XML;
+			for each( x in xml[ "links" ].link ) a.push( { nom: x.@nom, prenom: x.@prenom, url: x.@url } );
+			
+			return a
+		}
+		
 	}
 	
 }
