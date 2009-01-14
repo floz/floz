@@ -65,12 +65,24 @@ package main
 		
 		public function getLinks():Array
 		{
+			var tab:Array = [];
 			var a:Array = [];
 			
 			var x:XML;
-			for each( x in xml[ "links" ].link ) a.push( { nom: x.@nom, prenom: x.@prenom, url: x.@url } );
+			for each( x in xml[ "links" ][ "directors" ].link ) a.push( { url: x.@url, mail: x.@mail } );
+			tab.push( a );
+			a = [];
+			for each( x in xml[ "links" ][ "production" ].link ) a.push( { url: x.@url, mail: x.@mail } );
+			tab.push( a );
+			a = [];
+			for each( x in xml[ "links" ][ "storyboarder" ].link ) a.push( { url: x.@url, mail: x.@mail } );
+			tab.push( a );
+			a = [];
+			for each( x in xml[ "links" ][ "sound" ].link ) a.push( { url: x.@url, mail: x.@mail } );
+			tab.push( a );
+			a = [];
 			
-			return a
+			return tab
 		}
 		
 	}

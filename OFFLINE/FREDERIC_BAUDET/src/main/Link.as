@@ -16,6 +16,7 @@ package main
 		public var z:SimpleButton;
 		
 		public var url:String;
+		public var mail:Boolean;
 		
 		public function Link() 
 		{

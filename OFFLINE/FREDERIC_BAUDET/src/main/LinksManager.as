@@ -47,7 +47,7 @@ package main
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			request = new URLRequest( e.currentTarget.parent.url );
+			request = Link( e.currentTarget.parent ).mail ? new URLRequest( "mailTo:" + Link( e.currentTarget.parent ).url ) : new URLRequest( Link( e.currentTarget.parent ).url );
 			try
 			{
 				navigateToURL( request );
@@ -77,26 +77,70 @@ package main
 			var t:TextField;
 			
 			var colors:Array = Const.COLORS_VIVES;
+			var names:Array = [ "Directors", "Production", "Story Boarder", "Sound" ];
 			
+			var s:String;
+			var j:int;
+			var m:int;
+			var px:int;
+			var py:int;
+			var vy:int;
 			var n:int = links.length;
 			for ( var i:int; i < n; i++ )
 			{
 				link = new Link();
-				link.txt.text = links[ i ].nom + " " + links[ i ].prenom;
+				link.txt.text = names[ i ];
+				link.z.enabled = false;
 				
-				tf = link.txt.getTextFormat();
-				tf.color = colors[ int( Math.random() * colors.length ) ];
-				link.txt.setTextFormat( tf );
+				if ( i == 2 )
+				{
+					px = 290;
+					py = 0;
+					
+					vy = 0;
+				}
 				
-				link.y = 40 * i;
-				link.alpha = .2;
-				link.url = links[ i ].url;
+				py += vy * 40;
+				link.x = px;
+				link.y = py;
 				
-				TweenLite.to( link, .2, { y: link.y - 20, alpha: 1, delay: i * .05, ease: Back.easeOut } );
-				
-				link.z.addEventListener( MouseEvent.CLICK, onClick );
+				vy++;
 				
 				addChild( link );
+				
+				m = links[ i ].length;				
+				for ( j = 0; j < m; j++ )
+				{
+					link = new Link();
+					link.url = links[ i ][ j ].url;
+					if ( links[ i ][ j ].mail == "" )
+					{
+						s = links[ i ][ j ].url;
+						link.txt.text = s;
+						link.mail = true;
+					}
+					else 
+					{
+						s = links[ i ][ j ].url
+						link.txt.text = s.replace( /[@]/, " at " );
+						link.mail = false;
+					}
+					
+					tf = link.txt.getTextFormat();
+					tf.color = colors[ int( Math.random() * colors.length ) ];
+					link.txt.setTextFormat( tf );
+					
+					py += 40;
+					link.x = px;
+					link.y = py + 10;
+					link.alpha = .2;
+					
+					TweenLite.to( link, .2, { y: link.y - 20, alpha: 1, delay: i * .01, ease: Back.easeOut } );
+					
+					link.z.addEventListener( MouseEvent.CLICK, onClick );
+					
+					addChild( link );
+				}
 			}
 		}
 		
@@ -107,7 +151,7 @@ package main
 			var i:int;
 			var n:int = numChildren;
 			for ( i; i < n; i++ ) a.push( getChildAt( i ) );
-			for ( i = 0; i < n; i++ ) TweenLite.to( a[ i ], .2, { y: a[ i ].y + 20, alpha: .2, delay: i * .05, ease: Back.easeOut, onComplete: destroy, onCompleteParams: [ a[ i ] ] } );
+			for ( i = 0; i < n; i++ ) TweenLite.to( a[ i ], .2, { y: a[ i ].y + 20, alpha: .2, delay: i * .01, ease: Back.easeOut, onComplete: destroy, onCompleteParams: [ a[ i ] ] } );
 		}
 		
 	}
