@@ -52,7 +52,7 @@ package main
 			sound.load( request );
 			
 			soundTransf = new SoundTransform( .35 );
-			channel = sound.play( 0, 0, soundTransf );
+			channel = sound.play( 0, 100, soundTransf );
 			
 			z.addEventListener( MouseEvent.CLICK, onClick );
 		}

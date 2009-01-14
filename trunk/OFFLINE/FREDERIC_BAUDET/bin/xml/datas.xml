@@ -6,7 +6,7 @@
 		<vignette img="aides.jpeg" flv="aids.flv" title="A.I.D.S" director="A. BOWYN" sound="BOD" />
 		<vignette img="amnesty_international.jpeg" flv="amnesty_international.flv" title="Amnesty International" director="S. SEVERI" sound="" />
 		<vignette img="canal_sat.jpeg" flv="canalsat.flv" title="Canal sat" director="J. BACK" sound="" />
-		<vignette img="e_plus.jpeg" flv="e_plus.flv" title="E plus" director="F&R CARAZZO" sound="BOD" />
+		<vignette img="eplus.jpeg" flv="e_plus.flv" title="E plus" director="F&R CARAZZO" sound="BOD" />
 		<vignette img="haagen_dazs.jpeg" flv="haagen_dazs.flv" title="Haagen Dazs" director="JP. ROUX" sound="" />
 		<vignette img="lee_cooper.jpeg" flv="lee_cooper.flv" title="Lee Cooper" director="F & R CARAZZO" sound="BOD" />
 		<vignette img="lumina.jpeg" flv="lumina_ss.flv" title="Lumina SS" director="C. LYNGBYE" sound="BOD" />
@@ -17,21 +17,37 @@
 		<vignette img="volvic.jpeg" flv="Volvic Zidane.swf.flv" title="Volvic" director="JP. ROUX" sound="" />
 		<vignette img="gini.jpg" flv="gini.flv" title="Gini" director="C. LYNGBYE" sound="M. Pothier" />
 		<vignette img="trailblazer.jpeg" flv="trailblazer.flv" title="Trailblazer" director="F. Vroegop" sound="" />
+		<vignette img="shakatof.jpeg" flv="mybumpisbumpingl.flv" title="SHAKAPONK my bump" director="BoD" sound="" />
 	</pub>
 	<clip>
-		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS" director="F. VROEGOP" sound="" />
-		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI" sound="" />
-		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI" sound="" />
+		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS elle s’ennuie" director="F. VROEGOP" sound="" />
+		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI divine comedy" sound="" />
+		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI je cours" sound="" />
 	</clip>
 	<short>
 		<vignette img="easy_monay.jpeg" flv="easy_money.flv" title="EASY MONEY" director="P. DUSSOL" sound="" />
 		<vignette img="old_dog.jpeg" flv="old_dog.flv" title="OLD DOG" director="A. BOWYN" sound="" />
 	</short>
 	<links>
-		<link nom="Nom" prenom="Prenom" url="http://www.google.com" />
-		<link nom="Nom" prenom="Prenom" url="http://www.google.com" />
-		<link nom="Nom" prenom="Prenom" url="http://www.google.com" />
-		<link nom="Nom" prenom="Prenom" url="http://www.google.com" />
-		<link nom="Nom" prenom="Prenom" url="http://www.google.com" />
+		<directors>
+			<link url="www.frankvroegop.com" mail="" />
+			<link url="www.pascaldash.com" mail="" />
+			<link url="www.philshot.com" mail="" />
+		</directors>
+		<production>
+			<link url="www.2712productions.com" mail="" />
+			<link url="www.exod-us.com" mail="" />
+			<link url="www.filmworksdubai.com" mail="" />
+			<link url="www.gangfilms.com" mail="" />
+			<link url="www.delapostparis.com" mail="" />
+		</production>
+		<storyboarder>
+			<link url="michel.dore@zooloos.net" mail="y" />
+		</storyboarder>
+		<sound>
+			<link url="www.amagansett.fr" mail="" />
+			<link url="www.shakaponk.com" mail="" />
+			<link url="www.matthiaspothier.com" mail="" />
+		</sound>
 	</links>
 </data>
