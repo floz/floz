@@ -128,9 +128,9 @@ package main
 			
 			if ( soundManager.isActivated() ) soundManager.pause();
 			
-			player = new Player( Vignette( e.target ).getFLV() );
-			addChild( player );
-			player.init();
+			//player = new Player( Vignette( e.target ).getFLV() );
+			//addChild( player );
+			//player.init();
 		}
 		
 		private function onCurtainClick(e:MouseEvent):void 

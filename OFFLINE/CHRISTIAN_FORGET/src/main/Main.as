@@ -24,6 +24,7 @@ package main
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
+	import fr.minuit4.tools.FPS;
 	
 	public class Main extends MovieClip
 	{
@@ -86,6 +87,8 @@ package main
 			screen.addEventListener( Event.INIT, onVideoInit );
 			
 			menu.addEventListener( Event.SELECT, onMenuSelect );
+			
+			//addChild( new FPS() );
 		}
 		
 		// EVENTS
@@ -173,7 +176,7 @@ package main
 			
 			var text:TextField = new TextField();
 			text.width = stage.stageWidth;
-			text.htmlText = "email : " + contact.mail + "\n\nskype : " + contact.skype + "\n\ntel : " + contact.tel;
+			text.htmlText = "email : " + contact.mail + "\n\nskype : " + contact.skype + "\n\ncell : " + contact.tel;
 			text.setTextFormat( format );
 			text.multiline = true;
 			text.wordWrap = true;

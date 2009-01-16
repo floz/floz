@@ -8,6 +8,7 @@ package main
 {
 	import caurina.transitions.Tweener;
 	import fl.video.FLVPlayback;
+	import fl.video.VideoEvent;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.text.AntiAliasType;
@@ -21,11 +22,18 @@ package main
 	{
 		public var videoPlayer:FLVPlayback;
 		
+		private var flv:String;
+		
 		private var format:TextFormat;
 		private var infos:TextField;
 		
-		public function Player() 
+		private var currentUrl:String;
+		private var loading:Loading;
+		
+		public function Player( flv:String ) 
 		{
+			this.flv = flv;
+			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
@@ -46,17 +54,25 @@ package main
 			init();
 		}
 		
+		private function onReady(e:VideoEvent):void 
+		{
+			videoPlayer.removeEventListener( VideoEvent.READY, onReady );
+			
+			loading.stop();
+			videoPlayer.seek( 0 );
+			videoPlayer.play();
+		}
+		
 		// PRIVATE
 		
 		private function init():void
-		{
-			videoPlayer.setSize( 640, 360 );
-			videoPlayer.skinAutoHide = true;
-			videoPlayer.skinBackgroundAlpha = .9;
-			videoPlayer.skinFadeTime = 300;
-			videoPlayer.bitrate = 2000;
-			
+		{			
 			videoPlayer.bufferTime = .5;
+			
+			loading = new Loading( 0xffffff, 1, 4, 10, .9 );
+			loading.x = (parent.width >> 1) - loading.width - 2;
+			loading.y = (parent.height >> 1) - loading.height - 2;
+			addChild( loading );
 			
 			this.visible = false;
 			
@@ -86,8 +102,21 @@ package main
 		public function load( url:String, director:String, production:String, postProduction:String ):void
 		{
 			show();
-			videoPlayer.play( url );
-			//videoPlayer.seek( 0 );
+			
+			if ( currentUrl == url )
+			{
+				videoPlayer.seek( 0 );
+				videoPlayer.play();
+			}
+			else
+			{
+				loading.play();
+				
+				videoPlayer.addEventListener( VideoEvent.READY, onReady );
+				videoPlayer.load( url );
+			}
+			
+			currentUrl = url;
 			
 			infos.text = "Director : " + director + "\nProduction : " + production + "\nPostProduction : " + postProduction;
 			infos.setTextFormat( format );
@@ -101,14 +130,13 @@ package main
 			videoPlayer.volume = .4;
 			this.visible = true;
 			Tweener.addTween( this, { alpha: 1, transition: "easeInOutQuad", time: .8 } );
-			Tweener.addTween( videoPlayer, { alpha: 1, volume: 1, transition: "easeInOutQuad", time: .8 } );
+			Tweener.addTween( videoPlayer, { alpha: 1, volume: .8, transition: "easeInOutQuad", time: .8 } );
 		}
 		
 		public function hide():void
 		{
 			Tweener.addTween( this, { alpha: .6, transition: "easeInOutQuad", time: .4 } );
 			Tweener.addTween( videoPlayer, { volume: .4, transition: "easeInOutQuad", time: .4, onComplete: close } );
-			//this.visible = false;
 		}
 		
 	}

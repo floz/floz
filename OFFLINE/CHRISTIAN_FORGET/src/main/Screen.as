@@ -10,6 +10,7 @@ package main
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.geom.Matrix;
@@ -27,6 +28,7 @@ package main
 		private var downloaderArchives:Downloader;
 		private var downloader:Downloader;
 		private var player:Player;
+		private var cnt:Sprite;
 		
 		private var over:Boolean;
 		private var loading:Loading;
@@ -46,7 +48,7 @@ package main
 			_main = getAncestor( this, Main ) as Main;
 			_main.addEventListener( Main.READY, onReady );
 			
-			loading = new Loading();
+			loading = new Loading( 0xffffff, 1, 4, 10, .9 );
 			loading.x = (screen.width >> 1) - loading.width;
 			loading.y = (screen.height >> 1) - loading.height;
 			addChild( loading );
@@ -62,8 +64,10 @@ package main
 			
 			downloader = downloaderWorks;
 			
-			player = new Player();
+			player = new Player( "" );
 			addChild( player );
+			//cnt = new Sprite();
+			//addChild( cnt );
 		}
 		
 		private function onLoadComplete(e:Event):void 
@@ -135,6 +139,8 @@ package main
 		
 		public function clear():void
 		{
+			loading.stop();
+			
 			over = false;
 			screen.fillRect( screen.rect, 0x00ffffff );
 		}
@@ -142,7 +148,14 @@ package main
 		public function select( url:String, director:String, production:String, postProduction:String ):void
 		{
 			downloader.stop();
-			player.load( url, director, production, postProduction );
+			loading.stop();
+			player.load( url, director, production, postProduction ); // addchild le player
+			
+			//while ( cnt.numChildren ) cnt.removeChildAt( 0 );
+			//player = new Player( url );
+			//cnt.addChild( player );
+			//
+			//player.load( url, director, production, postProduction );
 		}
 		
 		public function close():void

@@ -11,6 +11,7 @@
 		<item name="Fiat" preview="fiat_idea.jpg" film="news/Fiat_idea21.flv" director="Henri Bargès" production="2332 (Kiev)" postproduction="Copirate" />
 		<item name="La poste" preview="la_poste.jpg" film="news/laposte1.flv" director="Henri Bargès" production="2332 (Kiev)" postproduction="Copirate" />
 		<item name="Michelin hivers" preview="siera.jpg" film="news/MICHELIN02small.flv" director="Henri Bargès" production="2332 (Kiev)" postproduction="Copirate" />
+		<item name="NOM_DU_FILM" preview="NOM_DE_L'IMAGE.jpg" film="NOM_DU_FILM.flv" director="Christian Forget" production="PRODUCTION" postproduction="POSTPRODUCTION" />
 	</works>
 	<archives>
 		<item name="Canal" preview="Canal_good.png" film="archives/Canal_good.flv" director="Henri Bargès" production="2332 (Kiev)" postproduction="Copirate" />
