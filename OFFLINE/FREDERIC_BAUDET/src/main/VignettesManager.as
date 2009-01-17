@@ -135,7 +135,7 @@ package main
 		
 		private function initLoadingMess():void
 		{
-			loading.txt.text = "Loading, please wait.";
+			loading.txt.text = "Loading, please wait...";
 			
 			loading.x = 726 + 100;
 			loading.y = 22 + 250;

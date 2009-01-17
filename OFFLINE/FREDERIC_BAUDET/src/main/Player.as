@@ -51,6 +51,8 @@ package main
 			this.scaleY = 0;
 			this.visible = false;
 			
+			vdo.bufferTime = .5;
+			
 			loading = new Loading();
 			addChild( loading );
 		}
@@ -94,6 +96,7 @@ package main
 		public function init( url:String ):void
 		{
 			this.visible = true;
+			vdo.volume = 1;
 			
 			if ( currentUrl == url )
 			{
