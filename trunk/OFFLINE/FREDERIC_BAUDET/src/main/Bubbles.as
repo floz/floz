@@ -65,7 +65,7 @@ package main
 			
 			aParticles.push( p );
 			
-			if ( ( n + 1 ) >= 15 ) 
+			if ( ( n + 1 ) >= 20 ) 
 			{
 				removeEventListener( Event.ENTER_FRAME, onFrame );
 				

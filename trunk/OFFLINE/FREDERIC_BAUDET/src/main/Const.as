@@ -16,8 +16,8 @@ package main
 		
 		public static const PUB_COLOR:Array = [ 0x951b32, 0x7e2f5f ]; // [ intérieur, extérieur ]
 		public static const CLIP_COLOR:Array = [ 0xf9870d, 0xe7380d ];
-		public static const SHORT_COLOR:Array = [ 0xb1dd30, 0x709a1c ];
-		public static const LINKS_COLOR:Array = [ 0x1d97d6, 0x044668 ];
+		public static const SHORT_COLOR:Array = [ 0xb1dd30, 0x2e750b ];
+		public static const LINKS_COLOR:Array = [ 0x1d97d6, 0x085862 ];
 			
 			public static const POSITIONS:Array = 
 			[ { x: 70, y: 413 }, // 1
@@ -43,7 +43,7 @@ package main
 			];
 			
 		public static const COLORS:Array = [ 0xb3da41, 0x7ba31e, 0xdf48d3, 0xb56df3, 0xd42d09, 0xfbed2c, 0xf98613, 0xed3801, 0x0165ed, 0x01b8ed, 0xe9248e ];
-		public static const COLORS_VIVES:Array = [ 0xfbed2c, 0xf98613, 0x0165ed, 0xdf48d3, 0xb3da41, 0xe9248e ];
+		public static const COLORS_VIVES:Array = [ 0xfbed2c, 0xf98613, 0xb3da41, 0xe9248e ];
 	}
 	
 }

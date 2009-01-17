@@ -17,7 +17,7 @@ package main
 		
 		public var xVel:Number = 0;
 		public var yVel:Number = 0;
-		public var friction:Number = .95;
+		public var friction:Number = .98;
 		public var fade:Number = .015;
 		public var shrink:Number = .02;
 		

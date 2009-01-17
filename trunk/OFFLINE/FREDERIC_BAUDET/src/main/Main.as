@@ -88,12 +88,15 @@ package main
 			curtain.addEventListener( MouseEvent.CLICK, onCurtainClick );
 			addChild( curtain );
 			
+			player = new Player();
+			addChild( player );
+			
 			contact.zMail.addEventListener( MouseEvent.CLICK, onMailClick );
-			contact.x = 960 * .5 - contact.width * .5;
+			contact.x = 960 * .5 - contact.width * .5 - 100;
 			contact.y = stage.stageHeight - this.y - 25;
 			
-			soundManager.x = 960 * .5 + stage.stageWidth * .5 - soundManager.width;
-			soundManager.y = 560 * .5 + stage.stageHeight * .5 - 50;
+			soundManager.x = 960 * .5 + stage.stageWidth * .5 - soundManager.width - 10;
+			soundManager.y = 560 * .5 + stage.stageHeight * .5 - 60;
 			
 			stage.addEventListener( Event.RESIZE, onResize );
 			
@@ -128,9 +131,7 @@ package main
 			
 			if ( soundManager.isActivated() ) soundManager.pause();
 			
-			//player = new Player( Vignette( e.target ).getFLV() );
-			//addChild( player );
-			//player.init();
+			player.init( Vignette( e.target ).getFLV() );
 		}
 		
 		private function onCurtainClick(e:MouseEvent):void 
@@ -163,11 +164,11 @@ package main
 			background.x = -this.x;
 			background.y = -this.y;
 			
-			contact.x = 960 * .5 - contact.width * .5;
+			contact.x = 960 * .5 - contact.width * .5 - 100;
 			contact.y = stage.stageHeight - this.y - 25;
 			
-			soundManager.x = 960 * .5 + stage.stageWidth * .5 - soundManager.width;
-			soundManager.y = 560 * .5 + stage.stageHeight * .5 - 50;
+			soundManager.x = 960 * .5 + stage.stageWidth * .5 - soundManager.width - 10;
+			soundManager.y = 560 * .5 + stage.stageHeight * .5 - 60;
 		}
 		
 		private function onRubriqueChange(e:Event):void 

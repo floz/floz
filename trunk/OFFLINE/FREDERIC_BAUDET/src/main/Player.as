@@ -8,6 +8,7 @@ package main
 {
 	import caurina.transitions.Tweener;
 	import fl.video.FLVPlayback;
+	import fl.video.VideoEvent;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -19,12 +20,14 @@ package main
 	{
 		public var vdo:FLVPlayback;
 		
-		private var flv:String;
+		private var loading:Loading;
+		private var showLoading:Boolean;
 		
-		public function Player( flv:String ) 
+		private var url:String;
+		private var currentUrl:String;
+		
+		public function Player() 
 		{
-			this.flv = flv;
-			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
@@ -33,8 +36,6 @@ package main
 		private function onRemovedFromStage(e:Event):void 
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
-			//Tweener.removeTweens( this );
-			//Tweener.removeTweens( vdo );
 			TweenLite.killTweensOf( this );
 			TweenLite.killTweensOf( vdo );
 		}
@@ -48,40 +49,74 @@ package main
 			this.y = 560 * .5;
 			this.scaleX =
 			this.scaleY = 0;
+			this.visible = false;
+			
+			loading = new Loading();
+			addChild( loading );
+		}
+		
+		private function onReady( e:VideoEvent ):void
+		{
+			vdo.removeEventListener( VideoEvent.READY, onReady );
+			
+			vdo.seek( 0 );
+			vdo.play();
+			
+			if( showLoading ) closeWaitMess();
 		}
 		
 		// PRIVATE
 		
 		private function deleting():void
 		{
-			stop();
-			parent.removeChild( this );
+			vdo.seek( 0 );
+			vdo.stop();
+			this.visible = false;
+		}
+		
+		private function showWaitMess():void
+		{
+			showLoading = true;
+			
+			loading.scaleX =
+			loading.scaleY = 1;
+		}
+		
+		private function closeWaitMess():void
+		{
+			showLoading = false;
+			
+			TweenLite.to( loading, .2, { scaleX: 0, scaleY: 0, ease: Expo.easeInOut } );
 		}
 		
 		// PUBLIC
 		
-		public function init():void
-		{			
-			//Tweener.addTween( this, { scaleX: 1, scaleY:1, time: .4, transition: "easeInOutExpo", onComplete: play } );
-			TweenLite.to( this, .4, { scaleX: 1, scaleY: 1, ease: Expo.easeInOut, onComplete: play } );
+		public function init( url:String ):void
+		{
+			this.visible = true;
+			
+			if ( currentUrl == url )
+			{
+				vdo.seek( 0 );
+				vdo.play();
+			}
+			else
+			{
+				showWaitMess();
+				
+				vdo.addEventListener( VideoEvent.READY, onReady );
+				vdo.load( url );
+			}
+			
+			currentUrl = url;			
+			
+			TweenLite.to( this, .4, { scaleX: 1, scaleY: 1, ease: Expo.easeInOut } );
 		}
 		
 		public function destroy():void
 		{
-			//Tweener.addTween( vdo, { volume: 0, time: .4, transition: "easeOutQuad" } );
-			//Tweener.addTween( this, { scaleX: 0, scaleY:0, time: .4, transition: "easeInOutExpo", onComplete: deleting } );
 			TweenLite.to( vdo, .4, { volume: 0, ease: Quad.easeOut } );
 			TweenLite.to( this, .4, { scaleX: 0, scaleY: 0, ease: Expo.easeInOut, onComplete: deleting } );
-		}
-		
-		public function play():void
-		{
-			vdo.play( flv );
-		}
-		
-		public function stop():void
-		{
-			vdo.stop();
 		}
 		
 	}
