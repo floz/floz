@@ -12,6 +12,8 @@ package main
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import gs.easing.Expo;
+	import gs.TweenLite;
 	
 	public class VignettesManager extends Sprite
 	{
@@ -24,7 +26,7 @@ package main
 		
 		private var currentVignette:Vignette;
 		private var ableToLoad:Boolean;
-		//private var dispToSwap:Sprite;
+		private var loading:Loading;
 		
 		// Default var
 		
@@ -59,6 +61,10 @@ package main
 			addChild( cnt );
 			
 			infosVignettes = [];
+			
+			loading = new Loading();
+			initLoadingMess();
+			addChild( loading );
 			
 			downloader = new Downloader();
 			downloader.addEventListener( Downloader.ITEM_LOADED, onItemLoaded );
@@ -101,7 +107,15 @@ package main
 			cnt.addChild( v );
 			cnt.setChildIndex( v, downloader.currentCount - 1 );
 			v.setIndex( downloader.currentCount - 1 );
-			v.init();			
+			v.init();
+			
+			loading.txt.text = "Loading : " + downloader.currentCount + " of " + downloader.totalCount;
+			
+			if ( !downloader.hasNext() )
+			{
+				hideLoadingMess();
+				return;
+			}
 			
 			downloader.loadNext();
 		}
@@ -117,6 +131,26 @@ package main
 		private function getRadians( degres:Number ):Number
 		{
 			return ( Math.PI * degres ) / 180;	
+		}
+		
+		private function initLoadingMess():void
+		{
+			loading.txt.text = "Loading, please wait.";
+			
+			loading.x = 726 + 100;
+			loading.y = 22 + 250;
+			loading.scaleX =
+			loading.scaleY = 0;
+		}
+		
+		private function showLoadingMess():void
+		{
+			TweenLite.to( loading, .4, { scaleX: 1, scaleY: 1, ease: Expo.easeInOut } );
+		}
+		
+		private function hideLoadingMess():void
+		{
+			TweenLite.to( loading, .4, { scaleX: 0, scaleY: 0, ease: Expo.easeInOut } );
 		}
 		
 		private function initFakeVignettes():void
@@ -139,6 +173,11 @@ package main
 		
 		public function load( infos:Array ):void
 		{
+			initLoadingMess();
+			showLoadingMess();
+			
+			//
+			
 			currentVignette = null;
 			
 			var a:Array = [];

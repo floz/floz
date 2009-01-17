@@ -6,6 +6,7 @@
  */
 package main 
 {
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -60,7 +61,7 @@ package main
 		
 		// PRIVATE
 		
-		private function destroy( link:Link ):void
+		private function destroy( link:MovieClip ):void
 		{
 			removeChild( link );
 		}
@@ -72,12 +73,13 @@ package main
 			while ( numChildren ) removeChildAt( 0 );
 			
 			var link:Link;
+			var title:Title;
 			
 			var tf:TextFormat;
 			var t:TextField;
 			
 			var colors:Array = Const.COLORS_VIVES;
-			var names:Array = [ "Directors", "Production", "Story Boarder", "Sound" ];
+			var names:Array = [ "Directors", "Production", "Post Production", "Story Boarder", "Sound" ];
 			
 			var s:String;
 			var j:int;
@@ -88,11 +90,11 @@ package main
 			var n:int = links.length;
 			for ( var i:int; i < n; i++ )
 			{
-				link = new Link();
-				link.txt.text = names[ i ];
-				link.z.enabled = false;
+				title = new Title();
+				title.txt.text = names[ i ];
+				//link.z.enabled = false;
 				
-				if ( i == 2 )
+				if ( i == 3 )
 				{
 					px = 290;
 					py = 0;
@@ -100,37 +102,41 @@ package main
 					vy = 0;
 				}
 				
-				py += vy * 40;
-				link.x = px;
-				link.y = py;
+				py += vy ? 40 : 0;
+				title.x = px;
+				title.y = py;
 				
+				py += 20;
 				vy++;
 				
-				addChild( link );
+				addChild( title );
 				
 				m = links[ i ].length;				
 				for ( j = 0; j < m; j++ )
 				{
 					link = new Link();
 					link.url = links[ i ][ j ].url;
-					if ( links[ i ][ j ].mail == "" )
-					{
-						s = links[ i ][ j ].url;
-						link.txt.text = s;
-						link.mail = true;
-					}
-					else 
-					{
-						s = links[ i ][ j ].url
-						link.txt.text = s.replace( /[@]/, " at " );
-						link.mail = false;
-					}
+					
+					s = links[ i ][ j ].url;
+					link.txt.text = s;
+					link.mail = links[ i ][ j ].mail == "" ? false : true;
+						
+					//if ( links[ i ][ j ].mail == "" )
+					//{						
+						//link.mail = true;
+					//}
+					//else 
+					//{
+						//s = links[ i ][ j ].url
+						//link.txt.text = s.replace( /[@]/, " [at] " );
+						//link.mail = false;
+					//}
 					
 					tf = link.txt.getTextFormat();
 					tf.color = colors[ int( Math.random() * colors.length ) ];
 					link.txt.setTextFormat( tf );
 					
-					py += 40;
+					py += 25;
 					link.x = px;
 					link.y = py + 10;
 					link.alpha = .2;

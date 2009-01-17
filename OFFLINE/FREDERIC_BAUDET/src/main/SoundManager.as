@@ -86,11 +86,15 @@ package main
 		
 		public function pause():void
 		{
+			gotoAndPlay( "showOff" );
+			
 			TweenLite.to( soundTransf, .4, { volume: 0, ease: Quad.easeOut, onUpdate: applyVolume } );
 		}
 		
 		public function resume():void
 		{
+			gotoAndPlay( "closeOff" );
+			
 			TweenLite.killTweensOf( soundTransf );
 			TweenLite.to( soundTransf, .4, { volume: .35, ease: Quad.easeOut, onUpdate: applyVolume } );
 		}

@@ -74,6 +74,9 @@ package main
 			a = [];
 			for each( x in xml[ "links" ][ "production" ].link ) a.push( { url: x.@url, mail: x.@mail } );
 			tab.push( a );
+			a = [];			
+			for each( x in xml[ "links" ][ "postproduction" ].link ) a.push( { url: x.@url, mail: x.@mail } );
+			tab.push( a );
 			a = [];
 			for each( x in xml[ "links" ][ "storyboarder" ].link ) a.push( { url: x.@url, mail: x.@mail } );
 			tab.push( a );
