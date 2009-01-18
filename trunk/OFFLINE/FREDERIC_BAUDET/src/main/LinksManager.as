@@ -78,7 +78,7 @@ package main
 			var tf:TextFormat;
 			var t:TextField;
 			
-			var colors:Array = Const.COLORS_VIVES;
+			var colors:Array = Const.COLORS_LINKS;
 			var names:Array = [ "Directors", "Production", "Post Production", "Story Boarder", "Sound" ];
 			
 			var s:String;
@@ -92,6 +92,9 @@ package main
 			{
 				title = new Title();
 				title.txt.text = names[ i ];
+				tf = title.txt.getTextFormat();
+				tf.color = colors[ i ];
+				title.txt.setTextFormat( tf );
 				//link.z.enabled = false;
 				
 				if ( i == 3 )
@@ -133,7 +136,7 @@ package main
 					//}
 					
 					tf = link.txt.getTextFormat();
-					tf.color = colors[ int( Math.random() * colors.length ) ];
+					tf.color = 0x000000;//colors[ int( Math.random() * colors.length ) ];
 					link.txt.setTextFormat( tf );
 					
 					py += 25;
