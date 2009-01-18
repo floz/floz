@@ -10,8 +10,12 @@ package main
 	import fl.video.FLVPlayback;
 	import fl.video.VideoEvent;
 	import flash.display.MovieClip;
+	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.net.navigateToURL;
+	import flash.net.URLRequest;
 	import gs.easing.Expo;
 	import gs.easing.Quad;
 	import gs.TweenLite;
@@ -19,9 +23,12 @@ package main
 	public class Player extends Sprite 
 	{
 		public var vdo:FLVPlayback;
+		public var zDownload:SimpleButton;
 		
 		private var loading:Loading;
 		private var showLoading:Boolean;
+		
+		private var request:URLRequest;
 		
 		private var url:String;
 		private var currentUrl:String;
@@ -55,6 +62,22 @@ package main
 			
 			loading = new Loading();
 			addChild( loading );
+			
+			zDownload.visible = false;
+			zDownload.addEventListener( MouseEvent.CLICK, onClick );
+		}
+		
+		private function onClick(e:MouseEvent):void 
+		{
+			request = new URLRequest( "http://wystor.free.fr/" + currentUrl );
+			try
+			{
+				navigateToURL( request, "_blank" );
+			}
+			catch ( er:Error )
+			{
+				trace ( "navigateToURL error : " + er.message );
+			}
 		}
 		
 		private function onReady( e:VideoEvent ):void
@@ -64,6 +87,7 @@ package main
 			vdo.seek( 0 );
 			vdo.play();
 			
+			zDownload.visible = true;
 			if( showLoading ) closeWaitMess();
 		}
 		
@@ -102,9 +126,12 @@ package main
 			{
 				vdo.seek( 0 );
 				vdo.play();
+				
+				zDownload.visible = true;
 			}
 			else
 			{
+				zDownload.visible = false;
 				showWaitMess();
 				
 				vdo.addEventListener( VideoEvent.READY, onReady );

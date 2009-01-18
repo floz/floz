@@ -48,10 +48,10 @@ package main
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			request = Link( e.currentTarget.parent ).mail ? new URLRequest( "mailTo:" + Link( e.currentTarget.parent ).url ) : new URLRequest( Link( e.currentTarget.parent ).url );
+			request = Link( e.currentTarget.parent ).mail ? new URLRequest( "mailTo:" + Link( e.currentTarget.parent ).url ) : new URLRequest( "http://" + Link( e.currentTarget.parent ).url );
 			try
 			{
-				navigateToURL( request );
+				navigateToURL( request, "_blank" );
 			}
 			catch ( er:Error )
 			{

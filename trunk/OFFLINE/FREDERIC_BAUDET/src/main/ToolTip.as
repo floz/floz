@@ -71,13 +71,11 @@ package main
 			this.title.setTextFormat( tf );
 			
 			this.visible = true;
-			//Tweener.addTween( this, { alpha: .9, y: this.y + 10, time: .2, transition: "easeOutQuad" } );
 			TweenLite.to( this, .2, { alpha: .9, y: this.y + 10, ease: Quad.easeOut } );
 		}
 		
 		public function desactivate():void
 		{
-			//Tweener.addTween( this, { alpha: 0, y: this.y - 10, time: .2, transition: "easeOutQuad", onComplete: disable } );
 			TweenLite.to( this, .2, { alpha: 0, y: this.y - 10, ease: Quad.easeOut, onComplete: disable } );
 		}
 		
