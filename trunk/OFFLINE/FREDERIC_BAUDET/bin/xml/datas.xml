@@ -17,18 +17,22 @@
 		<vignette img="volvic.jpeg" flv="Volvic Zidane.swf.flv" title="Volvic" director="JP. ROUX" sound="" />
 		<vignette img="gini.jpg" flv="gini.flv" title="Gini" director="C. LYNGBYE" sound="M. Pothier" />
 		<vignette img="trailblazer.jpeg" flv="trailblazer.flv" title="Trailblazer" director="F. Vroegop" sound="" />
-		<vignette img="norauto.jpeg" flv="norauto.flv" title="Norauto" director="Christian Lyngbye" sound="Matthias Pothier" />
+		<vignette img="norauto.jpeg" flv="norauto.flv" title="Norauto" director="C. Lyngbye" sound="M. Pothier" />
 		<vignette img="mennen.jpeg" flv="mennen.flv" title="Mennen" director="Derek Richard" sound="Bod" />
 	</pub>
 	<clip>
 		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS elle s’ennuie" director="F. VROEGOP" sound="" />
-		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI divine comedy" sound="" />
-		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI je cours" sound="" />
+		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO je cours" director="M.MAGGIORI" sound="" />
+		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO divine excuse" director="M.MAGGIORI" sound="" />
 		<vignette img="shakatof.jpeg" flv="mybumpisbumpingl.flv" title="SHAKAPONK my bump" director="Bod" sound="" />
 	</clip>
 	<short>
 		<vignette img="easy_monay.jpeg" flv="easy_money.flv" title="EASY MONEY" director="P. DUSSOL" sound="" />
 		<vignette img="old_dog.jpeg" flv="old_dog.flv" title="OLD DOG" director="A. BOWYN" sound="" />
+		<vignette img="lagoutte.jpeg" flv="13eruelagoutte.flv" title="La goutte" director="Les ROJOS" sound="Ben" />
+		<vignette img="lak7.jpeg" flv="13eruelaK7.flv" title="La K7" director="Les ROJOS" sound="Ben" />
+		<vignette img="laplume.jpeg" flv="13eruelaplume.flv" title="La plume" director="Les ROJOS" sound="Ben" />
+		<vignette img="Luma.jpeg" flv="lumabod.flv" title="Luma" director="A. BOWYN" sound="BoD" />
 	</short>
 	<links>
 		<directors>
