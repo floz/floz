@@ -30,6 +30,7 @@ package main
 		
 		private var request:URLRequest;
 		
+		private var downloadable:Boolean;
 		private var url:String;
 		private var currentUrl:String;
 		
@@ -59,6 +60,7 @@ package main
 			this.visible = false;
 			
 			vdo.bufferTime = .5;
+			//vdo.seekBarScrubTolerance = 80;
 			
 			loading = new Loading();
 			addChild( loading );
@@ -87,7 +89,7 @@ package main
 			vdo.seek( 0 );
 			vdo.play();
 			
-			zDownload.visible = true;
+			zDownload.visible = !downloadable ? true : false;
 			if( showLoading ) closeWaitMess();
 		}
 		
@@ -117,17 +119,21 @@ package main
 		
 		// PUBLIC
 		
-		public function init( url:String ):void
+		public function init( url:String, downloadable:Boolean ):void
 		{
+			this.downloadable = downloadable; // downloadable = !isLocked();
+			
 			this.visible = true;
 			vdo.volume = 1;
+			vdo.seekBarInterval = 33;
+			vdo.seekBarScrubTolerance = 1;
 			
 			if ( currentUrl == url )
 			{
 				vdo.seek( 0 );
 				vdo.play();
 				
-				zDownload.visible = true;
+				zDownload.visible = !downloadable ? true : false;
 			}
 			else
 			{

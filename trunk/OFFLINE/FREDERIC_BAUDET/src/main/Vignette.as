@@ -34,6 +34,7 @@ package main
 		private var title:String;
 		private var director:String;
 		private var sound:String;
+		private var lock:Boolean;
 		private var size:Number;
 		//
 		private var normalSize:Number;
@@ -44,7 +45,7 @@ package main
 		private var ready:Boolean;
 		private var dispatchable:Boolean;
 		
-		public function Vignette( preview:BitmapData, flv:String, title:String, director:String, sound:String, size:Number = 50 )
+		public function Vignette( preview:BitmapData, flv:String, title:String, director:String, sound:String, lock:Boolean, size:Number = 50 )
 		{			
 			this.preview = preview;
 			this.flv = flv;
@@ -52,6 +53,7 @@ package main
 			this.director = director;
 			this.sound = sound;
 			this.size = size;
+			this.lock = lock;
 			
 			var g:Graphics = this.graphics;
 			g.beginFill( 0x000000 );
@@ -186,30 +188,26 @@ package main
 		
 		public function init():void
 		{
-			//Tweener.addTween( this, { scaleX: 1, scaleY: 1, time: .35, transition: "easeInOutQuad", onComplete: setReadyOn } );
 			TweenLite.to( this, .35, { scaleX: 1, scaleY: 1, ease: Quad.easeInOut, onComplete: setReadyOn } );
 		}
 		
 		public function destroy():void
 		{
-			//ready = false;
 			TweenLite.killTweensOf( this );
 			TweenLite.to( this, .35, { scaleX: 0, scaleY: 0, ease: Quad.easeInOut, onComplete: setReadyOff } );
-			//Tweener.addTween( this, { scaleX: 0, scaleY: 0, time: .35, transition: "easeInOutQuad", onComplete: setReadyOff } );
 		}
 		
 		public function enlarge():void
 		{
-			//Tweener.addTween( this, { width: enlargedSize, height: enlargedSize, time: .3, transition: "easeInOutExpo", onUpdate: onUpdateTween, onUpdateParams: [ true ] } );
 			TweenLite.to( this, .3, { width: enlargedSize, height: enlargedSize, ease: Expo.easeInOut, onUpdate: onUpdateTween, onUpdateParams: [ true ] } );
 		}
 		
 		public function normalize():void
 		{
-			//Tweener.addTween( this, { width: normalSize, height: normalSize, time: .3, transition: "easeInOutBack", onUpdate: onUpdateTween, onUpdateParams: [ false ] } );
 			TweenLite.to( this, .3, { width: normalSize, height: normalSize, ease: Back.easeInOut, onUpdate: onUpdateTween, onUpdateParams: [ false ] } );
 		}
 		
+		public function isLocked():Boolean { return this.lock };
 		public function setIndex( index:int ):void { this.index = index };
 		public function getIndex():int { return this.index; }		
 		public function getTitle():String { return this.title; }

@@ -28,6 +28,7 @@ package main
 		public var background:Background;
 		public var contact:MovieClip;
 		public var soundManager:SoundManager;
+		public var logo:MovieClip;
 		private var linksManager:LinksManager;
 		
 		private var vignettesManager:VignettesManager;
@@ -67,6 +68,9 @@ package main
 			
 			background.x = -this.x;
 			background.y = -this.y;
+			
+			logo.x = -47 + 980 * .5 - stage.stageWidth * .5;
+			logo.y = -38 + 560 * .5 - stage.stageHeight * .5;
 			
 			vignettesManager = new VignettesManager();
 			vignettesManager.addEventListener( Vignette.VIGNETTE_OVER, onVignetteOver );
@@ -117,7 +121,7 @@ package main
 		
 		private function onVignetteOut(e:Event):void 
 		{
-			if ( toolTips.length ) Tooltip( toolTips.shift() ).desactivate();		
+			if ( toolTips.length ) Tooltip( toolTips.shift() ).desactivate();
 		}
 		
 		private function onVignetteClick(e:Event):void 
@@ -131,7 +135,7 @@ package main
 			
 			if ( soundManager.isActivated() ) soundManager.pause();
 			
-			player.init( Vignette( e.target ).getFLV() );
+			player.init( Vignette( e.target ).getFLV(), Vignette( e.target ).isLocked() );
 		}
 		
 		private function onCurtainClick(e:MouseEvent):void 
@@ -163,6 +167,9 @@ package main
 			
 			background.x = -this.x;
 			background.y = -this.y;
+			
+			logo.x = -47 + 980 * .5 - stage.stageWidth * .5;
+			logo.y = -38 + 560 * .5 - stage.stageHeight * .5;
 			
 			contact.x = 960 * .5 - contact.width * .5 - 100;
 			contact.y = stage.stageHeight - this.y - 25;
