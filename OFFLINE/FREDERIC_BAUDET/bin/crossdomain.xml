@@ -1,0 +1,5 @@
+﻿<?xml version="1.0"?>
+<cross-domain-policy>
+    <allow-access-from domain="http://www.fredbaudet-editor.com" />
+</cross-domain-policy>
+
