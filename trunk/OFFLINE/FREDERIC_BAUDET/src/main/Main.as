@@ -18,6 +18,7 @@ package main
 	import flash.events.MouseEvent;
 	import flash.net.navigateToURL;
 	import flash.net.URLRequest;
+	import flash.system.Security;
 	import gs.easing.Quad;
 	import gs.TweenLite;
 	
@@ -28,7 +29,6 @@ package main
 		public var background:Background;
 		public var contact:MovieClip;
 		public var soundManager:SoundManager;
-		public var logo:MovieClip;
 		private var linksManager:LinksManager;
 		
 		private var vignettesManager:VignettesManager;
@@ -63,14 +63,17 @@ package main
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			
+			//Security.loadPolicyFile( "crossdomain.xml" );
+			Security.allowDomain( "http://www.fredbaudet-editor.com" );
+			
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
 			background.x = -this.x;
 			background.y = -this.y;
 			
-			logo.x = -47 + 980 * .5 - stage.stageWidth * .5;
-			logo.y = -38 + 560 * .5 - stage.stageHeight * .5;
+			//logo.x = -47 + 980 * .5 - stage.stageWidth * .5;
+			//logo.y = -38 + 560 * .5 - stage.stageHeight * .5;
 			
 			vignettesManager = new VignettesManager();
 			vignettesManager.addEventListener( Vignette.VIGNETTE_OVER, onVignetteOver );
@@ -168,8 +171,8 @@ package main
 			background.x = -this.x;
 			background.y = -this.y;
 			
-			logo.x = -47 + 980 * .5 - stage.stageWidth * .5;
-			logo.y = -38 + 560 * .5 - stage.stageHeight * .5;
+			//logo.x = -47 + 980 * .5 - stage.stageWidth * .5;
+			//logo.y = -38 + 560 * .5 - stage.stageHeight * .5;
 			
 			contact.x = 960 * .5 - contact.width * .5 - 100;
 			contact.y = stage.stageHeight - this.y - 25;

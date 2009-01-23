@@ -13,9 +13,13 @@ package main
 	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
+	import flash.events.SecurityErrorEvent;
+	import flash.net.FileReference;
 	import flash.net.navigateToURL;
 	import flash.net.URLRequest;
+	import flash.system.Security;
 	import gs.easing.Expo;
 	import gs.easing.Quad;
 	import gs.TweenLite;
@@ -33,9 +37,10 @@ package main
 		private var downloadable:Boolean;
 		private var url:String;
 		private var currentUrl:String;
+		private var file:FileReference;
 		
 		public function Player() 
-		{
+		{			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
@@ -62,6 +67,8 @@ package main
 			vdo.bufferTime = .5;
 			//vdo.seekBarScrubTolerance = 80;
 			
+			
+			
 			loading = new Loading();
 			addChild( loading );
 			
@@ -69,17 +76,37 @@ package main
 			zDownload.addEventListener( MouseEvent.CLICK, onClick );
 		}
 		
+		private function onIOError(e:IOErrorEvent):void 
+		{
+			trace( "Player.onIOError : " + request.url );
+		}
+		
 		private function onClick(e:MouseEvent):void 
 		{
-			request = new URLRequest( "http://wystor.free.fr/" + currentUrl );
-			try
-			{
-				navigateToURL( request, "_blank" );
-			}
-			catch ( er:Error )
-			{
-				trace ( "navigateToURL error : " + er.message );
-			}
+			if ( file ) file.removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			
+			//
+			
+			request = new URLRequest( "http://www.fredbaudet-editor.com/" + currentUrl );
+			file = new FileReference();
+			file.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			file.addEventListener( SecurityErrorEvent.SECURITY_ERROR, onSecurityError );
+			file.download( request );
+			
+			//try
+			//{
+				//navigateToURL( request, "_blank" );
+			//}
+			//catch ( er:Error )
+			//{
+				//trace ( "navigateToURL error : " + er.message );
+			//}
+		}
+		
+		private function onSecurityError(e:SecurityErrorEvent):void 
+		{
+			trace( "Player.onSecurityError > e : " + e );
+			
 		}
 		
 		private function onReady( e:VideoEvent ):void
