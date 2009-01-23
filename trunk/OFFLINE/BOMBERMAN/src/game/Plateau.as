@@ -6,20 +6,18 @@
  */
 package game 
 {	
-	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import objects.characters.Player;
 	import main.Const;
 	
-	public class Plateau extends MovieClip 
+	public class Plateau extends Sprite 
 	{
 		private static const P1:Point = new Point( 50, 100 );
 		
 		public var aCells:Array = [];
 		public var cnt:MovieClip;
-		
-		/** Contient des tableaux de cellules. Chaque tableau contient une ligne de cellules */
 		
 		public function Plateau() 
 		{
