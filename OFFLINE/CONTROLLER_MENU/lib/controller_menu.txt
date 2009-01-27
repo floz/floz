@@ -1,0 +1,3 @@
+But de la classe "MenuCtrl" :
+- Gérer les différentes actions de l'utilisateur sur un menu
+- Prévenir quand une rubrique a été sélectionné
