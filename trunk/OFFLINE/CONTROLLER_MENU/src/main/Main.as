@@ -27,6 +27,13 @@ package main
 			menuCtrl.addEventListener( MenuCtrl.SECTION_OVER, onSectionOver );
 			menuCtrl.addEventListener( MenuCtrl.SECTION_OUT, onSectionOut );
 			menuCtrl.activate();
+			
+			stage.addEventListener( MouseEvent.MOUSE_WHEEL, onMouseWheel );
+		}
+		
+		private function onMouseWheel(e:MouseEvent):void 
+		{
+			trace( "here" );
 		}
 		
 		// EVENTS
@@ -38,7 +45,8 @@ package main
 		
 		private function onSectionOver(e:Event):void 
 		{
-			trace( "over" );			
+			trace( "over" );
+			trace ( menuCtrl.overSection );
 		}
 		
 		private function onSectionOut(e:Event):void 
