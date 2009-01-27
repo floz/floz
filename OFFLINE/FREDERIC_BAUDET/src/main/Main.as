@@ -65,6 +65,7 @@ package main
 			
 			//Security.loadPolicyFile( "crossdomain.xml" );
 			Security.allowDomain( "http://www.fredbaudet-editor.com" );
+			Security.allowInsecureDomain( "http://www.fredbaudet-editor.com" );
 			
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );

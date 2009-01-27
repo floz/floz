@@ -15,11 +15,12 @@ package main
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
+	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.net.FileReference;
 	import flash.net.navigateToURL;
 	import flash.net.URLRequest;
-	import flash.system.Security;
+	//import flash.system.Security;
 	import gs.easing.Expo;
 	import gs.easing.Quad;
 	import gs.TweenLite;
@@ -37,7 +38,7 @@ package main
 		private var downloadable:Boolean;
 		private var url:String;
 		private var currentUrl:String;
-		private var file:FileReference;
+		//private var file:FileReference;
 		
 		public function Player() 
 		{			
@@ -65,15 +66,24 @@ package main
 			this.visible = false;
 			
 			vdo.bufferTime = .5;
-			//vdo.seekBarScrubTolerance = 80;
 			
-			
+			//file = new FileReference();
+			//file.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			//file.addEventListener( SecurityErrorEvent.SECURITY_ERROR, onSecurityError );
+			//file.addEventListener( ProgressEvent.PROGRESS, progressHandler);
+			//file.addEventListener( Event.COMPLETE, onComplete );
+			//file.addEventListener( Event.CANCEL, cancelHandler );
 			
 			loading = new Loading();
 			addChild( loading );
 			
 			zDownload.visible = false;
 			zDownload.addEventListener( MouseEvent.CLICK, onClick );
+		}
+		
+		private function cancelHandler(e:Event):void 
+		{
+			FileReference( e.currentTarget ).cancel();
 		}
 		
 		private function onIOError(e:IOErrorEvent):void 
@@ -83,24 +93,33 @@ package main
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			if ( file ) file.removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			request = new URLRequest( currentUrl );
 			
 			//
+			//file.download( request );
+			try
+			{
+				navigateToURL( request, "_self" );
+			}
+			catch ( er:Error )
+			{
+				trace ( "navigateToURL error : " + er.message );
+			}
 			
-			request = new URLRequest( "http://www.fredbaudet-editor.com/" + currentUrl );
-			file = new FileReference();
-			file.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
-			file.addEventListener( SecurityErrorEvent.SECURITY_ERROR, onSecurityError );
-			file.download( request );
+		}
+		
+		private function progressHandler(e:ProgressEvent):void 
+		{
+			trace( "Player.progressHandler > e : " + e );
 			
-			//try
-			//{
-				//navigateToURL( request, "_blank" );
-			//}
-			//catch ( er:Error )
-			//{
-				//trace ( "navigateToURL error : " + er.message );
-			//}
+		}
+		
+		private function onComplete(e:Event):void 
+		{
+			trace( "Player.onComplete > e : " + e );
+			FileReference( e.currentTarget ).removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			FileReference( e.currentTarget ).removeEventListener( SecurityErrorEvent.SECURITY_ERROR, onSecurityError );
+			FileReference( e.currentTarget ).removeEventListener( Event.COMPLETE, onComplete );
 		}
 		
 		private function onSecurityError(e:SecurityErrorEvent):void 
@@ -148,6 +167,9 @@ package main
 		
 		public function init( url:String, downloadable:Boolean ):void
 		{
+			//if ( bool ) return;
+			
+			
 			this.downloadable = downloadable; // downloadable = !isLocked();
 			
 			this.visible = true;
@@ -171,7 +193,7 @@ package main
 				vdo.load( url );
 			}
 			
-			currentUrl = url;			
+			currentUrl = url;	
 			
 			TweenLite.to( this, .4, { scaleX: 1, scaleY: 1, ease: Expo.easeInOut } );
 		}
