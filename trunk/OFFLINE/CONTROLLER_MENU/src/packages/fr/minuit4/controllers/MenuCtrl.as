@@ -32,9 +32,22 @@ package fr.minuit4.controllers
 		/** Evènement déclenché lorsque l'utilisateur quitte le survol d'une des sections inscrite dans le controller de menu */
 		public static const SECTION_OUT			:String = "section_out";
 		
+		/** Menu organisé de haut en bas */
+		public static const VERTICAL_TOP_TO_BOTTOM		:String = "vertical_top_to_bottom";
+		/** Menu organisé de bas en haut */
+		public static const VERTICAL_BOTTOM_TO_TOP		:String = "vertical_bottom_to_top";
+		/** Menu organisé de gauche à droite */
+		public static const HORIZONTAL_LEFT_TO_RIGHT	:String = "horizontal_top_to_bottom";
+		/** Menu organisé de droite à gauche */
+		public static const HORIZONTAL_RIGHT_TO_LEFT	:String = "horizontal_bottom_to_top";
+		
+		//
+		
+		private var _organisation					:String;
 		private var _useHandCursor					:Boolean;
 		private var _usePressMode					:Boolean;
 		private var _dispatchOverStateWhenPressed	:Boolean;
+		private var _disableWhenSelected			:Boolean;
 		private var _sections						:Dictionary;
 		private var _sectionsByID					:Dictionary;
 		
@@ -42,6 +55,7 @@ package fr.minuit4.controllers
 		
 		private var _tempSection	:DisplayObject;
 		private var _overSection	:DisplayObject;
+		private var _oldSection		:DisplayObject;
 		private var _currentSection	:DisplayObject;
 		private var _pressed		:Boolean;
 		private var _numSections	:int;
@@ -54,11 +68,13 @@ package fr.minuit4.controllers
 		 * @param	usePressMode	Boolean
 		 * @param	dispatchOverStateWhenPressed
 		 */
-		public function MenuCtrl( useHandCursor:Boolean = true, usePressMode:Boolean = true, dispatchOverStateWhenPressed:Boolean = true ) 
+		public function MenuCtrl( organisation:String = VERTICAL_TOP_TO_BOTTOM, useHandCursor:Boolean = true, usePressMode:Boolean = true, dispatchOverStateWhenPressed:Boolean = true, disableWhenSelected:Boolean = true ) 
 		{
+			this._organisation = organisation;
 			this._useHandCursor = useHandCursor;
 			this._usePressMode = usePressMode;
 			this._dispatchOverStateWhenPressed = dispatchOverStateWhenPressed;
+			this._disableWhenSelected = disableWhenSelected;
 			
 			_sections = new Dictionary( false );
 			_sectionsByID = new Dictionary( true );
@@ -68,7 +84,12 @@ package fr.minuit4.controllers
 		
 		private function onClick(e:MouseEvent):void 
 		{
+			if ( e.currentTarget == _currentSection ) 
+				return;
+			
+			if ( _currentSection ) _oldSection = _currentSection;
 			_currentSection = e.currentTarget as DisplayObject;
+			
 			dispatchEvent( new Event( MenuCtrl.SECTION_SELECTED ) );
 		}
 		
@@ -105,17 +126,48 @@ package fr.minuit4.controllers
 		
 		private function onMouseUp(e:MouseEvent):void 
 		{
+			if ( e.currentTarget == _currentSection ) 
+				return;
+			
 			if ( e.target == _tempSection ) 
 			{
+				if ( _currentSection ) _oldSection = _currentSection;
 				_currentSection = _tempSection;
+				
 				dispatchEvent( new Event( MenuCtrl.SECTION_SELECTED ) );
-			}
+			}			
 			
 			_pressed = false;
 			_tempSection = null;			
 		}
 		
 		// PRIVATE
+		
+		private function getChildrenOrganised( menu:DisplayObjectContainer ):Array
+		{
+			var a:Array = [];
+			var section:DisplayObject;
+			
+			var n:int = menu.numChildren;
+			for ( var i:int; i < n; i++ )
+			{
+				section = menu.getChildAt( i );
+				if ( !( section is SimpleButton || section is Sprite ) ) 
+					continue;				
+				
+				a.push( section );
+			}
+			
+			switch( _organisation )
+			{
+				case VERTICAL_TOP_TO_BOTTOM: a.sortOn( "y", Array.NUMERIC ); break;
+				case HORIZONTAL_LEFT_TO_RIGHT: a.sortOn( "x", Array.NUMERIC ); break;
+				case VERTICAL_BOTTOM_TO_TOP: a.sortOn( "y", Array.NUMERIC ); a.reverse(); break;
+				case HORIZONTAL_RIGHT_TO_LEFT: a.sortOn( "x", Array.NUMERIC ); a.reverse(); break;
+			}
+			
+			return a;
+		}
 		
 		// PUBLIC
 		
@@ -129,16 +181,20 @@ package fr.minuit4.controllers
 			var section:DisplayObject;			
 			var name:String;
 			
-			var n:int = menu.numChildren;
+			var a:Array = getChildrenOrganised( menu );
+			
+			var n:int = a.length;
 			for ( var i:int; i < n; i++ )
 			{
-				section = menu.getChildAt( i );
+				section = a[ i ];
 				if ( !( section is SimpleButton || section is Sprite ) ) 
 					continue;
 				
-				var id:int = _numSections + 1;
+				trace( a[ i ].name );
+				trace( a[ i ].y );
+				var id:int = _numSections;
 				
-				this._sections[ section ] = false;
+				this._sections[ section ] = { id: id, init: false };
 				this._sectionsByID[ id ] = section;
 				this._numSections++;
 			}
@@ -153,9 +209,9 @@ package fr.minuit4.controllers
 			if ( !( section is SimpleButton || section is Sprite ) ) 
 				return;
 			
-			var id:int = _numSections + 1;
+			var id:int = _numSections;
 			
-			this._sections[ section ] = false;
+			this._sections[ section ] = { id: id, init: false };
 			this._sectionsByID[ id ] = section;
 			this._numSections++;
 		}
@@ -174,10 +230,10 @@ package fr.minuit4.controllers
 				if ( _sections[ ref ].init ) 
 					continue;
 				
-				if ( _useHandCursor && ref is Sprite ) 
+				if ( ref is Sprite )
 				{
-					Sprite( ref ).buttonMode = true;
-					Sprite( ref ).useHandCursor = true;
+					Sprite( ref ).buttonMode =
+					Sprite( ref ).useHandCursor = _useHandCursor ? true : false;
 				}
 				
 				if ( _usePressMode ) DisplayObject( ref ).addEventListener( MouseEvent.MOUSE_DOWN, onDown );
@@ -185,7 +241,7 @@ package fr.minuit4.controllers
 				DisplayObject( ref ).addEventListener( MouseEvent.MOUSE_OVER, onOver );
 				DisplayObject( ref ).addEventListener( MouseEvent.MOUSE_OUT, onOut );
 				
-				_sections[ ref ] = true;
+				_sections[ ref ].init = true;
 			}
 		}
 		
@@ -218,6 +274,14 @@ package fr.minuit4.controllers
 			return _sectionsByID[ id ];
 		}
 		
+		public function getSectionID( section:DisplayObject ):int
+		{
+			if ( !( section is SimpleButton || section is Sprite ) || !_sections[ section ] ) 
+				return -1;
+			
+			return _sections[ section ].id;
+		}
+		
 		// GETTERS & SETTERS
 		
 		/** Retourne la section actuellement sélectionné (DisplayObject) */
@@ -229,6 +293,8 @@ package fr.minuit4.controllers
 			if ( !_overSection ) return null;
 			return this._overSection;
 		}
+		
+		public function get oldSection():DisplayObject { return this._oldSection; }
 		
 		/** Retourne un booléen permettant de savoir si l'utilisateur est en état MOUSE_DOWN ou non */
 		public function get pressed():Boolean { return this._pressed; }	

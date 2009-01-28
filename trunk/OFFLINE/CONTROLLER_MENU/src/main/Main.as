@@ -8,7 +8,9 @@ package main
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.InteractiveObject;
 	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.system.System;
@@ -21,19 +23,13 @@ package main
 		
 		public function Main() 
 		{
-			menuCtrl = new MenuCtrl( true, true, false );
+			menuCtrl = new MenuCtrl( MenuCtrl.VERTICAL_TOP_TO_BOTTOM, true, true, false );
 			menuCtrl.linkToMenu( menu );
 			menuCtrl.addEventListener( MenuCtrl.SECTION_SELECTED, onSectionSelected );
 			menuCtrl.addEventListener( MenuCtrl.SECTION_OVER, onSectionOver );
 			menuCtrl.addEventListener( MenuCtrl.SECTION_OUT, onSectionOut );
 			menuCtrl.activate();
-			
-			stage.addEventListener( MouseEvent.MOUSE_WHEEL, onMouseWheel );
-		}
-		
-		private function onMouseWheel(e:MouseEvent):void 
-		{
-			trace( "here" );
+			var s:InteractiveObject;
 		}
 		
 		// EVENTS
@@ -41,12 +37,14 @@ package main
 		private function onSectionSelected(e:Event):void 
 		{
 			trace( "selected" );
+			trace( menuCtrl.getSectionID( menuCtrl.oldSection ) );
+			trace( menuCtrl.getSectionID( menuCtrl.currentSection ) );
 		}
 		
 		private function onSectionOver(e:Event):void 
 		{
 			trace( "over" );
-			trace ( menuCtrl.overSection );
+			trace ( menuCtrl.getSectionID( menuCtrl.overSection ) );
 		}
 		
 		private function onSectionOut(e:Event):void 
