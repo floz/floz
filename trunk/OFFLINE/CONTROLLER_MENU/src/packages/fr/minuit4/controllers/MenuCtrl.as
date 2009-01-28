@@ -190,8 +190,6 @@ package fr.minuit4.controllers
 				if ( !( section is SimpleButton || section is Sprite ) ) 
 					continue;
 				
-				trace( a[ i ].name );
-				trace( a[ i ].y );
 				var id:int = _numSections;
 				
 				this._sections[ section ] = { id: id, init: false };
