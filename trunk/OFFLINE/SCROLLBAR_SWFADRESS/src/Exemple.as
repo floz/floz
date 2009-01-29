@@ -2,6 +2,12 @@
 function replace(str, find, replace) {
 	return str.split(find).join(replace);
 }
+function toTitleCase(str) {
+	return str.substr(0,1).toUpperCase() + str.substr(1);
+}
+function formatTitle(title) {
+	return 'SWFAddress Website' + (title != '/' ? ' / ' + toTitleCase(replace(title.substr(1, title.length - 2), '/', ' / ')) : '');
+}
 function copyLink() {
 	System.setClipboard(url);
 }
@@ -30,7 +36,7 @@ this.menu.customItems.push(new ContextMenuItem('Portfolio 1...', function(){SWFA
 this.menu.customItems.push(new ContextMenuItem('Portfolio 2...', function(){SWFAddress.setValue('/portfolio/2/?desc=true')}));
 this.menu.customItems.push(new ContextMenuItem('Portfolio 3...', function(){SWFAddress.setValue('/portfolio/3/?desc=false&year=2001')}));
 this.menu.customItems.push(new ContextMenuItem('Contact...', function(){SWFAddress.setValue('/contact/')}));
-this.menu.customItems.push(new ContextMenuItem('Copy link to clipboard', function(){copyLink()}, true));
+this.menu.customItems.push(new ContextMenuItem('Copy link to clipboard', function() { copyLink() }, true));
 
 // Custom SWFAddress handling
 var content:String = null;
@@ -43,7 +49,6 @@ if (_url.indexOf('file://') == -1) {
 } else {
 	ds = 'http://localhost/swfaddress/samples/seo/datasource.php';
 }
-
 function handleChange(event:SWFAddressEvent) {
 	
 	content = null;
@@ -54,7 +59,9 @@ function handleChange(event:SWFAddressEvent) {
 		parameters += '&' + p + '=' + event.parameters[p];
 	}
 	
-	url = SWFAddress.getBaseURL() + event.value;
+	url = SWFAddress.getBaseURL() + SWFAddress.getValue();
+	title = formatTitle(path);
+	
 	if (_currentframe == 2 && path == '/') {
 		play();
 	} else {
@@ -65,18 +72,14 @@ function handleChange(event:SWFAddressEvent) {
 		}
 	}
 	
-	var xml:XML = new XML();
-	xml.onLoad = function(success:Boolean) {
+	//var xml:XML = new XML();
+	//xml.onLoad = function(success:Boolean) {
 		// Fix for the poor image support
-		content = replace(this.firstChild.toString(), 'height="300" />', 
-			'height="300" align="left" hspace="0" vspace="0" /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
-	}
-	xml.load(ds + '?swfaddress=' + path + parameters);
+		//content = replace(this.firstChild.toString(), 'height="300" />', 
+			//'height="300" align="left" hspace="0" vspace="0" /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />');
+	//}
+	//xml.load(ds + '?swfaddress=' + path + parameters);
 	
-	title = 'SWFAddress Website';	
-	for (var i = 0; i < event.pathNames.length; i++) {
-		title += ' / ' + event.pathNames[i].substr(0,1).toUpperCase() + event.pathNames[i].substr(1);
-	}
 	SWFAddress.setTitle(title);	
 }
 SWFAddress.addEventListener(SWFAddressEvent.CHANGE, handleChange);

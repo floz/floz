@@ -11,10 +11,10 @@
  * @author Matthew J Tretter <http://www.exanimo.com>
  * @author Piotr Zema <http://felixz.mark-naegeli.com>
  */
-package {
+package com.asual.swfaddress {
 
     import flash.events.Event;
-    import SWFAddress;
+    import com.asual.swfaddress.SWFAddress;
     
     /**
      * Event class for SWFAddress.
