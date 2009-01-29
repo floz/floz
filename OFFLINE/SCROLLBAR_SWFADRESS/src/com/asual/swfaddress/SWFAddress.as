@@ -11,7 +11,7 @@
  * @author Mark Ross <http://www.therossman.org>
  * @author Piotr Zema <http://felixz.mark-naegeli.com>
  */
-package {
+package com.asual.swfaddress {
 
     import flash.errors.IllegalOperationError;
     import flash.events.Event;
@@ -22,10 +22,10 @@ package {
     import flash.net.URLRequest;
     import flash.system.Capabilities;
     import flash.utils.Timer;
-    import SWFAddressEvent;
+    import com.asual.swfaddress.SWFAddressEvent;
     
-    [Event(name='init', type='SWFAddressEvent')]    
-    [Event(name='change', type='SWFAddressEvent')]
+    [Event(name='init', type='com.asual.swfaddress.SWFAddressEvent')]    
+    [Event(name='change', type='com.asual.swfaddress.SWFAddressEvent')]
 
     /**
      * SWFAddress class. 

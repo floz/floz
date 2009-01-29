@@ -1,16 +1,21 @@
 ﻿package 
 {
+	import com.asual.swfaddress.SWFAddress;
+	import com.asual.swfaddress.SWFAddressEvent;
 	import flash.display.BitmapData;
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
 	import flash.system.System;
 	import flash.ui.ContextMenu;
+	import flash.ui.ContextMenuBuiltInItems;
+	import flash.ui.ContextMenuItem;
 	
 	/**
 	 * ...
@@ -31,10 +36,23 @@
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
+			var ctMenu:ContextMenu = new ContextMenu();
+			ctMenu.hideBuiltInItems();
+			
+			ctMenu.customItems.push( new ContextMenuItem( "test1" ) );
+			ctMenu.customItems.push( new ContextMenuItem( "Test2", true ) );
+			ctMenu.customItems.push( new ContextMenuItem( "Test3" ) );
+			ctMenu.customItems.push( new ContextMenuItem( "Test4" ) );
+			this.contextMenu = ctMenu;
+			
+			var n:int = ctMenu.customItems.length;
+			for ( var i:int; i < n; i++ )
+				ctMenu.customItems[ i ].addEventListener( ContextMenuEvent.MENU_ITEM_SELECT, onMenuItemSelect );
+			
 			var s:Sprite;
 			var g:Graphics;
-			var n:int = colors.length;
-			for ( var i:int; i < n; i++ )
+			n = colors.length;
+			for ( i = 0; i < n; i++ )
 			{
 				s = new Sprite();
 				g = s.graphics;
@@ -50,13 +68,33 @@
 				s.addEventListener( MouseEvent.CLICK, onClick );
 			}
 			
+			SWFAddress.setTitle( "TESTEST" );
+			
 			var tempUrl:String = loaderInfo.url;
 			datasource = tempUrl.indexOf( "file://" ) == -1 ? tempUrl.substr( 0, tempUrl.lastIndexOf( '/' ) + 1 ) + "datasource.php" : "http://localhost/swfaddress/samples/seo/datasource.php";
+			
+			SWFAddress.addEventListener( SWFAddressEvent.CHANGE, onSWFAdressChange );
+		}
+		
+		private function onSWFAdressChange(e:SWFAddressEvent):void 
+		{
+			trace( e.path );
+			
+			url = SWFAddress.getBaseURL() + e.value;
+			title = "SWFAdress essais";
+			for ( var i:int; i < e.pathNames.length; i++ )
+				title += " - " + e.pathNames[ i ].substr( 0, 1 ).toUpperCase() + e.pathNames[ i ].substr( 1 );
+				
+			SWFAddress.setTitle( title );			
+		}
+		
+		private function onMenuItemSelect(e:ContextMenuEvent):void 
+		{
+			SWFAddress.setValue( "/" + e.currentTarget.caption + "/" );
 		}
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			trace( e.target.name );
 		}
 		
 	}
