@@ -71,7 +71,9 @@
 			SWFAddress.setTitle( "TESTEST" );
 			
 			var tempUrl:String = loaderInfo.url;
-			datasource = tempUrl.indexOf( "file://" ) == -1 ? tempUrl.substr( 0, tempUrl.lastIndexOf( '/' ) + 1 ) + "datasource.php" : "http://localhost/swfaddress/samples/seo/datasource.php";
+			trace( "tempUrl : " + tempUrl );
+			datasource = tempUrl.indexOf( "file://" ) == -1 ? tempUrl.substr( 0, tempUrl.lastIndexOf( '/' ) + 1 ) + "datasource.php" : "http://localhost/SWADRESS/datasource.php";
+			trace( "datasource : " + datasource );
 			
 			SWFAddress.addEventListener( SWFAddressEvent.CHANGE, onSWFAdressChange );
 		}
@@ -95,6 +97,13 @@
 		
 		private function onClick(e:MouseEvent):void 
 		{
+			switch( e.currentTarget.name )
+			{
+				case "0": SWFAddress.setValue( "test1" ); break;
+				case "1": SWFAddress.setValue( "Test2" ); break;
+				case "2": SWFAddress.setValue( "Test3" ); break;
+				case "3": SWFAddress.setValue( "Test4" ); break;
+			}
 		}
 		
 	}
