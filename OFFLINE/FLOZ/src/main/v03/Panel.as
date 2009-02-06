@@ -4,7 +4,7 @@
  * @author Floz - Florian Zumbrunn
  * www.floz.fr || www.minuit-4.fr
  */
-package main 
+package main.v03
 {
 	import com.as3dmod.util.ModConstant;
 	import fl.controls.RadioButton;
