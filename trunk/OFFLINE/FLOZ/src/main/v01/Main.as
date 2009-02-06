@@ -4,7 +4,7 @@
  * @author Floz - Florian Zumbrunn
  * www.floz.fr || www.minuit-4.fr
  */
-package main 
+package main.v01
 {
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
@@ -19,12 +19,12 @@ package main
 	import org.papervision3d.objects.primitives.Plane;
 	import org.papervision3d.view.BasicView;
 	
-	public class Main01 extends MovieClip
+	public class Main extends MovieClip
 	{
 		private var plane:Plane;
 		private var planeUnder:Plane;
 		
-		public function Main01() 
+		public function Main() 
 		{
 			var view:BasicView = new BasicView( stage.stageWidth, stage.stageHeight, false, true );
 			addChild( view );

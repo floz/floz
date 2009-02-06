@@ -4,7 +4,7 @@
  * @author Floz - Florian Zumbrunn
  * www.floz.fr || www.minuit-4.fr
  */
-package main 
+package main.v03
 {
 	import com.as3dmod.modifiers.Bend;
 	import com.as3dmod.modifiers.Noise;
@@ -19,7 +19,7 @@ package main
 	import org.papervision3d.objects.primitives.Plane;
 	import org.papervision3d.view.BasicView;
 	
-	public class Main03 extends MovieClip 
+	public class Main extends MovieClip 
 	{
 		public var panel:Panel;
 		
@@ -29,7 +29,7 @@ package main
 		private var plane:Plane;
 		private var mStack:ModifierStack;
 		
-		public function Main03() 
+		public function Main() 
 		{
 			view = new BasicView( stage.stageWidth, stage.stageHeight, false, true, CameraType.FREE );
 			addChild( view );
@@ -76,6 +76,9 @@ package main
 			var bend:Bend = new Bend( panel.force, panel.offset );
 			bend.bendAxis = panel.axis;
 			mStack.clear();			
+			mStack.addModifier( bend );
+			bend = new Bend( panel.force, panel.offset );
+			bend.bendAxis = panel.axis == ModConstant.X ? ModConstant.Y : ModConstant.X;
 			mStack.addModifier( bend );
 		}
 		
