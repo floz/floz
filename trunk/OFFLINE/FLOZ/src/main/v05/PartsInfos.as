@@ -11,6 +11,7 @@ package main.v05
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import fl.data.DataProvider;
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
 	public class PartsInfos extends Sprite
@@ -43,6 +44,8 @@ package main.v05
 			txtAttributes.text = "Aucune partie du corps n'a été sélectionnée.";
 			
 			listParts.addEventListener( Event.CHANGE, onPartChange );
+			zAdd.addEventListener( MouseEvent.CLICK, onMouseClick );
+			zDelete.addEventListener( MouseEvent.CLICK, onMouseClick );
 		}
 		
 		// PRIVATE
