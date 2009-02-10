@@ -16,6 +16,9 @@ package main.v05
 	
 	public class PartsInfos extends Sprite
 	{
+		public static const ADD_CLICK:String = "add_click";
+		public static const DELETE_CLICK:String = "delete_click";
+		
 		public var listParts:List;
 		public var listAttributes:List;
 		public var txtAttributes:TextField;
@@ -48,6 +51,15 @@ package main.v05
 			zDelete.addEventListener( MouseEvent.CLICK, onMouseClick );
 		}
 		
+		private function onMouseClick(e:MouseEvent):void 
+		{
+			switch( e.currentTarget )
+			{
+				case zAdd: openAddPanel(); break;
+				case zDelete: deletionProcedure(); break;
+			}
+		}
+		
 		// PRIVATE
 		
 		private function onPartChange(e:Event):void 
@@ -70,6 +82,16 @@ package main.v05
 				dp.addItem( list[ i ] );
 			
 			listAttributes.dataProvider = dp;
+		}
+		
+		private function openAddPanel():void
+		{
+			dispatchEvent( new Event( PartsInfos.ADD_CLICK ) );
+		}
+		
+		private function deletionProcedure():void
+		{
+			dispatchEvent( new Event( PartsInfos.DELETE_CLICK ) );	
 		}
 		
 		// PUBLIC
