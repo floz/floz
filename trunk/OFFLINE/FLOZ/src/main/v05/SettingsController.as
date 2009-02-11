@@ -15,6 +15,8 @@ package main.v05
 	
 	public class SettingsController extends Sprite
 	{
+		public static const SETTINGS_CHANGE:String = "settings_change";
+		
 		public var bendSettings:BendSettings;
 		public var perlinSettings:PerlinSettings;
 		public var taperSettings:TaperSettings;
@@ -45,16 +47,33 @@ package main.v05
 				getChildAt( i ).visible = false;
 		}
 		
-		public function showBendSettings( item:Object ):void 
+		public function showBendSettings():void 
 		{ 
 			hideAll(); 
-			bendSettings.linkTo( item );
+			bendSettings.linkToCurrentAttribute();
 			bendSettings.visible = true; 
 		}
 		
-		public function showPerlinSettings():void { hideAll(); perlinSettings.visible = true; }
-		public function showTaperSettings():void { hideAll(); taperSettings.visible = true; }
-		public function showTwistSettings():void { hideAll(); twistSettings.visible = true; }
+		public function showPerlinSettings():void 
+		{ 
+			hideAll(); 
+			perlinSettings.linkToCurrentAttribute();
+			perlinSettings.visible = true; 
+		}
+		
+		public function showTaperSettings():void
+		{
+			hideAll();
+			taperSettings.linkToCurrentAttribute();
+			taperSettings.visible = true;
+		}
+		
+		public function showTwistSettings():void 
+		{
+			hideAll(); 
+			twistSettings.linkToCurrentAttribute();
+			twistSettings.visible = true;
+		}
 		
 	}
 	

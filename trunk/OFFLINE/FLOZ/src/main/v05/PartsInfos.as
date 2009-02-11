@@ -72,7 +72,10 @@ package main.v05
 			}
 			
 			currentPart = e.currentTarget.selectedItem;
+			Model.currentPart = currentPart;
 			refreshListAttributes();
+			
+			zDelete.visible = false;
 			
 			dispatchEvent( new Event( PartsInfos.PART_CHANGE ) );
 		}
@@ -80,6 +83,7 @@ package main.v05
 		private function onAttributeChange(e:Event):void 
 		{
 			currentAttribute = e.currentTarget.selectedItem;
+			Model.currentAttribute = currentAttribute;
 			if ( !zDelete.visible ) zDelete.visible = true;
 			
 			dispatchEvent( new Event( PartsInfos.ATTRIBUTE_SELECT ) );
@@ -106,9 +110,35 @@ package main.v05
 			dispatchEvent( new Event( PartsInfos.DELETE_CLICK ) );	
 		}
 		
-		private function refreshListAttributes():void
+		// PUBLIC
+		
+		public function addAttribute( type:String, name:String ):void
 		{
-			var list:Array = currentPart.hist;
+			var m:Modifier;
+			switch( type )
+			{
+				case "Bend": m = new Bend( 0, 0, 0 ); break;
+				case "Perlin": m = new Perlin( 0 ); break;
+				case "Taper": m = new Taper( 0 ); break;
+				case "Twist": m = new Twist( 0 ); break;
+			}
+			
+			currentPart.attributes.push( { label: name, data: currentPart.attributes.length, modifier: m } );
+			refreshListAttributes();			
+		}
+		
+		public function deleteCurrentAttribute():void
+		{
+			currentPart.attributes.splice( currentAttribute.data, 1 );
+			refreshListAttributes();
+		}
+		
+		public function refreshListAttributes( saveSelection:Boolean = false ):void
+		{
+			var idxSelection:int;
+			if ( saveSelection ) idxSelection = listAttributes.selectedIndex;
+			
+			var list:Array = currentPart.attributes;
 			if ( !list.length )
 			{
 				listAttributes.dataProvider = new DataProvider();
@@ -126,31 +156,14 @@ package main.v05
 			
 			listAttributes.dataProvider = dp;
 			
-			currentAttribute = null;
-			zDelete.visible = false;
-		}
-		
-		// PUBLIC
-		
-		public function addAttribute( type:String, name:String ):void
-		{
-			var m:Modifier;
-			switch( type )
+			if ( saveSelection ) 
 			{
-				case "Bend": m = new Bend( 0, 0, 0 ); break;
-				case "Perlin": m = new Perlin( 0 ); break;
-				case "Taper": m = new Taper( 0 ); break;
-				case "Twist": m = new Twist( 0 ); break;
+				listAttributes.selectedIndex = idxSelection;
+				return;
 			}
 			
-			currentPart.hist.push( { label: name, data: currentPart.data, modifier: m } );
-			refreshListAttributes();			
-		}
-		
-		public function deleteCurrentAttribute():void
-		{
-			currentPart.hist.splice( currentAttribute.data, 1 );
-			refreshListAttributes();
+			currentAttribute = null;
+			zDelete.visible = false;
 		}
 		
 		// GETTERS & SETTERS
