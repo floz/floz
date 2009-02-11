@@ -12,6 +12,8 @@ package main.v05.settings
 	import fl.controls.TextInput;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import main.v05.Model;
+	import main.v05.SettingsController;
 	
 	public class BendSettings extends Sprite
 	{
@@ -31,9 +33,40 @@ package main.v05.settings
 		private function onAddedToStage(e:Event):void 
 		{
 			reset();
+			
+			iName.addEventListener( Event.CHANGE, onChange );
+			nForce.addEventListener( Event.CHANGE, onChange );
+			nOffset.addEventListener( Event.CHANGE, onChange );
+			nAngle.addEventListener( Event.CHANGE, onChange );
+			cAxe.addEventListener( Event.CHANGE, onChange );
+		}
+		
+		private function onChange(e:Event):void 
+		{
+			saveChanges();
 		}
 		
 		// PRIVATE
+		
+		private function saveChanges():void
+		{
+			var indexPart:int = Model.currentPart.data
+			var part:Object = Model.listParts[ indexPart ];
+			var indexAttribute:int = Model.currentAttribute.data;
+			var attribute:Object = part.attributes[ indexAttribute ];
+			
+			var bend:Bend = attribute.modifier;
+			bend.force = nForce.value;
+			bend.offset = nOffset.value;
+			bend.angle = nAngle.value;
+			bend.switchAxes = Boolean( cAxe.selectedIndex );
+			
+			attribute.label = iName.text == "" ? attribute.label : iName.text;
+			attribute.modifier = bend;
+			Model.listParts[ indexPart ].attributes[ indexAttribute ] = attribute;
+			
+			dispatchEvent( new Event( SettingsController.SETTINGS_CHANGE ) );
+		}
 		
 		// PUBLIC
 		
@@ -45,11 +78,11 @@ package main.v05.settings
 			cAxe.selectedIndex = 0;
 		}
 		
-		public function linkTo( item:Object ):void
+		public function linkToCurrentAttribute():void
 		{
-			iName.text = item.label;
+			iName.text = Model.currentAttribute.label;
 			
-			var bend:Bend = item.modifier;
+			var bend:Bend = Model.currentAttribute.modifier;
 			nForce.value = bend.force;
 			nOffset.value = bend.offset;
 			nAngle.value = bend.angle;
