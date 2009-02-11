@@ -6,6 +6,11 @@
  */
 package main.v05 
 {
+	import com.as3dmod.core.Modifier;
+	import com.as3dmod.modifiers.Bend;
+	import com.as3dmod.modifiers.Perlin;
+	import com.as3dmod.modifiers.Taper;
+	import com.as3dmod.modifiers.Twist;
 	import fl.controls.Button;
 	import fl.controls.List;
 	import flash.display.Sprite;
@@ -18,6 +23,8 @@ package main.v05
 	{
 		public static const ADD_CLICK:String = "add_click";
 		public static const DELETE_CLICK:String = "delete_click";
+		public static const PART_CHANGE:String = "part_change";
+		public static const ATTRIBUTE_SELECT:String = "attribute_select";
 		
 		public var listParts:List;
 		public var listAttributes:List;
@@ -25,6 +32,7 @@ package main.v05
 		public var zAdd:Button;
 		public var zDelete:Button;
 		
+		private var inited:Boolean;
 		private var currentPart:Object;
 		private var currentAttribute:Object;
 		
@@ -37,6 +45,9 @@ package main.v05
 		
 		private function onAddedToStage(e:Event):void 
 		{
+			zAdd.visible = false;
+			zDelete.visible = false;
+			
 			var dp:DataProvider = new DataProvider();
 			var n:int = Model.listParts.length;
 			for ( var i:int; i < n; i++ )
@@ -47,8 +58,31 @@ package main.v05
 			txtAttributes.text = "Aucune partie du corps n'a été sélectionnée.";
 			
 			listParts.addEventListener( Event.CHANGE, onPartChange );
+			listAttributes.addEventListener( Event.CHANGE, onAttributeChange );
 			zAdd.addEventListener( MouseEvent.CLICK, onMouseClick );
 			zDelete.addEventListener( MouseEvent.CLICK, onMouseClick );
+		}
+		
+		private function onPartChange(e:Event):void 
+		{
+			if ( !inited ) 
+			{
+				zAdd.visible = true;
+				inited = true;
+			}
+			
+			currentPart = e.currentTarget.selectedItem;
+			refreshListAttributes();
+			
+			dispatchEvent( new Event( PartsInfos.PART_CHANGE ) );
+		}
+		
+		private function onAttributeChange(e:Event):void 
+		{
+			currentAttribute = e.currentTarget.selectedItem;
+			if ( !zDelete.visible ) zDelete.visible = true;
+			
+			dispatchEvent( new Event( PartsInfos.ATTRIBUTE_SELECT ) );
 		}
 		
 		private function onMouseClick(e:MouseEvent):void 
@@ -62,10 +96,19 @@ package main.v05
 		
 		// PRIVATE
 		
-		private function onPartChange(e:Event):void 
+		private function openAddPanel():void
 		{
-			currentPart = e.currentTarget.selectedItem;
-			var list:Array = e.currentTarget.selectedItem.hist;
+			dispatchEvent( new Event( PartsInfos.ADD_CLICK ) );
+		}
+		
+		private function deletionProcedure():void
+		{
+			dispatchEvent( new Event( PartsInfos.DELETE_CLICK ) );	
+		}
+		
+		private function refreshListAttributes():void
+		{
+			var list:Array = currentPart.hist;
 			if ( !list.length )
 			{
 				listAttributes.dataProvider = new DataProvider();
@@ -82,19 +125,37 @@ package main.v05
 				dp.addItem( list[ i ] );
 			
 			listAttributes.dataProvider = dp;
-		}
-		
-		private function openAddPanel():void
-		{
-			dispatchEvent( new Event( PartsInfos.ADD_CLICK ) );
-		}
-		
-		private function deletionProcedure():void
-		{
-			dispatchEvent( new Event( PartsInfos.DELETE_CLICK ) );	
+			
+			currentAttribute = null;
+			zDelete.visible = false;
 		}
 		
 		// PUBLIC
+		
+		public function addAttribute( type:String, name:String ):void
+		{
+			var m:Modifier;
+			switch( type )
+			{
+				case "Bend": m = new Bend( 0, 0, 0 ); break;
+				case "Perlin": m = new Perlin( 0 ); break;
+				case "Taper": m = new Taper( 0 ); break;
+				case "Twist": m = new Twist( 0 ); break;
+			}
+			
+			currentPart.hist.push( { label: name, data: currentPart.data, modifier: m } );
+			refreshListAttributes();			
+		}
+		
+		public function deleteCurrentAttribute():void
+		{
+			currentPart.hist.splice( currentAttribute.data, 1 );
+			refreshListAttributes();
+		}
+		
+		// GETTERS & SETTERS
+		
+		public function getCurrentAttribute():Object { return this.currentAttribute; }
 		
 	}
 	

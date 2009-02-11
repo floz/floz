@@ -6,6 +6,7 @@
  */
 package main.v05 
 {
+	import flash.utils.Dictionary;
 	
 	public class Model 
 	{
@@ -17,10 +18,8 @@ package main.v05
 			{ label:"LeftLeg", data:4, hist: [] },
 			{ label:"RightLeg", data:5, hist: [] } ];
 		
-		public static var listModifiers:Array = [
-			{ label:"Bend", data:"bend" },
-			{ label:"Noise", data:"bend" },
-			{ label:"Perlin", data:"bend" }	];
+		
+		
 		
 	}
 	
