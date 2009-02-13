@@ -7,7 +7,7 @@
 package main.v05.settings 
 {	
 	import com.as3dmod.modifiers.Bend;
-	import fl.controls.ComboBox;
+	import fl.controls.CheckBox;
 	import fl.controls.NumericStepper;
 	import fl.controls.TextInput;
 	import flash.display.Sprite;
@@ -21,7 +21,7 @@ package main.v05.settings
 		public var nForce:NumericStepper;
 		public var nOffset:NumericStepper;
 		public var nAngle:NumericStepper;
-		public var cAxe:ComboBox;
+		public var cAxe:CheckBox;
 		
 		public function BendSettings() 
 		{
@@ -34,11 +34,12 @@ package main.v05.settings
 		{
 			reset();
 			
-			iName.addEventListener( Event.CHANGE, onChange );
-			nForce.addEventListener( Event.CHANGE, onChange );
-			nOffset.addEventListener( Event.CHANGE, onChange );
-			nAngle.addEventListener( Event.CHANGE, onChange );
-			cAxe.addEventListener( Event.CHANGE, onChange );
+			addEventListener( Event.CHANGE, onChange );
+			//iName.addEventListener( Event.CHANGE, onChange );
+			//nForce.addEventListener( Event.CHANGE, onChange );
+			//nOffset.addEventListener( Event.CHANGE, onChange );
+			//nAngle.addEventListener( Event.CHANGE, onChange );
+			//cAxe.addEventListener( Event.CHANGE, onChange );
 		}
 		
 		private function onChange(e:Event):void 
@@ -50,20 +51,20 @@ package main.v05.settings
 		
 		private function saveChanges():void
 		{
-			var indexPart:int = Model.currentPart.data
-			var part:Object = Model.listParts[ indexPart ];
-			var indexAttribute:int = Model.currentAttribute.data;
-			var attribute:Object = part.attributes[ indexAttribute ];
+			//var indexPart:int = Model.currentPart.data
+			var part:Object = Model.currentPart//Model.listParts[ indexPart ];
+			//var indexAttribute:int = Model.currentAttribute.data;
+			var attribute:Object = Model.currentAttribute; //part.attributes[ indexAttribute ];
 			
 			var bend:Bend = attribute.modifier;
 			bend.force = nForce.value;
 			bend.offset = nOffset.value;
 			bend.angle = nAngle.value;
-			bend.switchAxes = Boolean( cAxe.selectedIndex );
+			bend.switchAxes = cAxe.selected;
 			
 			attribute.label = iName.text == "" ? attribute.label : iName.text;
 			attribute.modifier = bend;
-			Model.listParts[ indexPart ].attributes[ indexAttribute ] = attribute;
+			//Model.listParts[ indexPart ].attributes[ indexAttribute ] = attribute;
 			
 			dispatchEvent( new Event( SettingsController.SETTINGS_CHANGE ) );
 		}
@@ -75,7 +76,7 @@ package main.v05.settings
 			nForce.value = 0;
 			nOffset.value = 0;
 			nAngle.value = 0;
-			cAxe.selectedIndex = 0;
+			cAxe.selected = false;
 		}
 		
 		public function linkToCurrentAttribute():void
@@ -86,7 +87,7 @@ package main.v05.settings
 			nForce.value = bend.force;
 			nOffset.value = bend.offset;
 			nAngle.value = bend.angle;
-			cAxe.selectedIndex = bend.switchAxes ? 1 : 0;
+			cAxe.selected = bend.switchAxes;
 		}
 		
 		// GETTERS & SETTERS
@@ -94,7 +95,7 @@ package main.v05.settings
 		public function get force():Number { return nForce.value; }
 		public function get offset():Number { return nOffset.value; }
 		public function get angle():Number { return nAngle.value; }
-		public function get axe():Number { return cAxe.selectedItem.data; }
+		public function get axe():Boolean { return cAxe.selected;  }
 		
 	}
 	

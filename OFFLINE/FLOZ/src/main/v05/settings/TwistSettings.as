@@ -30,8 +30,10 @@ package main.v05.settings
 		{
 			reset();
 			
-			iName.addEventListener( Event.CHANGE, onChange );
-			nAngle.addEventListener( Event.CHANGE, onChange );
+			addEventListener( Event.CHANGE, onChange );
+			
+			//iName.addEventListener( Event.CHANGE, onChange );
+			//nAngle.addEventListener( Event.CHANGE, onChange );
 		}
 		
 		private function onChange(e:Event):void 
@@ -43,17 +45,17 @@ package main.v05.settings
 		
 		private function saveChanges():void
 		{
-			var indexPart:int = Model.currentPart.data
-			var part:Object = Model.listParts[ indexPart ];
-			var indexAttribute:int = Model.currentAttribute.data;
-			var attribute:Object = part.attributes[ indexAttribute ];
+			//var indexPart:int = Model.currentPart.data
+			var part:Object = Model.currentPart;//Model.listParts[ indexPart ];
+			//var indexAttribute:int = Model.currentAttribute.data;
+			var attribute:Object = Model.currentAttribute;//part.attributes[ indexAttribute ];
 			
 			var twist:Twist = attribute.modifier;
 			twist.angle = nAngle.value;
 			
 			attribute.label = iName.text == "" ? attribute.label : iName.text;
 			attribute.modifier = twist;
-			Model.listParts[ indexPart ].attributes[ indexAttribute ] = attribute;
+			//Model.listParts[ indexPart ].attributes[ indexAttribute ] = attribute;
 			
 			dispatchEvent( new Event( SettingsController.SETTINGS_CHANGE ) );
 		}

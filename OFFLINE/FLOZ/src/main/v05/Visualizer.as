@@ -24,6 +24,11 @@ package main.v05
 		private var modifiersLeftLeg:ModifierStack;
 		private var modifiersRightLeg:ModifierStack;
 		
+		private var aX:Number;
+		private var aY:Number;
+		private var coef:Number;
+		private var pressed:Boolean;
+		
 		public function Visualizer() 
 		{
 			super( this.width, this.height, false, true, CameraType.FREE );
@@ -49,7 +54,20 @@ package main.v05
 		
 		private function onDown(e:MouseEvent):void 
 		{
-			//rotation
+			aX = e.stageX + body.rotationY;
+			coef = Math.cos( body.rotationY * Math.PI / 180 );
+			aY = coef > 0 ? e.stageY + body.rotationX : e.stageY - body.rotationX;
+			
+			pressed = true;
+			
+			stage.addEventListener( MouseEvent.MOUSE_UP, onUp );
+		}
+		
+		private function onUp(e:MouseEvent):void 
+		{
+			stage.removeEventListener( MouseEvent.MOUSE_UP, onUp );
+			
+			pressed = false;
 		}
 		
 		private function onFrame(e:Event):void 
@@ -61,6 +79,13 @@ package main.v05
 			modifiersLeftLeg.apply();
 			modifiersRightLeg.apply();
 			
+			if ( pressed )
+			{
+				body.rotationY = ( aX - stage.mouseX );
+				coef = Math.cos( body.rotationY * Math.PI / 180 );
+				body.rotationX = ( aY - stage.mouseY ) * coef;
+			}
+			
 			singleRender();
 		}
 		
@@ -68,6 +93,13 @@ package main.v05
 		
 		private function createModifiers():void
 		{
+			modifiersHead = 
+			modifiersChest =
+			modifiersLeftArm = 
+			modifiersRightArm =
+			modifiersLeftArm =
+			modifiersRightLeg =	null;
+			
 			modifiersHead = new ModifierStack( new LibraryPv3d(), body.head );
 			modifiersChest = new ModifierStack( new LibraryPv3d(), body.chest );
 			modifiersLeftArm = new ModifierStack( new LibraryPv3d(), body.leftArm );
@@ -78,10 +110,10 @@ package main.v05
 		
 		// PUBLIC
 		
-		public function refresh():void
+		public function refreshCurrentPart():void
 		{
 			var indexPart:int = Model.currentPart.data
-			var part:Object = Model.listParts[ indexPart ];
+			var part:Object = Model.listParts[ indexPart ]; // Model.currentPart a changer
 			var attributes:Array = part.attributes;
 			
 			var m:ModifierStack;
@@ -100,6 +132,37 @@ package main.v05
 			var n:int = attributes.length;
 			for ( var i:int; i < n; i++ )
 				m.addModifier( attributes[ i ].modifier );			
+		}
+		
+		public function refreshAllParts():void
+		{
+			var mod:ModifierStack;
+			
+			var n:int = Model.listParts.length;
+			var j:int;
+			var m:int;
+			for ( var i:int; i < n; i++ )
+			{
+				switch( i )
+				{
+					case 0: mod = modifiersHead; break;
+					case 1: mod = modifiersChest; break;
+					case 2: mod = modifiersLeftArm; break;
+					case 3: mod = modifiersRightArm; break;
+					case 4: mod = modifiersLeftLeg; break;
+					case 5: mod = modifiersRightLeg; break;
+				}
+				
+				m = Model.listParts[ i ].attributes.length;
+				for ( j = 0; j < m; j++ )
+					mod.addModifier( Model.listParts[ i ].attributes[ j ].modifier );
+			}
+		}
+		
+		public function rebuildCurrentPart():void
+		{
+			body.rebuildCurrentPart();
+			createModifiers();
 		}
 		
 	}
