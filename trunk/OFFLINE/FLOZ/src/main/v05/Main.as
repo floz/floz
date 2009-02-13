@@ -28,6 +28,7 @@ package main.v05
 			partsInfos.addEventListener( PartsInfos.ATTRIBUTE_SELECT, onAttributeSelect );
 			confirmation.addEventListener( Confirmation.CONFIRM, onConfirm );
 			settingsController.addEventListener( SettingsController.SETTINGS_CHANGE, onSettingsChange, true );
+			settingsController.addEventListener( SettingsController.GLOBAL_SETTINGS_CHANGE, onGlobalSettingsChange, true );
 		}
 		
 		// EVENTS
@@ -45,6 +46,7 @@ package main.v05
 		private function onPartChange(e:Event):void 
 		{
 			settingsController.hideAll();
+			settingsController.updateGlobalSettings();
 		}
 		
 		private function onAttributeSelect(e:Event):void 
@@ -62,14 +64,20 @@ package main.v05
 			else
 				partsInfos.deleteCurrentAttribute();
 			
-			visualizer.refresh();
+			visualizer.refreshCurrentPart();
 			settingsController.hideAll();
 		}
 		
 		private function onSettingsChange(e:Event):void 
 		{
 			partsInfos.refreshListAttributes( true );
-			visualizer.refresh();
+			visualizer.refreshCurrentPart();
+		}
+		
+		private function onGlobalSettingsChange(e:Event):void 
+		{
+			visualizer.rebuildCurrentPart();
+			visualizer.refreshAllParts();
 		}
 		
 		// PRIVATE

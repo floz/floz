@@ -16,11 +16,13 @@ package main.v05
 	public class SettingsController extends Sprite
 	{
 		public static const SETTINGS_CHANGE:String = "settings_change";
+		public static const GLOBAL_SETTINGS_CHANGE:String = "global_settings_change";
 		
 		public var bendSettings:BendSettings;
 		public var perlinSettings:PerlinSettings;
 		public var taperSettings:TaperSettings;
 		public var twistSettings:TwistSettings;
+		public var globalSettings:GlobalSettings;
 		
 		private var _hide:Boolean;
 		
@@ -45,6 +47,8 @@ package main.v05
 			var n:int = numChildren;
 			for ( var i:int; i < n; i++ )
 				getChildAt( i ).visible = false;
+			
+			if ( Model.currentPart ) globalSettings.visible = true;
 		}
 		
 		public function showBendSettings():void 
@@ -73,6 +77,11 @@ package main.v05
 			hideAll(); 
 			twistSettings.linkToCurrentAttribute();
 			twistSettings.visible = true;
+		}
+		
+		public function updateGlobalSettings():void
+		{
+			globalSettings.linkToCurrentPart();
 		}
 		
 	}

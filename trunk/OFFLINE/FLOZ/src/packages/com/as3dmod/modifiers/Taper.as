@@ -14,12 +14,14 @@ package com.as3dmod.modifiers {
 	 * 	@author Bartek Drozdz
 	 */
 	public class Taper extends Modifier implements IModifier {
-		private var frc:Number;		private var pow:Number;
+		private var frc:Number;
+		private var pow:Number;
 
 		private var start:Number = 0;
 		private var end:Number = 1;
 
-		private var _vector:Vector3 = new Vector3(1, 0, 1);		private var _vector2:Vector3 = new Vector3(0, 1, 0);
+		private var _vector:Vector3 = new Vector3(1, 0, 1);
+		private var _vector2:Vector3 = new Vector3(0, 1, 0);
 
 		public function Taper(f:Number) {
 			frc = f;

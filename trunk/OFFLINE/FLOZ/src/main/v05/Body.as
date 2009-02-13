@@ -60,6 +60,15 @@ package main.v05
 			
 			_height += bd.height;
 			
+			bd = new LeftArm( 0, 0 );
+			m = new BitmapMaterial( bd );
+			m.oneSide = false;
+			_leftArm = new Plane( m, bd.width, bd.height, Model.segmentsW, Model.segmentsH );
+			_leftArm.x = chestWidth * .5 + bd.width * .5;
+			_leftArm.y = _chest.y - bd.height / 4;
+			_leftArm.name = this.numChildren.toString();
+			addChild( _leftArm );
+			
 			bd = new RightArm( 0, 0 );
 			m = new BitmapMaterial( bd );
 			m.oneSide = false;
@@ -68,15 +77,6 @@ package main.v05
 			_rightArm.y = _chest.y - bd.height / 4;
 			_rightArm.name = this.numChildren.toString();
 			addChild( _rightArm );
-			
-			bd = new LeftArm( 0, 0 );
-			m = new BitmapMaterial( bd );
-			m.oneSide = false;
-			_leftArm = new Plane( m, bd.width, bd.height, Model.segmentsW, Model.segmentsH );
-			_leftArm.x = chestWidth * .5 + bd.width * .5;
-			_leftArm.y = _rightArm.y;
-			_leftArm.name = this.numChildren.toString();
-			addChild( _leftArm );
 			
 			bd = new LeftLeg( 0, 0 );
 			m = new BitmapMaterial( bd );
@@ -103,21 +103,50 @@ package main.v05
 		{
 			var n:int = this.numChildren;
 			for ( var i:int; i < n; i++ )
+			{
 				this.getChildByName( i.toString() ).y += this._height * .5;
+				Model.listParts[ i ].plane = this.getChildByName( i.toString() );
+				Model.listParts[ i ].x = this.getChildByName( i.toString() ).x
+				Model.listParts[ i ].y = this.getChildByName( i.toString() ).y
+				Model.listParts[ i ].z = this.getChildByName( i.toString() ).z
+			}
 		}
 		
 		// PUBLIC
+		
+		public function rebuildCurrentPart():void
+		{
+			var p:Plane;
+			var m:BitmapMaterial;
+			var n:int = this.numChildren;
+			for ( var i:int; i < n; i++ )
+			{
+				m = Model.listParts[ i ].plane.material;
+				p = new Plane( m, m.bitmap.width, m.bitmap.height, Model.listParts[ i ].segmentsW, Model.listParts[ i ].segmentsH );
+				p.x = Model.listParts[ i ].x;
+				p.y = Model.listParts[ i ].y;
+				p.z = Model.listParts[ i ].z;
+				p.rotationX = Model.listParts[ i ].rx;
+				p.rotationY = Model.listParts[ i ].ry;
+				p.rotationZ = Model.listParts[ i ].rz;
+				p.name = i.toString();
+				
+				removeChild( Model.listParts[ i ].plane );
+				addChild( p );
+				Model.listParts[ i ].plane = p;
+			}
+		}
 		
 		// GETTERS & SETTERS
 		
 		public function get height():Number { return this._height; }
 		
-		public function get head():Plane { return this._head; }
-		public function get chest():Plane { return this._chest; }
-		public function get leftArm():Plane { return this._leftArm; }
-		public function get rightArm():Plane { return this._rightArm; }
-		public function get leftLeg():Plane { return this._leftLeg; }
-		public function get rightLeg():Plane { return this._rightLeg; }
+		public function get head():Plane { return Model.listParts[ 0 ].plane; }
+		public function get chest():Plane { return Model.listParts[ 1 ].plane; }
+		public function get leftArm():Plane { return Model.listParts[ 2 ].plane; }
+		public function get rightArm():Plane { return Model.listParts[ 3 ].plane; }
+		public function get leftLeg():Plane { return Model.listParts[ 4 ].plane; }
+		public function get rightLeg():Plane { return Model.listParts[ 5 ].plane; }
 		
 	}
 	
