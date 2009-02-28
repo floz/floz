@@ -8,6 +8,7 @@ package main.v05
 {
 	import com.as3dmod.modifiers.Bend;
 	import com.as3dmod.modifiers.Perlin;
+	import com.as3dmod.modifiers.Pivot;
 	import com.as3dmod.modifiers.Taper;
 	import com.as3dmod.modifiers.Twist;
 	import flash.display.MovieClip;
@@ -53,7 +54,7 @@ package main.v05
 		{
 			if ( partsInfos.getCurrentAttribute().modifier is Bend ) settingsController.showBendSettings();
 			else if ( partsInfos.getCurrentAttribute().modifier is Perlin ) settingsController.showPerlinSettings();
-			else if ( partsInfos.getCurrentAttribute().modifier is Taper ) settingsController.showTaperSettings();
+			else if ( partsInfos.getCurrentAttribute().modifier is Pivot ) settingsController.showPivotSettings();
 			else if ( partsInfos.getCurrentAttribute().modifier is Twist ) settingsController.showTwistSettings();
 		}
 		

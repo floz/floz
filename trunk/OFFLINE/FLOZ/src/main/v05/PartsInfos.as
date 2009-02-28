@@ -9,6 +9,7 @@ package main.v05
 	import com.as3dmod.core.Modifier;
 	import com.as3dmod.modifiers.Bend;
 	import com.as3dmod.modifiers.Perlin;
+	import com.as3dmod.modifiers.Pivot;
 	import com.as3dmod.modifiers.Taper;
 	import com.as3dmod.modifiers.Twist;
 	import fl.controls.Button;
@@ -119,7 +120,7 @@ package main.v05
 			{
 				case "Bend": m = new Bend( 0, 0, 0 ); break;
 				case "Perlin": m = new Perlin( 0 ); break;
-				case "Taper": m = new Taper( 0 ); break;
+				case "Pivot": m = new Pivot(); break;
 				case "Twist": m = new Twist( 0 ); break;
 			}
 			

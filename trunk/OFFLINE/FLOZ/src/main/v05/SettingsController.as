@@ -10,7 +10,7 @@ package main.v05
 	import flash.events.Event;
 	import main.v05.settings.BendSettings;
 	import main.v05.settings.PerlinSettings;
-	import main.v05.settings.TaperSettings;
+	import main.v05.settings.PivotSettings;
 	import main.v05.settings.TwistSettings;
 	
 	public class SettingsController extends Sprite
@@ -20,7 +20,7 @@ package main.v05
 		
 		public var bendSettings:BendSettings;
 		public var perlinSettings:PerlinSettings;
-		public var taperSettings:TaperSettings;
+		public var pivotSettings:PivotSettings;
 		public var twistSettings:TwistSettings;
 		public var globalSettings:GlobalSettings;
 		
@@ -65,11 +65,11 @@ package main.v05
 			perlinSettings.visible = true; 
 		}
 		
-		public function showTaperSettings():void
+		public function showPivotSettings():void
 		{
 			hideAll();
-			taperSettings.linkToCurrentAttribute();
-			taperSettings.visible = true;
+			pivotSettings.linkToCurrentAttribute();
+			pivotSettings.visible = true;
 		}
 		
 		public function showTwistSettings():void 

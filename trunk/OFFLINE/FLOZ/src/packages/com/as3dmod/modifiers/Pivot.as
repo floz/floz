@@ -20,16 +20,25 @@ package com.as3dmod.modifiers {
 	public class Pivot extends Modifier implements IModifier {
 
 		public var pivot:Vector3;
+		
+		private var _px:Number;
+		private var _py:Number;
+		private var _pz:Number;
 
-		public function Pivot(x:Number=0, y:Number=0, z:Number=0) {
-			this.pivot = new Vector3(x, y, z);
+		public function Pivot(x:Number = 0, y:Number = 0, z:Number = 0) {
+			_px = x;
+			_py = y;
+			_pz = z;
+			this.pivot = new Vector3(_px, _py, _pz);
 		}
 		
 		/**
 		 * Sets the values of the pivot vector so that the pivot point of the mesh will be moved to it's center.
 		 */
 		public function setMeshCenter():void {
-			var vx:Number = -(mod.minX + mod.width / 2);			var vy:Number = -(mod.minY + mod.height / 2);			var vz:Number = -(mod.minZ + mod.depth / 2);
+			var vx:Number = -(mod.minX + mod.width / 2);
+			var vy:Number = -(mod.minY + mod.height / 2);
+			var vz:Number = -(mod.minZ + mod.depth / 2);
 			pivot = new Vector3(vx, vy, vz);
 		}
 
@@ -45,5 +54,27 @@ package com.as3dmod.modifiers {
 			var npivot:Vector3 = pivot.clone();
 			mod.updateMeshPosition(npivot.negate());
 		}
+		
+		public function set px( value:Number ):void
+		{
+			_px = value;
+			this.pivot = new Vector3(_px, _py, _pz);
+		}
+		
+		public function set py( value:Number ):void
+		{
+			_py = value;
+			this.pivot = new Vector3(_px, _py, _pz);
+		}
+		
+		public function set pz( value:Number ):void
+		{
+			_pz = value;
+			this.pivot = new Vector3(_px, _py, _pz);
+		}
+		
+		public function get px():Number { return this._px; }
+		public function get py():Number { return this._py; }
+		public function get pz():Number { return this._pz; }
 	}
 }

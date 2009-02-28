@@ -21,7 +21,7 @@ package main.v05
 		
 		public var rBend:RadioButton;
 		public var rPerlin:RadioButton;
-		public var rTaper:RadioButton;
+		public var rPivot:RadioButton;
 		public var rTwist:RadioButton;
 		public var zConfirm:Button;
 		public var zCancel:Button;
