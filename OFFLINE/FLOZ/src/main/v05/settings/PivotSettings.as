@@ -50,6 +50,8 @@ package main.v05.settings
 			pivot.py = nY.value;
 			pivot.pz = nZ.value;
 			
+			pivot.setMeshCenter();
+			
 			attribute.label = iName.text == "" ? attribute.label : iName.text;
 			attribute.modifier = pivot;
 			
