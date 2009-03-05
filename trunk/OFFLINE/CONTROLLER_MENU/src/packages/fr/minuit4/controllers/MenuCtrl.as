@@ -234,6 +234,12 @@ package fr.minuit4.controllers
 					Sprite( ref ).useHandCursor = _useHandCursor ? true : false;
 				}
 				
+				/*
+				 * :::::::::::::::::::::::::TTTTTTTOOOOOODDDDDDOOOOOO::::::::::::::::::::::::::::
+				 * Optimiser les listeners en faisant un test sur le parent, et en activant un écouteur sur le parent.
+				 * Optimisation de la mémoire derrière ça.
+				 * :::::::::::::::::::::::::TTTTTTTOOOOOODDDDDDOOOOOO::::::::::::::::::::::::::::
+				 */
 				if ( _usePressMode ) DisplayObject( ref ).addEventListener( MouseEvent.MOUSE_DOWN, onDown );
 				else DisplayObject( ref ).addEventListener( MouseEvent.CLICK, onClick );
 				DisplayObject( ref ).addEventListener( MouseEvent.MOUSE_OVER, onOver );
