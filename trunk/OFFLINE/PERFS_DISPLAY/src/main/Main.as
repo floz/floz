@@ -42,8 +42,6 @@ package main
 		{
 			if ( hasEventListener( Event.ENTER_FRAME ) ) removeEventListener( Event.ENTER_FRAME, onFrame );
 			else addEventListener( Event.ENTER_FRAME, onFrame );
-			//if ( fps.isRunning() ) fps.pause();
-			//else fps.play();
 		}
 		
 		private function onFrame(e:Event):void 
