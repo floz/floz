@@ -79,8 +79,8 @@ package fr.minuit4.tools.perfs
 		 */
 		public function FPS( width:Number = 250, height:Number = 50, interval:int = 5, scroll:int = 2, memMax:int = 100 ) 
 		{
-			_width = width;
-			_height = height;
+			_width = width >= 175 ? width : 175;
+			_height = height >= 20 ? height : 20;
 			_interval = interval;
 			_scroll = scroll;
 			_memMax = memMax;
@@ -138,16 +138,15 @@ package fr.minuit4.tools.perfs
 			addEventListener( Event.DEACTIVATE, onDeactivate );
 			addEventListener( Event.ACTIVATE, onActivate );
 			
-			addEventListener( MouseEvent.MOUSE_DOWN, onDown );
-			addEventListener( MouseEvent.MOUSE_UP, onUp );
+			var mouseZone:Sprite = new Sprite();
+			mouseZone.addChild( new Bitmap( new BitmapData( _width + 1, 20, true, 0x00 ) ) );
+			mouseZone.addEventListener( MouseEvent.MOUSE_DOWN, onDown );
+			mouseZone.addEventListener( MouseEvent.MOUSE_UP, onUp );
+			mouseZone.addEventListener( MouseEvent.DOUBLE_CLICK, onDoubleClick );
+			addChild( mouseZone );
 			
-			var doubleClickZone:Sprite = new Sprite();
-			doubleClickZone.addChild( new Bitmap( new BitmapData( _width + 1, 20, true, 0x00 ) ) );
-			doubleClickZone.addEventListener( MouseEvent.DOUBLE_CLICK, onDoubleClick );
-			addChild( doubleClickZone );
-			
-			doubleClickZone.doubleClickEnabled =
-			doubleClickZone.buttonMode =
+			mouseZone.doubleClickEnabled =
+			mouseZone.buttonMode =
 			_graphicShown = true;
 			
 			addEventListener( Event.ENTER_FRAME, renderCurves );
