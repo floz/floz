@@ -101,6 +101,7 @@ package main.v03
 			if ( _detector.detectMarkerLite( _raster, 80 ) && _detector.getConfidence() > .5 )
 			{
 				_detector.getTransformMatrix( _trans );
+				trace( "_trans : " + _trans );
 				_cnt3D.setTransformMatrix( _trans );
 				_cnt3D.visible = true;
 				_renderer.render();
