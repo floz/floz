@@ -36,7 +36,6 @@ package fr.minuit4.flartoolkit.loaders
 		{
 			_request = new URLRequest();
 			_loader = new URLLoader();
-			_loader.dataFormat = URLLoaderDataFormat.TEXT;
 			_loader.addEventListener( Event.COMPLETE, onLoadComplete );
 			_loader.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
 			
