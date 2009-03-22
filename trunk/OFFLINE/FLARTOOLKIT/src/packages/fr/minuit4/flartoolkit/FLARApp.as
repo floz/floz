@@ -6,15 +6,19 @@
  */
 package fr.minuit4.flartoolkit 
 {
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.media.Video;
 	import flash.utils.ByteArray;
 	import org.libspark.flartoolkit.core.FLARCode;
 	import org.libspark.flartoolkit.core.param.FLARParam;
+	import org.libspark.flartoolkit.core.raster.rgb.FLARRgbRaster_BitmapData;
 	import org.libspark.flartoolkit.core.transmat.FLARTransMatResult;
 	import org.libspark.flartoolkit.detector.FLARSingleMarkerDetector;
 	
-	public class FLARApp extends Sprite
+	public class FLARApp extends EventDispatcher
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -22,10 +26,12 @@ package fr.minuit4.flartoolkit
 		private var _vWidth:Number;
 		private var _vHeight:Number;
 		private var _webcam:Video;
-		private var _trans:FLARTransMatResult;
 		
 		private var _cameraParams:FLARParam;
 		private var _detectors:Array;
+		
+		private var _capture:BitmapData;
+		private var _raster:FLARRgbRaster_BitmapData;
 		
 		private var _running:Boolean;
 		
@@ -40,12 +46,26 @@ package fr.minuit4.flartoolkit
 			_webcam = webcam;
 			
 			_detectors = [];
-			_trans = new FLARTransMatResult();
+			
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
+		private function onFrame(e:Event):void
+		{
+			_capture.draw( _webcam );
+		}
+		
 		// - PRIVATE METHODS -------------------------------------------------------------
+		
+		private function init():void
+		{		
+			_capture = new BitmapData( _vWidth, _vHeight, false, 0x00 );
+			
+			_raster = new FLARRgbRaster_BitmapData( _cameraParams );
+			
+			addEventListener( Event.ENTER_FRAME, onFrame );
+		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
@@ -75,12 +95,12 @@ package fr.minuit4.flartoolkit
 			if ( !_webcam || !_cameraParams )
 				throw new Error( "There is no webcam or camera parameters (.dat file) attach." );
 			
+			init();
 			
+			_running = true;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
-		
-		// - END CLASS -------------------------------------------------------------------
 		
 	}
 	
