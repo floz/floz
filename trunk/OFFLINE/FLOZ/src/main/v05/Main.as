@@ -12,6 +12,8 @@ package main.v05
 	import com.as3dmod.modifiers.Taper;
 	import com.as3dmod.modifiers.Twist;
 	import flash.display.MovieClip;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	
 	public class Main extends MovieClip
@@ -20,9 +22,13 @@ package main.v05
 		public var confirmation:Confirmation;
 		public var settingsController:SettingsController;
 		public var visualizer:Visualizer;
+		public var background:MovieClip;
 		
 		public function Main() 
 		{
+			stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			
 			partsInfos.addEventListener( PartsInfos.ADD_CLICK, onAddClick );
 			partsInfos.addEventListener( PartsInfos.DELETE_CLICK, onDeleteClick );
 			partsInfos.addEventListener( PartsInfos.PART_CHANGE, onPartChange );
@@ -30,6 +36,9 @@ package main.v05
 			confirmation.addEventListener( Confirmation.CONFIRM, onConfirm );
 			settingsController.addEventListener( SettingsController.SETTINGS_CHANGE, onSettingsChange, true );
 			settingsController.addEventListener( SettingsController.GLOBAL_SETTINGS_CHANGE, onGlobalSettingsChange, true );
+			
+			stage.addEventListener( Event.RESIZE, onResize );
+			onResize();
 		}
 		
 		// EVENTS
@@ -79,6 +88,19 @@ package main.v05
 		{
 			visualizer.rebuildCurrentPart();
 			visualizer.refreshAllParts();
+		}
+		
+		private function onResize(e:Event = null):void 
+		{			
+			this.x = stage.stageWidth * .5 - 980 * .5;
+			this.y = stage.stageHeight * .5 - 560 * .5;
+			
+			background.width = stage.stageWidth;
+			background.height = stage.stageHeight;
+			
+			background.x = stage.stageWidth * .5 - background.width * .5 - this.x;
+			background.y = stage.stageHeight * .5 - background.height * .5 - this.y;
+			
 		}
 		
 		// PRIVATE

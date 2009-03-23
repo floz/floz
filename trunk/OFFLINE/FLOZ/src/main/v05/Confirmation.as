@@ -49,6 +49,8 @@ package main.v05
 			modifiers.selection = rBend;
 			input = iName;
 			
+			removeChild( rPivot );
+			
 			modifiers.addEventListener( Event.CHANGE, onChange );
 			zConfirm.addEventListener( MouseEvent.CLICK, onMouseClick );
 			zCancel.addEventListener( MouseEvent.CLICK, onMouseClick );
