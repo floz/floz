@@ -18,11 +18,13 @@ package fr.minuit4.webcam
 		private var _vHeight:Number;
 		private var _fps:Number;
 		
+		private var _running:Boolean;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function WebCam( vWidth:Number, vHeight:Number, fps:Number ) 
+		public function WebCam( vWidth:Number, vHeight:Number, fps:Number = 30 ) 
 		{
 			_vWidth = vWidth;
 			_vHeight = vHeight;
@@ -43,9 +45,15 @@ package fr.minuit4.webcam
 			if ( !camera )
 				throw new Error( "No camera detected. Please plug one." );
 			
-			camera.setMode( _vWidth, _vHeight, stage.frameRate ? stage.frameRate : 30, true );
+			camera.setMode( _vWidth, _vHeight, stage ? stage.frameRate : 30, true );
 			
 			this.attachCamera( camera );
+			_running = true;
+		}
+		
+		public function isRunning():Boolean
+		{
+			return _running;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

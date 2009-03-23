@@ -29,8 +29,30 @@
  */
 
 package com.squidder.flar.detector {
-	import flash.events.EventDispatcher;		import org.libspark.flartoolkit.FLARException;	import org.libspark.flartoolkit.core.FLARSquare;	import org.libspark.flartoolkit.core.FLARSquareDetector;	import org.libspark.flartoolkit.core.FLARSquareStack;	import org.libspark.flartoolkit.core.IFLARSquareDetector;	import org.libspark.flartoolkit.core.match.FLARMatchPatt_Color_WITHOUT_PCA;	import org.libspark.flartoolkit.core.param.FLARParam;	import org.libspark.flartoolkit.core.pickup.FLARDynamicRatioColorPatt_O3;	import org.libspark.flartoolkit.core.pickup.IFLARColorPatt;	import org.libspark.flartoolkit.core.raster.FLARRaster_BitmapData;	import org.libspark.flartoolkit.core.raster.IFLARRaster;	import org.libspark.flartoolkit.core.raster.rgb.IFLARRgbRaster;	import org.libspark.flartoolkit.core.rasterfilter.rgb2bin.FLARRasterFilter_BitmapDataThreshold;	import org.libspark.flartoolkit.core.transmat.FLARTransMat;	import org.libspark.flartoolkit.core.transmat.FLARTransMatResult;	import org.libspark.flartoolkit.core.transmat.IFLARTransMat;	import org.libspark.flartoolkit.core.types.FLARIntSize;	import org.libspark.flartoolkit.detector.FLARMultiMarkerDetectorResult;		import com.squidder.flar.events.FLARDetectorEvent;		
-	/**
+	import flash.events.EventDispatcher;
+	
+	import org.libspark.flartoolkit.FLARException;
+	import org.libspark.flartoolkit.core.FLARSquare;
+	import org.libspark.flartoolkit.core.FLARSquareDetector;
+	import org.libspark.flartoolkit.core.FLARSquareStack;
+	import org.libspark.flartoolkit.core.IFLARSquareDetector;
+	import org.libspark.flartoolkit.core.match.FLARMatchPatt_Color_WITHOUT_PCA;
+	import org.libspark.flartoolkit.core.param.FLARParam;
+	import org.libspark.flartoolkit.core.pickup.FLARDynamicRatioColorPatt_O3;
+	import org.libspark.flartoolkit.core.pickup.IFLARColorPatt;
+	import org.libspark.flartoolkit.core.raster.FLARRaster_BitmapData;
+	import org.libspark.flartoolkit.core.raster.IFLARRaster;
+	import org.libspark.flartoolkit.core.raster.rgb.IFLARRgbRaster;
+	import org.libspark.flartoolkit.core.rasterfilter.rgb2bin.FLARRasterFilter_BitmapDataThreshold;
+	import org.libspark.flartoolkit.core.transmat.FLARTransMat;
+	import org.libspark.flartoolkit.core.transmat.FLARTransMatResult;
+	import org.libspark.flartoolkit.core.transmat.IFLARTransMat;
+	import org.libspark.flartoolkit.core.types.FLARIntSize;
+	import org.libspark.flartoolkit.detector.FLARMultiMarkerDetectorResult;
+	
+	import com.squidder.flar.events.FLARDetectorEvent;		
+
+	/**
 	 * 複数のマーカーを検出し、それぞれに最も一致するARコードを、コンストラクタで登録したARコードから 探すクラスです。
 	 * 最大300個を認識しますが、ゴミラベルを認識したりするので100個程度が限界です。
 	 * 

@@ -84,7 +84,7 @@ package fr.minuit4.flartoolkit.loaders
 			_loader.removeEventListener( IOErrorEvent.IO_ERROR, onIOErrorEvent );
 			_loader = null;
 			
-			dispatchEvent( new Event( FLARLoaders.PARAMS_LOADED ) );
+			dispatchEvent( new Event( BasicFLARLoaders.PARAMS_LOADED ) );
 			_loaded = true;
 		}
 		
@@ -102,7 +102,7 @@ package fr.minuit4.flartoolkit.loaders
 			
 			_loader.load( _request );
 			
-			dispatchEvent( new Event( FLARLoaders.LOADING ) );
+			dispatchEvent( new Event( BasicFLARLoaders.LOADING ) );
 			_loading = true;
 		}
 		

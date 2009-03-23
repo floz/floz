@@ -3,6 +3,7 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.utils.Dictionary;
 	import flash.utils.getTimer;
 	
 	public class Main extends Sprite 
@@ -16,8 +17,8 @@
 		private function onClick( e:Event ):void
 		{
 			var a:Array = [];
+			var d:Dictionary = new Dictionary();
 			while (a.length < 10) a.push( "toto" );
-			var test:Number = 2000;			
 			
 			var debut:Number = 0;
 			var compteur:int;
@@ -26,7 +27,7 @@
 			for ( var i:int; i < 10000; i++ )
 			{
 				debut = getTimer();
-				for ( j = 0; j < 100; j++ )
+				for ( j = 0; j < 1000; j++ )
 				{
 					for ( var k:int; k < n; k++ )
 					{

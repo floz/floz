@@ -6,32 +6,33 @@
  */
 package fr.minuit4.flartoolkit 
 {
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.media.Video;
 	import flash.utils.ByteArray;
+	import fr.minuit4.flartoolkit.detector.FLARDetectorsManager;
+	import fr.minuit4.webcam.WebCam;
 	import org.libspark.flartoolkit.core.FLARCode;
 	import org.libspark.flartoolkit.core.param.FLARParam;
 	import org.libspark.flartoolkit.core.raster.rgb.FLARRgbRaster_BitmapData;
 	import org.libspark.flartoolkit.core.transmat.FLARTransMatResult;
 	import org.libspark.flartoolkit.detector.FLARSingleMarkerDetector;
 	
-	public class FLARApp extends EventDispatcher
+	public class FLARApp extends Sprite
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _vWidth:Number;
-		private var _vHeight:Number;
-		private var _webcam:Video;
+		private var _webcam:WebCam;
 		
 		private var _cameraParams:FLARParam;
 		private var _detectors:Array;
 		
 		private var _capture:BitmapData;
 		private var _raster:FLARRgbRaster_BitmapData;
+		private var _detectorsManager:FLARDetectorsManager;
 		
 		private var _running:Boolean;
 		
@@ -39,14 +40,16 @@ package fr.minuit4.flartoolkit
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function FLARApp( vWidth:Number, vHeight:Number, webcam:Video ) 
+		public function FLARApp( webcam:WebCam, cameraParams:ByteArray = null ) 
 		{
-			_vWidth = vWidth;
-			_vHeight = vHeight;
 			_webcam = webcam;
+			if ( cameraParams )
+			{
+				_cameraParams = new FLARParam();
+				_cameraParams.loadARParam( cameraParams );
+			}
 			
-			_detectors = [];
-			
+			_detectors = [];			
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -54,15 +57,22 @@ package fr.minuit4.flartoolkit
 		private function onFrame(e:Event):void
 		{
 			_capture.draw( _webcam );
+			_detectorsManager.detectMarkers();
+			
+			addChild( new Bitmap( _detectorsManager.getBmp() ) );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function init():void
-		{		
-			_capture = new BitmapData( _vWidth, _vHeight, false, 0x00 );
+		{
+			if ( !_webcam.isRunning() )
+				_webcam.activate();
 			
-			_raster = new FLARRgbRaster_BitmapData( _cameraParams );
+			_capture = new BitmapData( _webcam.width, _webcam.height, false, 0x00 );			
+			_raster = new FLARRgbRaster_BitmapData( _capture );
+			
+			_detectorsManager = new FLARDetectorsManager( _detectors, _raster );
 			
 			addEventListener( Event.ENTER_FRAME, onFrame );
 		}
@@ -80,14 +90,14 @@ package fr.minuit4.flartoolkit
 		
 		public function attachMarker( markerParams:String ):void
 		{
-			if ( !_flarParam )
+			if ( !_cameraParams )
 				throw new Error( "You first have to attach a camera by the attachCameraParams() method." );
 				
 			var marker:FLARCode = new FLARCode( 16, 16 );
 			marker.loadARPatt( markerParams );
 			
 			var detector:FLARSingleMarkerDetector = new FLARSingleMarkerDetector( _cameraParams, marker, 80 );
-			_detectors.push( detector );
+			_detectors.push( { detector: detector, trans: new FLARTransMatResult(), detected: false } );
 		}
 		
 		public function activate():void
@@ -98,6 +108,11 @@ package fr.minuit4.flartoolkit
 			init();
 			
 			_running = true;
+		}
+		
+		public function destroy():void
+		{
+			// destroy
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
