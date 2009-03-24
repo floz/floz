@@ -111,7 +111,7 @@ package fr.minuit4.flartoolkit.loaders
 		/** Renvoie les parametres de la caméra sous forme de ByteArray */
 		public function get cameraParams():ByteArray { return _cameraParams; }
 		/** Renvoie les parametres du marker sous la forme d'une chaine de caractères */
-		public function get patternParams():String { return _patternParams; }
+		public function getMarkersParams():String { return _patternParams; }
 		
 		// - END CLASS -------------------------------------------------------------------
 		
