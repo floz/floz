@@ -10,6 +10,7 @@ package main.v04
 	import flash.events.Event;
 	import fr.minuit4.flartoolkit.FLARApp;
 	import fr.minuit4.flartoolkit.loaders.BasicFLARLoaders;
+	import fr.minuit4.flartoolkit.loaders.MarkerParamsLoader;
 	import fr.minuit4.webcam.WebCam;
 	
 	public class Main extends MovieClip
@@ -18,6 +19,7 @@ package main.v04
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _webcam:WebCam;
+		private var _flar:FLARApp;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -35,10 +37,19 @@ package main.v04
 		
 		private function onParamsLoaded(e:Event):void 
 		{
-			var flar:FLARApp = new FLARApp( _webcam, BasicFLARLoaders( e.currentTarget ).cameraParams );
-			flar.attachMarker( BasicFLARLoaders( e.currentTarget ).patternParams );
-			flar.activate();
-			addChild( flar );
+			_flar = new FLARApp( _webcam, BasicFLARLoaders( e.currentTarget ).cameraParams );
+			_flar.attachMarker( BasicFLARLoaders( e.currentTarget ).getMarkersParams() );
+			
+			var markerLoader:MarkerParamsLoader = new MarkerParamsLoader();
+			markerLoader.addEventListener( MarkerParamsLoader.MARKER_PARAMS_LOAD, onMarkerParamsLoad );
+			markerLoader.load( "rectanglecarre.dat" );
+		}
+		
+		private function onMarkerParamsLoad(e:Event):void 
+		{
+			_flar.attachMarker( MarkerParamsLoader( e.currentTarget ).getMarkerParams() );
+			_flar.activate();
+			addChild( _flar );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------

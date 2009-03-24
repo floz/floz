@@ -46,6 +46,7 @@ package fr.minuit4.tools.perfs
 		
 		private var _prevFps:int;
 		private var _prevMem:int;
+		private var _prevMS:int;
 		private var _rect:Rectangle;
 		
 		private var _tFps:TextField;
@@ -105,6 +106,8 @@ package fr.minuit4.tools.perfs
 			
 			_prevFps =
 			_prevMem = _curves.height;
+			
+			_prevMS = 0;
 			
 			_rect = new Rectangle( _curves.width - _scroll, 0, _scroll, _curves.height );
 			
@@ -185,6 +188,8 @@ package fr.minuit4.tools.perfs
 		{
 			_currentTime = getTimer();
 			
+			_ms = int( _currentTime - _prevTime );
+			
 			if ( _count++ >+ _interval )
 			{
 				_fps = int( ( 1000 * _count ) / ( _currentTime - _prevIntervalTime ) );
@@ -207,10 +212,14 @@ package fr.minuit4.tools.perfs
 					var nextMem:int = ( 1 - rm ) * ( _curves.height - 1 );			
 					drawLine( _curves.width - _scroll, _prevMem, _curves.width - 1, nextMem, 0xff00ff00 );
 					_prevMem = nextMem;
+					
+					//var rms:Number = Math.min( 1, _ms / _curves.height );
+					//var nextMs:int = ( 1 - rms ) * ( _curves.height - 1 );
+					//drawLine( _curves.width - _scroll, _prevMS, _curves.width - 1, nextMs, 0xff0000ff );
+					//_prevMS = nextMs;
 				}
 			}
 			
-			_ms = int( _currentTime - _prevTime );
 			_prevTime = _currentTime;
 			
 			refreshTexts();
