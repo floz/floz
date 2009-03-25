@@ -6,22 +6,19 @@
  */
 package main 
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	import flash.events.Event;
-	import flash.events.TimerEvent;
-	import flash.text.TextField;
-	import flash.utils.Timer;
-	import fr.minuit4.effects.ApparitionTextEffect;
-	import fr.minuit4.effects.DisparitionTextEffect;
+	import fr.minuit4.tools.loaders.types.ImageLoader;
 	import fr.minuit4.tools.loaders.types.TextLoader;
-	import fr.minuit4.tools.Loading;
 	
 	public class Main extends MovieClip
 	{
+		private var loader:ImageLoader;
+		private var _xmlLoader:TextLoader;
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
-		
-		private var _loading:Loading;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -29,25 +26,29 @@ package main
 		
 		public function Main() 
 		{
-			_loading = new Loading( 0x00 );
-			_loading.x = stage.stageWidth * .5 - _loading.width * .5;
-			_loading.y = stage.stageHeight * .5 - _loading.height * .5;
-			_loading.play();
-			addChild( _loading );
-			
-			var xmlLoader:TextLoader = new TextLoader();
-			xmlLoader.addEventListener( Event.COMPLETE, onComplete );
-			xmlLoader.load( path_xml + "datas.xml" );
+			loader = new ImageLoader();
+			loader.addEventListener( Event.COMPLETE, onComplete );
+			loader.load( "grosllamahwin4.jpg" );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
-		private function onComplete(e:Event):void 
+				private function onComplete(e:Event):void 
 		{
-			var _xml:XML = XML( TextLoader( e.currentTarget ).getItemLoaded() );
-			TextLoader( e.currentTarget ).destroy();
+			var b:BitmapData = Bitmap( loader.getItemLoaded() ).bitmapData.clone();
+			addChild( new Bitmap( b ) );
+			loader.destroy();
 			
-			trace( _xml );
+			_xmlLoader = new TextLoader();
+			_xmlLoader.addEventListener( Event.COMPLETE, onXMLComplete );
+			_xmlLoader.load( "datas.xml" );
+		}
+		
+		private function onXMLComplete(e:Event):void 
+		{
+			var x:XML = XML( _xmlLoader.getItemLoaded() );
+			_xmlLoader.destroy();
+			trace( x );		
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -56,7 +57,6 @@ package main
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
-		public function get path_xml():String { return loaderInfo.parameters[ "path_xml" ] || "xml/"; }		
 	}
 	
 }

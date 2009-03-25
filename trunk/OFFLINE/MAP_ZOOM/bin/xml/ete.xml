@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data>
 	<path photos="img/photos/" />
-	<list>
+	<list id="">
 		<item name="toto" coordX="24" coordY="150" img="test1.jpg" titre="titi titre" infoText="ajezoaejazoejzaoejoazejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
 		<item name="tata" coordX="89" coordY="45" img="test1.jpg" titre="titi titre" infoText="ajezoaejazoejzaoejoazejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
 		<item name="titi" coordX="200" coordY="30" img="test1.jpg" titre="titi titre" infoText="ajezoaejazoejzaoejoazejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
 	</list>
-	<list>
+	<list id="">
 		
 	</list>
 </data>
