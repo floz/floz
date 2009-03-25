@@ -28,10 +28,10 @@ package fr.minuit4.tools.loaders.types
 			super( isPersistent );
 			
 			_loader = new URLLoader();
-			_loader.addEventListener( Event.INIT, onInit, false, 0, true );
-			_loader.addEventListener( IOErrorEvent.IO_ERROR, onIOError, false, 0, true );
-			_loader.addEventListener( ProgressEvent.PROGRESS, onProgress, false, 0, true );
-			_loader.addEventListener( Event.COMPLETE, onComplete, false, 0, true );
+			_loader.addEventListener( Event.INIT, onInit );
+			_loader.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			_loader.addEventListener( ProgressEvent.PROGRESS, onProgress );
+			_loader.addEventListener( Event.COMPLETE, onComplete );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
