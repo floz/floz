@@ -29,10 +29,10 @@ package fr.minuit4.tools.loaders.types
 			super( isPersistent );
 			
 			_loader = new Loader();
-			_loader.contentLoaderInfo.addEventListener( Event.INIT, onInit, false, 0, true );
-			_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError, false, 0, true );
-			_loader.contentLoaderInfo.addEventListener( ProgressEvent.PROGRESS, onProgress, false, 0, true );
-			_loader.contentLoaderInfo.addEventListener( Event.COMPLETE, onComplete, false, 0, true );
+			_loader.contentLoaderInfo.addEventListener( Event.INIT, onInit );
+			_loader.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			_loader.contentLoaderInfo.addEventListener( ProgressEvent.PROGRESS, onProgress );
+			_loader.contentLoaderInfo.addEventListener( Event.COMPLETE, onComplete );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
