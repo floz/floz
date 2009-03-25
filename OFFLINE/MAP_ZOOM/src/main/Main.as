@@ -7,6 +7,7 @@
 package main 
 {
 	import flash.display.MovieClip;
+	import fr.minuit4.tools.perfs.FPS;
 	
 	public class Main extends MovieClip
 	{
@@ -19,7 +20,7 @@ package main
 		
 		public function Main() 
 		{
-			
+			addChild( new FPS() );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
