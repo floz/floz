@@ -120,7 +120,6 @@ package main
 		{
 			if ( !_imagesLoaded[ _currentIndex ] ) return;
 			
-			//switchText();
 			switchImage();
 			if ( _currentIndex >= _itemsCount ) _currentIndex = 0;
 		}
