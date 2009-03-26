@@ -10,19 +10,24 @@ package main
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	import flash.display.PixelSnapping;
+	import flash.display.SimpleButton;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.filters.BlurFilter;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
+	import flash.net.navigateToURL;
+	import flash.net.URLRequest;
 	import flash.text.TextField;
 	import flash.utils.Timer;
-	import fr.minuit4.effects.ApparitionTextEffect;
-	import fr.minuit4.effects.DisparitionTextEffect;
 	import fr.minuit4.tools.loaders.types.ImageLoader;
 	import fr.minuit4.tools.loaders.types.TextLoader;
 	import fr.minuit4.tools.Loading;
 	import fr.minuit4.tools.perfs.FPS;
 	import fr.minuit4.utils.UBit;
 	import gs.easing.Linear;
+	import gs.easing.Quad;
 	import gs.TweenLite;
 	
 	public class Main extends MovieClip
@@ -31,13 +36,17 @@ package main
 		
 		private const WIDTH:Number = 880;
 		private const HEIGHT:Number = 205;
+		private const BLURFILTER:BlurFilter = new BlurFilter( 40, 40, 3 );
+		private const POINT:Point = new Point();
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _loading:Loading;
 		private var _image:BitmapData;
+		private var _blurImage:BitmapData;
+		private var _blurHolder:Bitmap;
 		private var _appearText:TextField;
-		private var _disappearText:TextField;
+		private var _textHolder:TextHolder;
 		
 		private var _xml:XML;
 		private var _itemsInfos:Array;
@@ -52,35 +61,34 @@ package main
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		public var cnt:MovieClip;
+		public var z:SimpleButton;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function Main() 
 		{
-			_loading = new Loading( 0x00 );
+			_loading = new Loading( 0x888888 );
 			_loading.x = stage.stageWidth * .5 - _loading.width * .5;
 			_loading.y = stage.stageHeight * .5 - _loading.height * .5;
 			_loading.play();
 			addChild( _loading );
 			
 			_image = new BitmapData( WIDTH, HEIGHT, false, 0xffffff );
-			cnt.addChild( new Bitmap( _image, PixelSnapping.AUTO, true ) );
+			cnt.addChild( new Bitmap( _image, PixelSnapping.AUTO, true ) );			
 			
-			var cth:TextHolder = new TextHolder();
-			addChild( cth );
-			_appearText = cth.txt;
+			_textHolder = new TextHolder();
+			_appearText = _textHolder.txt;
 			_appearText.text = "";
 			
-			var oth:TextHolder = new TextHolder();
-			addChild( oth );
-			_disappearText = oth.txt;
-			_disappearText.text = "";
+			_blurImage = new BitmapData( WIDTH, height, false, 0xffffff );
+			_blurHolder = new Bitmap( _blurImage, PixelSnapping.AUTO, true );
+			cnt.addChild( _blurHolder );
 			
 			var xmlLoader:TextLoader = new TextLoader();
 			xmlLoader.addEventListener( Event.COMPLETE, onComplete );
 			xmlLoader.load( path_xml + "datas.xml" );
 			
-			addChild( new FPS() );
+			z.addEventListener( MouseEvent.CLICK, onClick );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -103,11 +111,16 @@ package main
 			_imageLoader.load( path_img + _itemsInfos[ _currentIndex ].img );
 		}
 		
+		private function onClick(e:MouseEvent):void 
+		{
+			navigateToURL( new URLRequest( "http://www.altizem.fr" ) );
+		}
+		
 		private function onTimer(e:TimerEvent):void 
 		{
 			if ( !_imagesLoaded[ _currentIndex ] ) return;
 			
-			switchText();
+			//switchText();
 			switchImage();
 			if ( _currentIndex >= _itemsCount ) _currentIndex = 0;
 		}
@@ -118,7 +131,6 @@ package main
 			
 			if ( !_timer.running )
 			{
-				switchText();
 				switchImage();
 				_timer.start();
 				_loading.stop();
@@ -144,20 +156,21 @@ package main
 			return a;
 		}
 		
-		private function switchText():void
+		private function switchImage():void
 		{
-			_disappearText.x = _appearText.x;
-			_disappearText.y = _appearText.y;
-			DisparitionTextEffect.apply( _appearText.text, _disappearText, 750 );
+			_image.fillRect( _image.rect, 0x00 );
+			_image.draw( UBit.resize( _imagesLoaded[ _currentIndex ], WIDTH, HEIGHT, false ) );
 			
 			_appearText.x = _itemsInfos[ _currentIndex ].txtX;
 			_appearText.y = _itemsInfos[ _currentIndex ].txtY;
-			ApparitionTextEffect.apply( _itemsInfos[ _currentIndex ].txt, _appearText, 750 );
-		}
-		
-		private function switchImage():void
-		{
-			_image.draw( UBit.resize( _imagesLoaded[ _currentIndex ], WIDTH, HEIGHT, false ) );
+			_appearText.text = _itemsInfos[ _currentIndex ].txt;
+			_image.draw( _textHolder );
+			
+			_blurImage.draw( _image );
+			_blurImage.applyFilter( _blurImage, _blurImage.rect, POINT, BLURFILTER );
+			_blurHolder.alpha = 1;
+			TweenLite.to( _blurHolder, 1, { alpha: 0, ease: Quad.easeOut } );
+			
 			_timer.delay = _itemsInfos[ _currentIndex ].wait * 1000;
 			
 			_currentIndex++;
