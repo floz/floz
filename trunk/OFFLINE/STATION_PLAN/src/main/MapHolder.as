@@ -12,6 +12,7 @@ package main
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.geom.ColorTransform;
 	import flash.utils.Timer;
 	import fr.minuit4.utils.UBit;
 	import gs.easing.Quad;
@@ -29,6 +30,10 @@ package main
 		private var _timer:Timer;
 		
 		private var _zoomed:Boolean;
+		private var _cntPuces:Sprite;
+		
+		private var _puce:Puce;
+		private var _colorTransform:ColorTransform;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -68,6 +73,9 @@ package main
 			cnt.x = -_smallMap.x;
 			cnt.y = -_smallMap.y * 1.5;
 			
+			_cntPuces = new Sprite();
+			cnt.addChild( _cntPuces );
+			
 			TweenLite.to( cnt, .4, { alpha: 1, ease: Quad.easeOut } );
 			
 			mapZoom.activate();
@@ -77,10 +85,18 @@ package main
 		{
 			if ( mapZoom.display ) mapZoom.hide();
 			
-			var p:MovieClip = new Puce();
-			p.x = Model.currentItem.coordX * .5;
-			p.y = Model.currentItem.coordY * .5;
-			cnt.addChild( p );
+			while ( _cntPuces.numChildren ) _cntPuces.removeChildAt( 0 );
+			
+			_colorTransform = new ColorTransform();
+			_colorTransform.color = Model.colors[ Model.currentListIndex ];
+			
+			_puce = new Puce();
+			_puce.x = Model.currentItem.coordX * .5;
+			_puce.y = Model.currentItem.coordY * .5;
+			_puce.transform.colorTransform = _colorTransform;
+			_cntPuces.addChild( _puce );
+			
+			if ( _timer.running ) _timer.reset();
 			_timer.start();
 		}
 		
