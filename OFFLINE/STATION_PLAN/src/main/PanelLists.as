@@ -64,6 +64,8 @@ package main
 			if ( ComboBox( e.currentTarget ).selectedItem == Model.currentItem ) return;
 			
 			Model.currentItem = ComboBox( e.currentTarget ).selectedItem;
+			Model.currentListIndex = Model.currentItem.listIndex;
+			
 			ComboBox( e.currentTarget ).selectedIndex = 0;
 			dispatchEvent( new Event( PanelLists.ITEM_SELECT ) );
 		}

@@ -28,6 +28,8 @@ package main
 		private var _datas:XML;
 		private var _imageLoader:ImageLoader;
 		
+		private var _toolTip:ToolTip;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		public var mapHolder:MapHolder;
@@ -79,6 +81,16 @@ package main
 			panelInfos.displayInfos();
 		}
 		
+		private function onShow(e:Event):void 
+		{
+			_toolTip.show( Puce( e.target ) );
+		}
+		
+		private function onHide(e:Event):void 
+		{
+			_toolTip.hide();
+		}
+		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function parseXML():Array
@@ -101,8 +113,9 @@ package main
 						listIndex: listIndex,
 						coordX: x.item.@coordX[ i ], 
 						coordY: x.item.@coordY[ i ], 
-						img: x.item.@img[ i ], 
-						titre: x.item.@titre[ i ], 
+						imgUrl: x.item.@img[ i ], 
+						img: null,
+						title: x.item.@titre[ i ], 
 						infoText: x.item.@infoText[ i ], 
 						text: x.item.@text[ i ] 
 						} );
@@ -117,6 +130,8 @@ package main
 		
 		private function init():void
 		{
+			Model.path_photos = path_photos;
+			
 			_loading.stop();
 			removeChild( _loading );
 			_loading = null;
@@ -127,6 +142,11 @@ package main
 			panelInfos.activate();
 			
 			mapHolder.activate();
+			mapHolder.addEventListener(  Puce.TOOLTIP_SHOW, onShow );
+			mapHolder.addEventListener(  Puce.TOOLTIP_HIDE, onHide );
+			
+			_toolTip = new ToolTip();
+			addChild( _toolTip );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
