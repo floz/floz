@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<list id="Com">
+		<item name="toto" coordX="0" coordY="123" img="test1.jpg" titre="titi tizetre" infoText=" zer zerze raejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
+		<item name="tata" coordX="570" coordY="-200" img="test2.jpg" titre="tiazeazeati titre" infoText=" grzeze zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
+		<item name="tata" coordX="89" coordY="45" img="test3.jpg" titre="tirezrezti aze" infoText="ezrez trt e zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
+		<item name="titi" coordX="200" coordY="30" img="test1.jpg" titre="tit   iutiir titrte" infoText="zer tez zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
+	</list>
+	<list id="ZE">
+		<item name="toto" coordX="24" coordY="150" img="test1.jpg" titre="titzerezri tfdsfdsfsditre" infoText="ajezo aejazoejzaoe  joazejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
+		<item name="tata" coordX="-376" coordY="45" img="test2.jpg" titre="titiazeasdfsze" infoText="ajezoaejazoe jzaoej oazejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
+		<item name="titi" coordX="200" coordY="30" img="test3.jpg" titre="titsdfsdfisf titre" infoText="ajezoaeja zoejzaoejoaz ejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
+	</list>
+	<list id="TZT">
+		<item name="toto" coordX="120" coordY="150" img="test3.jpg" titre="titxvxvi tisdfsdftre" infoText="ajezoaejazoejzaoejoazejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
+		<item name="titi" coordX="-200" coordY="30" img="test2.jpg" titre="tdsfsdfsdfiti titre" infoText="ajezoaejazoejzaoejoazejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
+	</list>
+	<list id="ZZR">
+		<item name="toto" coordX="24" coordY="12" img="test1.jpg" titre="az es" infoText="qsdqsfds fd zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
+		<item name="tata" coordX="-89" coordY="-45" img="test2.jpg" titre="tieazti titre" infoText="ajezoaeja   zoejezaoejzeoaze joazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
+		<item name="titi" coordX="376" coordY="64" img="test3.jpg" titre="dqsd dtidtrsdsqd e" infoText="ajezoaejazoejzasdf oejoazejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
+	</list>
+</data>

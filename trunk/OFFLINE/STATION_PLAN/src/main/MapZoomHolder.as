@@ -123,7 +123,8 @@ package main
 		
 		public function hide():void
 		{
-			this.visible = false;
+			//this.visible = false;
+			TweenLite.to( this, .2, { alpha: 0, ease: Quad.easeOut } );
 			_display = false;
 		}
 		
