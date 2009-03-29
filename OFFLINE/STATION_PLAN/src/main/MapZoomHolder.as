@@ -38,6 +38,7 @@ package main
 		public var cntZoom:Sprite;
 		public var mapStrk:Sprite;
 		public var background:Sprite;		
+		private var _tooltip:ToolTip;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -60,6 +61,7 @@ package main
 				MovieClip( _cntPuces.getChildAt( i ) ).gotoAndStop( "deselect" );
 			
 			_pucesList[ Model.currentItem ].gotoAndPlay( "select" );
+			Model.currentPuce = _pucesList[ Model.currentItem ];
 		}
 		
 		private function generatePuces():void
@@ -105,6 +107,10 @@ package main
 			
 			_cntPuces.useHandCursor = true;
 			_cntPuces.buttonMode = true;
+			
+			_tooltip = new ToolTip();
+			addChild( _tooltip );
+			_tooltip.setCloseButtonVisible();
 		}
 		
 		public function zoom():void
@@ -113,6 +119,11 @@ package main
 			
 			cntZoom.x = _px - Model.currentItem.coordX;
 			cntZoom.y = _py - Model.currentItem.coordY;
+			
+			_tooltip.show( _pucesList[ Model.currentItem ] );
+			_tooltip.x = _px - _tooltip.width * .5;
+			_tooltip.y = _py - 20;
+			Model.mainTooltipVisible = true;
 			
 			this.alpha = 0;
 			this.visible = true;
@@ -123,7 +134,8 @@ package main
 		
 		public function hide():void
 		{
-			//this.visible = false;
+			if ( _tooltip.visible ) _tooltip.visible = false;
+			
 			TweenLite.to( this, .2, { alpha: 0, ease: Quad.easeOut } );
 			_display = false;
 		}

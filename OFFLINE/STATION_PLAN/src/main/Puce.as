@@ -25,14 +25,16 @@ package main
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Puce() 
+		public function Puce( enable:Boolean = true ) 
 		{
+			if ( !enable ) return;
 			this.addEventListener( MouseEvent.ROLL_OVER, onOver );
 			this.addEventListener( MouseEvent.ROLL_OUT, onOut );
 		}
 		
 		private function onOver(e:MouseEvent):void 
 		{
+			if ( this == Model.currentPuce && Model.mainTooltipVisible ) return;
 			dispatchEvent( new Event( TOOLTIP_SHOW, true ) );
 		}
 		
