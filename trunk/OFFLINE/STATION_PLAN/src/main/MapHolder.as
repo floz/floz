@@ -27,10 +27,10 @@ package main
 		
 		private var _smallMap:Bitmap;
 		private var _zoomMap:Bitmap;
-		private var _timer:Timer;
 		
 		private var _zoomed:Boolean;
 		private var _cntPuces:Sprite;
+		private var _timer:Timer;
 		
 		private var _puce:Puce;
 		private var _colorTransform:ColorTransform;
@@ -47,9 +47,6 @@ package main
 			mapZoom.visible = false;
 			
 			cnt.alpha = 0;
-			
-			_timer = new Timer( 1200, 1 );
-			_timer.addEventListener( TimerEvent.TIMER_COMPLETE, onTimerComplete );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -78,6 +75,9 @@ package main
 			
 			TweenLite.to( cnt, .4, { alpha: 1, ease: Quad.easeOut } );
 			
+			_timer = new Timer( 1200, 1 );
+			_timer.addEventListener( TimerEvent.TIMER_COMPLETE, onTimerComplete );
+			
 			mapZoom.activate();
 		}
 		
@@ -90,7 +90,7 @@ package main
 			_colorTransform = new ColorTransform();
 			_colorTransform.color = Model.colors[ Model.currentListIndex ];
 			
-			_puce = new Puce();
+			_puce = new Puce( false );
 			_puce.x = Model.currentItem.coordX * .5;
 			_puce.y = Model.currentItem.coordY * .5;
 			_puce.transform.colorTransform = _colorTransform;

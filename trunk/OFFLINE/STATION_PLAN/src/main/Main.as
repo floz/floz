@@ -95,6 +95,8 @@ package main
 		
 		private function parseXML():Array
 		{
+			Model.delay = _datas.infos.@wait * 1000;
+			
 			var x:XML;
 			
 			var infos:Array = [];

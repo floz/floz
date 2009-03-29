@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data>
+	<infos wait="1.2" />
 	<list id="Com">
 		<item name="toto" coordX="0" coordY="123" img="test1.jpg" titre="titi tizetre" infoText=" zer zerze raejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />
 		<item name="tata" coordX="570" coordY="-200" img="test2.jpg" titre="tiazeazeati titre" infoText=" grzeze zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" />

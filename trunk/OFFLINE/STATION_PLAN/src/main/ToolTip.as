@@ -8,8 +8,10 @@ package main
 {
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
+	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import fr.minuit4.tools.loaders.types.ImageLoader;
 	import gs.easing.Quad;
@@ -29,18 +31,28 @@ package main
 		public var imageHolder:ImageHolder;
 		public var text:TextField;
 		public var title:TextField;
+		public var zClose:SimpleButton;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function ToolTip() 
 		{
 			this.visible = false;
+			zClose.visible = false;
+			
+			zClose.addEventListener( MouseEvent.CLICK, onClick );
 			
 			_imageLoader = new ImageLoader();
 			_imageLoader.addEventListener( Event.COMPLETE, onComplete );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
+		
+		private function onClick(e:MouseEvent):void 
+		{
+			this.visible = false;
+			Model.mainTooltipVisible = false;
+		}
 		
 		private function onComplete(e:Event):void 
 		{
@@ -84,6 +96,11 @@ package main
 		public function hide():void
 		{
 			TweenLite.to( this, .2, { alpha: 0, ease: Quad.easeOut, onComplete: invisible() } );
+		}
+		
+		public function setCloseButtonVisible():void
+		{
+			zClose.visible = true;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
