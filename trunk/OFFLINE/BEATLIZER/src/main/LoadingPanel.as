@@ -89,6 +89,8 @@ package main
 			TweenLite.to( this, .4, { alpha: 1, ease: Quad.easeOut } );
 			loadingText.text = "Envoie des données relatives à la photo.";
 			_loadText = "Envoie de la photo : ";
+			
+			if ( !Model.initialized ) dispatchEvent( new Event( Event.SELECT ) );
 		}
 		
 		private function onIOError(e:IOErrorEvent):void 

@@ -11,7 +11,7 @@ package main
 	
 	public class Model 
 	{
-		public static const MASKS:Array = [ new Mask1( 0, 0 ), new Mask2( 0, 0 ), new Mask3( 0, 0 ) ];
+		public static var MASKS:Array = [];
 		public static const IMAGE_TYPE:FileFilter = new FileFilter( "Image ( '*.jpg', '*.jpeg', '*.png' )", "*.jpg; *.jpeg; *.png" );
 		
 		public static const PHP_UPLOAD_FILE:String = "upload.php";
@@ -28,6 +28,8 @@ package main
 		
 		public static var enable:Boolean;
 		public static var initialized:Boolean;
+		
+		public static var PATH_MASKS:String;
 		
 	}
 	

@@ -71,8 +71,8 @@ package fr.minuit4.utils
 			var bmpdHeight:Number = bmpd.height;
 			
 			var j:int;
-			var n:int = width / bmpdWidth;
-			var m:int = height / bmpdHeight;
+			var n:int = width / bmpdWidth + 1;
+			var m:int = height / bmpdHeight + 1;
 			for ( var i:int; i < n; i++ )
 			{
 				for ( j; j < m; j++ )
