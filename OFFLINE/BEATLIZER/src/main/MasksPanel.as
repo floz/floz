@@ -43,7 +43,7 @@ package main
 		{
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			
-			initBeatlesHolders();
+			//initBeatlesHolders();
 		}
 		
 		private function onOver(e:MouseEvent):void 
@@ -64,7 +64,7 @@ package main
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		private function initBeatlesHolders():void
+		public function initBeatlesHolders():void
 		{
 			var bh:BeatlesHolder;
 			var n:int = Model.MASKS.length;

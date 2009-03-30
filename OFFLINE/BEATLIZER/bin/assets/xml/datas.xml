@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<path masks="assets/masks/" />
+	<mask img="mask_lennon.png"/>
+	<mask img="mask_mccartney.png"/>
+	<mask img="mask_ringo.png"/>
+</data>

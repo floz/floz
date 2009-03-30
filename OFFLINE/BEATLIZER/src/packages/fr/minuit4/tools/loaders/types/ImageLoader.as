@@ -41,7 +41,6 @@ package fr.minuit4.tools.loaders.types
 		
 		protected override function setItemLoaded():void
 		{
-			if ( !( _loader.contentLoaderInfo.content is Bitmap ) ) throw new TypeError( "ImageLoader > The loaded item is not a Bitmap." );
 			_itemLoaded = _loader.contentLoaderInfo.content;			
 		}
 		
@@ -69,7 +68,7 @@ package fr.minuit4.tools.loaders.types
 			
 			if ( !_isPersistent )
 			{
-				Bitmap( _itemLoaded ).bitmapData.dispose();
+				if( _itemLoaded is Bitmap ) Bitmap( _itemLoaded ).bitmapData.dispose();
 				_itemLoaded = null;
 			}
 		}
