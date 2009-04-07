@@ -46,7 +46,7 @@ package main
 		public function displayInfos():void
 		{
 			title.text = Model.currentItem.label;
-			text.text = Model.currentItem.text;
+			text.htmlText = Model.currentItem.text + "\n\n<a href='" + Model.currentItem.url + "'>" + Model.currentItem.url + "</a>";
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
