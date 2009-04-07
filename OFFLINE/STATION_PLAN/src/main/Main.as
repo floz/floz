@@ -119,7 +119,8 @@ package main
 						img: null,
 						title: x.item.@titre[ i ], 
 						infoText: x.item.@infoText[ i ], 
-						text: x.item.@text[ i ] 
+						text: x.item.@text[ i ],
+						url: x.item.@url[ i ]
 						} );
 				}
 				infos.push( { id: x.@id, datas: a } );
