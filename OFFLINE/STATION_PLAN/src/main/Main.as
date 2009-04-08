@@ -77,6 +77,7 @@ package main
 		
 		private function onItemSelect(e:Event):void 
 		{
+			trace( "Main.onItemSelect > e : " + e );
 			mapHolder.zoom();
 			panelInfos.displayInfos();
 		}
@@ -145,8 +146,8 @@ package main
 			panelInfos.activate();
 			
 			mapHolder.activate();
-			mapHolder.addEventListener(  Puce.TOOLTIP_SHOW, onShow );
-			mapHolder.addEventListener(  Puce.TOOLTIP_HIDE, onHide );
+			mapHolder.addEventListener( Puce.TOOLTIP_SHOW, onShow );
+			mapHolder.addEventListener( Puce.TOOLTIP_HIDE, onHide );
 			
 			_toolTip = new ToolTip();
 			addChild( _toolTip );
