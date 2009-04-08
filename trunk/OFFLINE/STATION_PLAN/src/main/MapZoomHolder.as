@@ -90,6 +90,11 @@ package main
 			}
 		}
 		
+		private function onZoomFinish():void
+		{
+			_tooltip.show( _pucesList[ Model.currentItem ] );
+		}
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function activate():void
@@ -120,7 +125,6 @@ package main
 			cntZoom.x = _px - Model.currentItem.coordX;
 			cntZoom.y = _py - Model.currentItem.coordY;
 			
-			_tooltip.show( _pucesList[ Model.currentItem ] );
 			_tooltip.x = _px - _tooltip.width * .5;
 			_tooltip.y = _py - 20;
 			Model.mainTooltipVisible = true;
@@ -128,7 +132,7 @@ package main
 			this.alpha = 0;
 			this.visible = true;
 			
-			TweenLite.to( this, .4, { alpha: 1, ease: Quad.easeOut } );
+			TweenLite.to( this, .4, { alpha: 1, ease: Quad.easeOut, onComplete: onZoomFinish } );
 			_display = true;
 		}
 		
