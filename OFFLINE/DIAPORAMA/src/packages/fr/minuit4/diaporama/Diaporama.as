@@ -6,7 +6,7 @@
  * 
  * Version log :
  * 
- * 18.04.09		0.9		Floz		+ Première version
+ * 18.04.09		0.1		Floz		+ First version
  */
 package fr.minuit4.diaporama 
 {
