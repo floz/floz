@@ -14,6 +14,7 @@ package main
 	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.text.TextField;
 	import flash.utils.Dictionary;
 	import fr.minuit4.diaporama.types.FadingDiaporama;
 	import fr.minuit4.diaporama.types.SlidingDiaporama;
@@ -31,7 +32,7 @@ package main
 		
 		private var _xml:XML;
 		private var _datas:Array;
-		private var _diaporama:SlidingDiaporama;		
+		private var _diaporama:FadingDiaporama;		
 		private var _loader:MassLoader;
 		
 		private var _currentRubIdx:int;
@@ -42,6 +43,7 @@ package main
 		public var cnt:MovieClip;
 		public var zNext:MovieClip;
 		public var zPrev:MovieClip;
+		public var idxtxt:TextField;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -74,10 +76,9 @@ package main
 				day.addEventListener( MouseEvent.CLICK, onDayClick );
 			}
 			
-			_diaporama = new SlidingDiaporama( 650, 488, 0x000000 );
+			_diaporama = new FadingDiaporama( 650, 488, 0x000000 );
 			_diaporama.x = 980 * .5 - 650 * .5;
-			addChild( _diaporama );
-			
+			addChild( _diaporama );			
 			
 			zNext.addEventListener( MouseEvent.CLICK, onClick );
 			zPrev.addEventListener( MouseEvent.CLICK, onClick );
@@ -102,6 +103,7 @@ package main
 				case zNext: _diaporama.next(); break;
 				case zPrev: _diaporama.previous(); break;
 			}
+			idxtxt.text = _diaporama.currentId.toString();
 		}
 		
 		private function onImageComplete(e:Event):void 

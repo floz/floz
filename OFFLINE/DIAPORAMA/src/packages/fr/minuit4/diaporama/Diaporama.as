@@ -26,12 +26,12 @@ package fr.minuit4.diaporama
 		protected var _height:Number;
 		protected var _diaporamaCnt:Sprite;
 		private var _mask:Shape;
+		protected var _images:Array;
 		protected var _initEvent:Event;
-		protected var _completeEvent:Event;
+		protected var _changeEvent:Event;
 		
 		private var _timer:Timer;
 		
-		protected var _images:Array;
 		protected var _currentId:int;
 		protected var _nextId:int;
 		
@@ -62,10 +62,12 @@ package fr.minuit4.diaporama
 			
 			_diaporamaCnt.mask = _mask;
 			
+			_images = [];
+			
 			initDiaporama();
 			
 			_initEvent = new Event( Event.INIT );
-			_completeEvent = new Event( Event.COMPLETE );
+			_changeEvent = new Event( Event.CHANGE );
 			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
@@ -124,7 +126,7 @@ package fr.minuit4.diaporama
 		 */
 		public function addImage( image:DisplayObject, clean:Boolean = false ):void
 		{
-			if ( clean || !_images )
+			if ( clean )
 				_images = [];
 			
 			_images.push( image );
@@ -142,7 +144,6 @@ package fr.minuit4.diaporama
 				_images = images;
 				return;
 			}
-			if ( !_images ) _images = [];
 			
 			var n:int = images.length;
 			for ( var i:int; i < n; ++i )
@@ -159,13 +160,6 @@ package fr.minuit4.diaporama
 			_images = [];
 			_currentId = 0;
 			while ( _diaporamaCnt.numChildren ) _diaporamaCnt.removeChildAt( 0 );
-		}
-		
-		/** Launch the diaporama. Display the first image */
-		public function init():void
-		{
-			if ( !totalCount || _inited ) return;
-			show();
 		}
 		
 		/** Display the next image */
@@ -221,7 +215,7 @@ package fr.minuit4.diaporama
 		public function get currentId():int { return _currentId; }
 		
 		/** Return the total count of images */
-		public function get totalCount():int { return _images.length || 0; }
+		public function get totalCount():int { return _images.length }
 		
 	}
 	
