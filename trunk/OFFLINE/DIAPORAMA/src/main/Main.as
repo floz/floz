@@ -32,18 +32,20 @@ package main
 		
 		private var _xml:XML;
 		private var _datas:Array;
-		private var _diaporama:FadingDiaporama;		
 		private var _loader:MassLoader;
+		
+		private var _fadingDiaporama:FadingDiaporama;
+		private var _slidingDiaporama:SlidingDiaporama;
 		
 		private var _currentRubIdx:int;
 		private var _loadIdx:int;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
-		public var cnt:MovieClip;
-		public var zNext:MovieClip;
-		public var zPrev:MovieClip;
-		public var idxtxt:TextField;
+		public var fading:Diaporama;
+		public var sliding:Diaporama;
+		public var zPrev:SimpleButton;
+		public var zNext:SimpleButton;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -64,51 +66,36 @@ package main
 			
 			_datas = getXMLDatas();
 			
-			var day:Day;
-			var n:int = _datas.length;
-			for ( var i:int; i < n; ++i )
-			{
-				day = new Day();
-				day.txt.text = _datas[ i ].name;
-				day.y = i * day.height + 10 * i;
-				cnt.addChild( day );
-				
-				day.addEventListener( MouseEvent.CLICK, onDayClick );
-			}
+			initDiaporama();
 			
-			_diaporama = new FadingDiaporama( 650, 488, 0x000000 );
-			_diaporama.x = 980 * .5 - 650 * .5;
-			addChild( _diaporama );			
-			
-			zNext.addEventListener( MouseEvent.CLICK, onClick );
 			zPrev.addEventListener( MouseEvent.CLICK, onClick );
+			zNext.addEventListener( MouseEvent.CLICK, onClick );
 			
 			_loader = new MassLoader();
 			_loader.addEventListener( Event.COMPLETE, onImageComplete );
-			_loader.addItems( _datas[ 0 ].photos );
+			_loader.addItems( _datas );
 			_loader.loadNext();
-			
-			addChild( new FPS() );
-		}
-		
-		private function onDayClick(e:MouseEvent):void 
-		{
-			_currentRubIdx = cnt.getChildIndex( e.currentTarget as Day );
 		}
 		
 		private function onClick(e:MouseEvent):void 
 		{
 			switch( e.currentTarget )
 			{
-				case zNext: _diaporama.next(); break;
-				case zPrev: _diaporama.previous(); break;
+				case zNext: 
+					_fadingDiaporama.next();
+					_slidingDiaporama.next();
+					break;
+				case zPrev: 
+					_fadingDiaporama.previous(); 
+					_slidingDiaporama.previous(); 
+					break;
 			}
-			idxtxt.text = _diaporama.currentId.toString();
 		}
 		
 		private function onImageComplete(e:Event):void 
 		{
-			_diaporama.addImage( MassLoader( e.currentTarget ).getItemLoaded() );
+			_fadingDiaporama.addImage( MassLoader( e.currentTarget ).getItemLoaded() );
+			_slidingDiaporama.addImage( MassLoader( e.currentTarget ).getItemLoaded() );
 			
 			_loader.loadNext();
 		}
@@ -119,21 +106,19 @@ package main
 		{
 			var x:XML;
 			
-			var datas:Array = [];
-			var a:Array;
-			var i:int;
-			var n:int;
-			for each( x in _xml.jour )
-			{
-				a = [];
-				n = x.photo.length();
-				for ( i = 0; i < n; ++i )
-					a.push( x.photo.@name[ i ] );
-				
-				datas.push( { name: x.@name, photos: a } );
-			}
+			var a:Array = [];
+			for each( x in _xml.photo ) a.push( x.@name );
 			
-			return datas;
+			return a;
+		}
+		
+		private function initDiaporama():void
+		{
+			_fadingDiaporama = new FadingDiaporama( 266, 200 );
+			fading.cnt.addChild( _fadingDiaporama );
+			
+			_slidingDiaporama = new SlidingDiaporama( 266, 200 );
+			sliding.cnt.addChild( _slidingDiaporama );			
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
