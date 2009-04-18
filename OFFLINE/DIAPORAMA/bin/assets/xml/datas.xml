@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+<jour name="dimanche">
+	<photo name="assets/img/img1.jpg" />
+	<photo name="assets/img/img1.jpg" />
+	<photo name="assets/img/img1.jpg" />
+	<photo name="assets/img/img2.jpg" />
+	<photo name="assets/img/img2.jpg" />
+	<photo name="assets/img/img2.jpg" />
+	<photo name="assets/img/img3.jpg" />
+	<photo name="assets/img/img3.jpg" />
+	<photo name="assets/img/img3.jpg" />
+	<photo name="assets/img/img3.jpg" />
+</jour>
+<jour name="lundi">
+	
+</jour>
+</data>
