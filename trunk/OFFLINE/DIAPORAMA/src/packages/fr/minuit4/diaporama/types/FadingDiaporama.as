@@ -12,6 +12,7 @@ package fr.minuit4.diaporama.types
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.PixelSnapping;
 	import fr.minuit4.diaporama.Diaporama;
 	import fr.minuit4.utils.UBit;
@@ -63,7 +64,7 @@ package fr.minuit4.diaporama.types
 			{
 				var bmpd:BitmapData = new BitmapData( _width, _height, false, _toColor );
 				_fadingImg = new Bitmap( bmpd, PixelSnapping.AUTO, true );
-				_fadingImg.alpha = 1;
+				_fadingImg.alpha = 0;
 				_diaporamaCnt.addChild( _fadingImg );
 			}
 		}
@@ -71,26 +72,23 @@ package fr.minuit4.diaporama.types
 		/** Method called to perform the transistions */
 		final override protected function show():void
 		{
-			dispatchEvent( _initEvent );			
-			TweenLite.to( _fadingImg, _inited ? _transitionTime * .5 : _transitionTime * .25, { alpha: 1, ease: Quad.easeOut, onComplete: secondStep } );
+			dispatchEvent( _initEvent );
+			_currentId = _nextId;
+			TweenLite.to( _fadingImg, _transitionTime * .5, { alpha: 1, ease: Quad.easeOut, onComplete: secondStep } );
 		}
 		
 		private function secondStep():void
 		{
 			if( _imgTmp ) _imgTmp.dispose();
-			_imgTmp = new BitmapData( _images[ _nextId ].width, _images[ _nextId ].height, true, 0x00 );
-			_imgTmp.draw( _images[ _nextId ] );
-			_imgHolder.draw( UBit.resize( _imgTmp, _width, _height, true, false, false ) );
+			draw();
 			
-			_currentId = _nextId;
-			
-			TweenLite.to( _fadingImg, _inited ? _transitionTime * .5 : _transitionTime * .25, { alpha: 0, ease: Quad.easeOut, onComplete: finalStep } );
+			TweenLite.to( _fadingImg, _transitionTime * .5, { alpha: 0, ease: Quad.easeOut, onComplete: finalStep } );
 		}
 		
 		private function finalStep():void
 		{
 			if ( !_inited ) _inited = true;
-			dispatchEvent( _completeEvent );
+			dispatchEvent( _changeEvent );
 		}
 		
 		/** Method called after the EVENT.REMOVED_FROM_STAGE event to clean the memory */
@@ -108,7 +106,26 @@ package fr.minuit4.diaporama.types
 			_images = null;
 		}
 		
+		private function draw():void
+		{
+			_imgTmp = new BitmapData( _images[ _nextId ].width, _images[ _nextId ].height, true, 0x00 );
+			_imgTmp.draw( _images[ _nextId ] );
+			_imgHolder.draw( UBit.resize( _imgTmp, _width, _height, true, false, false ) );
+		}
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		final override public function addImage(image:DisplayObject, clean:Boolean = false):void 
+		{
+			super.addImage(image, clean);
+			if( !_inited ) draw();
+		}
+		
+		final override public function addImages(images:Array, clean:Boolean = false):void 
+		{
+			super.addImages(images, clean);
+			if( !_inited ) draw();
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

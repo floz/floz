@@ -58,8 +58,14 @@ package fr.minuit4.diaporama.types
 		/** Method called to perform the transistions */
 		final override protected function show():void
 		{
-			TweenLite.to( _diaporamaCnt, _transitionTime, { x: -_width * _nextId, ease: Quad.easeOut } );
+			dispatchEvent( _initEvent );
+			TweenLite.to( _diaporamaCnt, _transitionTime, { x: -_width * _nextId, ease: Quad.easeOut, onComplete: finalStep } );
 			_currentId = _nextId;
+		}
+		
+		private function finalStep():void
+		{
+			dispatchEvent( _changeEvent );
 		}
 		
 		/** Method called after the EVENT.REMOVED_FROM_STAGE event to clean the memory */
@@ -68,6 +74,12 @@ package fr.minuit4.diaporama.types
 			TweenLite.killTweensOf( _diaporamaCnt );
 			
 			_images = null;
+			_imgHolder.dispose();
+			_imgHolder = null;
+			_imgs.bitmapData.dispose();
+			_imgs = null;
+			_fadingImg.dispose();
+			_fadingImg = null;
 		}
 		
 		private function draw():void
