@@ -53,7 +53,7 @@ package main
 		{	
 			_xmlLoader = new TextLoader();
 			_xmlLoader.addEventListener( Event.COMPLETE, onComplete );
-			_xmlLoader.load( "assets/xml/datas.xml");			
+			_xmlLoader.load( "http://www.minuit4.fr/blog_assets/swf/diaporama/assets/xml/datas.xml");			
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
