@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<path img="img/" flv="flv/" />
+	<pub>
+		<vignette img="1000_enfants.jpeg" flv="1000_enfants.flv" title="1000 enfants" director="F.RUGGIERI" sound="M. Pothier" lock="" />
+		<vignette img="aides.jpeg" flv="aids.flv" title="A.I.D.S" director="A. BOWYN" sound="Bod" lock="" />
+		<vignette img="amnesty_international.jpeg" flv="amnesty_international.flv" title="Amnesty International" director="S. SEVERI" sound="" lock="" />
+		<vignette img="canal_sat.jpeg" flv="canalsat.flv" title="Canal sat" director="J. BACK" sound="" lock="" />
+		<vignette img="eplus.jpeg" flv="e_plus.flv" title="E plus" director="F&R CARAZZO" sound="Bod" lock="" />
+		<vignette img="haagen_dazs.jpeg" flv="haagen_dazs.flv" title="Haagen Dazs" director="JP. ROUX" sound="" lock="" />
+		<vignette img="lee_cooper.jpeg" flv="lee_cooper.flv" title="Lee Cooper" director="F & R CARAZZO" sound="Bod" lock="" />
+		<vignette img="lumina.jpeg" flv="lumina_ss.flv" title="Lumina SS" director="C. LYNGBYE" sound="Bod" lock="" />
+		<vignette img="mercedes.jpeg" flv="mercedes_theroad.flv" title="Mercedes " director="F & R CARAZZO" sound="Bod" lock="" />
+		<vignette img="opel_corsa.jpeg" flv="opelcorsa_the routine.flv" title="Opel Corsa" director="F & R CARAZZO" sound="Bod" lock="" />
+		<vignette img="opel_zafira.jpeg" flv="opel_zafira.flv" title="Opel Zafira" director="F. VROEGOP" sound="" lock="" />
+		<vignette img="seat.jpeg" flv="seat.flv" title="Seat" director="F&R CARAZZO" sound="Bod" lock="" />
+		<vignette img="volvic.jpeg" flv="Volvic Zidane.swf.flv" title="Volvic" director="JP. ROUX" sound="" lock="" />
+		<vignette img="gini.jpg" flv="gini.flv" title="Gini" director="C. LYNGBYE" sound="M. Pothier" lock="" />
+		<vignette img="trailblazer.jpeg" flv="trailblazer.flv" title="Trailblazer" director="F. VROEGOP" sound="" lock="" />
+		<vignette img="norauto.jpeg" flv="norauto.flv" title="Norauto" director="C. LYNGBYE" sound="M. Pothier" lock="" />
+		<vignette img="mennen.jpeg" flv="mennen.flv" title="Mennen" director="Derek RICHARD" sound="Bod" lock="" />
+	</pub>
+	<clip>
+		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS elle s’ennuie" director="F. VROEGOP" sound="" lock="" />
+		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO je cours" director="M.MAGGIORI" sound="" lock="" />
+		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO divine excuse" director="M.MAGGIORI" sound="" lock="" />
+		<vignette img="shakatof.jpeg" flv="mybumpisbumpingl.flv" title="SHAKAPONK my bump" director="Bod" sound="" lock="y" />
+	</clip>
+	<short>
+		<vignette img="easy_monay.jpeg" flv="easy_money.flv" title="EASY MONEY" director="P. DUSSOL" sound="" lock="" />
+		<vignette img="old_dog.jpeg" flv="old_dog.flv" title="OLD DOG" director="A. BOWYN" sound="" lock="" />
+		<vignette img="lagoutte.jpeg" flv="13eruelagoutte.flv" title="La goutte" director="Les ROJOS" sound="Ben" lock="" />
+		<vignette img="lak7.jpeg" flv="13eruelaK7.flv" title="La K7" director="Les ROJOS" sound="Ben" lock="" />
+		<vignette img="laplume.jpeg" flv="13eruelaplume.flv" title="La plume" director="Les ROJOS" sound="Ben" lock="" />
+		<vignette img="Luma.jpeg" flv="lumabod.flv" title="Luma" director="A. BOWYN" sound="BoD" lock="" />
+		<vignette img="tad_pict.jpeg" flv="spap.flv" title="Three raptor" director="Tadashi ABE" sound="" lock="" />
+	</short>
+	<links>
+		<directors>
+			<link url="www.frankvroegop.com" mail="" />
+			<link url="www.pascaldash.com" mail="" />
+			<link url="www.philshot.com" mail="" />
+		</directors>
+		<production>
+			<link url="www.2712productions.com" mail="" />
+			<link url="www.exod-us.com" mail="" />
+			<link url="www.filmworksdubai.com" mail="" />
+			<link url="www.gangfilms.com" mail="" />
+		</production>
+		<postproduction>
+			<link url="www.postprodbackup.com" mail="" />
+			<link url="www.delapostparis.com" mail="" />
+			<link url="www.digital-district.fr" mail="" />
+		</postproduction>
+		<storyboarder>
+			<link url="michel.dore@zooloos.net" mail="y" />
+		</storyboarder>
+		<sound>
+			<link url="www.amagansett.fr" mail="" />
+			<link url="www.shakaponk.com" mail="" />
+			<link url="www.matthiaspothier.com" mail="" />
+			<link url="www.obahamas.fr" mail="" />
+		</sound>
+	</links>
+</data>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<path img="img/" flv="flv/" />
+	<pub>
+		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS" director="F. VROEGOP" sound="" />
+		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI" sound="" />
+		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI" sound="" />
+		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS" director="F. VROEGOP" sound="" />
+		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI" sound="" />
+		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI" sound="" />
+		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS" director="F. VROEGOP" sound="" />
+		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI" sound="" />
+		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI" sound="" />
+		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS" director="F. VROEGOP" sound="" />
+		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI" sound="" />
+		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI" sound="" />
+		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS" director="F. VROEGOP" sound="" />
+		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI" sound="" />
+		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI" sound="" />
+	</pub>
+	<clip>
+		<vignette img="de_palmas.jpeg" flv="de_palmas.flv" title="DE PALMAS" director="F. VROEGOP" sound="" />
+		<vignette img="kyo.jpeg" flv="kyo1b.flv" title="KYO" director="M.MAGGIORI" sound="" />
+		<vignette img="pleymo.jpeg" flv="pleymo1.flv" title="PLEYMO" director="M.MAGGIORI" sound="" />
+	</clip>
+	<short>
+		<vignette img="easy_monay.jpeg" flv="easy_money.flv" title="EASY MONEY" director="P. DUSSOL" sound="" />
+		<vignette img="old_dog.jpeg" flv="pleymo1.flv" title="OLD DOG" director="A. BOWYN" sound="" />
+	</short>
+</data>
