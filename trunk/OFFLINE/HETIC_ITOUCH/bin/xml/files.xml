@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<data>
-	<rubrique name="Applications" tooltip="Texte de description : 'Application'" preview="applications.png" swf="applications.swf" />
-	<rubrique name="Vidéo" tooltip="Texte de description : 'Video'" preview="video.png" swf="video.swf" />
-	<rubrique name="Son" tooltip="Texte de description : 'Son'" preview="son.png" swf="son.swf" />
-	<rubrique name="Caractéristiques" tooltip="Texte de description : 'Caractéristiques'" preview="caracteristiques.png" swf="caracteristiques.swf" />
-</data>
