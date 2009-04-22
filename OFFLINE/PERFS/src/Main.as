@@ -8,6 +8,7 @@
 	
 	public class Main extends Sprite 
 	{
+		private var phase:int;
 		
 		public function Main():void 
 		{
@@ -16,27 +17,58 @@
 		
 		private function onClick( e:Event ):void
 		{
-			var a:Array = [];
-			var d:Dictionary = new Dictionary();
-			while (a.length < 10) a.push( "toto" );
+			var f:Function;
+			if ( phase == 0 ) 
+			{
+				f = ppi;
+				trace( "++i" );
+			}
+			else if ( phase == 1 )
+			{
+				f = ipp;
+				trace( "i++" );
+			}
+			else
+			{
+				f = ipeu;
+				trace( "i+=1" );
+			}			
 			
 			var debut:Number = 0;
 			var compteur:int;
-			var j:int;
-			var n:int = a.length;
 			for ( var i:int; i < 10000; i++ )
 			{
 				debut = getTimer();
-				for ( j = 0; j < 1000; j++ )
-				{
-					for ( var k:int; k < n; k++ )
-					{
-						a[ k ];
-					}
-				}
+				f();
 				compteur += getTimer() - debut;
 			}
 			trace ( compteur );
+			
+			phase = phase == 2 ? phase = 0 : phase + 1;
+		}
+		
+		private function ppi():void
+		{
+			var j:int;
+			for ( j = 0; j < 10000; ++j )
+			{
+			}
+		}
+		
+		private function ipp():void
+		{
+			var j:int;
+			for ( j = 0; j < 10000; j++ )
+			{
+			}
+		}
+		
+		private function ipeu():void
+		{
+			var j:int;
+			for ( j = 0; j < 10000; j+=1 )
+			{
+			}
 		}
 		
 	}
