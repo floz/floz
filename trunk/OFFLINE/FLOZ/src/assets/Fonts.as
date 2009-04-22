@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package main 
+package assets 
 {
 	import flash.system.ApplicationDomain;
 	import fr.minuit4.tools.loaders.types.MovieLoader;

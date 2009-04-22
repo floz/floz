@@ -6,9 +6,10 @@
  */
 package main 
 {
-	import flash.display.MovieClip;
+	import flash.events.EventDispatcher;
+	import fr.minuit4.tools.loaders.types.TextLoader;
 	
-	public class Main extends MovieClip
+	public class Preloader extends EventDispatcher
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -17,10 +18,9 @@ package main
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main() 
+		public function Preloader() 
 		{
-			Config.path_swf = path_swf;
-			Config.path_xml = path_xml;
+			var _xmlLoader:TextLoader = new TextLoader();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -30,9 +30,6 @@ package main
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
-		
-		public function get path_xml():String { return loaderInfo.parameters[ "path_xml" ] || "assets/xml"; }
-		public function get path_swf():String { return loaderInfo.parameters[ "path_swf" ] || "assets/swf"; }
 		
 	}
 	
