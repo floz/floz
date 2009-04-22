@@ -7,6 +7,7 @@
 package main 
 {
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.display.Sprite;
@@ -69,12 +70,15 @@ package main
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function show( p:Puce ):void
+		public function show( p:Puce, setOnPuce:Boolean = false ):void
 		{
 			_puce = p;
 			
-			this.x = stage.mouseX + 20;
-			this.y = stage.mouseY + 20;
+			if ( !setOnPuce )
+			{
+				this.x = stage.mouseX + 20;
+				this.y = stage.mouseY + 20;
+			}
 			text.text = p.getInfos().infoText;
 			title.text = p.getInfos().title;
 			
@@ -85,7 +89,8 @@ package main
 			else
 			{
 				imageHolder.performLoading();
-				_imageLoader.load( Model.path_photos + p.getInfos().imgUrl );
+				if ( !( p.getInfos().imgUrl == "" || p.getInfos().imgUrl == "http://" ) ) _imageLoader.load( Model.path_photos + p.getInfos().imgUrl );
+				else imageHolder.setImage( new BitmapData( 200, 200, true, 0x00 ) );
 			}
 			
 			this.visible = true;

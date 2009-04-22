@@ -2,7 +2,7 @@
 <data>
 	<infos wait="1.2" />
 	<list id="Com">
-		<item name="toto" coordX="0" coordY="123" img="test1.jpg" titre="titi tizetre" infoText=" zer zerze raejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://www.floz.fr" />
+		<item name="toto" coordX="0" coordY="123" img="" titre="titi tizetre" infoText=" zer zerze raejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://" />
 		<item name="tata" coordX="570" coordY="-200" img="test2.jpg" titre="tiazeazeati titre" infoText=" grzeze zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://www.floz.fr" />
 		<item name="tata" coordX="89" coordY="45" img="test3.jpg" titre="tirezrezti aze" infoText="ezrez trt e zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://www.floz.fr" />
 		<item name="titi" coordX="200" coordY="30" img="test1.jpg" titre="tit   iutiir titrte" infoText="zer tez zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://www.floz.fr" />
@@ -20,5 +20,15 @@
 		<item name="toto" coordX="24" coordY="12" img="test1.jpg" titre="az es" infoText="qsdqsfds fd zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="" />
 		<item name="tata" coordX="-89" coordY="-45" img="test2.jpg" titre="tieazti titre" infoText="ajezoaeja   zoejezaoejzeoaze joazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="" />
 		<item name="titi" coordX="376" coordY="64" img="test3.jpg" titre="dqsd dtidtrsdsqd e" infoText="ajezoaejazoejzasdf oejoazejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="" />
+	</list>
+	<list id="TOTO">
+		<item name="toto" coordX="100" coordY="-212" img="test1.jpg" titre="az es" infoText="qsdqsfds fd zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="" />
+		<item name="tata" coordX="-189" coordY="-145" img="test2.jpg" titre="tieazti titre" infoText="ajezoaeja   zoejezaoejzeoaze joazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="" />
+		<item name="titi" coordX="276" coordY="164" img="test3.jpg" titre="dqsd dtidtrsdsqd e" infoText="ajezoaejazoejzasdf oejoazejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="" />
+	</list>
+	<list id="HIHI">
+		<item name="toto" coordX="24" coordY="12" img="test1.jpg" titre="az es" infoText="qsdqsfds fd zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="" />
+		<item name="tata" coordX="-289" coordY="-145" img="test2.jpg" titre="tieazti titre" infoText="ajezoaeja   zoejezaoejzeoaze joazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="" />
+		<item name="titi" coordX="356" coordY="264" img="test3.jpg" titre="dqsd dtidtrsdsqd e" infoText="ajezoaejazoejzasdf oejoazejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="" />
 	</list>
 </data>

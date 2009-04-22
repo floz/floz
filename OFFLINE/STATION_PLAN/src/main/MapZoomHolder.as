@@ -92,7 +92,7 @@ package main
 		
 		private function onZoomFinish():void
 		{
-			_tooltip.show( _pucesList[ Model.currentItem ] );
+			_tooltip.show( _pucesList[ Model.currentItem ], true );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
