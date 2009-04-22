@@ -29,6 +29,8 @@ package main
 		public var list2:ComboBox;
 		public var list3:ComboBox;
 		public var list4:ComboBox;
+		public var list5:ComboBox;
+		public var list6:ComboBox;
 		
 		//public var txt1:TextField;
 		//public var txt2:TextField;
@@ -78,6 +80,8 @@ package main
 			initList( list2, 1 );
 			initList( list3, 2 );
 			initList( list4, 3 );
+			initList( list5, 4 );
+			initList( list6, 5 );
 			
 			TweenLite.to( this, .40, { y: 0, ease: Quad.easeOut } );
 		}

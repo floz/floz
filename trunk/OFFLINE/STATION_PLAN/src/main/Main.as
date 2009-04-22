@@ -77,7 +77,6 @@ package main
 		
 		private function onItemSelect(e:Event):void 
 		{
-			trace( "Main.onItemSelect > e : " + e );
 			mapHolder.zoom();
 			panelInfos.displayInfos();
 		}
