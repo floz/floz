@@ -50,7 +50,8 @@
 		private function ppi():void
 		{
 			var j:int;
-			for ( j = 0; j < 10000; ++j )
+			var n:int = 120000;
+			for ( j = 0; j < n; ++j )
 			{
 			}
 		}
@@ -58,7 +59,8 @@
 		private function ipp():void
 		{
 			var j:int;
-			for ( j = 0; j < 10000; j++ )
+			const n:int = 120000;
+			for ( j = 0; j < n; j++ )
 			{
 			}
 		}
@@ -66,7 +68,7 @@
 		private function ipeu():void
 		{
 			var j:int;
-			for ( j = 0; j < 10000; j+=1 )
+			for ( j = 0; j < 120000; j+=1 )
 			{
 			}
 		}
