@@ -1,4 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data>
-
+<path img="assets/img/" works="works/" lab="lab/" />
+<works>
+	<item title="Beatlize Yourself" preview="img1.jpg" pubdate="1240493812828">
+		<client><![CDATA[Nous production & Synerg'hetic]]></client>
+		<job>Flash developer, graphic designer></job>
+		<technos>Flash, FlashDevelop, AS3, XML, PHP</technos>
+		<url>http://www.beatlizeyourself.com</url>
+		<desc><![CDATA[blablablalva,le,zao jazeithuze hirhzier z <b>tototot</b>. <br />tototozet kzeotzejitjoze jtoze tjyrty rtyrty jrtyj j yjoer erte rotje orte r <br /> azeorjzeorhzorze r\n hahahaha]]></desc>
+		<diaporama>
+			<image name="img1.jpg" />
+			<image name="img2.jpg" />
+			<image name="img3.jpg" />
+		</diaporama>
+	</item>
+	<item title="Le dîner des illustres" pubdate="1240493811828">
+		<client>HETIC</client>
+		<job>Flash developer></job>
+		<technos>Flash, FlashDevelop, AS3, XML</technos>
+		<url>http://www.floz.fr</url>
+		<diaporama>
+			<image name="img1.jpg" />
+			<image name="img3.jpg" />
+		</diaporama>
+		<desc><![CDATA[blablablalva,le,zao jazeithuze hirhzier z <b>tototot</b>. <br />tototozet kzeotzejitjoze jtoze tjyrty rtyrty jrtyj j yjoer erte rotje orte r <br /> azeorjzeorhzorze r\n hahahaha]]></desc>
+	</item>
+</works>
+<lab>
+	<item title="Test é&' '" preview="img1.jpg" pubdate="1240453812828">
+		<client><![CDATA[Nous production & Synerg'hetic]]></client>
+		<job>Flash developer, graphic designer></job>
+		<technos>Flash, FlashDevelop, AS3, XML, PHP</technos>
+		<url>http://www.beatlizeyourself.com</url>
+		<diaporama>
+			<image name="img1.jpg" />
+			<image name="img2.jpg" />
+			<image name="img3.jpg" />
+		</diaporama>
+		<desc><![CDATA[blablablalva,le,zao jazeithuze hirhzier z <b>tototot</b>. <br />tototozet kzeotzejitjoze jtoze tjyrty rtyrty jrtyj j yjoer erte rotje orte r <br /> azeorjzeorhzorze r\n hahahaha]]></desc>
+	</item>
+</lab>
 </data>
