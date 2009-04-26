@@ -62,13 +62,13 @@ package main
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
 			_bUp = createBorder( _width, _bHeight );
-			_bUp.y = -_bHeight;
+			_bUp.y = 0;
 			_bDown = createBorder( _width, _bHeight );
-			_bDown.y = _height;
+			_bDown.y = _height - _bHeight;
 			_bLeft = createBorder( _bWidth, _height );
-			_bLeft.x = -_bWidth;
+			_bLeft.x = 0;
 			_bRight = createBorder( _bWidth, _height );
-			_bRight.x = _width;
+			_bRight.x = _width - _bWidth;
 			
 			cnt.addChild( _bUp );
 			cnt.addChild( _bDown );

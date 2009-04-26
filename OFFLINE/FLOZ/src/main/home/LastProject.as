@@ -156,7 +156,7 @@ package main.home
 		
 		public function hideBorders():void
 		{
-			if( _borders.isShow() ) _borders.hide();
+			_borders.hide();
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

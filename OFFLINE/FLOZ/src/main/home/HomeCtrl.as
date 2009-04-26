@@ -32,7 +32,7 @@ package main.home
 			var i:int = Config.cntMain.numChildren;
 			while ( --i > -1 )
 			{
-				if ( Config.cntMain.getChildAt( i ) == e.currentTarget ) ( Config.cntMain.getChildAt( i ) as LastProject ).showBorders()
+				if ( Config.cntMain.getChildAt( i ) == e.currentTarget ) ( Config.cntMain.getChildAt( i ) as LastProject ).hideBorders()
 				else ( Config.cntMain.getChildAt( i ) as LastProject ).darken();
 			}
 		}
@@ -42,7 +42,7 @@ package main.home
 			var i:int = Config.cntMain.numChildren;
 			while ( --i > -1 )
 			{
-				if ( Config.cntMain.getChildAt( i ) == e.currentTarget ) ( Config.cntMain.getChildAt( i ) as LastProject ).hideBorders()
+				if ( Config.cntMain.getChildAt( i ) == e.currentTarget ) ( Config.cntMain.getChildAt( i ) as LastProject ).showBorders()
 				else ( Config.cntMain.getChildAt( i ) as LastProject ).lighten();
 			}
 		}
@@ -89,8 +89,7 @@ package main.home
 			{
 				lp = new LastProject();
 				lp.linkToProject( a[ i ].title, a[ i ].preview, a[ i ].section );
-				lp.x = 320 * i;
-				lp.x += i ? 2 : 0;
+				lp.x = 320 * i + i * 2;
 				Config.cntMain.addChild( lp );
 				
 				lp.addEventListener( LastProject.OVER, onLastProjectOver );

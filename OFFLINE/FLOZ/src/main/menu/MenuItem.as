@@ -30,7 +30,8 @@ package main.menu
 		private var _sectionId:int;
 		private var _sectionName:String;
 		
-		private var _black:Shape;
+		private var _black:Shape;		
+		private var _selected:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -95,28 +96,40 @@ package main.menu
 			cnt.addChild( new Bitmap( bd, PixelSnapping.AUTO, true ) );			
 		}
 		
+		private function hideBlackScreen():void
+		{
+			_black.scaleY = 0;
+		}
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function over():void
 		{
 			if ( Config.currentSection == _sectionName ) return;
+			
+			TweenLite.killTweensOf( _black );
+			_black.scaleY = .7;
 			TweenLite.to( _black, .3, { scaleY: 1, ease: Quad.easeOut } );			
 		}
 		
 		public function out():void
 		{
-			if ( Config.currentSection == _sectionName ) return;
-			TweenLite.to( _black, .3, { scaleY: 0, ease: Quad.easeOut } );		
+			if ( Config.currentSection == _sectionName ) return;			
+			TweenLite.to( _black, .3, { scaleY: .3, ease: Quad.easeIn, onComplete: hideBlackScreen } );		
 		}
 		
 		public function select():void
 		{
+			if ( _selected ) return;
+			_selected = true;
 			TweenLite.to( _black, .3, { scaleY: 1, ease: Quad.easeOut } );
 		}
 		
 		public function deselect():void
 		{
-			TweenLite.to( _black, .3, { scaleY: 0, ease: Quad.easeOut } );	
+			if ( !_selected ) return;
+			_selected = false;
+			TweenLite.to( _black, .3, { scaleY: .3, ease: Quad.easeIn, onComplete: hideBlackScreen  } );	
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

@@ -90,6 +90,7 @@ package main
 		
 		private function onSWFAdressChange(e:SWFAddressEvent):void 
 		{
+			trace( e.value );
 			var currentValue:String = e.value.substr( 1 ).toLowerCase();
 			currentValue = currentValue == "" ? Config.HOME : currentValue;
 			if ( currentValue == Config.currentSection || !isRubrique( currentValue ) ) return;
