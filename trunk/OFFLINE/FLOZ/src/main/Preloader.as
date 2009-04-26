@@ -6,6 +6,7 @@
  */
 package main 
 {
+	import assets.Fonts;
 	import flash.display.Bitmap;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -18,6 +19,7 @@ package main
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _imageLoader:MovieLoader;
+		private var _fonts:Fonts;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -48,6 +50,16 @@ package main
 			Config.background = Bitmap( _imageLoader.getItemLoaded() ).bitmapData.clone();
 			_imageLoader.removeEventListener( Event.COMPLETE, onBackgroundComplete );
 			_imageLoader.destroy();
+			_imageLoader = null;
+			
+			_fonts = new Fonts();
+			_fonts.addEventListener( Event.COMPLETE, onFontsComplete );
+			_fonts.load( Config.path_swf + "fonts.swf" );
+		}
+		
+		private function onFontsComplete(e:Event):void 
+		{
+			Config.fonts = _fonts;			
 			
 			dispatchEvent( new Event( Event.COMPLETE ) );
 		}
@@ -60,12 +72,13 @@ package main
 			var a:Array = [];
 			var o:Object = { };
 			var list:Array = [ Config.WORKS, Config.LAB ];
-			const n:int = list.length			
+			const n:int = list.length;
 			
 			for ( var i:int; i < n; ++i )
 			{
 				for each( x in xml[ list[ i ] ].item )
 				{
+					o.section = list[ i ];
 					o.title = x.@title;
 					o.preview = x.@preview;
 					o.pubdate = x.@pubdate;
@@ -84,6 +97,7 @@ package main
 					a = [];
 					o = { };
 				}
+				Config[ list[ i ] + "Datas" ].sortOn( "pubdate", Array.DESCENDING | Array.NUMERIC )
 			}
 			
 			Config.path_img = xml.path.@img;

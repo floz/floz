@@ -16,6 +16,9 @@ package main
 	import flash.system.Security;
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
+	import fr.minuit4.tools.perfs.FPS;
+	import main.home.HomeCtrl;
+	import main.menu.Menu;
 	
 	public class Main extends Sprite
 	{
@@ -23,11 +26,16 @@ package main
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _background:Background;
+		private var _homeCtrl:HomeCtrl;
+		
+		private var _title:String;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		public var logo:Sprite;
-		public var cnt:Sprite;
+		public var title:Title;
+		public var menu:Menu;
+		public var cntMain:Sprite;
 		public var cntBackground:Sprite;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
@@ -52,45 +60,118 @@ package main
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		private function init(e:Event):void 
-		{			
+		{
+			Config.cntMain = cntMain;
+			
 			_background = new Background();
 			cntBackground.addChild( _background );
 			
-			initSWFAdress();
-			
 			logo.visible = true;
+			menu.init();			
+			initSWFAddress();
+			
+			_homeCtrl = new HomeCtrl();
+			
+			stage.addEventListener( Event.RESIZE, onResize );
+			onResize( null );
+			
+			if ( Config.DEBUG )
+			{
+				var fps:FPS = new FPS();
+				fps.x = 170;
+				addChild( fps );
+			}
 		}
 		
 		private function onSWFAdressMenuItemSelect(e:ContextMenuEvent):void 
 		{
-			SWFAddress.setValue( "/" + e.currentTarget.caption + "/" );
+			SWFAddress.setValue( e.currentTarget.caption.substr( 0, 1 ).toUpperCase() + e.currentTarget.caption.substr( 1 ).toLowerCase() );
 		}
 		
 		private function onSWFAdressChange(e:SWFAddressEvent):void 
 		{
-			trace( "Main.onSWFAdressChange > e : " + e.value.toLowerCase() );
-			trace( "base : " + SWFAddress.getBaseURL() );
+			var currentValue:String = e.value.substr( 1 ).toLowerCase();
+			currentValue = currentValue == "" ? Config.HOME : currentValue;
+			if ( currentValue == Config.currentSection || !isRubrique( currentValue ) ) return;
 			
+			Config.oldSection = Config.currentSection;
+			Config.currentSection = currentValue;		
+			switchRubrique();
+			
+			_title = "Floz - Flash Developer";
+			
+			var n:int = e.pathNames.length;
+			if ( n > 0 ) _title += " - ";
+			for ( var i:int; i < n; ++i )
+			{
+				_title += e.pathNames[ i ].substr( 0, 1 ).toUpperCase() + e.pathNames[ i ].substr( 1 ).toLowerCase();
+				if ( i < int( n - 1 ) ) _title += " - ";
+			}
+			SWFAddress.setTitle( _title );
+		}
+		
+		private function onResize(e:Event):void 
+		{
+			var px:Number = stage.stageWidth * .5 - 980 * .5;
+			var py:Number = stage.stageHeight * .5 - 560 * .5;
+			
+			cntMain.x = px + 8;
+			cntMain.y = py + 120;
+			
+			title.x = px + 970;
+			title.y = py + 58;
+			
+			menu.x = px + 445;
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		private function initSWFAdress():void
+		private function initSWFAddress():void
 		{
 			var ctMenu:ContextMenu = new ContextMenu();
-			ctMenu.hideBuiltInItems();
+			ctMenu.hideBuiltInItems();			
 			
-			ctMenu.customItems.push( new ContextMenuItem( Config.HOME.toUpperCase() ) );
-			ctMenu.customItems.push( new ContextMenuItem( Config.WORKS.toUpperCase() ) );
-			ctMenu.customItems.push( new ContextMenuItem( Config.LAB.toUpperCase() ) );
-			ctMenu.customItems.push( new ContextMenuItem( Config.ABOUT.toUpperCase() ) );
+			var n:int = Config.RUBRIQUES.length;
+			for ( var i:int; i < n; ++i )
+				ctMenu.customItems.push( new ContextMenuItem( Config.RUBRIQUES[ i ].toUpperCase() ) );
+			
 			this.contextMenu = ctMenu;
 			
-			var n:int = ctMenu.customItems.length;
-			for ( var i:int; i < n; ++i )
+			n = ctMenu.customItems.length;
+			for ( i = 0; i < n; ++i )
 				ctMenu.customItems[ i ].addEventListener( ContextMenuEvent.MENU_ITEM_SELECT, onSWFAdressMenuItemSelect );
 			
 			SWFAddress.addEventListener( SWFAddressEvent.CHANGE, onSWFAdressChange );
+		}
+		
+		private function isRubrique( rubriqueName:String ):Boolean
+		{
+			var i:int = Config.RUBRIQUES.length;
+			while ( --i > -1 )
+				if ( Config.RUBRIQUES[ i ] == rubriqueName ) return true;
+			
+			return false;
+		}
+		
+		private function switchRubrique():void
+		{
+			menu.update();
+			
+			switch( Config.oldSection )
+			{
+				case Config.HOME: _homeCtrl.deactivate(); break;
+				case Config.WORKS: break;
+				case Config.LAB: break;
+				case Config.ABOUT: break;
+			}
+			
+			switch( Config.currentSection )
+			{
+				case Config.HOME: title.update( "The last updates" ); _homeCtrl.activate(); break;
+				case Config.WORKS: title.update( "Projects List" ); break;
+				case Config.LAB: title.update( "Laboratory projects List" ); break;
+				case Config.ABOUT: title.update( "More informations" ); break;
+			}
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
