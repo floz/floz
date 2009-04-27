@@ -8,7 +8,7 @@
 	
 	<link href="css/style.css" type="text/css" rel="stylesheet" />
 	
-	<script src="js/swfaddress-optimizer.js?flash=9" type="text/javascript"></script>
+	
 	<script src="js/swfobject.js" type="text/javascript"></script>
 	<script src="js/swfaddress.js" type="text/javascript"></script>
 	<script type="text/javascript">
