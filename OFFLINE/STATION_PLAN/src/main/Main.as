@@ -11,6 +11,7 @@ package main
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.system.Security;
 	import fr.minuit4.tools.loaders.types.ImageLoader;
 	import fr.minuit4.tools.loaders.types.TextLoader;
 	import fr.minuit4.tools.Loading;
@@ -40,6 +41,9 @@ package main
 		
 		public function Main() 
 		{
+			Security.allowDomain( "*" );
+			Security.allowInsecureDomain( "*" );
+			
 			_loading = new Loading( 0x000000 );
 			_loading.x = stage.stageWidth * .5 - _loading.width * .5;
 			_loading.y = stage.stageHeight * .5 - _loading.height * .5;
@@ -48,7 +52,7 @@ package main
 			
 			_xmlLoader = new TextLoader();
 			_xmlLoader.addEventListener( Event.COMPLETE, onXMLComplete );
-			_xmlLoader.load( path_xml + saison + ".php" );
+			_xmlLoader.load( path_xml + saison + ".xml" );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -89,6 +93,11 @@ package main
 		private function onHide(e:Event):void 
 		{
 			_toolTip.hide();
+		}
+		
+		private function onMapZoomHide(e:Event):void 
+		{
+			panelInfos.reset();
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -147,6 +156,7 @@ package main
 			mapHolder.activate();
 			mapHolder.addEventListener( Puce.TOOLTIP_SHOW, onShow );
 			mapHolder.addEventListener( Puce.TOOLTIP_HIDE, onHide );
+			mapHolder.addEventListener( MapZoomHolder.HIDE, onMapZoomHide );
 			
 			_toolTip = new ToolTip();
 			addChild( _toolTip );

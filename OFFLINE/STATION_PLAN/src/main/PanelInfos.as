@@ -51,7 +51,13 @@ package main
 			if ( Model.currentItem.url == "" || Model.currentItem.url == "http://" )
 				return;
 			
-			text.htmlText += "\n\n<a href='" + Model.currentItem.url + "'>Plus d'informations</a>";
+			text.htmlText += "\n\n<a href='" + Model.currentItem.url + "' target='_blank'>Plus d'informations</a>";
+		}
+		
+		public function reset():void
+		{
+			title.text = "";
+			text.text = "Sélectionnez un des élements des listes ci dessus pour y voir les informations liées.";
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

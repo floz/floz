@@ -23,6 +23,8 @@ package main
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
+		public static const HIDE:String = "mapzoomholder_hide";
+		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _px:Number;
@@ -151,6 +153,8 @@ package main
 			
 			TweenLite.to( this, .2, { alpha: 0, ease: Quad.easeOut } );
 			_display = false;
+			
+			dispatchEvent( new Event( MapZoomHolder.HIDE, true ) );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
