@@ -9,6 +9,7 @@ package main
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.PixelSnapping;
+	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -37,7 +38,8 @@ package main
 		
 		public var cntZoom:Sprite;
 		public var mapStrk:Sprite;
-		public var background:Sprite;		
+		public var background:Sprite;
+		public var zClose:SimpleButton;
 		private var _tooltip:ToolTip;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
@@ -48,9 +50,16 @@ package main
 			_py = this.height * .5;
 			
 			_pucesList = new Dictionary();
+			
+			zClose.addEventListener( MouseEvent.CLICK, onCloseClick );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
+		
+		private function onCloseClick(e:MouseEvent):void 
+		{
+			hide();
+		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		

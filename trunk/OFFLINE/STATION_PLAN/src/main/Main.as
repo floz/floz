@@ -48,7 +48,7 @@ package main
 			
 			_xmlLoader = new TextLoader();
 			_xmlLoader.addEventListener( Event.COMPLETE, onXMLComplete );
-			_xmlLoader.load( path_xml + saison + ".xml" );
+			_xmlLoader.load( path_xml + saison + ".php" );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
