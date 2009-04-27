@@ -46,12 +46,12 @@ package main
 		public function displayInfos():void
 		{
 			title.text = Model.currentItem.label;
-			text.htmlText = Model.currentItem.text;
+			text.htmlText = Model.currentItem.infoText + "\n\n" + Model.currentItem.text;
 			
 			if ( Model.currentItem.url == "" || Model.currentItem.url == "http://" )
 				return;
 			
-			text.htmlText += "\n\n<a href='" + Model.currentItem.url + "'>" + Model.currentItem.url + "</a>";
+			text.htmlText += "\n\n<a href='" + Model.currentItem.url + "'>Plus d'informations</a>";
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
