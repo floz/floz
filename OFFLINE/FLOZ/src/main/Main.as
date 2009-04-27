@@ -90,10 +90,15 @@ package main
 		
 		private function onSWFAdressChange(e:SWFAddressEvent):void 
 		{
-			trace( e.value );
 			var currentValue:String = e.value.substr( 1 ).toLowerCase();
 			currentValue = currentValue == "" ? Config.HOME : currentValue;
-			if ( currentValue == Config.currentSection || !isRubrique( currentValue ) ) return;
+			if ( currentValue == Config.currentSection || !isRubrique( currentValue ) )
+			{
+				if ( !isRubrique( currentValue ) && Config.currentSection != Config.HOME )
+					SWFAddress.setValue( Config.HOME.substr( 0, 1 ).toUpperCase() + Config.HOME.substr( 1 ).toLowerCase() );
+				
+				return;
+			}
 			
 			Config.oldSection = Config.currentSection;
 			Config.currentSection = currentValue;		
