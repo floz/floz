@@ -10,6 +10,7 @@ package main
 	import flash.display.MovieClip;
 	import flash.display.PixelSnapping;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.ColorTransform;
@@ -45,11 +46,17 @@ package main
 		public function MapHolder() 
 		{
 			mapZoom.visible = false;
+			mapZoom.addEventListener( MapZoomHolder.HIDE, onMapZoomHolderHide );
 			
 			cnt.alpha = 0;
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
+		
+		private function onMapZoomHolderHide(e:Event):void 
+		{
+			deleteCurrentPuces();
+		}
 		
 		private function onTimerComplete(e:TimerEvent):void 
 		{
@@ -58,6 +65,11 @@ package main
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
+		
+		private function deleteCurrentPuces():void
+		{
+			while ( _cntPuces.numChildren ) _cntPuces.removeChildAt( 0 );
+		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
@@ -85,7 +97,7 @@ package main
 		{
 			if ( mapZoom.display ) mapZoom.hide();
 			
-			while ( _cntPuces.numChildren ) _cntPuces.removeChildAt( 0 );
+			deleteCurrentPuces();
 			
 			_colorTransform = new ColorTransform();
 			_colorTransform.color = Model.colors[ Model.currentListIndex ];

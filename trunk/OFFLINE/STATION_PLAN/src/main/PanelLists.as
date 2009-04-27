@@ -63,7 +63,11 @@ package main
 		
 		private function onChange(e:Event):void 
 		{
-			if ( ComboBox( e.currentTarget ).selectedItem == Model.currentItem ) return;
+			if ( ComboBox( e.currentTarget ).selectedItem == Model.currentItem ) 
+			{
+				ComboBox( e.currentTarget ).selectedIndex = 0;
+				return;
+			}
 			
 			Model.currentItem = ComboBox( e.currentTarget ).selectedItem;
 			Model.currentListIndex = Model.currentItem.listIndex;
