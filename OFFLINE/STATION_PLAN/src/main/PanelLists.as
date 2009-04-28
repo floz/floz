@@ -23,6 +23,8 @@ package main
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private var _lists:Array;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		public var list1:ComboBox;
@@ -87,7 +89,18 @@ package main
 			initList( list5, 4 );
 			initList( list6, 5 );
 			
+			_lists = [ list1, list2, list3, list4, list5, list6 ];
+			
 			TweenLite.to( this, .40, { y: 0, ease: Quad.easeOut } );
+		}
+		
+		public function selectItem( listIdx:int, itemIdx:int ):void
+		{
+			Model.currentListIndex = listIdx;
+			_lists[ listIdx ].selectedIndex = itemIdx;
+			Model.currentItem = _lists[ listIdx ].selectedItem;
+			_lists[ listIdx ].selectedIndex = 0;
+			dispatchEvent( new Event( PanelLists.ITEM_SELECT ) );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
