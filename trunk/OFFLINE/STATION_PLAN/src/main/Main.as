@@ -52,7 +52,7 @@ package main
 			
 			_xmlLoader = new TextLoader();
 			_xmlLoader.addEventListener( Event.COMPLETE, onXMLComplete );
-			_xmlLoader.load( path_xml + saison + ".xml" );
+			_xmlLoader.load( path_xml + saison + ".php" );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -160,6 +160,24 @@ package main
 			
 			_toolTip = new ToolTip();
 			addChild( _toolTip );
+			
+			gotoSelectedIndex();
+		}
+		
+		private function gotoSelectedIndex():void
+		{
+			var idStr:String = id;
+			var i:int = idStr.search( /[,]/g );
+			if ( i < 0 ) return;
+			
+			var a:Array = idStr.split( "," );
+			if ( a.length < 2 ) return;
+			if ( !int( a[ 0 ] ) || !int( a[ 1 ] ) ) return;
+			a[ i ] = int( a[ i ] ) + 1; // L'index doit etre augmenté a cause du premier index des listes
+			if ( a[ 0 ] < 0 || a[ 0 ] >= Model.datas.length ) return;
+			if ( a[ 1 ]	<= 0 || a[ i ] > Model.datas[ a[ 0 ] ].datas.length ) return;
+			
+			panelLists.selectItem( a[ 0 ], a[ 1 ] );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
@@ -170,7 +188,7 @@ package main
 		public function get path_plans():String { return loaderInfo.parameters[ "path_plans" ] || "assets/img/plans/"; }
 		public function get path_photos():String { return loaderInfo.parameters[ "path_photos" ] || "assets/img/photos/"; }
 		public function get saison():String { return loaderInfo.parameters[ "saison" ] || "ete"; }
-		
+		public function get id():String { return loaderInfo.parameters[ "id" ] || "2,1"; }
 	}
 	
 }
