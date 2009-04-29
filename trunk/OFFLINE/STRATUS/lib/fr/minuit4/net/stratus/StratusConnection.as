@@ -1,133 +1,99 @@
 ﻿
 /**
  * Written by :
- * @author Floz
+ * @author Floz - Florian Zumbrunn
  * www.floz.fr || www.minuit4.fr
  */
 package fr.minuit4.net.stratus 
 {
-	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.events.NetStatusEvent;
-	import flash.net.NetConnection;
 	import flash.net.NetStream;
-	import fr.minuit4.net.NetConnectionCode;
-	import fr.minuit4.net.NetStreamCode;
 	
-	public class StratusConnection extends EventDispatcher
+	public class StratusConnection extends StratusBasic
 	{
-		
-		// - CONSTS ----------------------------------------------------------------------
-		
-		private static const STRATUS_URL:String = "rtmfp://stratus.adobe.com";
-		
-		public static const CONNECT:String = "stratusconnection_connect";
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _developerKey:String;
-		private var _streamName:String;
-		private var _connectEvent:Event;
-		private var _netConnection:NetConnection;
-		
-		private var _userId:String;
-		
-		private var _sendStream:NetStream;		
-		private var _receiveStream:NetStream;
+		private var _listInPeers:Vector.<Object>;
+		private var _listOutPeers:Vector.<Object>;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function StratusConnection( developerKey:String, streamName:String = "minuit4_transaction" ) 
+		public function StratusConnection( developerKey:String ) 
 		{
-			this._developerKey = developerKey;
-			this._streamName = streamName
+			super( developerKey );
 			
-			_connectEvent = new Event( StratusConnection.CONNECT );
-			
-			_netConnection = new NetConnection();
-			_netConnection.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
+			_listInPeers = new Vector.<Object>(1337);
+			_listOutPeers = new Vector.<Object>(1337);
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
-		private function onNetStatus(e:NetStatusEvent):void 
-		{
-			switch( e.info.code )
-			{
-				case NetConnectionCode.CONNECTION_SUCCESS :
-					_userId = _netConnection.nearID;
-					createSendingStream();
-					
-					dispatchEvent( _connectEvent );
-					break;
-				case NetConnectionCode.CONNECTION_FAILED :
-					trace( NetConnectionCode.CONNECTION_FAILED );
-					break;
-				case NetConnectionCode.CONNECTION_CLOSED :
-					trace( NetConnectionCode.CONNECTION_CLOSED );
-					break;
-				case NetStreamCode.PLAY_START :
-					trace( NetStreamCode.PLAY_START );
-					break;
-				case NetStreamCode.CONNECTION_SUCCESS :
-					trace( NetStreamCode.CONNECTION_SUCCESS );
-					break;
-				case NetStreamCode.CONNECTION_CLOSED :
-					trace( NetStreamCode.CONNECTION_CLOSED );
-					break;
-				case NetStreamCode.PLAY_RESET :
-					trace( NetStreamCode.PLAY_RESET );
-					break;
-				default:
-					trace( "NetStatusEvent non pris en charge : " + e.info.code );
-					break;
-			}
-		}
-		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		private function createSendingStream():void
+		private function getOutPeerByChannel( channelName:Stirng ):NetStream
 		{
-			_sendStream = new NetStream( _netConnection, NetStream.DIRECT_CONNECTIONS );
-			_sendStream.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
-			_sendStream.publish( _streamName );
+			var i:int = _listOutPeers.length;
+			while ( --i > -1 )
+				if ( _listOutPeers[ i ].channelName == channelName ) return _listOutPeers[ i ].netStream;
+			
+			return null;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function connect():void
+		override public function addInPeer( channelName:String, id:String ):void 
 		{
-			if ( _netConnection.connected ) 
+			if ( !_netConnection.connected ) 
 				return;
 			
-			_netConnection.connect( StratusConnection.STRATUS_URL + "/" + _developerKey );
-		}
-		
-		public function addUserToListen( id:String ):void
-		{
-			_receiveStream = new NetStream( _netConnection, id );
-			_receiveStream.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
-			_receiveStream.play( _streamName );	
+			var ns:NetStream = getPeer( id );
+			ns.play( channelName );
 			
-			var o:Object = { };
-			o.essai = function( value:String ):void
-			{
-				trace( value );
-			}
-			_receiveStream.client = o;
-
+			_listInPeers.push( { channelName: channelName, netStream: ns } );
 		}
 		
-		public function send( handlerName:String, params:* ):void
+		override public function addOutPeer( channelName:String ):void 
 		{
-			_sendStream.send( handlerName, params );
+			if ( !_netConnection.connected )
+				return;
+			
+			var ns:NetStream = getPeer();
+			ns.publish( channelName );
+			
+			_listOutPeers.push( { channelName: channelName, netStream: ns } );
+		}
+		
+		public function addPeers( channelName:String, id:String ):void
+		{
+			addOutPeer( channelName );
+			addInPeer( channelName, id );
+		}
+		
+		public function getMethodsOnPeerChannel( channelName:String ):Object
+		{
+			var ns:NetStream = getOutPeerByChannel( channelName );
+			return ns ? ns.client : null;
+		}
+		
+		public function setMethodsOnPeerChannel( channelName:String, methods:Object ):void
+		{
+			var ns:NetStream = getOutPeerByChannel( channelName );
+			ns.client = methods;
+		}
+		
+		override public function send( channelName:String, handlerName:String, ... args ):void
+		{
+			var ns:NetStream = getOutPeerByChannel( channelName );
+			if ( !ns ) 
+				return;
+			
+			ns.send( handlerName, args );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
-		
-		public function get userId():String { return this._userId; }
 		
 	}
 	

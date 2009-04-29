@@ -12,6 +12,7 @@ package main
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
+	import fr.minuit4.net.stratus.StratusBasic;
 	import fr.minuit4.net.stratus.StratusConnection;
 	
 	public class Main extends Sprite
@@ -32,6 +33,8 @@ package main
 		{
 			initInterface();
 			
+			_stratusConnection.meth
+			
 			_stratusConnection = new StratusConnection( "76418ac5f3689170bce4fbed-d76819ed40c7" );
 			_stratusConnection.addEventListener( StratusConnection.CONNECT, onStratusConnect );
 			_stratusConnection.connect();
@@ -41,7 +44,7 @@ package main
 		
 		private function link(e:MouseEvent):void 
 		{
-			_stratusConnection.addUserToListen( _field.text );
+			_stratusConnection.addPeer( _field.text );
 		}
 		
 		private function send(e:MouseEvent):void
