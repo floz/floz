@@ -167,28 +167,18 @@ package main
 		
 		private function gotoSelectedIndex():void
 		{
-			if ( !int( id ) ) return;
-			var i:int = int( id );
+			var idStr:String = id;
+			var i:int = idStr.search( /[,]/g );
+			if ( i < 0 ) return;
 			
-			var a:Array = getItemIdsById( i );
+			var a:Array = idStr.split( "," );
+			if ( a.length < 2 ) return;
+			if ( !int( a[ 0 ] ) || !int( a[ 1 ] ) ) return;
+			a[ i ] = int( a[ i ] ) + 1; // L'index doit etre augmenté a cause du premier index des listes
 			if ( a[ 0 ] < 0 || a[ 0 ] >= Model.datas.length ) return;
 			if ( a[ 1 ]	<= 0 || a[ i ] > Model.datas[ a[ 0 ] ].datas.length ) return;
 			
 			panelLists.selectItem( a[ 0 ], a[ 1 ] );
-		}
-		
-		private function getItemIdsById( id:int ):Array
-		{
-			var j:int;
-			var n:int = Model.datas.length;
-			var m:int;
-			for ( var i:int; i < n; ++i )
-			{
-				m = Model.datas[ i ].datas.length;
-				for ( j = 0; j < m; ++j )
-					if ( Model.datas[ i ].datas[ j ].id == id ) return [ i, int( j+1 ) ];
-			}
-			return null;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
@@ -199,7 +189,7 @@ package main
 		public function get path_plans():String { return loaderInfo.parameters[ "path_plans" ] || "assets/img/plans/"; }
 		public function get path_photos():String { return loaderInfo.parameters[ "path_photos" ] || "assets/img/photos/"; }
 		public function get saison():String { return loaderInfo.parameters[ "saison" ] || "ete"; }
-		public function get id():String { return loaderInfo.parameters[ "id" ] || "35"; }
+		public function get id():String { return loaderInfo.parameters[ "id" ] || "2,1"; }
 	}
 	
 }
