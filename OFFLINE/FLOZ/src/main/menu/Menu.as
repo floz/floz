@@ -37,8 +37,6 @@ package main.menu
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			
-			
 			SWFAddress.setValue( e.currentTarget.getSectionName().substr( 0, 1 ).toUpperCase() + e.currentTarget.getSectionName().substr( 1 ).toLowerCase() );
 		}
 		
