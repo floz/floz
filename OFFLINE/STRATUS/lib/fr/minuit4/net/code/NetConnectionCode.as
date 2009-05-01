@@ -1,10 +1,10 @@
 ﻿
 /**
  * Written by :
- * @author Floz
- * www.floz.fr || www.minuit4.fr
+ * @author Minuit4
+ * www.minuit4.fr
  */
-package fr.minuit4.net 
+package fr.minuit4.net.code 
 {
 	
 	public class NetConnectionCode
