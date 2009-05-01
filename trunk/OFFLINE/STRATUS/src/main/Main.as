@@ -14,6 +14,7 @@ package main
 	import flash.text.TextFieldType;
 	import fr.minuit4.net.stratus.StratusBasic;
 	import fr.minuit4.net.stratus.StratusConnection;
+	import fr.minuit4.net.stratus.StratusEvent;
 	
 	public class Main extends Sprite
 	{
@@ -33,10 +34,8 @@ package main
 		{
 			initInterface();
 			
-			_stratusConnection.meth
-			
 			_stratusConnection = new StratusConnection( "76418ac5f3689170bce4fbed-d76819ed40c7" );
-			_stratusConnection.addEventListener( StratusConnection.CONNECT, onStratusConnect );
+			_stratusConnection.addEventListener( StratusEvent.CONNECTION_SUCCESS, onStratusConnect );
 			_stratusConnection.connect();
 		}
 		
@@ -44,17 +43,24 @@ package main
 		
 		private function link(e:MouseEvent):void 
 		{
-			_stratusConnection.addPeer( _field.text );
+			_stratusConnection.addInPeer( "essai", _field.text );
+			var o:Object = { };
+			o.test = function( value:String ):void
+			{
+				trace( value );
+			}
+			_stratusConnection.setMethodsByChannel( "essai", o );
 		}
 		
 		private function send(e:MouseEvent):void
 		{
-			_stratusConnection.send( "essai", "try" );
+			_stratusConnection.send( "essai", "test", "TOTOLOL" );
 		}
 		
 		private function onStratusConnect(e:Event):void 
 		{
-			trace( "connection : " + _stratusConnection.userId );
+			trace( "connection : " + _stratusConnection.userID );
+			_stratusConnection.addOutPeer( "essai" );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
