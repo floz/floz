@@ -94,8 +94,8 @@ package fr.minuit4.net.stratus
 				case NetConnectionCode.CONNECTION_FAILED: onConnectionFailed(); break;
 				
 				// NetStream
-				case NetStreamCode.CONNECTION_SUCCESS: onStreamConnectionSuccess(); break;
-				case NetStreamCode.CONNECTION_CLOSED: onStreamConnectionClosed(); break;
+				case NetStreamCode.CONNECTION_SUCCESS: onStreamConnectionSuccess( e.info.stream ); break;
+				case NetStreamCode.CONNECTION_CLOSED: onStreamConnectionClosed( e.info.stream ); break;
 				case NetStreamCode.PLAY_START: onStreamPlayStart(); break;
 				case NetStreamCode.PLAY_RESET: onStreamPlayReset(); break;
 				case NetStreamCode.PUBLISH_START: onStreamPlayPublishStart(); break;
@@ -114,55 +114,43 @@ package fr.minuit4.net.stratus
 		
 		protected function onConnectionClosed():void
 		{
-			trace( "StratusBasic.onConnectionClosed" );
 			_dispatcher.dispatchEvent( _connectionClosedEvent );
-			
-			// MUST BE OVERRIDED
 		}
 		
 		protected function onConnectionFailed():void
 		{
-			trace( "StratusBasic.onConnectionFailed" );
 			_dispatcher.dispatchEvent( _connectionFailedEvent );
-			
-			// MUST BE OVERRIDED
 		}
 		
-		protected function onStreamConnectionSuccess():void
+		protected function onStreamConnectionSuccess( ns:NetStream ):void
 		{
-			trace( "StratusBasic.onStreamConnectionSuccess" );
+			_streamSuccessEvent = new StratusEvent( StratusEvent.STREAM_SUCCESS );
+			_streamSuccessEvent.netStream = ns;
+			_streamSuccessEvent.id = ns.farID;
 			_dispatcher.dispatchEvent( _streamSuccessEvent );
-			// MUST BE OVERRIDED
 		}
 		
-		protected function onStreamConnectionClosed():void
+		protected function onStreamConnectionClosed( ns:NetStream ):void
 		{
-			trace( "StratusBasic.onStreamConnectionClosed" );
+			_streamClosedEvent = new StratusEvent( StratusEvent.STREAM_CLOSED );
+			_streamClosedEvent.netStream = ns;
+			_streamClosedEvent.id = ns.farID;
 			_dispatcher.dispatchEvent( _streamClosedEvent );
-			
-			// MUST BE OVERRIDED
 		}
 		
 		protected function onStreamPlayStart():void
 		{
 			_dispatcher.dispatchEvent( _streamStartEvent );
-			
-			// MUST BE OVERRIDED
 		}
 		
 		protected function onStreamPlayReset():void
 		{
-			trace( "StratusBasic.onStreamPlayReset" );
 			_dispatcher.dispatchEvent( _streamResetEvent );
-			
-			// MUST BE OVERRIDED
 		}
 		
 		protected function onStreamPlayPublishStart():void
 		{
-			trace( "StratusBasic.onStreamPlayPublishStart" );
 			_dispatcher.dispatchEvent( _streamPublishStartEvent );
-			// MUST BE OVERRIDED
 		}
 		
 		/**

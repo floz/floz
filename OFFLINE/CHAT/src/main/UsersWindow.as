@@ -48,15 +48,12 @@ package main
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function refresh():void
+		public function refresh( v:Vector.<Object> ):void
 		{
 			var dp:DataProvider = new DataProvider();
-			var n:int = Config.userList.length;
+			var n:int = v.length;
 			for ( var i:int; i < n; ++i )
-			{
-				dp.addItem( { label: Config.userList[ i ].pseudo, id: Config.userList[ i ].id } );
-				trace( "Config.userList[ i ].pseudo : " + Config.userList[ i ].pseudo );
-			}
+				dp.addItem( { label: v[ i ].pseudo, id: v[ i ].id } );
 			
 			list.dataProvider = dp;
 		}

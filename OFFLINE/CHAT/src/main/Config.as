@@ -16,9 +16,10 @@ package main
 		public static const CONFIRMATION_CHANNEL:String = "confirmation";
 		public static const CHAT_CHANNEL:String = "chat";
 		
-		public static var userListFromPhp:Array;
-		public static var userConnected:Dictionary = new Dictionary();		
-		public static const userList:Vector.<Object> = new Vector.<Object>();
+		public static var userAsked:Dictionary = new Dictionary();
+		public static var userList:Vector.<Object>;
+		
+		public static const pseudoByID:Dictionary = new Dictionary();
 	}
 	
 }

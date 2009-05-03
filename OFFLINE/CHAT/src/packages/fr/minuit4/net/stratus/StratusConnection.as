@@ -206,11 +206,19 @@ package fr.minuit4.net.stratus
 			if ( !ns ) return null;
 			
 			var v:Vector.<String> = new Vector.<String>();
-			var i:int = ns.peerStreams.length;
-			while ( --i > -1 )
-				v.push( ns.peerStreams[ i ] );
+			var n:int = ns.peerStreams.length;
+			for ( var i:int; i < n; ++i )
+				v.push( ns.peerStreams[ i ].farID );
 			
 			return v;
+		}
+		
+		public function killPeer( netStream:NetStream ):void
+		{
+			try { netStream.close(); }
+			catch ( e:Error ) { trace( "erreur" ); }
+			
+			netStream = null;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

@@ -22,7 +22,7 @@ package main
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _lagTimer:Timer;
+		private var _checkTimer:Timer;
 		
 		private var _service:Service;
 		private var _stratus:StratusConnection;
@@ -49,63 +49,30 @@ package main
 		
 		private function onAppliStart(e:Event):void 
 		{			
-			_lagTimer = new Timer( 200, 1 );
-			_lagTimer.addEventListener( TimerEvent.TIMER_COMPLETE, onTimerComplete );
 			initNetwork();
-		}
-		
-		private function onTimerComplete(e:TimerEvent):void 
-		{
-			refreshUserList();
 		}
 		
 		private function onStratusConnection(e:StratusEvent):void 
 		{
 			_stratus.addOutPeer( Config.CHAT_CHANNEL );
+			_stratus.addOutPeer( Config.CONFIRMATION_CHANNEL );
 			defineStratusMethods();
 			
-			_service.call( "Users.addUser", { id: _stratus.userID, pseudo: connectWindow.getPseudo() } );
 			_service.call( "Users.getUserList", null, onUserListReady );
+			_service.call( "Users.addUser", { id: _stratus.userID, pseudo: connectWindow.getPseudo() } );
 			
 			connectWindow.hide();
-			msgBox.addEventListener( Event.COMPLETE, onMsgComplete );
-		}
-		
-		private function onMsgComplete(e:Event):void 
-		{
-			msgWindow.addText( "<" + connectWindow.getPseudo() + "> " + msgBox.getLastMessage() );
-			_stratus.send( Config.CHAT_CHANNEL, "message", { from: connectWindow.getPseudo(), msg: msgBox.getLastMessage() } );
-		}
-		
-		// Une connexion à un stream vient d'être établie
-		private function onStreamSuccess(e:StratusEvent):void 
-		{
-			if ( !Config.userAsked[ e.id ] )
-			{
-				Config.userAsked[ e.id ] = true;
-				_stratus.addInPeer( Config.CHAT_CHANNEL, e.id );
-			}
-			_service.call( "Users.getUserList", null, onUserListReady );			
-		}
-		
-		private function onStreamClosed(e:StratusEvent):void 
-		{
-			_stratus.killPeer( e.netStream );
-			_service.call( "Users.deleteUser", e.netStream.farID );
-			refreshUserList();
 		}
 		
 		private function onStreamStart(e:StratusEvent):void 
 		{
-			_lagTimer.reset();
-			_lagTimer.start();
+			_service.call( "Users.getUserList", null, onUserListReady );
+			_stratus.send( Config.CONFIRMATION_CHANNEL, "addNewcomer", { id: _stratus.userID, pseudo: connectWindow.getPseudo() } );
 		}
 		
-		private function onStreamPublishStart(e:StratusEvent):void 
+		private function onStreamClosed(e:StratusEvent):void 
 		{
-			var v:Vector.<Object> = new Vector.<Object>( 1, true );
-			v[ 0 ] = { id: _stratus.userID, pseudo: connectWindow.getPseudo() };
-			usersWindow.refresh( v );
+			_service.call( "Users.deleteUser", e.netStream.farID );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -116,60 +83,67 @@ package main
 			
 			_stratus = new StratusConnection( Config.devKey );
 			_stratus.addEventListener( StratusEvent.CONNECTION_SUCCESS, onStratusConnection );
-			_stratus.addEventListener( StratusEvent.STREAM_SUCCESS, onStreamSuccess );
-			_stratus.addEventListener( StratusEvent.STREAM_CLOSED, onStreamClosed );
 			_stratus.addEventListener( StratusEvent.STREAM_START, onStreamStart );
-			_stratus.addEventListener( StratusEvent.STREAM_PLAY_PUBLISH_START, onStreamPublishStart );
+			_stratus.addEventListener( StratusEvent.STREAM_CLOSED, onStreamClosed );
 			_stratus.connect();
 		}
 		
 		private function defineStratusMethods():void
 		{
-			var chatMethods:Object = { };
-			chatMethods.message = addMessage;
-			_stratus.setMethodsByChannel( Config.CHAT_CHANNEL, chatMethods );
-		}
-		
-		private function addMessage( datas:Object ):void
-		{
-			var from:String = datas.from;
-			var msg:String = datas.msg;
-			
-			msgWindow.addText( "<" + from + "> " + msg );
+			var confirmation:Object = { };
+			confirmation.addNewcomer = addNewcomer;
+			_stratus.setMethodsByChannel( Config.CONFIRMATION_CHANNEL, confirmation );
 		}
 		
 		private function onUserListReady( list:Array ):void
-		{			
+		{
 			var i:int;
+			
 			if ( _inited )
 			{
 				i = list.length;
+				var j:int = Config.userListFromPhp.length;
+				var j0:int = j;
+				var b:Boolean
 				while ( --i > -1 )
-					Config.pseudoByID[ list[ i ].id ] = list[ i ].pseudo;
+				{
+					j = j0;
+					b = false;
+					while ( --j > -1 )
+					{
+						if ( list[ i ].id == Config.userListFromPhp[ j ].id ) b = true;
+						if ( b ) continue;
+					}
+					if ( !b ) addInPeers( list[ i ].id );
+				}
+				Config.userListFromPhp = list;
 			}
 			else
 			{
-				_inited = true;				
+				_inited = true;
+				Config.userListFromPhp = list;
+				
 				i = list.length;
 				while ( --i > -1 )
-				{
-					Config.userAsked[ list[ i ].id ] = true;
-					Config.pseudoByID[ list[ i ].id ] = list[ i ].pseudo;
-					_stratus.addInPeer( Config.CHAT_CHANNEL, list[ i ].id );					
-				}
+					addInPeers( list[ i ].id );
 			}
 		}
 		
-		private function refreshUserList():void
+		private function addInPeers( id:String ):void
 		{
-			var v:Vector.<Object> = new Vector.<Object>();
-			var list:Vector.<String> = _stratus.getUsersIDByChannel( Config.CHAT_CHANNEL );
-			var n:int = list.length;
-			v.push( { id: _stratus.userID, pseudo: connectWindow.getPseudo() } );
-			for ( var i:int; i < n; ++i )
-				v.push( { id: list[ i ], pseudo: Config.pseudoByID[ list[ i ] ] } );
+			_stratus.addInPeer( Config.CHAT_CHANNEL, id );
+			_stratus.addInPeer( Config.CONFIRMATION_CHANNEL, id );
+		}
+		
+		private function addNewcomer( datas:Object ):void
+		{
+			if ( Config.userConnected[ datas.id ] ) 
+				return;
 			
-			usersWindow.refresh( v );
+			Config.userConnected[ datas.id ] = datas.pseudo;
+			Config.userList.push( { id: datas.id, pseudo: datas.pseudo } );
+			
+			usersWindow.refresh();
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
