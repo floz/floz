@@ -50,15 +50,15 @@ package main
 		
 		public function refresh():void
 		{
-			//var dp:DataProvider = new DataProvider();
-			//var n:int = Config.users.length;
-			//for ( var i:int; i < n; ++i )
-			//{
-				//dp.addItem( { label: Config.users[ i ].pseudo, id: Config.users[ i ].id } );
-				//trace( "Config.users[ i ].pseudo : " + Config.users[ i ].pseudo );
-			//}
-			//
-			//list.dataProvider = dp;
+			var dp:DataProvider = new DataProvider();
+			var n:int = Config.userList.length;
+			for ( var i:int; i < n; ++i )
+			{
+				dp.addItem( { label: Config.userList[ i ].pseudo, id: Config.userList[ i ].id } );
+				trace( "Config.userList[ i ].pseudo : " + Config.userList[ i ].pseudo );
+			}
+			
+			list.dataProvider = dp;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

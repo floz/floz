@@ -262,7 +262,7 @@ package fr.minuit4.net.stratus
 		 * @param	handlerName
 		 * @param	... args
 		 */
-		public function send( channelName:String, handlerName:String, ... args ):void
+		public function send( channelName:String, handlerName:String, datas:* ):void
 		{
 			// MUST BE OVERRIDED
 		}

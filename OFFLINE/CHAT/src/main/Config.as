@@ -13,7 +13,12 @@ package main
 		public static const devKey:String = "76418ac5f3689170bce4fbed-d76819ed40c7";
 		public static const amfUrl:String = "http://localhost/CHAT/amfphp/gateway.php";
 		
-		public static var userList:Array;
+		public static const CONFIRMATION_CHANNEL:String = "confirmation";
+		public static const CHAT_CHANNEL:String = "chat";
+		
+		public static var userListFromPhp:Array;
+		public static var userConnected:Dictionary = new Dictionary();		
+		public static const userList:Vector.<Object> = new Vector.<Object>();
 	}
 	
 }
