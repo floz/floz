@@ -8,6 +8,8 @@ package main
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
 	public class MsgBox extends Sprite
@@ -17,9 +19,12 @@ package main
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private var _lastMessage:String;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		public var message:TextField;
+		public var btSend:Sprite;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -41,11 +46,32 @@ package main
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
 			message.text = "";
+			
+			btSend.addEventListener( MouseEvent.CLICK, onClick );
+			addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
+		}
+		
+		private function onKeyDown(e:KeyboardEvent):void 
+		{
+			if ( e.charCode == 13 )
+				onClick( null );
+		}
+		
+		private function onClick(e:MouseEvent):void 
+		{
+			trace( "MsgBox.onClick > e : " + e );
+			if ( message.text == "" ) return;
+			
+			_lastMessage = message.text;
+			message.text = "";
+			dispatchEvent( new Event( Event.COMPLETE ) );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function getLastMessage():String { return _lastMessage }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

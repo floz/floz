@@ -8,6 +8,7 @@ package fr.minuit4.net.stratus
 {
 	import fl.controls.progressBarClasses.IndeterminateBar;
 	import flash.events.Event;
+	import flash.net.NetStream;
 	
 	public class StratusEvent extends Event 
 	{
@@ -34,10 +35,13 @@ package fr.minuit4.net.stratus
 		
 		public static const STREAM_PLAY_PUBLISH_START:String = "stratusconnection_streampublishstart";
 		
+		private var _netStream:NetStream;
 		private var _id:String;
 		
-		public function StratusEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false, id:String = "" ) 
+		public function StratusEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false, netStream:NetStream = null, id:String = null ) 
 		{ 
+			this._netStream = netStream;
+			this._id = id;
 			super(type, bubbles, cancelable);
 		} 
 		
@@ -51,8 +55,14 @@ package fr.minuit4.net.stratus
 			return formatToString("StratusEvent", "type", "bubbles", "cancelable", "eventPhase"); 
 		}
 		
-		public function get id():String { return this._id; }
+		public function get netStream():NetStream { return this._netStream; }
 		
+		public function set netStream( value:NetStream ):void
+		{
+			this._netStream = value;
+		}
+		
+		public function get id():String { return this._id; }
 		public function set id( value:String ):void { this._id = value; }
 		
 	}
