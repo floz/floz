@@ -140,13 +140,13 @@ package fr.minuit4.net.stratus
 		 * @param	channelName	String	Le nom du channel sur lequel les informations vont être diffusées.
 		 * @param	handlerName	String	L'identifiant de l'information, exemple : "media".
 		 * 			Si une méthode "media" a été passée en paramètre précédemment via "setMethodsByChannel", celle ci sera déclenchée.
-		 * @param	... args	Vars	Les différentes variables qui vont être passées en paramètre à la méthode appellée via l'écoute du channel.
+		 * @param	datas	*	Les informations à faire passer pendant l'envoie.
 		 */
-		override public function send( channelName:String, handlerName:String, ... args ):void
+		override public function send( channelName:String, handlerName:String, datas:* ):void
 		{
 			var ns:NetStream = getOutPeerByChannel( channelName );
 			if ( !ns ) return;
-			ns.send( handlerName, args );
+			ns.send( handlerName, datas );
 		}
 		
 		/**
@@ -198,6 +198,19 @@ package fr.minuit4.net.stratus
 			clean( true );		
 			
 			_netConnection = null;
+		}
+		
+		public function getUsersIDByChannel( channelName:String ):Vector.<String>
+		{
+			var ns:NetStream = getOutPeerByChannel( channelName );
+			if ( !ns ) return null;
+			
+			var v:Vector.<String> = new Vector.<String>();
+			var i:int = ns.peerStreams.length;
+			while ( --i > -1 )
+				v.push( ns.peerStreams[ i ] );
+			
+			return v;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

@@ -69,8 +69,9 @@ package main
 		{
 			if ( pseudo.text == "" ) return;
 			
-			_pseudo = pseudo.text;
+			bt.removeEventListener( MouseEvent.CLICK, onClick );
 			
+			_pseudo = pseudo.text;			
 			pseudo.type = TextFieldType.DYNAMIC;
 			pseudo.selectable = false;
 			
