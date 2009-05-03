@@ -90,6 +90,7 @@ package fr.minuit4.net.stratus
 		
 		protected function onConnectionClosed():void
 		{
+			trace( "StratusBasic.onConnectionClosed" );
 			_dispatcher.dispatchEvent( _connectionClosedEvent );
 			
 			// MUST BE OVERRIDED
@@ -97,6 +98,7 @@ package fr.minuit4.net.stratus
 		
 		protected function onConnectionFailed():void
 		{
+			trace( "StratusBasic.onConnectionFailed" );
 			_dispatcher.dispatchEvent( _connectionFailedEvent );
 			
 			// MUST BE OVERRIDED
@@ -104,12 +106,14 @@ package fr.minuit4.net.stratus
 		
 		protected function onStreamConnectionSuccess():void
 		{
+			trace( "StratusBasic.onStreamConnectionSuccess" );
 			_dispatcher.dispatchEvent( _streamSuccessEvent );
 			// MUST BE OVERRIDED
 		}
 		
 		protected function onStreamConnectionClosed():void
 		{
+			trace( "StratusBasic.onStreamConnectionClosed" );
 			_dispatcher.dispatchEvent( _streamClosedEvent );
 			
 			// MUST BE OVERRIDED
@@ -117,6 +121,8 @@ package fr.minuit4.net.stratus
 		
 		protected function onStreamPlayStart():void
 		{
+			trace( "StratusBasic.onStreamPlayStart" );
+			trace( _netConnection.farID );
 			_dispatcher.dispatchEvent( _streamStartEvent );
 			
 			// MUST BE OVERRIDED
@@ -124,6 +130,7 @@ package fr.minuit4.net.stratus
 		
 		protected function onStreamPlayReset():void
 		{
+			trace( "StratusBasic.onStreamPlayReset" );
 			_dispatcher.dispatchEvent( _streamResetEvent );
 			
 			// MUST BE OVERRIDED
@@ -131,6 +138,7 @@ package fr.minuit4.net.stratus
 		
 		protected function onStreamPlayPublishStart():void
 		{
+			trace( "StratusBasic.onStreamPlayPublishStart" );
 			_dispatcher.dispatchEvent( _streamPublishStartEvent );
 			// MUST BE OVERRIDED
 		}
