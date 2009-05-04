@@ -112,6 +112,16 @@ package main
 			_timer.start();
 		}
 		
+		public function centerZoom():void
+		{
+			mapZoom.centerZoom();
+		}
+		
+		public function hide():void
+		{
+			mapZoom.hide();
+		}
+		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
 	}

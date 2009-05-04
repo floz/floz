@@ -9,8 +9,10 @@ package main
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
+	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.system.Security;
 	import fr.minuit4.tools.loaders.types.ImageLoader;
 	import fr.minuit4.tools.loaders.types.TextLoader;
@@ -36,6 +38,8 @@ package main
 		public var mapHolder:MapHolder;
 		public var panelLists:PanelLists;
 		public var panelInfos:PanelInfos;
+		public var zMoins:SimpleButton;
+		public var zPlus:SimpleButton;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -52,7 +56,7 @@ package main
 			
 			_xmlLoader = new TextLoader();
 			_xmlLoader.addEventListener( Event.COMPLETE, onXMLComplete );
-			_xmlLoader.load( path_xml + saison + ".php" );
+			_xmlLoader.load( path_xml + saison + ".xml" );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -76,7 +80,19 @@ package main
 			_imageLoader.destroy();
 			_imageLoader = null;
 			
+			zMoins.addEventListener( MouseEvent.CLICK, onClick );
+			zPlus.addEventListener( MouseEvent.CLICK, onClick );
+			
 			init();
+		}
+		
+		private function onClick(e:MouseEvent):void 
+		{
+			switch( e.currentTarget )
+			{
+				case zMoins: mapHolder.hide(); break;
+				case zPlus: mapHolder.centerZoom(); break;
+			}
 		}
 		
 		private function onItemSelect(e:Event):void 

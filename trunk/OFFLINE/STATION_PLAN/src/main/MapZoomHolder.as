@@ -15,6 +15,7 @@ package main
 	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	import flash.utils.Dictionary;
+	import fr.minuit4.utils.UBit;
 	import gs.easing.Quad;
 	import gs.TweenLite;
 	
@@ -29,6 +30,8 @@ package main
 		
 		private var _px:Number;
 		private var _py:Number;
+		private var _p0x:Number;
+		private var _p0y:Number;
 		private var _pucesList:Dictionary;
 		
 		private var _cntPuces:Sprite;
@@ -39,6 +42,7 @@ package main
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		public var cntZoom:Sprite;
+		public var cntMask:Sprite;
 		public var mapStrk:Sprite;
 		public var background:Sprite;
 		public var zClose:SimpleButton;
@@ -53,14 +57,47 @@ package main
 			
 			_pucesList = new Dictionary();
 			
-			zClose.addEventListener( MouseEvent.CLICK, onCloseClick );
+			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
+		private function onAddedToStage(e:Event):void 
+		{
+			stage.addEventListener( MouseEvent.MOUSE_DOWN, onDown );
+			stage.addEventListener( MouseEvent.MOUSE_UP, onUp );
+			zClose.addEventListener( MouseEvent.CLICK, onCloseClick );
+		}
+		
 		private function onCloseClick(e:MouseEvent):void 
 		{
 			hide();
+		}
+		
+		private function onDown(e:MouseEvent):void 
+		{
+			if ( e.target is SimpleButton ) return;
+			stage.addEventListener( MouseEvent.MOUSE_MOVE, onMove );
+			_cntPuces.visible = 
+			_tooltip.visible = 
+			Model.mainTooltipVisible = false;
+			
+			_p0x = ( e.stageX - 77.5 ) - cntZoom.x;
+			_p0y = ( e.stageY - 141 ) - cntZoom.y;
+		}
+		
+		private function onMove(e:MouseEvent):void 
+		{
+			cntZoom.x = ( e.stageX - 77.5 ) - _p0x;
+			cntZoom.y = ( e.stageY - 141 ) - _p0y;
+			
+			e.updateAfterEvent();
+		}
+		
+		private function onUp(e:MouseEvent):void 
+		{
+			stage.removeEventListener( MouseEvent.MOUSE_MOVE, onMove );
+			_cntPuces.visible = true;
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -115,8 +152,9 @@ package main
 			generatePuces();
 			
 			_zoomMap = new Bitmap( Model.map, PixelSnapping.AUTO, true );
-			_zoomMap.x = -_zoomMap.width * .5;
-			_zoomMap.y = -_zoomMap.height * .5;
+			_zoomMap.x = -1 * ( _zoomMap.width * 1.5 ) * .5;
+			_zoomMap.y = -1 *( _zoomMap.height * 1.5 ) * .5;
+			_zoomMap.scaleX = _zoomMap.scaleY = 1.5;
 			cntZoom.addChild( _zoomMap );
 			
 			cntZoom.addChild( _cntPuces );
@@ -155,6 +193,22 @@ package main
 			_display = false;
 			
 			dispatchEvent( new Event( MapZoomHolder.HIDE, true ) );
+		}
+		
+		public function centerZoom():void
+		{
+			var n:int = _cntPuces.numChildren;
+			for ( var i:int; i < n; ++i )
+				MovieClip( _cntPuces.getChildAt( i ) ).gotoAndStop( "deselect" );
+			
+			cntZoom.x = 
+			cntZoom.y = 0;
+			
+			this.alpha = 0;
+			this.visible = true;
+			
+			TweenLite.to( this, .4, { alpha: 1, ease: Quad.easeOut } );
+			_display = true;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
