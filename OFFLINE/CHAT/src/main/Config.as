@@ -16,6 +16,11 @@ package main
 		public static const CONFIRMATION_CHANNEL:String = "confirmation";
 		public static const CHAT_CHANNEL:String = "chat";
 		
+		public static const MODO:String = "moderateur";
+		public static const USER:String = "user";
+		
+		public static var type:String;
+		
 		public static const userAsked:Dictionary = new Dictionary();		
 		public static const pseudoByID:Dictionary = new Dictionary();
 	}

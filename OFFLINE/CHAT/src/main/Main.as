@@ -107,9 +107,8 @@ package main
 		
 		private function onStreamClosed(e:StratusEvent):void 
 		{
-			trace( "Main.onStreamClosed > e : " + e );
-			_stratus.killPeer( e.netStream );
 			_service.call( "Users.deleteUser", e.netStream.farID );
+			_stratus.killPeer( e.netStream );
 			refreshUserList();
 		}
 		
