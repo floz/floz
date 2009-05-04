@@ -59,7 +59,6 @@ package main
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			trace( "MsgBox.onClick > e : " + e );
 			if ( message.text == "" ) return;
 			
 			_lastMessage = message.text;
