@@ -54,6 +54,16 @@ package main
 		private function onRemovedFromStage(e:Event):void 
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			
+			TweenLite.killTweensOf( _bUp );
+			TweenLite.killTweensOf( _bDown );
+			TweenLite.killTweensOf( _bLeft );
+			TweenLite.killTweensOf( _bRight );
+			
+			_bUp = 
+			_bDown = 
+			_bLeft = 
+			_bRight = null;
 		}
 		
 		private function onAddedToStage(e:Event):void 
