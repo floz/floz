@@ -20,11 +20,6 @@ package main.home
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function HomeCtrl() 
-		{
-			
-		}
-		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		private function onLastProjectOver(e:Event):void 

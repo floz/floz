@@ -13,14 +13,14 @@ package
 	import flash.geom.Rectangle;
 	import flash.utils.getTimer;
 	
-	public class DeletingNoise_02 extends MovieClip 
+	public class DeletingNoise_03 extends MovieClip 
 	{
 		private var map:BitmapData;
 		private var calculationMap:BitmapData;
 		
 		private var aPixels:Array = [];
 		
-		public function DeletingNoise_02() 
+		public function DeletingNoise_03() 
 		{
 			map = new BitmapData( 400, 400, false, 0xffffffff );
 			calculationMap = map.clone();

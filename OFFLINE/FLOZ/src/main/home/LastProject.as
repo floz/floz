@@ -42,6 +42,7 @@ package main.home
 		private var _borders:Borders;
 		
 		private var _loading:Boolean;
+		private var _imageHolder:Bitmap;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -72,6 +73,11 @@ package main.home
 		private function onRemovedFromStage(e:Event):void 
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			z.removeEventListener( MouseEvent.MOUSE_OVER, onOver );
+			z.removeEventListener( MouseEvent.MOUSE_OUT, onOut );
+			
+			_imageHolder.bitmapData.dispose();
+			_imageHolder.bitmapData = null;
 			
 			TweenLite.killTweensOf( shadow );
 		}
@@ -103,7 +109,8 @@ package main.home
 			_loading = false;
 			
 			var bd:BitmapData = UBit.resize( Bitmap( _movieLoader.getItemLoaded() ).bitmapData.clone(), strkContent.width, strkContent.height, false );
-			cntContent.addChild( new Bitmap( bd, PixelSnapping.AUTO, true ) );
+			_imageHolder = new Bitmap( bd, PixelSnapping.AUTO, true );
+			cntContent.addChild( _imageHolder );
 			
 			_movieLoader.destroy();
 			_movieLoader = null;
