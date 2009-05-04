@@ -7,8 +7,11 @@
 package main 
 {
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
+	import flash.system.Security;
 	import flash.utils.Dictionary;
 	import flash.utils.Timer;
 	import fr.minuit4.net.Service;
@@ -23,13 +26,13 @@ package main
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _lagTimer:Timer;
+		private var _checkTimer:Timer;
 		
 		private var _service:Service;
 		private var _stratus:StratusConnection;
 		
 		private var _inited:Boolean;
-		
-		private var _checkList:Dictionary;
+		private var _phpList:Array;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -42,6 +45,12 @@ package main
 		
 		public function Main() 
 		{
+			Security.allowDomain( "floz.fr" );
+			Security.allowInsecureDomain( "floz.fr" );
+			
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
+			
 			connectWindow.addEventListener( Event.CONNECT, onAppliStart );
 		}
 		
@@ -51,12 +60,20 @@ package main
 		{			
 			_lagTimer = new Timer( 200, 1 );
 			_lagTimer.addEventListener( TimerEvent.TIMER_COMPLETE, onTimerComplete );
+			
+			_checkTimer = new Timer( 5000, 1 );
+			_checkTimer.addEventListener( TimerEvent.TIMER_COMPLETE, onTimerComplete );
+			
 			initNetwork();
 		}
 		
 		private function onTimerComplete(e:TimerEvent):void 
 		{
-			refreshUserList();
+			switch( e.currentTarget )
+			{
+				case _lagTimer: refreshUserList(); break;
+				case _checkTimer: checkAndDelete(); break;
+			}
 		}
 		
 		private function onStratusConnection(e:StratusEvent):void 
@@ -85,12 +102,12 @@ package main
 			{
 				Config.userAsked[ e.id ] = true;
 				_stratus.addInPeer( Config.CHAT_CHANNEL, e.id );
-			}
-			_service.call( "Users.getUserList", null, onUserListReady );			
+			}			
 		}
 		
 		private function onStreamClosed(e:StratusEvent):void 
 		{
+			trace( "Main.onStreamClosed > e : " + e );
 			_stratus.killPeer( e.netStream );
 			_service.call( "Users.deleteUser", e.netStream.farID );
 			refreshUserList();
@@ -98,6 +115,8 @@ package main
 		
 		private function onStreamStart(e:StratusEvent):void 
 		{
+			_stratus.send( Config.CHAT_CHANNEL, "confirmation", { id: _stratus.userID, pseudo: connectWindow.getPseudo() } );
+			
 			_lagTimer.reset();
 			_lagTimer.start();
 		}
@@ -128,37 +147,33 @@ package main
 		{
 			var chatMethods:Object = { };
 			chatMethods.message = addMessage;
+			chatMethods.confirmation = managePeers;
 			_stratus.setMethodsByChannel( Config.CHAT_CHANNEL, chatMethods );
 		}
 		
 		private function addMessage( datas:Object ):void
 		{
-			var from:String = datas.from;
-			var msg:String = datas.msg;
-			
-			msgWindow.addText( "<" + from + "> " + msg );
+			msgWindow.addText( "<" + datas.from + "> " + datas.msg );
+		}
+		
+		private function managePeers( datas:Object ):void
+		{
+			if( !Config.pseudoByID[ datas.id ] ) Config.pseudoByID[ datas.id ] = datas.pseudo;
 		}
 		
 		private function onUserListReady( list:Array ):void
-		{			
-			var i:int;
-			if ( _inited )
+		{
+			_phpList = list;
+			
+			var i:int = list.length;
+			while ( --i > -1 )
 			{
-				i = list.length;
-				while ( --i > -1 )
-					Config.pseudoByID[ list[ i ].id ] = list[ i ].pseudo;
+				Config.userAsked[ list[ i ].id ] = true;
+				Config.pseudoByID[ list[ i ].id ] = list[ i ].pseudo;
+				_stratus.addInPeer( Config.CHAT_CHANNEL, list[ i ].id );					
 			}
-			else
-			{
-				_inited = true;				
-				i = list.length;
-				while ( --i > -1 )
-				{
-					Config.userAsked[ list[ i ].id ] = true;
-					Config.pseudoByID[ list[ i ].id ] = list[ i ].pseudo;
-					_stratus.addInPeer( Config.CHAT_CHANNEL, list[ i ].id );					
-				}
-			}
+			
+			_checkTimer.start();
 		}
 		
 		private function refreshUserList():void
@@ -171,6 +186,31 @@ package main
 				v.push( { id: list[ i ], pseudo: Config.pseudoByID[ list[ i ] ] } );
 			
 			usersWindow.refresh( v );
+		}
+		
+		private function checkAndDelete():void
+		{
+			trace( "Check TimeOut" );
+			var listConnected:Vector.<String> = _stratus.getUsersIDByChannel( Config.CHAT_CHANNEL );
+			var i:int = _phpList.length;
+			var j:int = listConnected.length;
+			var j0:int = j;
+			var b:Boolean;
+			while ( --i > -1 )
+			{
+				j = j0;
+				b = false;
+				if ( _phpList[ i ].id == _stratus.userID ) continue;
+				while ( --j > -1 )
+				{
+					if ( _phpList[ i ].id == listConnected[ j ] )
+					{						
+						b = true;
+						continue;
+					}
+				}
+				if ( !b ) _service.call( "Users.deleteUser", _phpList[ i ].id );
+			}
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
