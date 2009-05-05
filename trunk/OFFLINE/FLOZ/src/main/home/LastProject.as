@@ -18,8 +18,8 @@ package main.home
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
-	import fr.minuit4.tools.loaders.types.MovieLoader;
-	import fr.minuit4.utils.UBit;
+	import fr.minuit4.net.loaders.types.MovieLoader;
+	import fr.minuit4.utils.UImg;
 	import gs.easing.Quad;
 	import gs.TweenLite;
 	import main.Borders;
@@ -108,7 +108,7 @@ package main.home
 		{
 			_loading = false;
 			
-			var bd:BitmapData = UBit.resize( Bitmap( _movieLoader.getItemLoaded() ).bitmapData.clone(), strkContent.width, strkContent.height, false );
+			var bd:BitmapData = UImg.resize( Bitmap( _movieLoader.getItemLoaded() ).bitmapData.clone(), strkContent.width, strkContent.height, false );
 			_imageHolder = new Bitmap( bd, PixelSnapping.AUTO, true );
 			cntContent.addChild( _imageHolder );
 			

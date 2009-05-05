@@ -7,7 +7,7 @@
 package assets 
 {
 	import flash.system.ApplicationDomain;
-	import fr.minuit4.tools.loaders.types.MovieLoader;
+	import fr.minuit4.net.loaders.types.MovieLoader;
 	
 	public class Fonts extends MovieLoader
 	{
