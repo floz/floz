@@ -10,8 +10,8 @@ package main
 	import flash.display.Bitmap;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import fr.minuit4.tools.loaders.types.MovieLoader;
-	import fr.minuit4.tools.loaders.types.TextLoader;
+	import fr.minuit4.net.loaders.types.MovieLoader;
+	import fr.minuit4.net.loaders.types.TextLoader;
 	
 	public class Preloader extends EventDispatcher
 	{

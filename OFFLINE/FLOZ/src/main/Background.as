@@ -16,7 +16,7 @@ package main
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Matrix;
-	import fr.minuit4.utils.UBit;
+	import fr.minuit4.utils.UImg;
 	
 	public class Background extends Sprite
 	{
@@ -64,7 +64,7 @@ package main
 		private function drawBackground():void
 		{
 			var bd:BitmapData = new BitmapData( stage.stageWidth, stage.stageHeight, true, 0x00 );
-			bd.draw( UBit.resize( Config.background, stage.stageWidth, stage.stageHeight, false ) );
+			bd.draw( UImg.resize( Config.background, stage.stageWidth, stage.stageHeight, false ) );
 			
 			_backgroundHolder.bitmapData = bd;
 			

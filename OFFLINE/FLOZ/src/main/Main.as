@@ -16,7 +16,7 @@ package main
 	import flash.system.Security;
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
-	import fr.minuit4.tools.perfs.FPS;
+	import fr.minuit4.utils.debug.FPS;
 	import main.home.HomeCtrl;
 	import main.menu.Menu;
 	
