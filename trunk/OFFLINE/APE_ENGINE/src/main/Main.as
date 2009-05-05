@@ -35,7 +35,7 @@ package main
 			var defaultGroup:Group = new Group();
 			defaultGroup.collideInternal = true;
 			 
-			var cp:CircleParticle = new CircleParticle(250,10,5);
+			var cp:CircleParticle = new CircleParticle(250,10,5, false, 1, .3, 0);
 			defaultGroup.addParticle(cp);
 			 
 			var rp:RectangleParticle = new RectangleParticle(250,300,300,50,0,true);
