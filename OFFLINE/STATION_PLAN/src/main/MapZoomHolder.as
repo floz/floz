@@ -6,6 +6,7 @@
  */
 package main 
 {
+	import fl.controls.ComboBox;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.PixelSnapping;
@@ -76,7 +77,7 @@ package main
 		
 		private function onDown(e:MouseEvent):void 
 		{
-			if ( e.target is SimpleButton ) return;
+			if ( e.target is SimpleButton || e.target is ComboBox ) return;
 			stage.addEventListener( MouseEvent.MOUSE_MOVE, onMove );
 			_cntPuces.visible = 
 			_tooltip.visible = 
@@ -127,8 +128,8 @@ package main
 				for ( j = 0; j < m; ++j )
 				{
 					puce = new Puce();
-					puce.x = Model.datas[ i ].datas[ j ].coordX;
-					puce.y = Model.datas[ i ].datas[ j ].coordY;
+					puce.x = Model.datas[ i ].datas[ j ].coordX * 1.5;
+					puce.y = Model.datas[ i ].datas[ j ].coordY * 1.5;
 					puce.setInfos( Model.datas[ i ].datas[ j ] );
 					puce.transform.colorTransform = ct;
 					_cntPuces.addChild( puce );
@@ -171,8 +172,8 @@ package main
 		{
 			setPucesStatus();
 			
-			cntZoom.x = _px - Model.currentItem.coordX;
-			cntZoom.y = _py - Model.currentItem.coordY;
+			cntZoom.x = _px - Model.currentItem.coordX * 1.5;
+			cntZoom.y = _py - Model.currentItem.coordY * 1.5;
 			
 			_tooltip.x = _px - _tooltip.width * .5;
 			_tooltip.y = _py - 20;

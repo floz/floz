@@ -48,6 +48,9 @@ package main
 			Security.allowDomain( "*" );
 			Security.allowInsecureDomain( "*" );
 			
+			zMoins.visible =
+			zPlus.visible = false;
+			
 			_loading = new Loading( 0x000000 );
 			_loading.x = stage.stageWidth * .5 - _loading.width * .5;
 			_loading.y = stage.stageHeight * .5 - _loading.height * .5;
@@ -56,7 +59,7 @@ package main
 			
 			_xmlLoader = new TextLoader();
 			_xmlLoader.addEventListener( Event.COMPLETE, onXMLComplete );
-			_xmlLoader.load( path_xml + saison + ".xml" );
+			_xmlLoader.load( path_xml + saison + ".php" );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -76,7 +79,16 @@ package main
 		
 		private function onImageComplete(e:Event):void 
 		{
-			Model.map = Bitmap( _imageLoader.getItemLoaded() ).bitmapData.clone();
+			Model.map = Bitmap( _imageLoader.getItemLoaded() ).bitmapData.clone();			
+			
+			_imageLoader.removeEventListener( Event.COMPLETE, onImageComplete );
+			_imageLoader.addEventListener( Event.COMPLETE, onLogoComplete );
+			_imageLoader.load( Model.logourl );
+		}
+		
+		private function onLogoComplete(e:Event):void 
+		{
+			Model.logo = Bitmap( _imageLoader.getItemLoaded() ).bitmapData.clone();
 			_imageLoader.destroy();
 			_imageLoader = null;
 			
@@ -121,6 +133,7 @@ package main
 		private function parseXML():Array
 		{
 			Model.delay = _datas.infos.@wait * 1000;
+			Model.logourl = _datas.infos.@logourl;
 			
 			var x:XML;
 			
@@ -161,6 +174,9 @@ package main
 		{
 			Model.path_photos = path_photos;
 			
+			zMoins.visible =
+			zPlus.visible = true;
+			
 			_loading.stop();
 			removeChild( _loading );
 			_loading = null;
@@ -169,6 +185,7 @@ package main
 			panelLists.activate();
 			
 			panelInfos.activate();
+			panelInfos.addLogo();
 			
 			mapHolder.activate();
 			mapHolder.addEventListener( Puce.TOOLTIP_SHOW, onShow );

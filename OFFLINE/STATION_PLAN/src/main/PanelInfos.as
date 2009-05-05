@@ -6,6 +6,8 @@
  */
 package main 
 {
+	import flash.display.Bitmap;
+	import flash.display.PixelSnapping;
 	import flash.display.Sprite;
 	import flash.text.TextField;
 	import gs.easing.Quad;
@@ -23,6 +25,7 @@ package main
 		public var imageHolder:ImageHolder;
 		public var text:TextField;
 		public var title:TextField;
+		public var cntLogo:Sprite;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -58,6 +61,11 @@ package main
 		{
 			title.text = "";
 			text.text = "Sélectionnez un des élements des listes ci dessus pour y voir les informations liées.";
+		}
+		
+		public function addLogo():void
+		{
+			cntLogo.addChild( new Bitmap( Model.logo, PixelSnapping.AUTO, true ) );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
