@@ -9,6 +9,7 @@ package main.home
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.PixelSnapping;
+	import flash.display.Shape;
 	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -164,6 +165,11 @@ package main.home
 		public function hideBorders():void
 		{
 			_borders.hide();
+		}
+		
+		public function kill():void
+		{
+			
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
