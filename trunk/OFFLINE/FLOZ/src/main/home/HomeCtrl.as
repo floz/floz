@@ -58,6 +58,9 @@ package main.home
 					a.push( aw.shift() );
 			}
 			
+			aw =
+			al = null;
+			
 			return a;
 		}
 		
@@ -94,7 +97,10 @@ package main.home
 		
 		public function deactivate():void
 		{
-			while ( Config.cntMain.numChildren ) Config.cntMain.removeChildAt( 0 );
+			//while ( Config.cntMain.numChildren ) Config.cntMain.removeChildAt( 0 );
+			var i:int = Config.cntMain.numChildren;
+			while ( --i > -1 )
+				LastProject( Config.cntMain.getChildAt( i ) ).kill();
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
