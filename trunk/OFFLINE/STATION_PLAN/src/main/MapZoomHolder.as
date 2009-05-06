@@ -29,6 +29,7 @@ package main
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private const zoomPercent:Number = 2;
 		private var _px:Number;
 		private var _py:Number;
 		private var _p0x:Number;
@@ -128,8 +129,8 @@ package main
 				for ( j = 0; j < m; ++j )
 				{
 					puce = new Puce();
-					puce.x = Model.datas[ i ].datas[ j ].coordX * 1.5;
-					puce.y = Model.datas[ i ].datas[ j ].coordY * 1.5;
+					puce.x = Model.datas[ i ].datas[ j ].coordX * zoomPercent;
+					puce.y = Model.datas[ i ].datas[ j ].coordY * zoomPercent;
 					puce.setInfos( Model.datas[ i ].datas[ j ] );
 					puce.transform.colorTransform = ct;
 					_cntPuces.addChild( puce );
@@ -153,9 +154,9 @@ package main
 			generatePuces();
 			
 			_zoomMap = new Bitmap( Model.map, PixelSnapping.AUTO, true );
-			_zoomMap.x = -1 * ( _zoomMap.width * 1.5 ) * .5;
-			_zoomMap.y = -1 *( _zoomMap.height * 1.5 ) * .5;
-			_zoomMap.scaleX = _zoomMap.scaleY = 1.5;
+			_zoomMap.x = -1 * ( _zoomMap.width * zoomPercent ) * .5;
+			_zoomMap.y = -1 *( _zoomMap.height * zoomPercent ) * .5;
+			_zoomMap.scaleX = _zoomMap.scaleY = zoomPercent;
 			cntZoom.addChild( _zoomMap );
 			
 			cntZoom.addChild( _cntPuces );
@@ -172,8 +173,8 @@ package main
 		{
 			setPucesStatus();
 			
-			cntZoom.x = _px - Model.currentItem.coordX * 1.5;
-			cntZoom.y = _py - Model.currentItem.coordY * 1.5;
+			cntZoom.x = _px - Model.currentItem.coordX * zoomPercent;
+			cntZoom.y = _py - Model.currentItem.coordY * zoomPercent;
 			
 			_tooltip.x = _px - _tooltip.width * .5;
 			_tooltip.y = _py - 20;
