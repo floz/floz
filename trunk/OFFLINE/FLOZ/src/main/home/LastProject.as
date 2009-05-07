@@ -91,6 +91,10 @@ package main.home
 			_borders = new Borders( 320, 359, 15, 15 );
 			cntBorders.addChild( _borders );
 			
+			cntTitle.mouseEnabled =
+			cntTitle.mouseChildren = false;
+			strkTitle.buttonMode = true;
+			
 			z.addEventListener( MouseEvent.MOUSE_OVER, onOver );
 			z.addEventListener( MouseEvent.MOUSE_OUT, onOut );
 		}
@@ -165,11 +169,6 @@ package main.home
 		public function hideBorders():void
 		{
 			_borders.hide();
-		}
-		
-		public function kill():void
-		{
-			
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
