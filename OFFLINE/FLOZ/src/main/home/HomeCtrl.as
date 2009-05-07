@@ -25,20 +25,24 @@ package main.home
 		private function onLastProjectOver(e:Event):void 
 		{
 			var i:int = Config.cntMain.numChildren;
+			var lpc:LastProjectContainer;
 			while ( --i > -1 )
 			{
-				if ( Config.cntMain.getChildAt( i ) == e.currentTarget ) ( Config.cntMain.getChildAt( i ) as LastProject ).hideBorders()
-				else ( Config.cntMain.getChildAt( i ) as LastProject ).darken();
+				lpc = Config.cntMain.getChildAt( i ) as LastProjectContainer;
+				if ( lpc == e.currentTarget ) lpc.lastProject.hideBorders()
+				else lpc.lastProject.darken();
 			}
 		}
 		
 		private function onLastProjectOut(e:Event):void 
 		{
 			var i:int = Config.cntMain.numChildren;
+			var lpc:LastProjectContainer;
 			while ( --i > -1 )
 			{
-				if ( Config.cntMain.getChildAt( i ) == e.currentTarget ) ( Config.cntMain.getChildAt( i ) as LastProject ).showBorders()
-				else ( Config.cntMain.getChildAt( i ) as LastProject ).lighten();
+				lpc = Config.cntMain.getChildAt( i ) as LastProjectContainer;
+				if ( lpc == e.currentTarget ) lpc.lastProject.showBorders()
+				else lpc.lastProject.lighten();
 			}
 		}
 		
@@ -80,27 +84,28 @@ package main.home
 		{
 			while ( Config.cntMain.numChildren ) Config.cntMain.removeChildAt( 0 );
 			
-			var lp:LastProject;
+			var lpc:LastProjectContainer;
 			var a:Array = sortProjects();
 			var n:int = a.length;
+			var px:Number = -10;
 			for ( var i:int; i < n; ++i )
 			{
-				lp = new LastProject();
-				lp.linkToProject( a[ i ].title, a[ i ].preview, a[ i ].section );
-				lp.x = 320 * i + i * 2;
-				Config.cntMain.addChild( lp );
+				lpc = new LastProjectContainer();
+				lpc.lastProject.linkToProject( a[ i ].title, a[ i ].preview, a[ i ].section );
+				lpc.x = px;
+				px += 322;
+				Config.cntMain.addChild( lpc );
 				
-				lp.addEventListener( LastProject.OVER, onLastProjectOver );
-				lp.addEventListener( LastProject.OUT, onLastProjectOut );
+				lpc.addEventListener( LastProject.OVER, onLastProjectOver, true );
+				lpc.addEventListener( LastProject.OUT, onLastProjectOut, true );
 			}
 		}
 		
 		public function deactivate():void
 		{
-			//while ( Config.cntMain.numChildren ) Config.cntMain.removeChildAt( 0 );
 			var i:int = Config.cntMain.numChildren;
 			while ( --i > -1 )
-				LastProject( Config.cntMain.getChildAt( i ) ).kill();
+				LastProjectContainer( Config.cntMain.getChildAt( i ) ).kill( i );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
