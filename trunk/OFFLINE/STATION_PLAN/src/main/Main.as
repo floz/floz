@@ -59,7 +59,7 @@ package main
 			
 			_xmlLoader = new TextLoader();
 			_xmlLoader.addEventListener( Event.COMPLETE, onXMLComplete );
-			_xmlLoader.load( path_xml + saison + ".php" );
+			_xmlLoader.load( path_xml + saison + ".xml" );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -134,6 +134,7 @@ package main
 		{
 			Model.delay = _datas.infos.@wait * 1000;
 			Model.logourl = _datas.infos.@logourl;
+			Model.zoomPercent = _datas.infos.@zoom;
 			
 			var x:XML;
 			

@@ -9,59 +9,39 @@ package fr.minuit4.animation.rain
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 	import flash.display.PixelSnapping;
-	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
-	import flash.events.TimerEvent;
-	import flash.filters.ColorMatrixFilter;
-	import flash.geom.ColorTransform;
 	import flash.geom.Point;
-	import flash.utils.Dictionary;
-	import flash.utils.Timer;
 	
-	public class Rain extends EventDispatcher
+	public class Rain extends Bitmap
 	{
 		
 		private const PIXEL_MOVE:Number = .18;
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		static private var _instances:Dictionary = new Dictionary();
-		static private var _allowInstance:Boolean;
-		static private var _numExplosions:int;
-		
 		private var _target:DisplayObject;
 		private var _pixels:Array;
 		private var _pixelsEnd:Array;
 		private var _image:BitmapData;
-		private var _imageHolder:Bitmap;
 		
-		private var _timer:Timer;
+		private var _numPixels:int;
+		private var _numPixelsEnd:int;
+		
+		private var _enable:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Rain( target:DisplayObject ) 
-		{
-			if ( !Rain._allowInstance ) throw new Error( "Cette classe ne peut pas être instanciée. Veuillez appeller la méthode static apply()" );
-			Rain._allowInstance = false;
-			
-			if ( !target.parent ) 
-			{
-				destroy();
-				return;
-			}
-			
+		public function Rain( target:DisplayObject )
+		{			
 			this._target = target;
+			super( null, PixelSnapping.AUTO, true );
 			
-			Rain._instances[ this ] = true;
-			Rain._numExplosions++;
+			this._enable = true;
 			
 			create();
-			explode();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -71,21 +51,19 @@ package fr.minuit4.animation.rain
 			render();
 		}
 		
-		private function onTimerComplete(e:TimerEvent):void 
-		{
-			destroy();
-		}
-		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function destroy():void
 		{
-			if ( !Rain._instances[ this ] ) return;
+			if ( !_enable ) 
+				return;
 			
-			delete Rain._instances[ this ];
-			Rain._numExplosions--;
+			_enable = false;
 			
-			_imageHolder.removeEventListener( Event.ENTER_FRAME, onFrame );
+			_pixels =
+			_pixelsEnd = null;
+			
+			removeEventListener( Event.ENTER_FRAME, onFrame );
 			dispatchEvent( new Event( Event.COMPLETE ) );
 		}
 		
@@ -95,12 +73,13 @@ package fr.minuit4.animation.rain
 			_image.draw( _target );			
 			
 			_pixels = [];
+			_pixelsEnd = [];
 			var pixel:Pixel;
 			var b:Boolean = true;
 			var x:int = -1;
 			var y:int;
-			var w:Number = _image.width;
-			var h:Number = _image.height;
+			const w:Number = _image.width;
+			const h:Number = _image.height;
 			var c:uint;
 			while ( true )
 			{
@@ -113,29 +92,20 @@ package fr.minuit4.animation.rain
 					b = !b;
 				}				
 			}
+			_numPixels = _pixels.length;
 			
-			_imageHolder = new Bitmap( _image, PixelSnapping.AUTO, true );
-			_imageHolder.x = _target.x;
-			_imageHolder.y = _target.y;
-			
-			var targetParent:DisplayObjectContainer = _target.parent;
-			while ( targetParent.numChildren ) targetParent.removeChildAt( 0 );
-			targetParent.addChild( _imageHolder );
+			this.bitmapData = _image;
 		}
 		
-		private function explode():void
+		private function rain():void
 		{
-			_timer = new Timer( _imageHolder.height * 2.5, 1 );
-			_timer.addEventListener( TimerEvent.TIMER_COMPLETE, onTimerComplete );
-			_timer.start();
-			
-			_imageHolder.addEventListener( Event.ENTER_FRAME, onFrame );
+			addEventListener( Event.ENTER_FRAME, onFrame );
 		}
 		
 		private function render():void
 		{
 			var pixel:Pixel;
-			var i:int = _pixels.length;
+			var i:int = _numPixels;
 			var py:Number;
 			var vy:Number;
 			
@@ -150,34 +120,50 @@ package fr.minuit4.animation.rain
 				py = pixel.py;
 				vy = pixel.vy;
 				
-				vy += Math.random() / ( .5 / PIXEL_MOVE ) - PIXEL_MOVE;
-				if ( vy < 0 ) vy *= -1;
-				vy = vy + vy;
+				_image.setPixel32( pixel.px, py, pixel.c );	
 				
-				_image.setPixel32( pixel.px, py, pixel.c );			
+				if ( pixel.end ) continue;
+				
+				vy += Math.random() / ( .5 / PIXEL_MOVE ) - PIXEL_MOVE;
+				vy = vy < 0 ? -vy : vy;
+				vy = vy + vy;		
 				
 				if ( py < h )
-				{				
-					py += vy;				
+				{	
+					py += vy;
 					
 					pixel.py = py;
 					pixel.vy = vy;
 				}
+				else 
+				{
+					pixel.end = true;
+					_pixelsEnd.push( 1 );
+					++_numPixelsEnd;
+				}
 			}
 			_image.unlock();
+			
+			if ( _numPixelsEnd >= _numPixels ) destroy();
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		static public function apply( target:DisplayObject ):Rain
+		public function start():void
 		{
-			Rain._allowInstance = true;
-			return new Rain( target );
+			if ( !_enable ) throw new Error( "L'animation est maintenant terminée, créez une nouvelle instance de Rain pour pouvoir la rejouer." );			
+			rain();
 		}
 		
-		static public function get numExplosions():int
+		public function kill():void
 		{
-			return Rain._numExplosions;
+			destroy();
+		}
+		
+		public function eraseBitmap():void
+		{
+			_image.dispose();
+			_image = null;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

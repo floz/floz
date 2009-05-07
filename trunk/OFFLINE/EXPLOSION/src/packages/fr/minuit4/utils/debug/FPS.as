@@ -6,6 +6,7 @@
  * 
  * Version log :
  * 
+ * 07.05.09		1.3		Floz		+ Ajout d'un parametre dans le constructeur pour rendre partiellement visible l'outil
  * 24.03.09		1.2		Floz		+ Courbe supplémentaire pour les millisecondes
  * 08.03.09		1.1		Floz		+ Possibilité de déplacer le composant, et de cacher/afficher le graphique.
  * 08.03.09		1.0		Floz		+ Refonte pour ajout d'un graphique de performances
@@ -35,6 +36,7 @@ package fr.minuit4.utils.debug
 		
 		private var _width:Number;
 		private var _height:Number;
+		private var _showAll:Boolean;
 		private var _interval:int;
 		private var _scroll:int;
 		private var _memMax:int;
@@ -77,17 +79,19 @@ package fr.minuit4.utils.debug
 		 * FPS sont petits, et plus l'application est lente.
 		 * @param	width	Number	La largeur de la fenêtre.
 		 * @param	height	Number	La hauteur de la fenêtre.
+		 * @param	Boolean	ShowAll	Rend partiellement ou totalement visible l'outil FPS. Revient à double cliquer sur la barre noire des infos.
 		 * @param	interval	int	Correspond au nombre de seconde entre chaque rafraichissement du graphique.
 		 * @param	scroll	int	Correspond au nombre de pixels scrollés sur le graphique.
 		 * @param	memMax	int	Correspond à la hauteur maximale du graphique (si memMax = 100, le graphique atteindra son "sommet" avec 100mo de ram utilisé).
 		 */
-		public function FPS( width:Number = 250, height:Number = 50, interval:int = 5, scroll:int = 2, memMax:int = 100 ) 
+		public function FPS( width:Number = 250, height:Number = 50, showAll:Boolean = true, interval:int = 5, scroll:int = 2, memMax:int = 100 ) 
 		{
-			_width = width >= 175 ? width : 175;
-			_height = height >= 20 ? height : 20;
-			_interval = interval;
-			_scroll = scroll;
-			_memMax = memMax;
+			this._width = width >= 175 ? width : 175;
+			this._height = height >= 20 ? height : 20;
+			this._showAll = showAll;
+			this._interval = interval;
+			this._scroll = scroll;
+			this._memMax = memMax;
 			
 			var head:Bitmap = new Bitmap( new BitmapData( _width + 1, 20, true, 0xEE111111 ) );
 			addChild( head );
@@ -153,6 +157,8 @@ package fr.minuit4.utils.debug
 			mouseZone.doubleClickEnabled =
 			mouseZone.buttonMode =
 			_graphicShown = true;
+			
+			if ( !_showAll ) onDoubleClick( null );
 			
 			addEventListener( Event.ENTER_FRAME, renderCurves );
 			_isRunning = true;
