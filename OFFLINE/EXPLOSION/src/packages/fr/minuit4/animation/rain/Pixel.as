@@ -22,6 +22,10 @@ package fr.minuit4.animation.rain
 		public var vy:Number;
 		public var c:uint;
 		
+		public var fx:Number;
+		public var fy:Number;
+		public var end:Boolean;
+		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function Pixel( px:Number, py:Number, color:uint, vx:Number = 0, vy:Number = 0) 
@@ -31,6 +35,9 @@ package fr.minuit4.animation.rain
 			this.c = color;
 			this.vx = vx;
 			this.vy = vy;
+			
+			this.fx = px;
+			this.fy = py;
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------

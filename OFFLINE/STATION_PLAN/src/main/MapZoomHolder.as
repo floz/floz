@@ -29,7 +29,6 @@ package main
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private const zoomPercent:Number = 2;
 		private var _px:Number;
 		private var _py:Number;
 		private var _p0x:Number;
@@ -73,12 +72,13 @@ package main
 		
 		private function onCloseClick(e:MouseEvent):void 
 		{
+			Model.currentItem = null;
 			hide();
 		}
 		
 		private function onDown(e:MouseEvent):void 
 		{
-			if ( e.target is SimpleButton || e.target is ComboBox ) return;
+			if ( e.target is SimpleButton || e.target is ComboBox || !this.visible ) return;
 			stage.addEventListener( MouseEvent.MOUSE_MOVE, onMove );
 			_cntPuces.visible = 
 			_tooltip.visible = 
@@ -129,8 +129,8 @@ package main
 				for ( j = 0; j < m; ++j )
 				{
 					puce = new Puce();
-					puce.x = Model.datas[ i ].datas[ j ].coordX * zoomPercent;
-					puce.y = Model.datas[ i ].datas[ j ].coordY * zoomPercent;
+					puce.x = Model.datas[ i ].datas[ j ].coordX * Model.zoomPercent;
+					puce.y = Model.datas[ i ].datas[ j ].coordY * Model.zoomPercent;
 					puce.setInfos( Model.datas[ i ].datas[ j ] );
 					puce.transform.colorTransform = ct;
 					_cntPuces.addChild( puce );
@@ -154,9 +154,9 @@ package main
 			generatePuces();
 			
 			_zoomMap = new Bitmap( Model.map, PixelSnapping.AUTO, true );
-			_zoomMap.x = -1 * ( _zoomMap.width * zoomPercent ) * .5;
-			_zoomMap.y = -1 *( _zoomMap.height * zoomPercent ) * .5;
-			_zoomMap.scaleX = _zoomMap.scaleY = zoomPercent;
+			_zoomMap.x = -1 * ( _zoomMap.width * Model.zoomPercent ) * .5;
+			_zoomMap.y = -1 *( _zoomMap.height * Model.zoomPercent ) * .5;
+			_zoomMap.scaleX = _zoomMap.scaleY = Model.zoomPercent;
 			cntZoom.addChild( _zoomMap );
 			
 			cntZoom.addChild( _cntPuces );
@@ -173,8 +173,8 @@ package main
 		{
 			setPucesStatus();
 			
-			cntZoom.x = _px - Model.currentItem.coordX * zoomPercent;
-			cntZoom.y = _py - Model.currentItem.coordY * zoomPercent;
+			cntZoom.x = _px - Model.currentItem.coordX * Model.zoomPercent;
+			cntZoom.y = _py - Model.currentItem.coordY * Model.zoomPercent;
 			
 			_tooltip.x = _px - _tooltip.width * .5;
 			_tooltip.y = _py - 20;

@@ -27,6 +27,8 @@ package main
 		public static var logo:BitmapData;
 		
 		public static var path_photos:String;
+		
+		public static var zoomPercent:Number;
 	}
 	
 }
