@@ -10,6 +10,8 @@ package main
 	import flash.display.Bitmap;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.text.Font;
+	import flash.text.StyleSheet;
 	import fr.minuit4.net.loaders.types.MovieLoader;
 	import fr.minuit4.net.loaders.types.TextLoader;
 	
@@ -19,6 +21,7 @@ package main
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _imageLoader:MovieLoader;
+		private var _textLoader:TextLoader;
 		private var _fonts:Fonts;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
@@ -59,7 +62,24 @@ package main
 		
 		private function onFontsComplete(e:Event):void 
 		{
-			Config.fonts = _fonts;			
+			_fonts.removeEventListener( Event.COMPLETE, onFontsComplete );
+			_fonts.destroy();
+			_fonts = null;
+			
+			_textLoader = new TextLoader();
+			_textLoader.addEventListener( Event.COMPLETE, onCSSComplete );
+			_textLoader.load( Config.path_css + "floz.css" );			
+		}
+		
+		private function onCSSComplete(e:Event):void 
+		{
+			var s:StyleSheet = new StyleSheet();
+			s.parseCSS( _textLoader.getItemLoaded() );
+			Config.styleSheet = s;
+			
+			_textLoader.removeEventListener( Event.COMPLETE, onCSSComplete );
+			_textLoader.destroy();
+			_textLoader = null;
 			
 			dispatchEvent( new Event( Event.COMPLETE ) );
 		}

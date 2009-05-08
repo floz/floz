@@ -1,0 +1,21 @@
+﻿.title_menu
+{
+	font-family:Futura Std Light;
+	font-size:36;
+	color:#b4c59c;
+}
+
+.title_rubrique
+{
+	font-family:Futura Std Medium;
+	font-size:36;
+	font-style:bold;
+	color:#b4c59c;
+}
+
+.projects_preview_title
+{
+	font-family:Futura Std Light;
+	font-size:14;
+	color:#ffffff;
+}

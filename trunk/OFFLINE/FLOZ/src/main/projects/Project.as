@@ -4,13 +4,11 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package assets 
+package main.projects 
 {
-	import flash.system.ApplicationDomain;
-	import flash.text.Font;
-	import fr.minuit4.net.loaders.types.MovieLoader;
+	import flash.display.Sprite;
 	
-	public class Fonts extends MovieLoader
+	public class Project extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -21,26 +19,14 @@ package assets
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Fonts() 
+		public function Project() 
 		{
-			super( false );
+			
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
-		
-		final override protected function setItemLoaded():void 
-		{
-			var a:ApplicationDomain = _loader.contentLoaderInfo.applicationDomain;
-			
-			var futuraLight:Class = a.getDefinition( "FuturaLight" ) as Class;
-			var futuraMedium:Class = a.getDefinition( "FuturaMedium" ) as Class;
-			Font.registerFont( futuraLight );
-			Font.registerFont( futuraMedium );
-			
-			super.setItemLoaded();			
-		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
