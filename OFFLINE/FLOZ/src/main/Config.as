@@ -10,6 +10,7 @@ package main
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.filters.GlowFilter;
+	import flash.text.StyleSheet;
 	
 	public class Config 
 	{
@@ -31,15 +32,16 @@ package main
 		// Les chemins d'accès aux fichiers nécessaires
 		public static var path_swf:String;
 		public static var path_xml:String;
+		public static var path_css:String;
 		public static var path_img:String; // Chemin des images
 		public static var path_works:String; // Chemin du dossier works contenu dans img
 		public static var path_lab:String; // Chemin du dossier lab contenu dans img
 		
-		public static var cntMain:Sprite;
+		public static var cntMain:Sprite; // Conteneur des différentes rubriques
 		public static var background:BitmapData;
-		public static var fonts:Fonts;
+		public static var styleSheet:StyleSheet;
 		
-		public static var oldSection:String;
+		public static var tempSection:String;
 		public static var currentSection:String;
 		
 		public static const glowFilter:GlowFilter = new GlowFilter( 0x142927, .75, 4, 4, 1.8, 3 );

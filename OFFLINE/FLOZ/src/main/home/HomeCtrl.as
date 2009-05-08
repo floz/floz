@@ -6,7 +6,9 @@
  */
 package main.home 
 {
+	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import main.Config;
 	
 	public class HomeCtrl
@@ -16,9 +18,16 @@ package main.home
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private var _dispatcher:EventDispatcher;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
+		
+		public function HomeCtrl()
+		{
+			_dispatcher = new EventDispatcher();
+		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
@@ -44,6 +53,12 @@ package main.home
 				if ( lpc == e.currentTarget ) lpc.lastProject.showBorders()
 				else lpc.lastProject.lighten();
 			}
+		}
+		
+		private function onLPCComplete(e:Event):void 
+		{
+			Config.cntMain.removeChild( e.currentTarget as DisplayObject );
+			if ( !Config.cntMain.numChildren ) _dispatcher.dispatchEvent( new Event( Event.COMPLETE ) );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -94,6 +109,7 @@ package main.home
 				lpc.lastProject.linkToProject( a[ i ].title, a[ i ].preview, a[ i ].section );
 				lpc.x = px;
 				px += 322;
+				lpc.addEventListener( Event.COMPLETE, onLPCComplete );
 				Config.cntMain.addChild( lpc );
 				
 				lpc.addEventListener( LastProject.OVER, onLastProjectOver, true );
@@ -106,6 +122,11 @@ package main.home
 			var i:int = Config.cntMain.numChildren;
 			while ( --i > -1 )
 				LastProjectContainer( Config.cntMain.getChildAt( i ) ).kill( i );
+		}
+		
+		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
+		{
+			_dispatcher.addEventListener( type, listener, useCapture, priority, useWeakReference );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

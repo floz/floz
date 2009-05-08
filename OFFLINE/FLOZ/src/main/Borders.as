@@ -18,6 +18,8 @@ package main
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
+		private const _SPEED:Number = .2;
+		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _width:Number;
@@ -72,13 +74,13 @@ package main
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
 			_bUp = createBorder( _width, _bHeight );
-			_bUp.y = 0;
+			_bUp.y = -_bHeight;
 			_bDown = createBorder( _width, _bHeight );
-			_bDown.y = _height - _bHeight;
+			_bDown.y = _height;
 			_bLeft = createBorder( _bWidth, _height );
-			_bLeft.x = 0;
+			_bLeft.x = -_bWidth;
 			_bRight = createBorder( _bWidth, _height );
-			_bRight.x = _width - _bWidth;
+			_bRight.x = _width;
 			
 			cnt.addChild( _bUp );
 			cnt.addChild( _bDown );
@@ -106,19 +108,19 @@ package main
 		
 		public function show():void
 		{
-			TweenLite.to( _bUp, .3, { y: 0, ease: Quad.easeOut } );
-			TweenLite.to( _bDown, .3, { y: _height - _bHeight, ease: Quad.easeOut } );
-			TweenLite.to( _bLeft, .3, { x: 0, ease: Quad.easeOut } );
-			TweenLite.to( _bRight, .3, { x: _width - _bWidth, ease: Quad.easeOut } );
+			TweenLite.to( _bUp, _SPEED, { y: 0, ease: Quad.easeOut } );
+			TweenLite.to( _bDown, _SPEED, { y: _height - _bHeight, ease: Quad.easeOut } );
+			TweenLite.to( _bLeft, _SPEED, { x: 0, ease: Quad.easeOut } );
+			TweenLite.to( _bRight, _SPEED, { x: _width - _bWidth, ease: Quad.easeOut } );
 			_shown = true;
 		}
 		
-		public function hide():void
+		public function hide( delay:int = 0 ):void
 		{
-			TweenLite.to( _bUp, .3, { y: -_bHeight, ease: Quad.easeOut } );
-			TweenLite.to( _bDown, .3, { y: _height, ease: Quad.easeOut } );
-			TweenLite.to( _bLeft, .3, { x: -_bWidth, ease: Quad.easeOut } );
-			TweenLite.to( _bRight, .3, { x: _width, ease: Quad.easeOut } );
+			TweenLite.to( _bUp, _SPEED, { y: -_bHeight, ease: Quad.easeOut, delay: delay * .1 } );
+			TweenLite.to( _bDown, _SPEED, { y: _height, ease: Quad.easeOut, delay: delay * .1 } );
+			TweenLite.to( _bLeft, _SPEED, { x: -_bWidth, ease: Quad.easeOut, delay: delay * .1 } );
+			TweenLite.to( _bRight, _SPEED, { x: _width, ease: Quad.easeOut, delay: delay * .1 } );
 			_shown = false;
 		}
 		

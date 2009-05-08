@@ -8,7 +8,7 @@ package main.home
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import gs.easing.Quad;
+	import gs.easing.Cubic;
 	import gs.TweenLite;
 	
 	public class LastProjectContainer extends Sprite
@@ -42,22 +42,37 @@ package main.home
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
+			msk.y = -msk.height;
+			TweenLite.to( msk, .4, { y: 0, ease: Cubic.easeIn, delay: parent.numChildren * .1, onComplete: showTitle } );
+			
+			lastProject.addEventListener( Event.COMPLETE, onLastProjectDestroy );
+			
 			msk.mouseChildren = false;
 			msk.mouseEnabled = false;
 		}
 		
+		private function onLastProjectDestroy(e:Event):void 
+		{
+			TweenLite.to( msk, .4, { y: msk.height, ease: Cubic.easeOut, onComplete: destroy } );
+		}
+		
 		// - PRIVATE METHODS -------------------------------------------------------------
+		
+		private function showTitle():void
+		{
+			lastProject.init();
+		}
 		
 		private function destroy():void
 		{
-			parent.removeChild( this );
+			dispatchEvent( new Event( Event.COMPLETE ) );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function kill( delay:int ):void
 		{
-			TweenLite.to( msk, .4, { y: msk.height, ease: Quad.easeInOut, delay: delay / 8, onComplete: destroy } );
+			lastProject.kill( delay );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

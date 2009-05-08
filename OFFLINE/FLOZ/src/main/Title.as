@@ -33,12 +33,14 @@ package main
 			_title = new TextField();
 			_title.autoSize = TextFieldAutoSize.RIGHT;
 			_title.selectable = false;
+			_title.styleSheet = Config.styleSheet;
 			_title.filters = [ Config.glowFilter ];
 			addChild( _title );
 			
 			_subTitle = new TextField();
 			_subTitle.autoSize = TextFieldAutoSize.RIGHT;
 			_subTitle.selectable = false;
+			_subTitle.styleSheet = Config.styleSheet;
 			_subTitle.y = 37;
 			var glowFilter:GlowFilter = Config.glowFilter.clone() as GlowFilter;
 			glowFilter.strength = 2.2;
@@ -70,14 +72,14 @@ package main
 		
 		public function update( subTitle:String ):void
 		{
-			_title.text = Config.currentSection.toUpperCase();
-			_subTitle.text = subTitle.toUpperCase();
+			_title.styleSheet = Config.styleSheet;
+			_subTitle.styleSheet = Config.styleSheet;
+			
+			_title.htmlText = "<span class='title_rubrique'>" + Config.currentSection.toUpperCase() + "</span>";
+			_subTitle.htmlText = "<span class='projects_preview_title'>" + subTitle.toUpperCase() + "</span>";
 			
 			_title.x = - _title.textWidth;
 			_subTitle.x = - _subTitle.textWidth - 1;
-			
-			_title.setTextFormat( getTextFormat( Config.fonts.getItemLoaded().futuraMedium.fontName, 36, 0xb4c59c, true ) );
-			_subTitle.setTextFormat( getTextFormat( Config.fonts.getItemLoaded().futuraLight.fontName, 14, 0xffffff ) );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

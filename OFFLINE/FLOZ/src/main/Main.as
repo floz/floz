@@ -49,6 +49,7 @@ package main
 			
 			Config.path_swf = path_swf;
 			Config.path_xml = path_xml;
+			Config.path_css = path_css;
 			
 			logo.visible = false;
 			
@@ -67,10 +68,14 @@ package main
 			cntBackground.addChild( _background );
 			
 			logo.visible = true;
-			menu.init();			
+			
 			initSWFAddress();
 			
+			menu.init();
+			menu.addEventListener( Event.CHANGE, onMenuChange );
+			
 			_homeCtrl = new HomeCtrl();
+			_homeCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
 			
 			stage.addEventListener( Event.RESIZE, onResize );
 			onResize( null );
@@ -83,6 +88,22 @@ package main
 			}
 		}
 		
+		private function onMenuChange(e:Event):void 
+		{
+			switch( Config.currentSection )
+			{
+				case Config.HOME: _homeCtrl.deactivate(); break;
+				case Config.WORKS: ; break;
+				case Config.LAB: ; break;
+				case Config.ABOUT: ; break;
+			}
+		}
+		
+		private function onSwitchSectionComplete(e:Event):void 
+		{
+			SWFAddress.setValue( Config.tempSection );
+		}
+		
 		private function onSWFAdressMenuItemSelect(e:ContextMenuEvent):void 
 		{
 			SWFAddress.setValue( e.currentTarget.caption.substr( 0, 1 ).toUpperCase() + e.currentTarget.caption.substr( 1 ).toLowerCase() );
@@ -90,6 +111,13 @@ package main
 		
 		private function onSWFAdressChange(e:SWFAddressEvent):void 
 		{
+			if ( Config.cntMain.numChildren )
+			{
+				Config.tempSection = e.value.substr( 0, 1 ).toUpperCase() + e.value.substr( 1 ).toLowerCase();
+				onMenuChange( null );
+				return;
+			}
+			
 			var currentValue:String = e.value.substr( 1 ).toLowerCase();
 			currentValue = currentValue == "" ? Config.HOME : currentValue;
 			if ( currentValue == Config.currentSection || !isRubrique( currentValue ) )
@@ -100,7 +128,6 @@ package main
 				return;
 			}
 			
-			Config.oldSection = Config.currentSection;
 			Config.currentSection = currentValue;		
 			switchRubrique();
 			
@@ -163,14 +190,6 @@ package main
 		{
 			menu.update();
 			
-			switch( Config.oldSection )
-			{
-				case Config.HOME: _homeCtrl.deactivate(); break;
-				case Config.WORKS: break;
-				case Config.LAB: break;
-				case Config.ABOUT: break;
-			}
-			
 			switch( Config.currentSection )
 			{
 				case Config.HOME: title.update( "The last updates" ); _homeCtrl.activate(); break;
@@ -186,6 +205,7 @@ package main
 		
 		public function get path_xml():String { return loaderInfo.parameters[ "path_xml" ] || "assets/xml/"; }
 		public function get path_swf():String { return loaderInfo.parameters[ "path_swf" ] || "assets/swf/"; }
+		public function get path_css():String { return loaderInfo.parameters[ "path_swf" ] || "assets/css/"; }
 		
 	}
 	

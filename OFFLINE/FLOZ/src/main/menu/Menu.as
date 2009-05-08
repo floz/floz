@@ -37,7 +37,8 @@ package main.menu
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			SWFAddress.setValue( e.currentTarget.getSectionName().substr( 0, 1 ).toUpperCase() + e.currentTarget.getSectionName().substr( 1 ).toLowerCase() );
+			Config.tempSection = e.currentTarget.getSectionName().substr( 0, 1 ).toUpperCase() + e.currentTarget.getSectionName().substr( 1 ).toLowerCase();
+			dispatchEvent( new Event( Event.CHANGE ) );
 		}
 		
 		private function onOver(e:MouseEvent):void 

@@ -16,6 +16,7 @@ package main.home
 	import flash.events.MouseEvent;
 	import flash.filters.BitmapFilter;
 	import flash.filters.GlowFilter;
+	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
@@ -44,6 +45,8 @@ package main.home
 		
 		private var _loading:Boolean;
 		private var _imageHolder:Bitmap;
+		
+		private var _enable:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -81,6 +84,8 @@ package main.home
 			_imageHolder.bitmapData = null;
 			
 			TweenLite.killTweensOf( shadow );
+			TweenLite.killTweensOf( cntTitle );
+			TweenLite.killTweensOf( strkTitle );
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -95,18 +100,30 @@ package main.home
 			cntTitle.mouseChildren = false;
 			strkTitle.buttonMode = true;
 			
+			cntTitle.y = 
+			strkTitle.y = int( 359 - 40 );
+			
 			z.addEventListener( MouseEvent.MOUSE_OVER, onOver );
 			z.addEventListener( MouseEvent.MOUSE_OUT, onOut );
+			z.addEventListener( MouseEvent.CLICK, onClick );
+			strkTitle.addEventListener( MouseEvent.CLICK, onClick );
 		}
 		
 		private function onOver(e:MouseEvent):void 
 		{
+			if ( !_enable ) return;
 			dispatchEvent( _overEvent );
 		}
 		
 		private function onOut(e:MouseEvent):void 
 		{
+			if ( !_enable ) return;
 			dispatchEvent( _outEvent );
+		}
+		
+		private function onClick(e:MouseEvent):void 
+		{
+			trace( "click" );
 		}
 		
 		private function onLoadComplete(e:Event):void 
@@ -123,17 +140,22 @@ package main.home
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
+		private function destroy():void
+		{
+			dispatchEvent( new Event( Event.COMPLETE ) );
+		}
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function linkToProject( name:String, img:String, section:String ):void
 		{
 			_loading = true;
 			
-			var tf:TextFormat = new TextFormat( Config.fonts.getItemLoaded().futuraLight.fontName, 14, 0xffffff );
+			var fonts:Array =  Font.enumerateFonts();
 			var textField:TextField = new TextField();
-			textField.text = section.toUpperCase() + " / " + name.toUpperCase();
+			textField.styleSheet = Config.styleSheet;
+			textField.htmlText = "<span class='projects_preview_title'>" + section.toUpperCase() + " / " + name.toUpperCase() + "</span>";
 			textField.autoSize = TextFieldAutoSize.LEFT;
-			textField.setTextFormat( tf );
 			textField.x =
 			textField.y = 9;
 			textField.selectable = false;
@@ -149,6 +171,27 @@ package main.home
 			url += section == Config.WORKS ? Config.path_works : Config.path_lab;
 			url += "preview/" + img;
 			_movieLoader.load( url );
+		}
+		
+		public function init():void
+		{
+			showBorders();
+			
+			TweenLite.to( cntTitle, .3, { y: 359, ease: Quad.easeOut } );
+			TweenLite.to( strkTitle, .3, { y: 359, ease: Quad.easeOut } );
+			
+			_enable = true;
+		}
+		
+		public function kill( delay:int ):void
+		{
+			_enable = false;
+			
+			var d:Number = delay * .1;
+			
+			_borders.hide( d );			
+			TweenLite.to( cntTitle, .3, { y: int( 359 - 40 ), delay: d, ease: Quad.easeOut } );
+			TweenLite.to( strkTitle, .3, { y: int( 359 - 40 ), ease: Quad.easeOut, delay: d, onComplete: destroy } );
 		}
 		
 		public function darken():void

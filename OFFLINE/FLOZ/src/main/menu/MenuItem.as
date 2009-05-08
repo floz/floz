@@ -16,6 +16,7 @@ package main.menu
 	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import gs.easing.Cubic;
 	import gs.easing.Quad;
 	import gs.TweenLite;
 	import main.Config;
@@ -24,6 +25,8 @@ package main.menu
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
+		
+		private const _SPEED:Number = .2;
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
@@ -62,10 +65,9 @@ package main.menu
 		
 		private function init():void
 		{
-			var tf:TextFormat = new TextFormat( Config.fonts.getItemLoaded().futuraLight.fontName, 36, 0xb4c59c );
 			var t:TextField = new TextField();
-			t.text = Config.RUBRIQUES[ _sectionId ].toUpperCase();
-			t.setTextFormat( tf );
+			t.styleSheet = Config.styleSheet;
+			t.htmlText = "<span class='title_menu'>" + Config.RUBRIQUES[ _sectionId ].toUpperCase() + "</span>";
 			t.width = t.textWidth + 10;
 			t.x = 15;
 			
@@ -85,7 +87,7 @@ package main.menu
 			g.beginFill( 0x000000 );
 			g.drawRect( 0, 0, s.width, s.height );
 			g.endFill();
-			_black.scaleY = 0;
+			_black.alpha = 0;
 			
 			var bd:BitmapData = new BitmapData( s.width, s.height, true, 0x00 );
 			bd.draw( cnt );
@@ -96,11 +98,6 @@ package main.menu
 			cnt.addChild( new Bitmap( bd, PixelSnapping.AUTO, true ) );			
 		}
 		
-		private function hideBlackScreen():void
-		{
-			_black.scaleY = 0;
-		}
-		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function over():void
@@ -108,28 +105,27 @@ package main.menu
 			if ( Config.currentSection == _sectionName ) return;
 			
 			TweenLite.killTweensOf( _black );
-			_black.scaleY = .7;
-			TweenLite.to( _black, .3, { scaleY: 1, ease: Quad.easeOut } );			
+			TweenLite.to( _black, _SPEED, { alpha: 1, ease: Quad.easeOut } );			
 		}
 		
 		public function out():void
 		{
 			if ( Config.currentSection == _sectionName ) return;			
-			TweenLite.to( _black, .3, { scaleY: .3, ease: Quad.easeIn, onComplete: hideBlackScreen } );		
+			TweenLite.to( _black, _SPEED, { alpha: 0, ease: Quad.easeOut } );		
 		}
 		
 		public function select():void
 		{
 			if ( _selected ) return;
 			_selected = true;
-			TweenLite.to( _black, .3, { scaleY: 1, ease: Quad.easeOut } );
+			TweenLite.to( _black, _SPEED, { alpha: 1, ease: Quad.easeOut } );
 		}
 		
 		public function deselect():void
 		{
 			if ( !_selected ) return;
 			_selected = false;
-			TweenLite.to( _black, .3, { scaleY: .3, ease: Quad.easeIn, onComplete: hideBlackScreen  } );	
+			TweenLite.to( _black, _SPEED, { alpha: 0, ease: Quad.easeOut  } );	
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
