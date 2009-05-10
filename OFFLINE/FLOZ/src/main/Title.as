@@ -76,7 +76,7 @@ package main
 			_subTitle.styleSheet = Config.styleSheet;
 			
 			_title.htmlText = "<span class='title_rubrique'>" + Config.currentSection.toUpperCase() + "</span>";
-			_subTitle.htmlText = "<span class='projects_preview_title'>" + subTitle.toUpperCase() + "</span>";
+			_subTitle.htmlText = "<span class='lastprojects_preview_title'>" + subTitle.toUpperCase() + "</span>";
 			
 			_title.x = - _title.textWidth;
 			_subTitle.x = - _subTitle.textWidth - 1;

@@ -31,12 +31,13 @@ package fr.minuit4.animation.text
 		private var field:TextField;
 		private var time:int;
 		private var type:String;
+		private var cssClass:String;
 		private var listChars:Array;
 		private var timer:Timer;
 		private var currentText:String;		
 		private var currentCharIndex:int;
 		
-		public function RandomTextEffect( str:String, field:TextField, time:int, type:String ):void
+		public function RandomTextEffect( str:String, field:TextField, time:int, type:String, cssClass:String ):void
 		{
 			if ( !str.length || !field ) return;
 			
@@ -44,6 +45,7 @@ package fr.minuit4.animation.text
 			this.field = field;
 			this.time = time;
 			this.type = type;
+			this.cssClass = cssClass;
 			
 			if ( type == "lowerLetters" ) listChars = LOWER_LETTERS;
 			else if ( type == "upperLetters" ) listChars = UPPER_LETTERS;
@@ -80,7 +82,7 @@ package fr.minuit4.animation.text
 			if ( !field.hasEventListener( Event.ENTER_FRAME ) ) field.addEventListener( Event.ENTER_FRAME, onFrame );
 			
 			currentText += str.charAt( currentCharIndex );
-			field.text = currentText + generate();
+			field.htmlText = "<span class=" + cssClass + ">" + currentText + generate() + "</span>";
 			
 			currentCharIndex++;
 			
@@ -109,7 +111,7 @@ package fr.minuit4.animation.text
 		private function onFrame(e:Event):void 
 		{
 			if ( !field || !field.parent ) remove();
-			field.text = currentText + generate();
+			field.htmlText = "<span class=" + cssClass + ">" + currentText + generate() + "</span>";
 		}
 		
 		// PRIVATE
@@ -142,6 +144,11 @@ package fr.minuit4.animation.text
 		
 		// PUBLIC
 		
+		public function getText():String
+		{
+			return field.text;
+		}
+		
 		/**
 		 * Permet d'apply un effect de recherche de texte aléatoire.
 		 * @param	str		String	Le texte final à fournir.
@@ -158,9 +165,9 @@ package fr.minuit4.animation.text
 		 * 		- "lettersNumsSignsMix"	Les lettres -minuscules et majuscules-, les chiffres et les signes.
 		 * 		- "numsSigns"	Les nombres et les signes.
 		 */
-		public static function apply( str:String, field:TextField, time:int = 3000, type:String = "lowerLetters" ):RandomTextEffect
+		public static function apply( str:String, field:TextField, time:int = 3000, type:String = "lowerLetters", cssClass:String = "" ):RandomTextEffect
 		{
-			return new RandomTextEffect( str, field, time, type );
+			return new RandomTextEffect( str, field, time, type, cssClass );
 		}
 	}
 	

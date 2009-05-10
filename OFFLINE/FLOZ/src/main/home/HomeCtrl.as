@@ -7,8 +7,10 @@
 package main.home 
 {
 	import flash.display.DisplayObject;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import gs.TweenLite;
 	import main.Config;
 	
 	public class HomeCtrl
@@ -19,6 +21,10 @@ package main.home
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _dispatcher:EventDispatcher;
+		
+		private var _cntProjects:Sprite;
+		
+		private var _killing:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -57,8 +63,12 @@ package main.home
 		
 		private function onLPCComplete(e:Event):void 
 		{
-			Config.cntMain.removeChild( e.currentTarget as DisplayObject );
-			if ( !Config.cntMain.numChildren ) _dispatcher.dispatchEvent( new Event( Event.COMPLETE ) );
+			_cntProjects.removeChild( e.currentTarget as DisplayObject );
+			if ( !_cntProjects.numChildren ) 
+			{
+				Config.cntMain.removeChild( _cntProjects );
+				_dispatcher.dispatchEvent( new Event( Event.COMPLETE ) );
+			}
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -99,6 +109,9 @@ package main.home
 		{
 			while ( Config.cntMain.numChildren ) Config.cntMain.removeChildAt( 0 );
 			
+			_cntProjects = new Sprite();
+			Config.cntMain.addChild( _cntProjects );
+			
 			var lpc:LastProjectContainer;
 			var a:Array = sortProjects();
 			var n:int = a.length;
@@ -109,19 +122,20 @@ package main.home
 				lpc.lastProject.linkToProject( a[ i ].title, a[ i ].preview, a[ i ].section );
 				lpc.x = px;
 				px += 322;
-				lpc.addEventListener( Event.COMPLETE, onLPCComplete );
-				Config.cntMain.addChild( lpc );
-				
 				lpc.addEventListener( LastProject.OVER, onLastProjectOver, true );
 				lpc.addEventListener( LastProject.OUT, onLastProjectOut, true );
+				lpc.addEventListener( Event.COMPLETE, onLPCComplete );
+				_cntProjects.addChild( lpc );
 			}
 		}
 		
 		public function deactivate():void
-		{
-			var i:int = Config.cntMain.numChildren;
+		{			
+			_killing = true;
+			
+			var i:int = _cntProjects.numChildren;
 			while ( --i > -1 )
-				LastProjectContainer( Config.cntMain.getChildAt( i ) ).kill( i );
+				LastProjectContainer( _cntProjects.getChildAt( i ) ).kill( i );
 		}
 		
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
