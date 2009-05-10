@@ -16,6 +16,8 @@ package main.home
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private var _enable:Boolean;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		public var lastProject:LastProject;
@@ -42,12 +44,14 @@ package main.home
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
+			_enable = true;
+			
 			msk.y = -msk.height;
 			TweenLite.to( msk, .4, { y: 0, ease: Cubic.easeIn, delay: parent.numChildren * .1, onComplete: showTitle } );
 			
 			lastProject.addEventListener( Event.COMPLETE, onLastProjectDestroy );
 			
-			msk.mouseChildren = false;
+			msk.mouseChildren =
 			msk.mouseEnabled = false;
 		}
 		
@@ -60,6 +64,7 @@ package main.home
 		
 		private function showTitle():void
 		{
+			if ( !_enable ) return;
 			lastProject.init();
 		}
 		
@@ -72,6 +77,9 @@ package main.home
 		
 		public function kill( delay:int ):void
 		{
+			if ( !_enable ) return;
+			
+			_enable = false;
 			lastProject.kill( delay );
 		}
 		

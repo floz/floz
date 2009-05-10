@@ -151,10 +151,9 @@ package main.home
 		{
 			_loading = true;
 			
-			var fonts:Array =  Font.enumerateFonts();
 			var textField:TextField = new TextField();
 			textField.styleSheet = Config.styleSheet;
-			textField.htmlText = "<span class='projects_preview_title'>" + section.toUpperCase() + " / " + name.toUpperCase() + "</span>";
+			textField.htmlText = "<span class='lastprojects_preview_title'>" + section.toUpperCase() + " / " + name.toUpperCase() + "</span>";
 			textField.autoSize = TextFieldAutoSize.LEFT;
 			textField.x =
 			textField.y = 9;
@@ -189,8 +188,8 @@ package main.home
 			
 			var d:Number = delay * .1;
 			
-			_borders.hide( d );			
-			TweenLite.to( cntTitle, .3, { y: int( 359 - 40 ), delay: d, ease: Quad.easeOut } );
+			_borders.hide( d );
+			TweenLite.to( cntTitle, .3, { y: int( 359 - 40 ), delay: d, ease: Quad.easeOut, onUpdate: function():void { trace( "here" ); } } );
 			TweenLite.to( strkTitle, .3, { y: int( 359 - 40 ), ease: Quad.easeOut, delay: d, onComplete: destroy } );
 		}
 		

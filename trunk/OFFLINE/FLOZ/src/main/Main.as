@@ -19,6 +19,7 @@ package main
 	import fr.minuit4.utils.debug.FPS;
 	import main.home.HomeCtrl;
 	import main.menu.Menu;
+	import main.projects.ProjectsCtrl;
 	
 	public class Main extends Sprite
 	{
@@ -27,6 +28,7 @@ package main
 		
 		private var _background:Background;
 		private var _homeCtrl:HomeCtrl;
+		private var _projectsCtrl:ProjectsCtrl;
 		
 		private var _title:String;
 		
@@ -77,6 +79,9 @@ package main
 			_homeCtrl = new HomeCtrl();
 			_homeCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
 			
+			_projectsCtrl = new ProjectsCtrl();
+			_projectsCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
+			
 			stage.addEventListener( Event.RESIZE, onResize );
 			onResize( null );
 			
@@ -93,15 +98,15 @@ package main
 			switch( Config.currentSection )
 			{
 				case Config.HOME: _homeCtrl.deactivate(); break;
-				case Config.WORKS: ; break;
-				case Config.LAB: ; break;
+				case Config.WORKS: _projectsCtrl.deactivate(); break;
+				case Config.LAB: _projectsCtrl.deactivate(); break;
 				case Config.ABOUT: ; break;
 			}
 		}
 		
 		private function onSwitchSectionComplete(e:Event):void 
 		{
-			SWFAddress.setValue( Config.tempSection );
+			SWFAddress.setValue( Config.tempSection.substr( 0, 1 ).toUpperCase() + Config.tempSection.substr( 1 ).toLowerCase() );
 		}
 		
 		private function onSWFAdressMenuItemSelect(e:ContextMenuEvent):void 
@@ -111,15 +116,11 @@ package main
 		
 		private function onSWFAdressChange(e:SWFAddressEvent):void 
 		{
-			if ( Config.cntMain.numChildren )
-			{
-				Config.tempSection = e.value.substr( 0, 1 ).toUpperCase() + e.value.substr( 1 ).toLowerCase();
-				onMenuChange( null );
-				return;
-			}
-			
+			trace( e.value );
 			var currentValue:String = e.value.substr( 1 ).toLowerCase();
-			currentValue = currentValue == "" ? Config.HOME : currentValue;
+			if ( currentValue == "" ) 
+				SWFAddress.setValue( Config.HOME.substr( 0, 1 ).toUpperCase() + Config.HOME.substr( 1 ).toLowerCase() );
+			
 			if ( currentValue == Config.currentSection || !isRubrique( currentValue ) )
 			{
 				if ( !isRubrique( currentValue ) && Config.currentSection != Config.HOME )
@@ -128,7 +129,15 @@ package main
 				return;
 			}
 			
-			Config.currentSection = currentValue;		
+			//if ( Config.cntMain.numChildren )
+			//{
+				//trace( "ici" );
+				//Config.tempSection = e.value.substr( 0, 1 ).toUpperCase() + e.value.substr( 1 ).toLowerCase();
+				//onMenuChange( null );
+				//return;
+			//}
+			
+			Config.currentSection = currentValue.toLowerCase();
 			switchRubrique();
 			
 			_title = "Floz - Flash Developer";
@@ -181,7 +190,7 @@ package main
 		{
 			var i:int = Config.RUBRIQUES.length;
 			while ( --i > -1 )
-				if ( Config.RUBRIQUES[ i ] == rubriqueName ) return true;
+				if ( Config.RUBRIQUES[ i ] == rubriqueName.toLowerCase() ) return true;
 			
 			return false;
 		}
@@ -193,8 +202,8 @@ package main
 			switch( Config.currentSection )
 			{
 				case Config.HOME: title.update( "The last updates" ); _homeCtrl.activate(); break;
-				case Config.WORKS: title.update( "Projects List" ); break;
-				case Config.LAB: title.update( "Laboratory projects List" ); break;
+				case Config.WORKS: title.update( "Projects List" ); _projectsCtrl.activate(); break;
+				case Config.LAB: title.update( "Laboratory projects List" ); _projectsCtrl.activate(); break;
 				case Config.ABOUT: title.update( "More informations" ); break;
 			}
 		}

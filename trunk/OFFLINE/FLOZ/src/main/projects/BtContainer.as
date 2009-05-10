@@ -6,28 +6,27 @@
  */
 package main.projects 
 {
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import gs.easing.Cubic;
 	import gs.TweenLite;
 	
-	public class ProjectContainer extends Sprite
+	public class BtContainer extends MovieClip
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _enable:Boolean;
-		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
-		public var project:Project;
-		public var msk:Sprite;
+		public var msk1:Sprite;
+		public var msk2:Sprite;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function ProjectContainer() 
+		public function BtContainer() 
 		{
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
@@ -38,7 +37,8 @@ package main.projects
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			TweenLite.killTweensOf( msk );
+			TweenLite.killTweensOf( msk1 );
+			TweenLite.killTweensOf( msk2 );			
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -46,29 +46,11 @@ package main.projects
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			_enable = true;
-			
-			msk.y = -msk.height;
-			TweenLite.to( msk, .4, { y: 0, ease: Cubic.easeIn, delay: parent.numChildren * .1, onComplete: projectInit } );
-			
-			project.addEventListener( Event.COMPLETE, onProjectDestroy );
-			
-			msk.mouseChildren =
-			msk.mouseEnabled = false;
-		}
-		
-		private function onProjectDestroy(e:Event):void 
-		{
-			TweenLite.to( msk, .4, { y: msk.height, ease: Cubic.easeOut, onComplete: destroy } );
+			msk1.y =
+			msk2.y = 50;
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
-		
-		private function projectInit():void
-		{
-			if ( !_enable ) return;
-			project.init();
-		}
 		
 		private function destroy():void
 		{
@@ -77,12 +59,34 @@ package main.projects
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function kill( delay:int ):void
+		public function showPrev():void
 		{
-			if ( !_enable ) return;
-			
-			_enable = false;			
-			project.kill( delay );
+			if ( msk1.y == 0 ) return;
+			TweenLite.to( msk1, .2, { y: 0, ease: Cubic.easeOut } );
+		}
+		
+		public function showNext():void
+		{
+			if ( msk2.y == 0 ) return;
+			TweenLite.to( msk2, .2, { y: 0, ease: Cubic.easeOut } );
+		}
+		
+		public function hidePrev():void
+		{
+			if ( msk1.y == 50 ) return;
+			TweenLite.to( msk1, .2, { y: 50, ease: Cubic.easeOut } );
+		}
+		
+		public function hideNext():void
+		{
+			if ( msk2.y == 50 ) return;
+			TweenLite.to( msk2, .2, { y: 50, ease: Cubic.easeOut } );
+		}
+		
+		public function kill():void
+		{
+			TweenLite.to( msk1, .4, { y: 50, ease: Cubic.easeOut } );
+			TweenLite.to( msk2, .4, { y: 50, ease: Cubic.easeOut, delay: .1, onComplete: destroy } );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
