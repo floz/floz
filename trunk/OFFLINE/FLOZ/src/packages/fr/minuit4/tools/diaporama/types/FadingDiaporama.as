@@ -14,8 +14,8 @@ package fr.minuit4.tools.diaporama.types
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.PixelSnapping;
-	import fr.minuit4.diaporama.Diaporama;
-	import fr.minuit4.utils.UBit;
+	import fr.minuit4.tools.diaporama.Diaporama;
+	import fr.minuit4.utils.UImg;
 	import gs.easing.Quad;
 	import gs.TweenLite;
 	
@@ -110,7 +110,7 @@ package fr.minuit4.tools.diaporama.types
 		{
 			_imgTmp = new BitmapData( _images[ _nextId ].width, _images[ _nextId ].height, true, 0x00 );
 			_imgTmp.draw( _images[ _nextId ] );
-			_imgHolder.draw( UBit.resize( _imgTmp, _width, _height, true, false, false ) );
+			_imgHolder.draw( UImg.resize( _imgTmp, _width, _height, true, false, false ) );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

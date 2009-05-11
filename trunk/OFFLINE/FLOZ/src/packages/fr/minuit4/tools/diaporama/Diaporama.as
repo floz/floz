@@ -19,6 +19,7 @@ package fr.minuit4.tools.diaporama
 	
 	public class Diaporama extends Sprite
 	{
+		public static const SWITCH_COMPLETE:String = "diaporama_switch_complete";
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
@@ -31,6 +32,7 @@ package fr.minuit4.tools.diaporama
 		protected var _changeEvent:Event;
 		
 		private var _timer:Timer;
+		private var _playing:Boolean;
 		
 		protected var _currentId:int;
 		protected var _nextId:int;
@@ -94,6 +96,7 @@ package fr.minuit4.tools.diaporama
 		private function onTimer(e:TimerEvent):void 
 		{
 			next();
+			dispatchEvent( new Event( Diaporama.SWITCH_COMPLETE ) );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -198,6 +201,13 @@ package fr.minuit4.tools.diaporama
 		 */
 		public function startDiaporamaMode( delay:Number = 5000 ):void
 		{
+			_playing = true;
+			
+			if ( _timer.running )
+			{
+				_timer.reset();
+				_timer.stop();
+			}
 			_timer.delay = delay;
 			_timer.start();
 		}
@@ -205,9 +215,13 @@ package fr.minuit4.tools.diaporama
 		/** Stop the diaporama mode */
 		public function stopDiaporamaMode():void
 		{
+			_playing = false;
+			
 			_timer.stop();
 			_timer.reset();
 		}
+		
+		public function isPlaying():Boolean { return _playing; }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

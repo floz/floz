@@ -16,9 +16,9 @@ package fr.minuit4.tools.diaporama.types
 	import flash.display.PixelSnapping;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
-	import fr.minuit4.diaporama.Diaporama;
-	import fr.minuit4.utils.UBit;
-	import gs.easing.Quad;
+	import fr.minuit4.tools.diaporama.Diaporama;
+	import fr.minuit4.utils.UImg;
+	import gs.easing.Cubic;
 	import gs.TweenLite;
 	
 	public class SlidingDiaporama extends Diaporama
@@ -59,7 +59,7 @@ package fr.minuit4.tools.diaporama.types
 		final override protected function show():void
 		{
 			dispatchEvent( _initEvent );
-			TweenLite.to( _diaporamaCnt, _transitionTime, { x: -_width * _nextId, ease: Quad.easeOut, onComplete: finalStep } );
+			TweenLite.to( _diaporamaCnt, _transitionTime, { x: -_width * _nextId, ease: Cubic.easeOut, onComplete: finalStep } );
 			_currentId = _nextId;
 		}
 		
@@ -96,7 +96,7 @@ package fr.minuit4.tools.diaporama.types
 				bmpd = new BitmapData( _images[ i ].width, _images[ i ].height, true, 0x00 );
 				bmpd.draw( _images[ i ] );
 				
-				b = new Bitmap( UBit.resize( bmpd, _width, _height ), PixelSnapping.AUTO, true );
+				b = new Bitmap( UImg.resize( bmpd, _width, _height ), PixelSnapping.AUTO, true );
 				b.x = vx;
 				cnt.addChild( b );
 				
