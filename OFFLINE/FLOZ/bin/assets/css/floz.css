@@ -23,7 +23,7 @@
 .projects_preview_title
 {
 	font-family:Futura Std Medium;
-	font-size:13;
+	font-size:14;
 	text-align:center;
 	color:#ffffff;
 }
@@ -33,4 +33,25 @@
 	font-family:Futura Std Medium;
 	font-size:12;
 	color:#21d799;
+}
+
+.index
+{
+	font-family:Futura Std Medium;
+	font-size:12;
+	color:#999999;
+}
+
+.index_selected
+{
+	font-family:Futura Std Medium;
+	font-size:12;
+	color:#21d799;
+}
+
+.index_over
+{
+	font-family:Futura Std Medium;
+	font-size:12;
+	color:#a1c269;
 }
