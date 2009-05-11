@@ -66,6 +66,7 @@ package main.menu
 		private function init():void
 		{
 			var t:TextField = new TextField();
+			t.embedFonts = true;
 			t.styleSheet = Config.styleSheet;
 			t.htmlText = "<span class='title_menu'>" + Config.RUBRIQUES[ _sectionId ].toUpperCase() + "</span>";
 			t.width = t.textWidth + 10;

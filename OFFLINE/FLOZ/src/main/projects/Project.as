@@ -125,7 +125,8 @@ package main.projects
 		{
 			_loading = false;
 			
-			var bd:BitmapData = Bitmap( _movieLoader.getItemLoaded() ).bitmapData.clone();
+			var bdTmp:BitmapData = _movieLoader.getItemLoaded().bitmapData.clone();
+			var bd:BitmapData = UImg.resize( bdTmp, bdTmp.width, strkContent.height - 1, false );
 			_imageHolder = new Bitmap( bd, PixelSnapping.AUTO, true );
 			cntContent.addChild( _imageHolder );
 			
@@ -147,16 +148,17 @@ package main.projects
 			_loading = true;
 			
 			var textField:TextField = new TextField();
+			textField.embedFonts = true;
 			textField.styleSheet = Config.styleSheet;
 			textField.width = strkContent.width;
 			textField.htmlText = "<span class='projects_preview_title'>" + name.toUpperCase() + "</span>";
-			textField.y = 10;
+			textField.y = 9;
 			textField.selectable = false;
 			cntTitle.addChild( textField );
 			
 			var glowFilter:GlowFilter = Config.glowFilter.clone() as GlowFilter;
-			glowFilter.strength = 3;
 			textField.filters =	[ glowFilter ];
+			glowFilter.strength = 3;			
 			strkContent.filters = [ Config.glowFilter ];			
 			
 			var url:String = Config.path_img;

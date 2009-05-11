@@ -33,11 +33,10 @@ package assets
 		final override protected function setItemLoaded():void 
 		{
 			var a:ApplicationDomain = _loader.contentLoaderInfo.applicationDomain;
+			var assetsFonts:AssetsFonts = new AssetsFonts( a );
 			
-			var futuraLight:Class = a.getDefinition( "FuturaLight" ) as Class;
-			var futuraMedium:Class = a.getDefinition( "FuturaMedium" ) as Class;
-			Font.registerFont( futuraLight );
-			Font.registerFont( futuraMedium );
+			Font.registerFont( assetsFonts.futuraLight );
+			Font.registerFont( assetsFonts.futuraMedium );
 			
 			super.setItemLoaded();			
 		}
@@ -48,4 +47,18 @@ package assets
 		
 	}
 	
+}
+import flash.system.ApplicationDomain;
+import flash.text.Font;
+
+class AssetsFonts
+{
+	public var futuraLight:Class;
+	public var futuraMedium:Class;
+	
+	public function AssetsFonts( domain:ApplicationDomain )
+	{
+		futuraLight = domain.getDefinition( "FLight" ) as Class;
+		futuraMedium = domain.getDefinition( "FMedium" ) as Class;
+	}
 }

@@ -39,11 +39,11 @@ package main.home
 		
 		private function onLastProjectOver(e:Event):void 
 		{
-			var i:int = Config.cntMain.numChildren;
+			var i:int = _cntProjects.numChildren;
 			var lpc:LastProjectContainer;
 			while ( --i > -1 )
 			{
-				lpc = Config.cntMain.getChildAt( i ) as LastProjectContainer;
+				lpc = _cntProjects.getChildAt( i ) as LastProjectContainer;
 				if ( lpc == e.currentTarget ) lpc.lastProject.hideBorders()
 				else lpc.lastProject.darken();
 			}
@@ -51,11 +51,11 @@ package main.home
 		
 		private function onLastProjectOut(e:Event):void 
 		{
-			var i:int = Config.cntMain.numChildren;
+			var i:int = _cntProjects.numChildren;
 			var lpc:LastProjectContainer;
 			while ( --i > -1 )
 			{
-				lpc = Config.cntMain.getChildAt( i ) as LastProjectContainer;
+				lpc = _cntProjects.getChildAt( i ) as LastProjectContainer;
 				if ( lpc == e.currentTarget ) lpc.lastProject.showBorders()
 				else lpc.lastProject.lighten();
 			}
