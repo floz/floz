@@ -17,6 +17,7 @@ package main
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
 	import fr.minuit4.utils.debug.FPS;
+	import main.details.DetailsCtrl;
 	import main.home.HomeCtrl;
 	import main.menu.Menu;
 	import main.projects.ProjectsCtrl;
@@ -29,6 +30,7 @@ package main
 		private var _background:Background;
 		private var _homeCtrl:HomeCtrl;
 		private var _projectsCtrl:ProjectsCtrl;
+		private var _detailsCtrl:DetailsCtrl;
 		
 		private var _title:String;
 		
@@ -77,10 +79,13 @@ package main
 			menu.addEventListener( Event.CHANGE, onMenuChange );
 			
 			_homeCtrl = new HomeCtrl();
+			_homeCtrl.addEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelect );
 			_homeCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
 			
 			_projectsCtrl = new ProjectsCtrl();
 			_projectsCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
+			
+			_detailsCtrl = new DetailsCtrl();
 			
 			stage.addEventListener( Event.RESIZE, onResize );
 			onResize( null );
@@ -91,6 +96,11 @@ package main
 				fps.x = 170;
 				addChild( fps );
 			}
+		}
+		
+		private function onProjectSelect(e:ProjectEvent):void 
+		{
+			_detailsCtrl.activate( e.section, e.title );
 		}
 		
 		private function onMenuChange(e:Event):void 
@@ -111,7 +121,6 @@ package main
 		
 		private function onSWFAdressMenuItemSelect(e:ContextMenuEvent):void 
 		{
-			//SWFAddress.setValue( e.currentTarget.caption.substr( 0, 1 ).toUpperCase() + e.currentTarget.caption.substr( 1 ).toLowerCase() );
 			Config.tempSection = e.currentTarget.caption.substr( 0, 1 ).toUpperCase() + e.currentTarget.caption.substr( 1 ).toLowerCase();
 			onMenuChange( null );
 		}

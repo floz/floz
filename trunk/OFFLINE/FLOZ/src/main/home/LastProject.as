@@ -26,6 +26,7 @@ package main.home
 	import gs.TweenLite;
 	import main.Borders;
 	import main.Config;
+	import main.ProjectEvent;
 	
 	public class LastProject extends Sprite
 	{
@@ -40,6 +41,9 @@ package main.home
 		private var _movieLoader:MovieLoader;
 		private var _overEvent:Event;
 		private var _outEvent:Event;
+		
+		private var _section:String;
+		private var _title:String;
 		
 		private var _borders:Borders;
 		
@@ -123,7 +127,13 @@ package main.home
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			trace( "click" );
+			if ( !_enable ) return;
+			
+			var projectEvent:ProjectEvent = new ProjectEvent( ProjectEvent.PROJECT_SELECT );
+			projectEvent.section = this._section;
+			projectEvent.title = this._title;
+			
+			dispatchEvent( projectEvent );
 		}
 		
 		private function onLoadComplete(e:Event):void 
@@ -150,6 +160,9 @@ package main.home
 		public function linkToProject( name:String, img:String, section:String ):void
 		{
 			_loading = true;
+			
+			this._title = name;
+			this._section = section;
 			
 			var textField:TextField = new TextField();
 			textField.embedFonts = true;

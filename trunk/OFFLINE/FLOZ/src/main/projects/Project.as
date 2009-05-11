@@ -54,6 +54,7 @@ package main.projects
 		public var shadow:Sprite;
 		public var cntBorders:Sprite;
 		public var msk:Sprite;
+		public var txt:TextField;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -152,7 +153,7 @@ package main.projects
 			textField.styleSheet = Config.styleSheet;
 			textField.width = strkContent.width;
 			textField.htmlText = "<span class='projects_preview_title'>" + name.toUpperCase() + "</span>";
-			textField.y = 9;
+			textField.y = 14;
 			textField.selectable = false;
 			cntTitle.addChild( textField );
 			
