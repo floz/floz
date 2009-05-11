@@ -108,7 +108,7 @@ package main
 					o.url = x.url;
 					o.desc = x.desc;
 					for each( x in x.diaporama.image )
-						a.push( x.name );
+						a.push( x.@name );
 					
 					o.diaporama = a;
 					

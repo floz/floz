@@ -12,6 +12,7 @@ package main.home
 	import flash.events.EventDispatcher;
 	import gs.TweenLite;
 	import main.Config;
+	import main.ProjectEvent;
 	
 	public class HomeCtrl
 	{
@@ -59,6 +60,15 @@ package main.home
 				if ( lpc == e.currentTarget ) lpc.lastProject.showBorders()
 				else lpc.lastProject.lighten();
 			}
+		}
+		
+		private function onProjectSelect(e:ProjectEvent):void 
+		{
+			var projectEvent:ProjectEvent = new ProjectEvent( ProjectEvent.PROJECT_SELECT );
+			projectEvent.section = e.section;
+			projectEvent.title = e.title;
+			
+			_dispatcher.dispatchEvent( projectEvent );
 		}
 		
 		private function onLPCComplete(e:Event):void 
@@ -124,6 +134,7 @@ package main.home
 				px += 322;
 				lpc.addEventListener( LastProject.OVER, onLastProjectOver, true );
 				lpc.addEventListener( LastProject.OUT, onLastProjectOut, true );
+				lpc.addEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelect, true );
 				lpc.addEventListener( Event.COMPLETE, onLPCComplete );
 				_cntProjects.addChild( lpc );
 			}

@@ -64,6 +64,8 @@ package main.projects
 			
 			_textValue = cntContent.txt1.text;
 			
+			cntContent.txt1.embedFonts = 
+			cntContent.txt2.embedFonts = true;
 			cntContent.txt1.styleSheet =
 			cntContent.txt2.styleSheet = Config.styleSheet;
 			cntContent.txt1.htmlText = 
