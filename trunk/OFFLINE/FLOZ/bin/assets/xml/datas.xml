@@ -12,6 +12,8 @@
 			<image name="img1.jpg" />
 			<image name="img2.jpg" />
 			<image name="img3.jpg" />
+			<image name="img3.jpg" />
+			<image name="img3.jpg" />
 		</diaporama>
 	</item>
 	<item title="Altizem" preview="altizem.jpg" pubdate="1240493811828">
@@ -34,7 +36,11 @@
 		<url>http://www.beatlizeyourself.com</url>
 		<diaporama>
 			<image name="img1.jpg" />
+			<image name="img1.jpg" />
 			<image name="img2.jpg" />
+			<image name="img3.jpg" />
+			<image name="img3.jpg" />
+			<image name="img3.jpg" />
 			<image name="img3.jpg" />
 		</diaporama>
 		<desc><![CDATA[blablablalva,le,zao jazeithuze hirhzier z <b>tototot</b>. <br />tototozet kzeotzejitjoze jtoze tjyrty rtyrty jrtyj j yjoer erte rotje orte r <br /> azeorjzeorhzorze r\n hahahaha]]></desc>
