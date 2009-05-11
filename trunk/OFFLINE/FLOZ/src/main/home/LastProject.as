@@ -130,7 +130,7 @@ package main.home
 		{
 			_loading = false;
 			
-			var bd:BitmapData = UImg.resize( Bitmap( _movieLoader.getItemLoaded() ).bitmapData.clone(), strkContent.width, strkContent.height, false );
+			var bd:BitmapData = UImg.resize( Bitmap( _movieLoader.getItemLoaded() ).bitmapData.clone(), strkContent.width, strkContent.height - 1, false );
 			_imageHolder = new Bitmap( bd, PixelSnapping.AUTO, true );
 			cntContent.addChild( _imageHolder );
 			
@@ -152,6 +152,7 @@ package main.home
 			_loading = true;
 			
 			var textField:TextField = new TextField();
+			textField.embedFonts = true;
 			textField.styleSheet = Config.styleSheet;
 			textField.htmlText = "<span class='lastprojects_preview_title'>" + section.toUpperCase() + " / " + name.toUpperCase() + "</span>";
 			textField.autoSize = TextFieldAutoSize.LEFT;
@@ -189,7 +190,7 @@ package main.home
 			var d:Number = delay * .1;
 			
 			_borders.hide( d );
-			TweenLite.to( cntTitle, .3, { y: int( 359 - 40 ), delay: d, ease: Quad.easeOut, onUpdate: function():void { trace( "here" ); } } );
+			TweenLite.to( cntTitle, .3, { y: int( 359 - 40 ), delay: d, ease: Quad.easeOut } );
 			TweenLite.to( strkTitle, .3, { y: int( 359 - 40 ), ease: Quad.easeOut, delay: d, onComplete: destroy } );
 		}
 		

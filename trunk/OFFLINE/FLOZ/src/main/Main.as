@@ -111,7 +111,9 @@ package main
 		
 		private function onSWFAdressMenuItemSelect(e:ContextMenuEvent):void 
 		{
-			SWFAddress.setValue( e.currentTarget.caption.substr( 0, 1 ).toUpperCase() + e.currentTarget.caption.substr( 1 ).toLowerCase() );
+			//SWFAddress.setValue( e.currentTarget.caption.substr( 0, 1 ).toUpperCase() + e.currentTarget.caption.substr( 1 ).toLowerCase() );
+			Config.tempSection = e.currentTarget.caption.substr( 0, 1 ).toUpperCase() + e.currentTarget.caption.substr( 1 ).toLowerCase();
+			onMenuChange( null );
 		}
 		
 		private function onSWFAdressChange(e:SWFAddressEvent):void 
@@ -128,14 +130,6 @@ package main
 				
 				return;
 			}
-			
-			//if ( Config.cntMain.numChildren )
-			//{
-				//trace( "ici" );
-				//Config.tempSection = e.value.substr( 0, 1 ).toUpperCase() + e.value.substr( 1 ).toLowerCase();
-				//onMenuChange( null );
-				//return;
-			//}
 			
 			Config.currentSection = currentValue.toLowerCase();
 			switchRubrique();

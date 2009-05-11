@@ -33,6 +33,7 @@ package main
 			_title = new TextField();
 			_title.autoSize = TextFieldAutoSize.RIGHT;
 			_title.selectable = false;
+			_title.embedFonts = true;
 			_title.styleSheet = Config.styleSheet;
 			_title.filters = [ Config.glowFilter ];
 			addChild( _title );
@@ -40,6 +41,7 @@ package main
 			_subTitle = new TextField();
 			_subTitle.autoSize = TextFieldAutoSize.RIGHT;
 			_subTitle.selectable = false;
+			_subTitle.embedFonts = true;
 			_subTitle.styleSheet = Config.styleSheet;
 			_subTitle.y = 37;
 			var glowFilter:GlowFilter = Config.glowFilter.clone() as GlowFilter;
@@ -72,7 +74,9 @@ package main
 		
 		public function update( subTitle:String ):void
 		{
+			_title.embedFonts = true;
 			_title.styleSheet = Config.styleSheet;
+			_subTitle.embedFonts = true;
 			_subTitle.styleSheet = Config.styleSheet;
 			
 			_title.htmlText = "<span class='title_rubrique'>" + Config.currentSection.toUpperCase() + "</span>";
