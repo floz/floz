@@ -98,6 +98,7 @@ package main
 			{
 				for each( x in xml[ list[ i ] ].item )
 				{
+					o.index = Config[ list[ i ] + "Datas" ].length;
 					o.section = list[ i ];
 					o.title = x.@title;
 					o.preview = x.@preview;

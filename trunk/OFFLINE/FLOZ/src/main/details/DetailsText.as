@@ -8,6 +8,9 @@ package main.details
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.filters.GlowFilter;
+	import flash.text.TextField;
+	import main.Config;
 	
 	public class DetailsText extends Sprite
 	{
@@ -20,7 +23,17 @@ package main.details
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
-		public var strkTxt:Sprite;
+		public var strk:Sprite;
+		public var titleClient:TextField;
+		public var titleJob:TextField;
+		public var titleTechno:TextField;
+		public var titleDesc:TextField;
+		public var titleUrl:TextField;
+		public var txtClient:TextField;
+		public var txtJob:TextField;
+		public var txtTechno:TextField;
+		public var txtDesc:TextField;
+		public var txtUrl:TextField;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -49,6 +62,43 @@ package main.details
 		public function linkToProject( project:Object ):void
 		{
 			this._project = project;
+			
+			var txt:TextField;
+			var a:Array = [ txtClient, txtJob, txtDesc, txtTechno, txtUrl ];
+			var i:int = a.length;
+			while ( --i > -1 )
+			{
+				txt = a[ i ];
+				
+				txt.embedFonts = true;
+				txt.styleSheet = Config.styleSheet;
+			}
+			
+			txtClient.htmlText = "<span class='basic_text'>" + project.client + "</span>";
+			txtJob.htmlText = "<span class='basic_text'>" + project.job + "</span>";
+			txtClient.htmlText = "<span class='basic_text'>" + project.client + "</span>";
+			txtTechno.htmlText = "<span class='basic_text'>" + project.technos + "</span>";
+			txtDesc.htmlText = "<span class='basic_text'>" + project.desc + "</span>";
+			txtUrl.htmlText = "<a href='" + project.url + "' class='basic_url'>" + project.url + "</a>";
+			
+			var filter:GlowFilter = Config.glowFilter.clone() as GlowFilter;
+			filter.strength = 3.
+			
+			txtUrl.filters = [ filter ];
+			
+			a = [ titleClient, titleJob, titleTechno, titleUrl, titleDesc ];
+			i = a.length;
+			while ( --i > -1 )
+			{
+				txt = a[ i ];
+				
+				txt.embedFonts = true;
+				txt.styleSheet = Config.styleSheet;
+				
+				txt.htmlText = "<span class='basic_title_text'>" + txt.text + "</span>";
+				
+				txt.filters = [ filter ];
+			}
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

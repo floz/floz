@@ -61,23 +61,14 @@ package main
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		private function getTextFormat( fontName:String, fontSize:int, fontColor:uint, bold:Boolean = false ):TextFormat
-		{
-			var tf:TextFormat = new TextFormat( fontName, fontSize, fontColor );
-			tf.align = TextFormatAlign.RIGHT;
-			tf.bold = bold;
-			
-			return tf;
-		}
-		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function update( subTitle:String ):void
-		{
-			_title.embedFonts = true;
-			_title.styleSheet = Config.styleSheet;
-			_subTitle.embedFonts = true;
-			_subTitle.styleSheet = Config.styleSheet;
+		{	
+			//_title.embedFonts = true;
+			//_title.styleSheet = Config.styleSheet;
+			//_subTitle.embedFonts = true;
+			//_subTitle.styleSheet = Config.styleSheet;
 			
 			_title.htmlText = "<span class='title_rubrique'>" + Config.currentSection.toUpperCase() + "</span>";
 			_subTitle.htmlText = "<span class='lastprojects_preview_title'>" + subTitle.toUpperCase() + "</span>";

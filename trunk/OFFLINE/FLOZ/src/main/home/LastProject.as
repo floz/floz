@@ -44,6 +44,7 @@ package main.home
 		
 		private var _section:String;
 		private var _title:String;
+		private var _index:int;
 		
 		private var _borders:Borders;
 		
@@ -130,8 +131,8 @@ package main.home
 			if ( !_enable ) return;
 			
 			var projectEvent:ProjectEvent = new ProjectEvent( ProjectEvent.PROJECT_SELECT );
+			projectEvent.index = this._index;
 			projectEvent.section = this._section;
-			projectEvent.title = this._title;
 			
 			dispatchEvent( projectEvent );
 		}
@@ -157,12 +158,13 @@ package main.home
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function linkToProject( name:String, img:String, section:String ):void
+		public function linkToProject( name:String, img:String, section:String, index:int ):void
 		{
 			_loading = true;
 			
 			this._title = name;
 			this._section = section;
+			this._index = index;
 			
 			var textField:TextField = new TextField();
 			textField.embedFonts = true;

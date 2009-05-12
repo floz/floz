@@ -88,7 +88,11 @@ package main.projects
 		
 		private function onBtComplete(e:Event):void 
 		{
-			if( e.currentTarget.parent ) Config.cntMain.removeChild( e.currentTarget as DisplayObject );
+			if ( e.currentTarget.parent ) 
+			{
+				_btContainer.removeEventListener( Event.COMPLETE, onBtComplete );
+				Config.cntMain.removeChild( e.currentTarget as DisplayObject );
+			}
 		}
 		
 		private function onPrev(e:Event):void 
@@ -182,6 +186,8 @@ package main.projects
 			
 			removeProjects();
 			
+			_btContainer.removeEventListener( Bt.PREV, onPrev, true );
+			_btContainer.removeEventListener( Bt.NEXT, onNext, true );
 			_btContainer.kill();
 		}
 		

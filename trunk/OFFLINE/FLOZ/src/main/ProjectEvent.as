@@ -10,11 +10,13 @@
 	{
 		public static const PROJECT_SELECT:String = "project_select";
 		
+		private var _index:int;
 		private var _section:String;
 		private var _title:String;
 		
-		public function ProjectEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false, section:String = null, title:String = null) 
+		public function ProjectEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false, index:int = -1, section:String = null, title:String = null) 
 		{ 
+			this._index = index;
 			this._section = section;
 			this._title = title;
 			super(type, bubbles, cancelable);
@@ -42,6 +44,13 @@
 		public function set title(value:String):void 
 		{
 			_title = value;
+		}
+		
+		public function get index():int { return _index; }
+		
+		public function set index(value:int):void 
+		{
+			_index = value;
 		}
 		
 	}
