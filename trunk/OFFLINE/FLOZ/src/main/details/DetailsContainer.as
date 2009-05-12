@@ -34,9 +34,12 @@ package main.details
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
-		private function onRemovedFromStage(e:Event):void 
+		private function onRemovedFromStage(e:Event):void
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			
+			TweenLite.killTweensOf( msk1 );
+			TweenLite.killTweensOf( dText );
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -49,7 +52,15 @@ package main.details
 			TweenLite.to( msk1, .4, { y: -5, ease: Cubic.easeIn, onComplete: onDiaporamaAppear } );
 			TweenLite.to( dText, .2, { alpha: 1, ease: Cubic.easeIn, delay: .2 } );
 			
+			dDiaporama.addEventListener( Event.COMPLETE, onPanelComplete );
+			
 			this.x = 2;
+		}
+		
+		private function onPanelComplete(e:Event):void 
+		{
+			TweenLite.to( msk1, .4, { y: msk1.height + 10, ease: Cubic.easeOut, onComplete: destroy } );
+			TweenLite.to( dText, .4, { alpha: 0, ease: Cubic.easeOut } );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -59,12 +70,22 @@ package main.details
 			dDiaporama.showPanel();
 		}
 		
+		private function destroy():void
+		{
+			dispatchEvent( new Event( Event.COMPLETE ) );
+		}		
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function linkToProject( project:Object ):void
 		{
 			dDiaporama.linkToProject( project );
 			dText.linkToProject( project );
+		}
+		
+		public function kill():void
+		{
+			dDiaporama.hidePanel();
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

@@ -11,6 +11,7 @@ package main.projects
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import main.Config;
+	import main.ProjectEvent;
 	
 	public class ProjectsCtrl 
 	{
@@ -62,6 +63,15 @@ package main.projects
 				if ( pc == e.currentTarget ) pc.project.showBorders()
 				else pc.project.lighten();
 			}
+		}
+		
+		private function onProjectSelect(e:ProjectEvent):void 
+		{
+			var projectEvent:ProjectEvent = new ProjectEvent( ProjectEvent.PROJECT_SELECT );
+			projectEvent.index = e.index;
+			projectEvent.section = e.section;
+			
+			_dispatcher.dispatchEvent( projectEvent );
 		}
 		
 		private function onPCComplete(e:Event):void 
@@ -121,11 +131,12 @@ package main.projects
 			{				
 				idx = int( idxAct + i );
 				pc = new ProjectContainer();
-				pc.project.linkToProject( _datasProjects[ idx ].title, _datasProjects[ idx ].preview, _datasProjects[ idx ].section );
+				pc.project.linkToProject( _datasProjects[ idx ].title, _datasProjects[ idx ].preview, _datasProjects[ idx ].section, _datasProjects[ idx ].index );
 				pc.x = px;
 				px += 161;
 				pc.addEventListener( Project.OVER, onProjectOver, true );
 				pc.addEventListener( Project.OUT, onProjectOut, true );
+				pc.addEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelect, true );
 				pc.addEventListener( Event.COMPLETE, onPCComplete );
 				_cntProjects.addChild( pc );
 			}

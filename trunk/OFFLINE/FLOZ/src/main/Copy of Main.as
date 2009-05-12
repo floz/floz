@@ -76,18 +76,16 @@ package main
 			initSWFAddress();
 			
 			menu.init();
-			menu.addEventListener( Event.CHANGE, onRubriqueChange );
+			menu.addEventListener( Event.CHANGE, onMenuChange );
 			
 			_homeCtrl = new HomeCtrl();
 			_homeCtrl.addEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelect );
 			_homeCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
 			
 			_projectsCtrl = new ProjectsCtrl();
-			_projectsCtrl.addEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelect );
 			_projectsCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
 			
 			_detailsCtrl = new DetailsCtrl();
-			_detailsCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
 			
 			stage.addEventListener( Event.RESIZE, onResize );
 			onResize( null );
@@ -102,11 +100,11 @@ package main
 		
 		private function onProjectSelect(e:ProjectEvent):void 
 		{
-			Config.tempSection = formatText( e.section ) + "/" + e.index + "/";
-			onRubriqueChange( null );
+			//SWFAddress.setValue( e.section.substr( 0, 1 ).toUpperCase() + e.section.substr( 1 ).toLowerCase() + "/" + e.title + "/" + e.index );
+			_detailsCtrl.activate( e.section, e.index );
 		}
 		
-		private function onRubriqueChange(e:Event):void 
+		private function onMenuChange(e:Event):void 
 		{
 			switch( Config.currentSection )
 			{
@@ -114,78 +112,61 @@ package main
 				case Config.WORKS: _projectsCtrl.deactivate(); break;
 				case Config.LAB: _projectsCtrl.deactivate(); break;
 				case Config.ABOUT: ; break;
-				case Config.DETAILS: _detailsCtrl.deactivate(); break;
 			}
 		}
 		
 		private function onSwitchSectionComplete(e:Event):void 
 		{
-			trace( Config.tempSection );
-			SWFAddress.setValue( Config.tempSection );
+			SWFAddress.setValue( Config.tempSection.substr( 0, 1 ).toUpperCase() + Config.tempSection.substr( 1 ).toLowerCase() );
 		}
 		
 		private function onSWFAdressMenuItemSelect(e:ContextMenuEvent):void 
 		{
-			Config.tempSection = formatText( e.currentTarget.caption );
-			onRubriqueChange( null );
+			Config.tempSection = e.currentTarget.caption.substr( 0, 1 ).toUpperCase() + e.currentTarget.caption.substr( 1 ).toLowerCase();
+			onMenuChange( null );
 		}
 		
 		private function onSWFAdressChange(e:SWFAddressEvent):void 
 		{
-			var a:Array = [];
-			var n:int = e.pathNames.length;
-			for ( var i:int; i < n; ++i )
-				a.push( e.pathNames[ i ].toLowerCase() );
+			trace( e.value );
+			var currentValue:String = e.value.substr( 1 ).toLowerCase();
+			if ( currentValue == "" ) 
+				SWFAddress.setValue( Config.HOME.substr( 0, 1 ).toUpperCase() + Config.HOME.substr( 1 ).toLowerCase() );
 			
-			n = a.length;
-			if ( !n || n > 2 )
+			//var a:Array = [];
+			//var m:int = e.pathNames.length;
+			//for ( var j:int; j < m; ++j )
+			//{
+				//a.push( e.pathNames[ j ] );
+				//trace( e.pathNames[ j ] );
+			//}
+			//
+			//trace( a.length );
+			//trace( a[ 0 ] );
+				
+				
+			if ( currentValue == Config.currentSection || !isRubrique( currentValue ) )
 			{
-				SWFAddress.setValue( formatText( Config.HOME ) + "/" );				
+				if ( !isRubrique( currentValue ) && Config.currentSection != Config.HOME )
+					SWFAddress.setValue( Config.HOME.substr( 0, 1 ).toUpperCase() + Config.HOME.substr( 1 ).toLowerCase() );
+				
 				return;
-			}			
-			else if ( n == 1 )
-			{
-				if ( a[ 0 ] == Config.currentSection || !isRubrique( a[ 0 ] ) ) 
-				{
-					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
-					return;
-				}
-				
-				Config.currentSection = a[ 0 ];
-			}
-			else if ( n == 2 )
-			{
-				if ( !isRubrique( a[ 0 ] ) ) 
-				{
-					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
-					return;
-				}
-				
-				var datas:Array = a[ 0 ] == Config.WORKS ? Config.worksDatas : Config.labDatas;
-				if ( a[ i ] < 0 || a[ i ] > datas.length ) 
-				{
-					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
-					return;
-				}
-				
-				Config.detailsSection = a[ 0 ];
-				Config.detailsId = a[ 1 ];
-				Config.currentSection = Config.DETAILS;
-				a.pop();
 			}
 			
+			Config.currentSection = currentValue.toLowerCase();
 			switchRubrique();
 			
 			_title = "Floz - Flash Developer";
 			
-			n = a.length;
+			var n:int = e.pathNames.length;
 			if ( n > 0 ) _title += " - ";
-			for ( i = 0; i < n; ++i )
+			for ( var i:int; i < n; ++i )
 			{
-				_title += formatText( a[ i ] );
+				_title += e.pathNames[ i ].substr( 0, 1 ).toUpperCase() + e.pathNames[ i ].substr( 1 ).toLowerCase();
 				if ( i < int( n - 1 ) ) _title += " - ";
 			}
 			SWFAddress.setTitle( _title );
+			trace( "_title : " + _title );
 		}
 		
 		private function onResize(e:Event):void 
@@ -209,7 +190,7 @@ package main
 			var ctMenu:ContextMenu = new ContextMenu();
 			ctMenu.hideBuiltInItems();			
 			
-			var n:int = Config.RUBRIQUES.length - 1;
+			var n:int = Config.RUBRIQUES.length;
 			for ( var i:int; i < n; ++i )
 				ctMenu.customItems.push( new ContextMenuItem( Config.RUBRIQUES[ i ].toUpperCase() ) );
 			
@@ -226,7 +207,7 @@ package main
 		{
 			var i:int = Config.RUBRIQUES.length;
 			while ( --i > -1 )
-				if ( Config.RUBRIQUES[ i ] == rubriqueName.toLowerCase() || Config.DETAILS == rubriqueName.toLowerCase() ) return true;
+				if ( Config.RUBRIQUES[ i ] == rubriqueName.toLowerCase() ) return true;
 			
 			return false;
 		}
@@ -241,13 +222,7 @@ package main
 				case Config.WORKS: title.update( "Projects List" ); _projectsCtrl.activate(); break;
 				case Config.LAB: title.update( "Laboratory projects List" ); _projectsCtrl.activate(); break;
 				case Config.ABOUT: title.update( "More informations" ); break;
-				case Config.DETAILS: title.update( "TEMPTEMPTEMP" ); _detailsCtrl.activate( Config.detailsSection, Config.detailsId ); break;
 			}
-		}
-		
-		private function formatText( txt:String ):String
-		{
-			return txt.substr( 0, 1 ).toUpperCase() + txt.substr( 1 ).toLowerCase();
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

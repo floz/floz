@@ -74,11 +74,8 @@ package fr.minuit4.tools.diaporama.types
 			TweenLite.killTweensOf( _diaporamaCnt );
 			
 			_images = null;
-			_imgHolder.dispose();
 			_imgHolder = null;
-			_imgs.bitmapData.dispose();
 			_imgs = null;
-			_fadingImg.dispose();
 			_fadingImg = null;
 		}
 		

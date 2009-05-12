@@ -60,7 +60,7 @@ package main.details
 			panel.removeEventListener( Panel.INDEX_CLICK, onIndexClick );
 			
 			stopDiaporamaMode();
-			//_diaporama.clearImages();
+			_diaporama.clearImages();
 			_diaporama.removeEventListener( Diaporama.SWITCH_COMPLETE, onSwitchComplete );
 			_diaporama = null;
 			
@@ -187,6 +187,11 @@ package main.details
 			}
 		}
 		
+		private function destroy():void
+		{
+			dispatchEvent( new Event( Event.COMPLETE ) );
+		}
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function linkToProject( project:Object ):void
@@ -212,6 +217,11 @@ package main.details
 		public function showPanel():void
 		{
 			TweenLite.to( panel, .3, { y: 359, ease: Quad.easeOut } );
+		}
+		
+		public function hidePanel():void
+		{
+			TweenLite.to( panel, .3, { y: int( 359 - 40 ), ease: Quad.easeOut, onComplete: destroy } );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

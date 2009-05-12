@@ -6,6 +6,7 @@
  */
 package main.details 
 {
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import main.Config;
 	
@@ -34,6 +35,12 @@ package main.details
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
+		private function onComplete(e:Event):void 
+		{
+			Config.cntMain.removeChild( _detailContainer );
+			_dispatcher.dispatchEvent( new Event( Event.COMPLETE ) );
+		}
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function activate( section:String, index:int ):void
@@ -47,12 +54,18 @@ package main.details
 			
 			_detailContainer = new DetailsContainer();
 			_detailContainer.linkToProject( project );
+			_detailContainer.addEventListener( Event.COMPLETE, onComplete );
 			Config.cntMain.addChild( _detailContainer );
 		}
 		
 		public function deactivate():void
 		{
-			
+			_detailContainer.kill();
+		}
+		
+		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
+		{
+			_dispatcher.addEventListener( type, listener, useCapture, priority, useWeakReference );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
