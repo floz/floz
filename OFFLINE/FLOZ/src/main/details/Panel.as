@@ -76,6 +76,22 @@ package main.details
 		private function onRemovedFromStage(e:Event):void 
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			
+			a = [ btFirst, btPrev, btNext, btLast, btSlideshow ];
+			i = a.length;
+			while ( --i > -1 )
+			{
+				a[ i ].removeEventListener( MouseEvent.MOUSE_OVER, onOver );
+				a[ i ].removeEventListener( MouseEvent.MOUSE_OUT, onOut );
+				a[ i ].removeEventListener( MouseEvent.CLICK, onClick );
+			}
+			
+			TweenLite.killTweensOf( cnt )
+			
+			var a:Array = [ first, prev, next, last, slideshow ];
+			var i:int = a.length;
+			while ( --i > -1 )
+				TweenLite.killTweensOf( a[ i ] );
 		}
 		
 		private function onAddedToStage(e:Event):void 

@@ -14,6 +14,7 @@ package main.details
 	import fr.minuit4.tools.diaporama.Diaporama;
 	import fr.minuit4.tools.diaporama.types.SlidingDiaporama;
 	import gs.easing.Cubic;
+	import gs.easing.Quad;
 	import gs.TweenLite;
 	import main.Config;
 	
@@ -50,6 +51,20 @@ package main.details
 		private function onRemovedFromStage(e:Event):void 
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			
+			panel.removeEventListener( Panel.FIRST, onFirst );
+			panel.removeEventListener( Panel.PREV, onPrev );
+			panel.removeEventListener( Panel.NEXT, onNext );
+			panel.removeEventListener( Panel.LAST, onLast );
+			panel.removeEventListener( Panel.PLAYSLIDESHOW, onPlaySlideShow );
+			panel.removeEventListener( Panel.INDEX_CLICK, onIndexClick );
+			
+			stopDiaporamaMode();
+			//_diaporama.clearImages();
+			_diaporama.removeEventListener( Diaporama.SWITCH_COMPLETE, onSwitchComplete );
+			_diaporama = null;
+			
+			TweenLite.killTweensOf( shadow );
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -63,6 +78,8 @@ package main.details
 			panel.addEventListener( Panel.LAST, onLast );
 			panel.addEventListener( Panel.PLAYSLIDESHOW, onPlaySlideShow );
 			panel.addEventListener( Panel.INDEX_CLICK, onIndexClick );
+			
+			panel.y = 359 - 40;
 			
 			strk.filters = [ Config.glowFilter ];
 		}
@@ -140,6 +157,9 @@ package main.details
 				switchBtSlideShowState();
 				
 				TweenLite.to( shadow, .3, { alpha: 0, ease: Cubic.easeOut } );
+				
+				_massLoader.removeEventListener( Event.COMPLETE, onLoadComplete );
+				_massLoader.destroy();
 			}
 		}
 		
@@ -187,6 +207,11 @@ package main.details
 			_massLoader.addEventListener( Event.COMPLETE, onLoadComplete );
 			_massLoader.addItems( a );
 			_massLoader.loadNext();
+		}
+		
+		public function showPanel():void
+		{
+			TweenLite.to( panel, .3, { y: 359, ease: Quad.easeOut } );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

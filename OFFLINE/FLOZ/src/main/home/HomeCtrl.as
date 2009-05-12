@@ -65,14 +65,16 @@ package main.home
 		private function onProjectSelect(e:ProjectEvent):void 
 		{
 			var projectEvent:ProjectEvent = new ProjectEvent( ProjectEvent.PROJECT_SELECT );
+			projectEvent.index = e.index;
 			projectEvent.section = e.section;
-			projectEvent.title = e.title;
 			
 			_dispatcher.dispatchEvent( projectEvent );
 		}
 		
 		private function onLPCComplete(e:Event):void 
 		{
+			e.currentTarget.removeEventListener( Event.COMPLETE, onLPCComplete );
+			
 			_cntProjects.removeChild( e.currentTarget as DisplayObject );
 			if ( !_cntProjects.numChildren ) 
 			{
@@ -129,7 +131,7 @@ package main.home
 			for ( var i:int; i < n; ++i )
 			{
 				lpc = new LastProjectContainer();
-				lpc.lastProject.linkToProject( a[ i ].title, a[ i ].preview, a[ i ].section );
+				lpc.lastProject.linkToProject( a[ i ].title, a[ i ].preview, a[ i ].section, a[ i ].index );
 				lpc.x = px;
 				px += 322;
 				lpc.addEventListener( LastProject.OVER, onLastProjectOver, true );
@@ -144,9 +146,16 @@ package main.home
 		{			
 			_killing = true;
 			
+			var lpc:LastProjectContainer;
 			var i:int = _cntProjects.numChildren;
 			while ( --i > -1 )
-				LastProjectContainer( _cntProjects.getChildAt( i ) ).kill( i );
+			{
+				lpc = _cntProjects.getChildAt( i ) as LastProjectContainer;
+				lpc.removeEventListener( LastProject.OVER, onLastProjectOver, true );
+				lpc.removeEventListener( LastProject.OUT, onLastProjectOut, true );
+				lpc.removeEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelect, true );
+				lpc.kill( i );
+			}
 		}
 		
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void

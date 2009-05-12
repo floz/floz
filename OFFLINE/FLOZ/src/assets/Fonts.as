@@ -37,6 +37,7 @@ package assets
 			
 			Font.registerFont( assetsFonts.futuraLight );
 			Font.registerFont( assetsFonts.futuraMedium );
+			Font.registerFont( assetsFonts.calibri );
 			
 			super.setItemLoaded();			
 		}
@@ -55,10 +56,12 @@ class AssetsFonts
 {
 	public var futuraLight:Class;
 	public var futuraMedium:Class;
+	public var calibri:Class;
 	
 	public function AssetsFonts( domain:ApplicationDomain )
 	{
 		futuraLight = domain.getDefinition( "FLight" ) as Class;
 		futuraMedium = domain.getDefinition( "FMedium" ) as Class;
+		calibri = domain.getDefinition( "FCalibri" ) as Class;
 	}
 }

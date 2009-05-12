@@ -36,27 +36,18 @@ package main.details
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function activate( section:String, projectTitle:String ):void
+		public function activate( section:String, index:int ):void
 		{
 			_datas = section == Config.WORKS ? Config.worksDatas : Config.labDatas;
 			
-			var project:Object;
-			var i:int = _datas.length;
-			while ( --i > -1 )
-			{
-				if ( _datas[ i ].title == projectTitle )
-				{
-					project = _datas[ i ];
-					break;
-				}
-			}			
+			var project:Object = _datas[ index ];	
 			if ( !project ) throw new Error( "Aucun projet associé !" );
 			
 			while ( Config.cntMain.numChildren ) Config.cntMain.removeChildAt( 0 );
 			
 			_detailContainer = new DetailsContainer();
-			Config.cntMain.addChild( _detailContainer );
 			_detailContainer.linkToProject( project );
+			Config.cntMain.addChild( _detailContainer );
 		}
 		
 		public function deactivate():void

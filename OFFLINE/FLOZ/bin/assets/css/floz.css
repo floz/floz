@@ -55,3 +55,25 @@
 	font-size:12;
 	color:#a1c269;
 }
+
+.basic_text
+{
+	font-family:Calibri;
+	font-size:12;
+	color:#ffffff;
+}
+
+.basic_url
+{
+	font-family:Calibri;
+	font-size:12;
+	color:#21d799;
+	font-style:bold;
+}
+
+.basic_title_text
+{
+	font-family:Futura Std Medium;
+	font-size:14;
+	color:#b4c59c;
+}

@@ -100,7 +100,8 @@ package main
 		
 		private function onProjectSelect(e:ProjectEvent):void 
 		{
-			_detailsCtrl.activate( e.section, e.title );
+			SWFAddress.setValue( e.section.substr( 0, 1 ).toUpperCase() + e.section.substr( 1 ).toLowerCase() + "/" + e.title + "/" + e.index );
+			//_detailsCtrl.activate( e.section, e.index );
 		}
 		
 		private function onMenuChange(e:Event):void 
@@ -132,6 +133,18 @@ package main
 			if ( currentValue == "" ) 
 				SWFAddress.setValue( Config.HOME.substr( 0, 1 ).toUpperCase() + Config.HOME.substr( 1 ).toLowerCase() );
 			
+			//var a:Array = [];
+			//var m:int = e.pathNames.length;
+			//for ( var j:int; j < m; ++j )
+			//{
+				//a.push( e.pathNames[ j ] );
+				//trace( e.pathNames[ j ] );
+			//}
+			//
+			//trace( a.length );
+			//trace( a[ 0 ] );
+				
+				
 			if ( currentValue == Config.currentSection || !isRubrique( currentValue ) )
 			{
 				if ( !isRubrique( currentValue ) && Config.currentSection != Config.HOME )
@@ -153,6 +166,7 @@ package main
 				if ( i < int( n - 1 ) ) _title += " - ";
 			}
 			SWFAddress.setTitle( _title );
+			trace( "_title : " + _title );
 		}
 		
 		private function onResize(e:Event):void 
