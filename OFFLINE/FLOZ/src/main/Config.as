@@ -22,6 +22,7 @@ package main
 		public static const WORKS:String = "works";
 		public static const LAB:String = "lab";
 		public static const ABOUT:String = "about";
+		public static const DETAILS:String = "details";
 		public static const RUBRIQUES:Array = [ Config.HOME, Config.WORKS, Config.LAB, Config.ABOUT ];
 		
 		// Les informations des différentes rubriques
@@ -43,6 +44,8 @@ package main
 		
 		public static var tempSection:String;
 		public static var currentSection:String;
+		public static var detailsSection:String;
+		public static var detailsId:int;
 		
 		public static const glowFilter:GlowFilter = new GlowFilter( 0x142927, .75, 4, 4, 1.8, 3 );
 	}

@@ -22,6 +22,7 @@ package main.projects
 	import gs.TweenLite;
 	import main.Borders;
 	import main.Config;
+	import main.ProjectEvent;
 	
 	public class Project extends Sprite
 	{
@@ -41,6 +42,9 @@ package main.projects
 		
 		private var _loading:Boolean;
 		private var _imageHolder:Bitmap;
+		private var _title:String;
+		private var _section:String;
+		private var _index:int;
 		
 		private var _enable:Boolean;
 		
@@ -119,7 +123,13 @@ package main.projects
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			trace( "click" );
+			if ( !_enable ) return;
+			
+			var projectEvent:ProjectEvent = new ProjectEvent( ProjectEvent.PROJECT_SELECT );
+			projectEvent.index = this._index;
+			projectEvent.section = this._section;
+			
+			dispatchEvent( projectEvent );
 		}
 		
 		private function onLoadComplete(e:Event):void 
@@ -144,9 +154,13 @@ package main.projects
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function linkToProject( name:String, img:String, section:String ):void
+		public function linkToProject( name:String, img:String, section:String, index:int ):void
 		{
 			_loading = true;
+			
+			this._title = name;
+			this._section = section;
+			this._index = index;
 			
 			var textField:TextField = new TextField();
 			textField.embedFonts = true;
