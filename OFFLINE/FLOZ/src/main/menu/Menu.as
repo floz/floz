@@ -46,11 +46,17 @@ package main.menu
 		
 		private function onOver(e:MouseEvent):void 
 		{
+			if ( Config.currentSection == Config.DETAILS && e.currentTarget.getSectionName() == Config.detailsSection )
+				return;
+			
 			e.currentTarget.over();
 		}
 		
 		private function onOut(e:MouseEvent):void 
 		{
+			if ( Config.currentSection == Config.DETAILS && e.currentTarget.getSectionName() == Config.detailsSection )
+				return;
+			
 			e.currentTarget.out();
 		}
 		
@@ -82,8 +88,16 @@ package main.menu
 			while ( --i > -1 )
 			{
 				mi = getChildAt( i ) as MenuItem;
-				if ( mi.getSectionName() == Config.currentSection ) mi.select();
-				else mi.deselect();
+				if ( Config.currentSection == Config.DETAILS )
+				{
+					if ( mi.getSectionName() == Config.detailsSection ) mi.select();
+					else mi.deselect();
+				}
+				else
+				{
+					if ( mi.getSectionName() == Config.currentSection ) mi.select();
+					else mi.deselect();
+				}
 			}
 		}
 		

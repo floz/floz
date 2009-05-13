@@ -94,11 +94,13 @@ package main
 			var list:Array = [ Config.WORKS, Config.LAB ];
 			const n:int = list.length;
 			
+			var j:int;
+			var m:int;
+			
 			for ( var i:int; i < n; ++i )
 			{
 				for each( x in xml[ list[ i ] ].item )
 				{
-					o.index = Config[ list[ i ] + "Datas" ].length;
 					o.section = list[ i ];
 					o.title = x.@title;
 					o.preview = x.@preview;
@@ -119,6 +121,13 @@ package main
 					o = { };
 				}
 				Config[ list[ i ] + "Datas" ].sortOn( "pubdate", Array.DESCENDING | Array.NUMERIC )
+				
+				a = Config[ list[ i ] + "Datas" ];
+				m = a.length;
+				for ( j = 0; j < m; ++j )
+					a[ j ].index = j;
+				
+				a = [];
 			}
 			
 			Config.path_img = xml.path.@img;

@@ -109,7 +109,6 @@ package main
 		private function onProjectSelect(e:ProjectEvent):void 
 		{
 			Config.tempSection = formatText( e.section ) + "/" + e.index + "/";
-			trace( "e.index : " + e.index );
 			onRubriqueChange( null );
 		}
 		
@@ -170,7 +169,7 @@ package main
 				}
 				
 				var datas:Array = a[ 0 ] == Config.WORKS ? Config.worksDatas : Config.labDatas;
-				if ( a[ i ] < 0 || a[ i ] >= datas.length ) 
+				if ( a[ 1 ] < 0 || a[ 1 ] >= datas.length ) 
 				{
 					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
 					return;
@@ -179,6 +178,7 @@ package main
 				Config.detailsSection = a[ 0 ];
 				Config.detailsId = a[ 1 ];
 				Config.currentSection = Config.DETAILS;
+				Config.detailsTitle = a[ 0 ].toLowerCase() == Config.WORKS ? Config.worksDatas[ a[ 1 ] ].title : Config.labDatas[ a[ 1 ] ].title;
 				a.pop();
 			}
 			
@@ -249,7 +249,7 @@ package main
 				case Config.WORKS: title.update( "Projects List" ); _projectsCtrl.activate(); break;
 				case Config.LAB: title.update( "Laboratory projects List" ); _projectsCtrl.activate(); break;
 				case Config.ABOUT: title.update( "More informations" ); break;
-				case Config.DETAILS: _detailsCtrl.activate( Config.detailsSection, Config.detailsId ); break;
+				case Config.DETAILS: title.update( Config.detailsTitle ); _detailsCtrl.activate( Config.detailsSection, Config.detailsId ); break;
 			}
 		}
 		
