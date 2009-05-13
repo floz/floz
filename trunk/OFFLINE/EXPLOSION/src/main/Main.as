@@ -9,6 +9,8 @@ package main
 	import flash.display.Bitmap;
 	import flash.display.PixelSnapping;
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
@@ -31,7 +33,10 @@ package main
 		
 		public function Main() 
 		{
-			v = new Bitmap( new VignetteBmp( 0, 0 ), PixelSnapping.AUTO, true );
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP;
+			
+			v = new Bitmap( new Floz( 0, 0 ), PixelSnapping.AUTO, true );
 			v.x = stage.stageWidth * .5 - v.width * .5;
 			v.y = stage.stageHeight * .5 - v.height * .5 + 10;
 			cnt.addChild( v );

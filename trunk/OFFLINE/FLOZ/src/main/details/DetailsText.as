@@ -81,7 +81,7 @@ package main.details
 			txtClient.htmlText = "<span class='basic_text'>" + project.client + "</span>";
 			txtTechno.htmlText = "<span class='basic_text'>" + project.technos + "</span>";
 			txtDesc.htmlText = "<span class='basic_text'>" + project.desc + "</span>";
-			txtUrl.htmlText = "<a href='" + project.url + "' class='basic_url'>" + project.url + "</a>";
+			txtUrl.htmlText = "<a href='" + project.url + "' class='basic_url' target='_blank'>" + project.url + "</a>";
 			
 			var filter:GlowFilter = Config.glowFilter.clone() as GlowFilter;
 			filter.strength = 3.

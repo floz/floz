@@ -275,6 +275,8 @@ package main.details
 		
 		public function setIndexState( indexToSelect:int ):void
 		{
+			if ( !cnt.numChildren ) return;
+			
 			var index:Index;			
 			if ( _indexSelect >= 0 )
 			{

@@ -130,6 +130,10 @@ package main
 				a = [];
 			}
 			
+			Config.aboutDatas.presentation = xml.about.presentation;
+			Config.aboutDatas.skills = { flash : xml.about.skills.flash, graphic: xml.about.skills.graphic };
+			Config.aboutDatas.softwares = { flash: xml.about.softwares.@flash, graphic: xml.about.softwares.@graphic };
+			
 			Config.path_img = xml.path.@img;
 			Config.path_works = xml.path.@works;
 			Config.path_lab = xml.path.@lab;

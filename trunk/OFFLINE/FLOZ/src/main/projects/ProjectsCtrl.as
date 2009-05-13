@@ -178,7 +178,10 @@ package main.projects
 			Config.cntMain.addChild( _cntProjects );
 			
 			const n:int = _datasProjects.length;
-			_idxMax = int( n / 6 );
+			var t:Number = n / 6;
+			_idxMax = n / 6;
+			_idxMax = t > _idxMax ? _idxMax + 1 : _idxMax;
+			--_idxMax;
 			
 			_currentIdx = 0;
 			_killing = false;
