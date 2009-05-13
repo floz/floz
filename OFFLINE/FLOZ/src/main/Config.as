@@ -28,7 +28,7 @@ package main
 		// Les informations des différentes rubriques
 		public static const worksDatas:Array = [];
 		public static const labDatas:Array = [];
-		public static const aboutDatas:Array = [];
+		public static const aboutDatas:Object = {};
 		
 		// Les chemins d'accès aux fichiers nécessaires
 		public static var path_swf:String;

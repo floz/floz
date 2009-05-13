@@ -218,7 +218,6 @@ package main.details
 			for ( var i:int; i < n; ++i )
 				a.push( Config.path_img + path_img + project.diaporama[ i ] );
 			
-			
 			if ( _massLoader )
 			{
 				_massLoader.clean( true );

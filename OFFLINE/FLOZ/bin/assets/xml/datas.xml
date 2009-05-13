@@ -32,9 +32,9 @@
 	</item>
 	<item title="M6 Rentrée" preview="m6rentree.jpg" pubdate="1220220000000">
 		<client><![CDATA[M6]]></client>
-		<job>Flash developer></job>
+		<job>Flash developer</job>
 		<technos>Flash, AS3, Papervision3D, XML</technos>
-		<url>http://www.fredbaudet-editor.com</url>
+		<url>http://www.groupem6.fr/rentree2008/</url>
 		<desc><![CDATA[To have my diploma (DUT SRC, BAC+2), I had to find a job for 3 months in a company. This one was Havas Entertainment. During this time, I worked on a project for M6. I had to build a coverflow/caroussel which is now their show's portfolio. Date: June 2008 ]]></desc>
 		<diaporama>
 			<image name="m6rentree1.jpg" />
@@ -112,4 +112,12 @@
 		<desc><![CDATA[During the development of this portfolio, I had an idea : make the transition between two section by disintegration of elements. And it worked ! <br />Unfortunately, the effect is too greedy in performances. Anyway, I would like to use it in another project with small images. It could be fun. <br />Date: May 2009]]></desc>
 	</item>
 </lab>
+<about>
+	<presentation><![CDATA[Passionate by Flash development for now two years, i'm currently following the HETIC formation, after being graduated with a DUT Services et Réseaux de Communication. These two schools both gave me a sample group of skills bound to the domains of the New Technologies of the Information and the Communication. <br />I spent 5 months at Havas Entertainement, a web agency, at the status of Flash Developer.]]></presentation>
+	<skills>
+		<flash><![CDATA[AS1 / AS2 / AS3 Programming <br />Flash Remoting / XML / etc. <br />PV3D / Away3D / PureMVC / etc. <br />Flex & Air (Basics)]]></flash>
+		<graphic><![CDATA[Identification <br />Web layouts]]></graphic>
+	</skills>
+	<softwares flash="Flash, Flex Builder, Flash Develop" graphic="Photoshop, Illustrator, Pencils & Hands" />
+</about>
 </data>
