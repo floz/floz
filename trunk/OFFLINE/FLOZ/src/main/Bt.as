@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package main.projects 
+package main 
 {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -30,6 +30,8 @@ package main.projects
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _textValue:String;
+		
+		private var _enable:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -83,16 +85,19 @@ package main.projects
 		
 		private function onOver(e:MouseEvent):void 
 		{
+			if ( !_enable ) return;
 			TweenLite.to( cntContent, .2, { y: -strk.height + 11, ease: Cubic.easeOut } );		
 		}
 		
 		private function onOut(e:MouseEvent):void 
 		{
+			if ( !_enable ) return;
 			TweenLite.to( cntContent, .2, { y: 11, ease: Cubic.easeOut } );
 		}
 		
 		private function onClick(e:MouseEvent):void 
 		{
+			if ( !_enable ) return;
 			dispatchEvent( new Event( _textValue == "PREV" ? Bt.PREV : Bt.NEXT ) ); 
 		}
 		
@@ -101,6 +106,14 @@ package main.projects
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
+		
+		public function set enable(value:Boolean):void 
+		{
+			_enable = value;
+			
+			this.mouseChildren =
+			this.mouseEnabled = value;
+		}
 		
 	}
 	

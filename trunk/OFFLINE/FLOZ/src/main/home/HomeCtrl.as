@@ -93,7 +93,7 @@ package main.home
 			
 			while ( a.length < 3 )
 			{
-				if ( aw[ 0 ].pubdate < al[ 0 ] )
+				if ( aw[ 0 ].pubdate < al[ 0 ].pubdate )
 					a.push( al.shift() );
 				else
 					a.push( aw.shift() );

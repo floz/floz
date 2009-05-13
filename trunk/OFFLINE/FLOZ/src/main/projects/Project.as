@@ -198,7 +198,7 @@ package main.projects
 			TweenLite.killTweensOf( cntTitle );
 			TweenLite.killTweensOf( strkTitle );
 			
-			var d:Number = delay * .1;
+			var d:Number = delay * .05;
 			TweenLite.to( strkTitle, .2, { y: cntContent.height, ease: Quad.easeOut, delay: d } );
 			TweenLite.to( cntTitle, .2, { y: cntContent.height, ease: Quad.easeOut, delay: d, onComplete: destroy } );
 			

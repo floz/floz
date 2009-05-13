@@ -65,12 +65,13 @@ package main
 		
 		public function update( subTitle:String ):void
 		{	
-			//_title.embedFonts = true;
-			//_title.styleSheet = Config.styleSheet;
-			//_subTitle.embedFonts = true;
-			//_subTitle.styleSheet = Config.styleSheet;
+			_title.embedFonts = true;
+			_title.styleSheet = Config.styleSheet;
+			_subTitle.embedFonts = true;
+			_subTitle.styleSheet = Config.styleSheet;
 			
-			_title.htmlText = "<span class='title_rubrique'>" + Config.currentSection.toUpperCase() + "</span>";
+			var value:String = Config.currentSection == Config.DETAILS ? Config.detailsSection : Config.currentSection;
+			_title.htmlText = "<span class='title_rubrique'>" + value.toUpperCase() + "</span>";
 			_subTitle.htmlText = "<span class='lastprojects_preview_title'>" + subTitle.toUpperCase() + "</span>";
 			
 			_title.x = - _title.textWidth;

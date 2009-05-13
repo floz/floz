@@ -64,7 +64,11 @@ package main.details
 			_diaporama.removeEventListener( Diaporama.SWITCH_COMPLETE, onSwitchComplete );
 			_diaporama = null;
 			
+			_massLoader.removeEventListener( Event.COMPLETE, onLoadComplete );
+			_massLoader.destroy();
+			
 			TweenLite.killTweensOf( shadow );
+			TweenLite.killTweensOf( panel );
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -148,6 +152,8 @@ package main.details
 			{
 				_ready = true;
 				
+				_diaporama.stopDiaporamaMode();
+				_diaporama.clearImages();
 				_diaporama.addImages( _massLoader.getItemsLoaded() );
 				_diaporama.startDiaporamaMode( 4000 );
 				
@@ -157,9 +163,6 @@ package main.details
 				switchBtSlideShowState();
 				
 				TweenLite.to( shadow, .3, { alpha: 0, ease: Cubic.easeOut } );
-				
-				_massLoader.removeEventListener( Event.COMPLETE, onLoadComplete );
-				_massLoader.destroy();
 			}
 		}
 		
@@ -198,9 +201,16 @@ package main.details
 		{
 			this._project = project;
 			
-			_diaporama = new SlidingDiaporama( strk.width, strk.height, 0x000000, .4 );
-			_diaporama.addEventListener( Diaporama.SWITCH_COMPLETE, onSwitchComplete );
-			cnt.addChild( _diaporama );
+			TweenLite.to( shadow, .3, { alpha: 1, ease: Cubic.easeOut } );
+			
+			panel.resetIndex();
+			
+			if ( !_diaporama )
+			{
+				_diaporama = new SlidingDiaporama( strk.width, strk.height, 0x000000, .4 );
+				_diaporama.addEventListener( Diaporama.SWITCH_COMPLETE, onSwitchComplete );
+				cnt.addChild( _diaporama );
+			}
 			
 			var path_img:String = project.section.toLowerCase() == Config.WORKS.toLowerCase() ? Config.path_works : Config.path_lab
 			var a:Array = [];
@@ -208,8 +218,16 @@ package main.details
 			for ( var i:int; i < n; ++i )
 				a.push( Config.path_img + path_img + project.diaporama[ i ] );
 			
+			
+			if ( _massLoader )
+			{
+				_massLoader.clean( true );
+				_massLoader.destroy();
+				_massLoader.removeEventListener( Event.COMPLETE, onLoadComplete );
+				_massLoader = null;
+			}
 			_massLoader = new MassLoader();
-			_massLoader.addEventListener( Event.COMPLETE, onLoadComplete );
+			_massLoader.addEventListener( Event.COMPLETE, onLoadComplete );			
 			_massLoader.addItems( a );
 			_massLoader.loadNext();
 		}
