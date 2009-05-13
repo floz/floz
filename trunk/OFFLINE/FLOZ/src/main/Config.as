@@ -46,6 +46,7 @@ package main
 		public static var currentSection:String;
 		public static var detailsSection:String;
 		public static var detailsId:int;
+		public static var detailsTitle:String;
 		
 		public static const glowFilter:GlowFilter = new GlowFilter( 0x142927, .75, 4, 4, 1.8, 3 );
 	}
