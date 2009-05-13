@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package main.projects 
+package main 
 {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -23,6 +23,8 @@ package main.projects
 		
 		public var msk1:Sprite;
 		public var msk2:Sprite;
+		public var btPrev:Bt;
+		public var btNext:Bt;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -83,10 +85,34 @@ package main.projects
 			TweenLite.to( msk2, .2, { y: 50, ease: Cubic.easeOut } );
 		}
 		
+		public function activateNext():void
+		{
+			btNext.enable = true;
+			TweenLite.to( btNext, .2, { alpha: 1, ease: Cubic.easeOut } );
+		}
+		
+		public function deactivateNext():void
+		{
+			btNext.enable = false;
+			TweenLite.to( btNext, .2, { alpha: .5, ease: Cubic.easeOut } );
+		}
+		
+		public function activatePrev():void
+		{
+			btPrev.enable = true;
+			TweenLite.to( btPrev, .2, { alpha: 1, ease: Cubic.easeOut } );
+		}
+		
+		public function deactivatePrev():void
+		{
+			btPrev.enable = false;
+			TweenLite.to( btPrev, .2, { alpha: .5, ease: Cubic.easeOut } );
+		}
+		
 		public function kill():void
 		{
 			TweenLite.to( msk1, .4, { y: 50, ease: Cubic.easeOut } );
-			TweenLite.to( msk2, .4, { y: 50, ease: Cubic.easeOut, delay: .1, onComplete: destroy } );
+			TweenLite.to( msk2, .4, { y: 50, ease: Cubic.easeOut, onComplete: destroy } );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

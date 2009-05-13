@@ -49,7 +49,7 @@ package main.projects
 			_enable = true;
 			
 			msk.y = -msk.height;
-			TweenLite.to( msk, .4, { y: 0, ease: Cubic.easeIn, delay: parent.numChildren * .1, onComplete: projectInit } );
+			TweenLite.to( msk, .4, { y: 0, ease: Cubic.easeIn, delay: parent.numChildren * .05, onComplete: projectInit } );
 			
 			project.addEventListener( Event.COMPLETE, onProjectDestroy );
 			

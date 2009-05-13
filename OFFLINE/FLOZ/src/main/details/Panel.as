@@ -287,6 +287,11 @@ package main.details
 			index.txt.htmlText = "<span class='index_selected'>" + index.txt.text + "</span>";
 		}
 		
+		public function resetIndex():void
+		{
+			while ( cnt.numChildren ) cnt.removeChildAt( 0 );
+		}
+		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
 		public function get indexSelect():int { return _indexSelect; }

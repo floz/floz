@@ -87,6 +87,7 @@ package main
 			_projectsCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
 			
 			_detailsCtrl = new DetailsCtrl();
+			_detailsCtrl.addEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelectDirect );
 			_detailsCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
 			
 			stage.addEventListener( Event.RESIZE, onResize );
@@ -100,9 +101,15 @@ package main
 			}
 		}
 		
+		private function onProjectSelectDirect(e:ProjectEvent):void 
+		{
+			SWFAddress.setValue( formatText( e.section ) + "/" + e.index + "/" );
+		}
+		
 		private function onProjectSelect(e:ProjectEvent):void 
 		{
 			Config.tempSection = formatText( e.section ) + "/" + e.index + "/";
+			trace( "e.index : " + e.index );
 			onRubriqueChange( null );
 		}
 		
@@ -120,12 +127,13 @@ package main
 		
 		private function onSwitchSectionComplete(e:Event):void 
 		{
-			trace( Config.tempSection );
 			SWFAddress.setValue( Config.tempSection );
 		}
 		
 		private function onSWFAdressMenuItemSelect(e:ContextMenuEvent):void 
 		{
+			if ( e.currentTarget.caption.toLowerCase() == Config.currentSection ) return;
+			
 			Config.tempSection = formatText( e.currentTarget.caption );
 			onRubriqueChange( null );
 		}
@@ -145,7 +153,7 @@ package main
 			}			
 			else if ( n == 1 )
 			{
-				if ( a[ 0 ] == Config.currentSection || !isRubrique( a[ 0 ] ) ) 
+				if ( a[ 0 ] == Config.currentSection || !isRubrique( a[ 0 ] ) || a[ 0 ] == Config.DETAILS ) 
 				{
 					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
 					return;
@@ -162,7 +170,7 @@ package main
 				}
 				
 				var datas:Array = a[ 0 ] == Config.WORKS ? Config.worksDatas : Config.labDatas;
-				if ( a[ i ] < 0 || a[ i ] > datas.length ) 
+				if ( a[ i ] < 0 || a[ i ] >= datas.length ) 
 				{
 					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
 					return;
@@ -209,7 +217,7 @@ package main
 			var ctMenu:ContextMenu = new ContextMenu();
 			ctMenu.hideBuiltInItems();			
 			
-			var n:int = Config.RUBRIQUES.length - 1;
+			var n:int = Config.RUBRIQUES.length;
 			for ( var i:int; i < n; ++i )
 				ctMenu.customItems.push( new ContextMenuItem( Config.RUBRIQUES[ i ].toUpperCase() ) );
 			
@@ -237,11 +245,11 @@ package main
 			
 			switch( Config.currentSection )
 			{
-				case Config.HOME: title.update( "The last updates" ); _homeCtrl.activate(); break;
+				case Config.HOME: title.update( "Last updates" ); _homeCtrl.activate(); break;
 				case Config.WORKS: title.update( "Projects List" ); _projectsCtrl.activate(); break;
 				case Config.LAB: title.update( "Laboratory projects List" ); _projectsCtrl.activate(); break;
 				case Config.ABOUT: title.update( "More informations" ); break;
-				case Config.DETAILS: title.update( "TEMPTEMPTEMP" ); _detailsCtrl.activate( Config.detailsSection, Config.detailsId ); break;
+				case Config.DETAILS: _detailsCtrl.activate( Config.detailsSection, Config.detailsId ); break;
 			}
 		}
 		

@@ -163,6 +163,7 @@ package fr.minuit4.tools.diaporama
 			_images = [];
 			_currentId = 0;
 			while ( _diaporamaCnt.numChildren ) _diaporamaCnt.removeChildAt( 0 );
+			_diaporamaCnt.x = 0;
 		}
 		
 		/** Display the next image */

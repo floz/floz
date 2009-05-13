@@ -10,6 +10,8 @@ package main.projects
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import main.Bt;
+	import main.BtContainer;
 	import main.Config;
 	import main.ProjectEvent;
 	
@@ -121,17 +123,16 @@ package main.projects
 		
 		private function display():void
 		{
-			var idx:int;
-			var idxAct:int = _currentIdx * 6;
-			var n:int = _datasProjects.length - idxAct;
+			var i:int = _currentIdx * 6;
+			var tmp:int = int( i + 6 );
+			var n:int = tmp > _datasProjects.length ? i + ( 6 - int( tmp - _datasProjects.length ) ) : tmp;
 			
 			var pc:ProjectContainer = new ProjectContainer();
 			var px:Number = 0;			
-			for ( var i:int; i < n; ++i )
-			{				
-				idx = int( idxAct + i );
+			for ( ; i < n; ++i )
+			{
 				pc = new ProjectContainer();
-				pc.project.linkToProject( _datasProjects[ idx ].title, _datasProjects[ idx ].preview, _datasProjects[ idx ].section, _datasProjects[ idx ].index );
+				pc.project.linkToProject( _datasProjects[ i ].title, _datasProjects[ i ].preview, _datasProjects[ i ].section, _datasProjects[ i ].index );
 				pc.x = px;
 				px += 161;
 				pc.addEventListener( Project.OVER, onProjectOver, true );
@@ -146,11 +147,11 @@ package main.projects
 		{
 			removeProjects();
 			
-			if ( _currentIdx > 0 ) _btContainer.showPrev();
-			else _btContainer.hidePrev();
+			if ( _currentIdx > 0 ) _btContainer.activatePrev();
+			else _btContainer.deactivatePrev();
 			
-			if ( _currentIdx < _idxMax ) _btContainer.showNext();
-			else _btContainer.hideNext();
+			if ( _currentIdx < _idxMax ) _btContainer.activateNext();
+			else _btContainer.deactivateNext();
 		}
 		
 		private function removeProjects():void
@@ -179,16 +180,28 @@ package main.projects
 			const n:int = _datasProjects.length;
 			_idxMax = int( n / 6 );
 			
+			_currentIdx = 0;
+			_killing = false;
+			
 			display();
 			
 			_btContainer = new BtContainer();
 			_btContainer.y = 375;
+			_btContainer.msk2.x = 865;
+			_btContainer.btNext.x = 875;
 			_btContainer.addEventListener( Bt.PREV, onPrev, true );
 			_btContainer.addEventListener( Bt.NEXT, onNext, true );
 			_btContainer.addEventListener( Event.COMPLETE, onBtComplete );
 			Config.cntMain.addChild( _btContainer );
 			
-			if( _currentIdx < _idxMax ) _btContainer.showNext();
+			_btContainer.showPrev();
+			_btContainer.showNext();
+			
+			if ( _currentIdx > 0 ) _btContainer.activatePrev();
+			else _btContainer.deactivatePrev();
+			
+			if ( _currentIdx < _idxMax ) _btContainer.activateNext();
+			else _btContainer.deactivateNext();
 		}
 		
 		public function deactivate():void
