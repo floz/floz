@@ -63,7 +63,7 @@ package fr.minuit4.animation
 			
 			
 			this.smoothing = true;
-			if ( blur ) this.filters = [ new BlurFilter( 1, 1, 4 ) ];
+			if ( blur ) this.filters = [ new BlurFilter( 2, 2, 4 ) ];
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
@@ -71,8 +71,9 @@ package fr.minuit4.animation
 		
 		private function onRemovedFromStage(e:Event):void 
 		{
-			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			
+			_playing = false;
 			
 			if ( hasEventListener( Event.ENTER_FRAME ) ) removeEventListener( Event.ENTER_FRAME, onFrame );
 			
@@ -82,6 +83,7 @@ package fr.minuit4.animation
 		
 		private function onAddedToStage(e:Event):void 
 		{
+			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
 			particule = new Shape();
@@ -139,8 +141,8 @@ package fr.minuit4.animation
 		 */
 		public function get playing():Boolean { return _playing; }
 		
-		override public function get width():Number { return ( super.width ? super.width : ( distance * size ) ) };
-		override public function get height():Number { return ( super.height ? super.height : ( distance * size ) ) };		
+		//override public function get width():Number { return ( super.width ? super.width : ( distance * size ) ) };
+		//override public function get height():Number { return ( super.height ? super.height : ( distance * size ) ) };		
 	}
 	
 }

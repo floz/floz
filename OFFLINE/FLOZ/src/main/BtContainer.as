@@ -40,7 +40,9 @@ package main
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
 			TweenLite.killTweensOf( msk1 );
-			TweenLite.killTweensOf( msk2 );			
+			TweenLite.killTweensOf( msk2 );
+			TweenLite.killTweensOf( btNext );
+			TweenLite.killTweensOf( btPrev );
 		}
 		
 		private function onAddedToStage(e:Event):void 
