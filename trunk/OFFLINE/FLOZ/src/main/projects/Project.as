@@ -16,8 +16,10 @@ package main.projects
 	import flash.filters.GlowFilter;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
+	import fr.minuit4.animation.Loading;
 	import fr.minuit4.net.loaders.types.MovieLoader;
 	import fr.minuit4.utils.UImg;
+	import gs.easing.Cubic;
 	import gs.easing.Quad;
 	import gs.TweenLite;
 	import main.Borders;
@@ -40,7 +42,7 @@ package main.projects
 		
 		private var _borders:Borders;
 		
-		private var _loading:Boolean;
+		private var _loading:Loading;
 		private var _imageHolder:Bitmap;
 		private var _title:String;
 		private var _section:String;
@@ -59,6 +61,7 @@ package main.projects
 		public var cntBorders:Sprite;
 		public var msk:Sprite;
 		public var txt:TextField;
+		public var cntLoading:Sprite;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -80,19 +83,42 @@ package main.projects
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			_imageHolder.bitmapData.dispose();
-			_imageHolder.bitmapData = null;
-			_imageHolder = null;
+			if ( _movieLoader )
+			{
+				_movieLoader.removeEventListener( Event.COMPLETE, onLoadComplete );
+				_movieLoader.destroy();
+				_movieLoader = null;
+			}
 			
+			if ( _imageHolder )
+			{
+				_imageHolder.bitmapData.dispose();
+				_imageHolder = null;
+			}
+			
+			if ( _loading && _loading.playing ) _loading.stop();
+			
+			z.removeEventListener( MouseEvent.MOUSE_OVER, onOver );
+			z.removeEventListener( MouseEvent.MOUSE_OUT, onOut );
+			
+			TweenLite.killTweensOf( _loading );
 			TweenLite.killTweensOf( shadow );
 			TweenLite.killTweensOf( strkTitle );
 			TweenLite.killTweensOf( cntTitle );
+			
+			_loading = null;
 		}
 		
 		private function onAddedToStage(e:Event):void 
 		{
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			
+			_loading = new Loading();
+			cntLoading.addChild( _loading );
+			_loading.x = strkContent.width * .5 - _loading.width * .5 + 15;
+			_loading.y = strkContent.height * .5 - _loading.height * .5 + 15;
+			_loading.play();
 			
 			_borders = new Borders( strkContent.width, strkContent.height, 10, 10 );
 			cntBorders.addChild( _borders );
@@ -123,8 +149,6 @@ package main.projects
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			if ( !_enable ) return;
-			
 			var projectEvent:ProjectEvent = new ProjectEvent( ProjectEvent.PROJECT_SELECT );
 			projectEvent.index = this._index;
 			projectEvent.section = this._section;
@@ -134,7 +158,9 @@ package main.projects
 		
 		private function onLoadComplete(e:Event):void 
 		{
-			_loading = false;
+			_movieLoader.removeEventListener( Event.COMPLETE, onLoadComplete );
+			
+			TweenLite.to( _loading, .3, { alpha: 0, ease: Cubic.easeOut, onComplete: _loading.stop } );
 			
 			var bdTmp:BitmapData = _movieLoader.getItemLoaded().bitmapData.clone();
 			var bd:BitmapData = UImg.resize( bdTmp, bdTmp.width, strkContent.height - 1, false );
@@ -143,6 +169,8 @@ package main.projects
 			
 			_movieLoader.destroy();
 			_movieLoader = null;
+			
+			_enable = true;
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -155,9 +183,7 @@ package main.projects
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function linkToProject( name:String, img:String, section:String, index:int ):void
-		{
-			_loading = true;
-			
+		{			
 			this._title = name;
 			this._section = section;
 			this._index = index;
@@ -187,20 +213,17 @@ package main.projects
 			showBorders();
 			TweenLite.to( strkTitle, .2, { y: 309, ease: Quad.easeOut } );
 			TweenLite.to( cntTitle, .2, { y: 309, ease: Quad.easeOut } );
-			
-			_enable = true;
 		}
 		
 		public function kill( delay:int ):void
 		{
 			_enable = false;
 			
-			TweenLite.killTweensOf( cntTitle );
-			TweenLite.killTweensOf( strkTitle );
+			z.removeEventListener( MouseEvent.CLICK, onClick );
 			
 			var d:Number = delay * .05;
-			TweenLite.to( strkTitle, .2, { y: cntContent.height, ease: Quad.easeOut, delay: d } );
-			TweenLite.to( cntTitle, .2, { y: cntContent.height, ease: Quad.easeOut, delay: d, onComplete: destroy } );
+			TweenLite.to( strkTitle, .2, { y: strkContent.height, ease: Quad.easeOut, delay: d } );
+			TweenLite.to( cntTitle, .2, { y: strkContent.height, ease: Quad.easeOut, delay: d, onComplete: destroy } );
 			
 			_borders.hide( d );
 		}

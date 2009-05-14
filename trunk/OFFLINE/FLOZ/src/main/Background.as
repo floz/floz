@@ -17,6 +17,8 @@ package main
 	import flash.events.Event;
 	import flash.geom.Matrix;
 	import fr.minuit4.utils.UImg;
+	import gs.easing.Cubic;
+	import gs.TweenLite;
 	
 	public class Background extends Sprite
 	{
@@ -40,6 +42,7 @@ package main
 		public function Background() 
 		{
 			_backgroundHolder = new Bitmap( null, PixelSnapping.AUTO, true );
+			_backgroundHolder.alpha = 0;
 			addChild( _backgroundHolder );
 			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
@@ -50,6 +53,7 @@ package main
 		private function onAddedToStage(e:Event):void 
 		{
 			drawBackground();
+			TweenLite.to( _backgroundHolder, .4, { alpha: 1, ease: Cubic.easeIn } );
 			
 			stage.addEventListener( Event.RESIZE, onResize );
 		}

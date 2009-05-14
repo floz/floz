@@ -1,0 +1,17 @@
+<galerie>
+	<photo petite="photo_1.jpg" grande="photo_1.jpg" />
+	<photo petite="photo_2.jpg" grande="photo_2.jpg" />
+	<photo petite="photo_3.jpg" grande="photo_3.jpg" />
+	<photo petite="photo_4.jpg" grande="photo_4.jpg" />
+	<photo petite="photo_5.jpg" grande="photo_5.jpg" />
+	<photo petite="photo_6.jpg" grande="photo_6.jpg" />
+	<photo petite="photo_7.jpg" grande="photo_7.jpg" />
+	<photo petite="photo_8.jpg" grande="photo_8.jpg" />
+	<photo petite="photo_9.jpg" grande="photo_9.jpg" />
+	<photo petite="photo_10.jpg" grande="photo_10.jpg" />
+	<photo petite="photo_11.jpg" grande="photo_11.jpg" />
+	<photo petite="photo_12.jpg" grande="photo_12.jpg" />
+	<photo petite="photo_13.jpg" grande="photo_13.jpg" />
+	<photo petite="photo_14.jpg" grande="photo_14.jpg" />
+	<photo petite="photo_15.jpg" grande="photo_14.jpg" />
+</galerie>

@@ -20,8 +20,10 @@ package main.home
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
+	import fr.minuit4.animation.Loading;
 	import fr.minuit4.net.loaders.types.MovieLoader;
 	import fr.minuit4.utils.UImg;
+	import gs.easing.Cubic;
 	import gs.easing.Quad;
 	import gs.TweenLite;
 	import main.Borders;
@@ -47,8 +49,8 @@ package main.home
 		private var _index:int;
 		
 		private var _borders:Borders;
+		private var _loading:Loading;
 		
-		private var _loading:Boolean;
 		private var _imageHolder:Bitmap;
 		
 		private var _enable:Boolean;
@@ -62,6 +64,7 @@ package main.home
 		public var strkTitle:Sprite;
 		public var shadow:Sprite;
 		public var cntBorders:Sprite;
+		public var cntLoading:Sprite;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -73,7 +76,7 @@ package main.home
 			_overEvent = new Event( LastProject.OVER );
 			_outEvent = new Event( LastProject.OUT );
 			
-			shadow.alpha = 0;			
+			shadow.alpha = 1;			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}
 		
@@ -85,12 +88,27 @@ package main.home
 			z.removeEventListener( MouseEvent.MOUSE_OVER, onOver );
 			z.removeEventListener( MouseEvent.MOUSE_OUT, onOut );
 			
-			_imageHolder.bitmapData.dispose();
-			_imageHolder.bitmapData = null;
+			if ( _imageHolder )
+			{
+				_imageHolder.bitmapData.dispose();
+				_imageHolder.bitmapData = null;
+			}
 			
+			if ( _movieLoader )
+			{
+				_movieLoader.removeEventListener( Event.COMPLETE, onLoadComplete );
+				_movieLoader.destroy();
+				_movieLoader = null;
+			}
+			
+			if ( _loading.playing ) _loading.stop();
+			
+			TweenLite.killTweensOf( _loading );	
 			TweenLite.killTweensOf( shadow );
 			TweenLite.killTweensOf( cntTitle );
 			TweenLite.killTweensOf( strkTitle );
+			
+			_loading = null;
 		}
 		
 		private function onAddedToStage(e:Event):void 
@@ -107,6 +125,12 @@ package main.home
 			
 			cntTitle.y = 
 			strkTitle.y = int( 359 - 40 );
+			
+			_loading = new Loading();
+			cntLoading.addChild( _loading );
+			_loading.x = strkContent.width * .5 - _loading.width * .5 + 10;
+			_loading.y = strkContent.height * .5 - _loading.height * .5 + 10;
+			_loading.play();
 			
 			z.addEventListener( MouseEvent.MOUSE_OVER, onOver );
 			z.addEventListener( MouseEvent.MOUSE_OUT, onOut );
@@ -128,8 +152,6 @@ package main.home
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			if ( !_enable ) return;
-			
 			var projectEvent:ProjectEvent = new ProjectEvent( ProjectEvent.PROJECT_SELECT );
 			projectEvent.index = this._index;
 			projectEvent.section = this._section;
@@ -139,7 +161,10 @@ package main.home
 		
 		private function onLoadComplete(e:Event):void 
 		{
-			_loading = false;
+			_movieLoader.removeEventListener( Event.COMPLETE, onLoadComplete );
+			
+			TweenLite.to( _loading, .3, { alpha: 0, ease: Cubic.easeIn, onComplete: _loading.stop } );			
+			TweenLite.to( shadow, .3, { alpha: 0, ease: Quad.easeOut } );
 			
 			var bd:BitmapData = UImg.resize( Bitmap( _movieLoader.getItemLoaded() ).bitmapData.clone(), strkContent.width, strkContent.height - 1, false );
 			_imageHolder = new Bitmap( bd, PixelSnapping.AUTO, true );
@@ -147,6 +172,8 @@ package main.home
 			
 			_movieLoader.destroy();
 			_movieLoader = null;
+			
+			_enable = true;
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -159,9 +186,7 @@ package main.home
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function linkToProject( name:String, img:String, section:String, index:int ):void
-		{
-			_loading = true;
-			
+		{			
 			this._title = name;
 			this._section = section;
 			this._index = index;
@@ -194,13 +219,14 @@ package main.home
 			
 			TweenLite.to( cntTitle, .3, { y: 359, ease: Quad.easeOut } );
 			TweenLite.to( strkTitle, .3, { y: 359, ease: Quad.easeOut } );
-			
-			_enable = true;
 		}
 		
 		public function kill( delay:int ):void
 		{
 			_enable = false;
+			
+			z.removeEventListener( MouseEvent.CLICK, onClick );
+			strkTitle.removeEventListener( MouseEvent.CLICK, onClick );
 			
 			var d:Number = delay * .1;
 			
@@ -211,11 +237,13 @@ package main.home
 		
 		public function darken():void
 		{
+			if ( !_enable ) return;
 			TweenLite.to( shadow, .3, { alpha: .35, ease: Quad.easeOut } );			
 		}
 		
 		public function lighten():void
 		{
+			if ( !_enable ) return;
 			TweenLite.to( shadow, .3, { alpha: 0, ease: Quad.easeOut } );
 		}
 		

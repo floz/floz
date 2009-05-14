@@ -66,6 +66,9 @@ package fr.minuit4.tools.diaporama
 			
 			_images = [];
 			
+			_timer = new Timer( 1000, 0 );
+			_timer.addEventListener( TimerEvent.TIMER, onTimer );
+			
 			initDiaporama();
 			
 			_initEvent = new Event( Event.INIT );
@@ -88,9 +91,6 @@ package fr.minuit4.tools.diaporama
 		{
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
-			
-			_timer = new Timer( 1000, 0 );
-			_timer.addEventListener( TimerEvent.TIMER, onTimer );
 		}
 		
 		private function onTimer(e:TimerEvent):void 
@@ -218,8 +218,11 @@ package fr.minuit4.tools.diaporama
 		{
 			_playing = false;
 			
-			_timer.stop();
-			_timer.reset();
+			if ( _timer.running )
+			{
+				_timer.stop();
+				_timer.reset();
+			}
 		}
 		
 		public function isPlaying():Boolean { return _playing; }

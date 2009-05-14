@@ -47,9 +47,14 @@ package main.details
 		
 		private function onComplete(e:Event):void 
 		{
+			if ( !_detailContainer.parent )
+			{
+				trace( "ALLLLLELEERRTTTEE" );
+				return;
+			}
 			_detailContainer.removeEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelect );
 			Config.cntMain.removeChild( _detailContainer );
-			_detailContainer = null
+			_detailContainer = null;
 			
 			_dispatcher.dispatchEvent( new Event( Event.COMPLETE ) );
 		}
@@ -58,11 +63,14 @@ package main.details
 		
 		public function activate( section:String, index:int ):void
 		{
-			if ( _detailContainer )
+			trace( "---------DETAILS CTRL---------" );
+			trace( "DetailsCtrl.activate > section : " + section + ", index : " + index );
+			if ( _detailContainer && Config.cntMain.numChildren )
 			{
-				_detailContainer.switchProject();
+				_detailContainer.switchProject( index );
 				return;
 			}
+			trace( "Nouvelle création" );
 			
 			_datas = section == Config.WORKS ? Config.worksDatas : Config.labDatas;
 			
@@ -72,10 +80,10 @@ package main.details
 			while ( Config.cntMain.numChildren ) Config.cntMain.removeChildAt( 0 );
 			
 			_detailContainer = new DetailsContainer();
-			_detailContainer.linkToProject( project );
 			_detailContainer.addEventListener( Event.COMPLETE, onComplete );
 			_detailContainer.addEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelect );
 			Config.cntMain.addChild( _detailContainer );
+			_detailContainer.linkToProject( project );
 		}
 		
 		public function deactivate():void

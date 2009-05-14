@@ -63,6 +63,9 @@ package main.details
 		
 		public function linkToProject( project:Object ):void
 		{
+			if ( !project)
+				return;
+			
 			this._project = project;
 			
 			var txt:TextField;

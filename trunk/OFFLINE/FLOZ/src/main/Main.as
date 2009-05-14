@@ -16,7 +16,9 @@ package main
 	import flash.system.Security;
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
+	import fr.minuit4.animation.Loading;
 	import fr.minuit4.utils.debug.FPS;
+	import main.about.AboutCtrl;
 	import main.details.DetailsCtrl;
 	import main.home.HomeCtrl;
 	import main.menu.Menu;
@@ -27,10 +29,14 @@ package main
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private var _loading:Loading;
+		
+		private var _ready:Boolean;
 		private var _background:Background;
 		private var _homeCtrl:HomeCtrl;
 		private var _projectsCtrl:ProjectsCtrl;
 		private var _detailsCtrl:DetailsCtrl;
+		private var _aboutCtrl:AboutCtrl;
 		
 		private var _title:String;
 		
@@ -55,7 +61,15 @@ package main
 			Config.path_xml = path_xml;
 			Config.path_css = path_css;
 			
+			_loading = new Loading();
+			cntBackground.addChild( _loading );
+			_loading.x = stage.stageWidth * .5 - _loading.width * .5 + 15;
+			_loading.y = stage.stageHeight * .5 - _loading.height * .5 + 15;
+			_loading.play();
+			
 			logo.visible = false;
+			
+			stage.addEventListener( Event.RESIZE, onResize );
 			
 			var preloader:Preloader = new Preloader();
 			preloader.addEventListener( Event.COMPLETE, init );
@@ -66,7 +80,13 @@ package main
 		
 		private function init(e:Event):void 
 		{
+			_ready = true;
+			
 			Config.cntMain = cntMain;
+			
+			_loading.stop();
+			cntBackground.removeChild( _loading );
+			_loading = null;
 			
 			_background = new Background();
 			cntBackground.addChild( _background );
@@ -90,7 +110,9 @@ package main
 			_detailsCtrl.addEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelectDirect );
 			_detailsCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
 			
-			stage.addEventListener( Event.RESIZE, onResize );
+			_aboutCtrl = new AboutCtrl();
+			_aboutCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
+			
 			onResize( null );
 			
 			if ( Config.DEBUG )
@@ -119,7 +141,7 @@ package main
 				case Config.HOME: _homeCtrl.deactivate(); break;
 				case Config.WORKS: _projectsCtrl.deactivate(); break;
 				case Config.LAB: _projectsCtrl.deactivate(); break;
-				case Config.ABOUT: ; break;
+				case Config.ABOUT: _aboutCtrl.deactivate(); break;
 				case Config.DETAILS: _detailsCtrl.deactivate(); break;
 			}
 		}
@@ -139,6 +161,7 @@ package main
 		
 		private function onSWFAdressChange(e:SWFAddressEvent):void 
 		{
+			trace( "Main.onSWFAdressChange > e : " + e );
 			var a:Array = [];
 			var n:int = e.pathNames.length;
 			for ( var i:int; i < n; ++i )
@@ -198,6 +221,13 @@ package main
 		
 		private function onResize(e:Event):void 
 		{
+			if ( !_ready )
+			{
+				_loading.x = stage.stageWidth * .5 - _loading.width * .5 + 15;
+				_loading.y = stage.stageHeight * .5 - _loading.height * .5 + 15;
+				return;
+			}
+			
 			var px:Number = stage.stageWidth * .5 - 980 * .5;
 			var py:Number = stage.stageHeight * .5 - 560 * .5;
 			
@@ -248,7 +278,7 @@ package main
 				case Config.HOME: title.update( "Last updates" ); _homeCtrl.activate(); break;
 				case Config.WORKS: title.update( "Projects List" ); _projectsCtrl.activate(); break;
 				case Config.LAB: title.update( "Laboratory projects List" ); _projectsCtrl.activate(); break;
-				case Config.ABOUT: title.update( "More informations" ); break;
+				case Config.ABOUT: title.update( "More informations" ); _aboutCtrl.activate(); break;
 				case Config.DETAILS: title.update( Config.detailsTitle ); _detailsCtrl.activate( Config.detailsSection, Config.detailsId ); break;
 			}
 		}

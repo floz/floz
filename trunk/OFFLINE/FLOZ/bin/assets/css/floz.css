@@ -82,6 +82,19 @@
 {
 	font-family:Futura Std Light;
 	font-size:12;
-	font-style:bold;
 	color:#ffffff;
+}
+
+.about_souscategorie
+{
+	font-family:Futura Std Medium;
+	font-size:30;
+	color:#b4c59c;
+}
+
+.about_details
+{
+	font-family:Calibri;
+	font-size:12;
+	color:#b4c59c;
 }

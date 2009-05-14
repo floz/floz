@@ -291,7 +291,13 @@ package main.details
 		
 		public function resetIndex():void
 		{
-			while ( cnt.numChildren ) cnt.removeChildAt( 0 );
+			while ( cnt.numChildren ) 
+			{
+				cnt.getChildAt( 0 ).removeEventListener( MouseEvent.MOUSE_OVER, onIndexOver );
+				cnt.getChildAt( 0 ).removeEventListener( MouseEvent.MOUSE_OUT, onIndexOut );
+				cnt.getChildAt( 0 ).removeEventListener( MouseEvent.CLICK, onIndexClick );
+				cnt.removeChildAt( 0 );
+			}
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

@@ -131,7 +131,6 @@ package main.home
 			for ( var i:int; i < n; ++i )
 			{
 				lpc = new LastProjectContainer();
-				lpc.lastProject.linkToProject( a[ i ].title, a[ i ].preview, a[ i ].section, a[ i ].index );
 				lpc.x = px;
 				px += 322;
 				lpc.addEventListener( LastProject.OVER, onLastProjectOver, true );
@@ -139,6 +138,7 @@ package main.home
 				lpc.addEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelect, true );
 				lpc.addEventListener( Event.COMPLETE, onLPCComplete );
 				_cntProjects.addChild( lpc );
+				lpc.lastProject.linkToProject( a[ i ].title, a[ i ].preview, a[ i ].section, a[ i ].index );
 			}
 		}
 		
