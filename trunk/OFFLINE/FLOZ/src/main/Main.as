@@ -13,6 +13,9 @@ package main
 	import flash.display.StageScaleMode;
 	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
+	import flash.events.ProgressEvent;
+	import flash.media.SoundMixer;
+	import flash.media.SoundTransform;
 	import flash.system.Security;
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
@@ -29,7 +32,7 @@ package main
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _loading:Loading;
+		private var _loaderBar:LoaderBar;
 		
 		private var _ready:Boolean;
 		private var _background:Background;
@@ -37,6 +40,8 @@ package main
 		private var _projectsCtrl:ProjectsCtrl;
 		private var _detailsCtrl:DetailsCtrl;
 		private var _aboutCtrl:AboutCtrl;
+		
+		private var _allowed:Boolean;
 		
 		private var _title:String;
 		
@@ -60,23 +65,35 @@ package main
 			Config.path_swf = path_swf;
 			Config.path_xml = path_xml;
 			Config.path_css = path_css;
+			Config.path_mp3 = path_mp3;
 			
-			_loading = new Loading();
-			cntBackground.addChild( _loading );
-			_loading.x = stage.stageWidth * .5 - _loading.width * .5 + 15;
-			_loading.y = stage.stageHeight * .5 - _loading.height * .5 + 15;
-			_loading.play();
+			_loaderBar = new LoaderBar( 200, 10, 0xffffff, 0x444444, 4 );
+			_loaderBar.x = stage.stageWidth * .5 - _loaderBar.width * .5;
+			_loaderBar.y = stage.stageHeight * .5 - _loaderBar.height * .5;
+			cntBackground.addChild( _loaderBar );
 			
 			logo.visible = false;
 			
 			stage.addEventListener( Event.RESIZE, onResize );
 			
 			var preloader:Preloader = new Preloader();
+			preloader.addEventListener( PreloaderEvent.CHANGE, onLoadChange );
+			preloader.addEventListener( PreloaderEvent.PROGRESS, onLoadProgress );
 			preloader.addEventListener( Event.COMPLETE, init );
 			preloader.init();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
+		
+		private function onLoadChange(e:PreloaderEvent):void 
+		{
+			_loaderBar.next();
+		}
+		
+		private function onLoadProgress(e:PreloaderEvent):void 
+		{
+			_loaderBar.toPercent( e.percent );
+		}
 		
 		private function init(e:Event):void 
 		{
@@ -84,15 +101,16 @@ package main
 			
 			Config.cntMain = cntMain;
 			
-			_loading.stop();
-			cntBackground.removeChild( _loading );
-			_loading = null;
+			SoundMixer.soundTransform = new SoundTransform( .3 );
+			
+			cntBackground.removeChild( _loaderBar );
 			
 			_background = new Background();
 			cntBackground.addChild( _background );
 			
 			logo.visible = true;
 			
+			_allowed = true;
 			initSWFAddress();
 			
 			menu.init();
@@ -125,6 +143,7 @@ package main
 		
 		private function onProjectSelectDirect(e:ProjectEvent):void 
 		{
+			_allowed = true;
 			SWFAddress.setValue( formatText( e.section ) + "/" + e.index + "/" );
 		}
 		
@@ -136,6 +155,8 @@ package main
 		
 		private function onRubriqueChange(e:Event):void 
 		{
+			_allowed = true;
+			
 			switch( Config.currentSection )
 			{
 				case Config.HOME: _homeCtrl.deactivate(); break;
@@ -148,7 +169,17 @@ package main
 		
 		private function onSwitchSectionComplete(e:Event):void 
 		{
-			SWFAddress.setValue( Config.tempSection );
+			trace( "------------SWITCH -----------" + _allowed );
+			trace( "SWITCH - Config.tempSection : " + Config.tempSection );
+			trace( "SWITCH - " + Config.currentSection );
+			if ( SWFAddress.getValue() != Config.tempSection )
+			{
+				SWFAddress.setValue( Config.tempSection );
+			}
+			else
+			{
+				trace( "here" );
+			}
 		}
 		
 		private function onSWFAdressMenuItemSelect(e:ContextMenuEvent):void 
@@ -161,7 +192,15 @@ package main
 		
 		private function onSWFAdressChange(e:SWFAddressEvent):void 
 		{
-			trace( "Main.onSWFAdressChange > e : " + Config.cntMain.numChildren );
+			trace( "SWF CHANGE" );
+			if ( !_allowed )
+			{
+				trace( SWFAddress.getValue() );
+				Config.tempSection = e.value.substr( 1 );
+				onRubriqueChange( null );
+				return;
+			}
+			
 			var a:Array = [];
 			var n:int = e.pathNames.length;
 			for ( var i:int; i < n; ++i )
@@ -175,12 +214,11 @@ package main
 			}			
 			else if ( n == 1 )
 			{
-				if ( a[ 0 ] == Config.currentSection || !isRubrique( a[ 0 ] ) || a[ 0 ] == Config.DETAILS || Config.cntMain.numChildren ) 
+				if ( !isRubrique( a[ 0 ] ) || a[ 0 ] == Config.DETAILS ) 
 				{
 					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
 					return;
 				}
-				
 				Config.currentSection = a[ 0 ];
 			}
 			else if ( n == 2 )
@@ -189,15 +227,18 @@ package main
 				{
 					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
 					return;
+					trace( "4" );
 				}
-				
+				trace( "5" );
 				var datas:Array = a[ 0 ] == Config.WORKS ? Config.worksDatas : Config.labDatas;
 				if ( a[ 1 ] < 0 || a[ 1 ] >= datas.length ) 
 				{
 					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
 					return;
+					trace( "6" );
 				}
 				
+				trace( "7" );
 				trace( "Section : " + Config.currentSection );
 				
 				Config.detailsSection = a[ 0 ];
@@ -206,7 +247,12 @@ package main
 				Config.detailsTitle = a[ 0 ].toLowerCase() == Config.WORKS ? Config.worksDatas[ a[ 1 ] ].title : Config.labDatas[ a[ 1 ] ].title;
 				a.pop();
 			}
+			else
+			{
+				trace( "non !" );
+			}
 			
+			trace( "8" );
 			switchRubrique();
 			
 			_title = "Floz - Flash Developer";
@@ -225,8 +271,8 @@ package main
 		{
 			if ( !_ready )
 			{
-				_loading.x = stage.stageWidth * .5 - _loading.width * .5 + 15;
-				_loading.y = stage.stageHeight * .5 - _loading.height * .5 + 15;
+				_loaderBar.x = stage.stageWidth * .5 - _loaderBar.width * .5;
+				_loaderBar.y = stage.stageHeight * .5 - _loaderBar.height * .5;
 				return;
 			}
 			
@@ -275,6 +321,7 @@ package main
 		{
 			menu.update();
 			
+			trace( "RUB - " + Config.currentSection );
 			switch( Config.currentSection )
 			{
 				case Config.HOME: title.update( "Last updates" ); _homeCtrl.activate(); break;
@@ -283,6 +330,8 @@ package main
 				case Config.ABOUT: title.update( "More informations" ); _aboutCtrl.activate(); break;
 				case Config.DETAILS: title.update( Config.detailsTitle ); _detailsCtrl.activate( Config.detailsSection, Config.detailsId ); break;
 			}
+			
+			_allowed = false;
 		}
 		
 		private function formatText( txt:String ):String
@@ -296,7 +345,8 @@ package main
 		
 		public function get path_xml():String { return loaderInfo.parameters[ "path_xml" ] || "assets/xml/"; }
 		public function get path_swf():String { return loaderInfo.parameters[ "path_swf" ] || "assets/swf/"; }
-		public function get path_css():String { return loaderInfo.parameters[ "path_swf" ] || "assets/css/"; }
+		public function get path_css():String { return loaderInfo.parameters[ "path_css" ] || "assets/css/"; }
+		public function get path_mp3():String { return loaderInfo.parameters[ "path_mp3" ] || "assets/mp3/"; }
 		
 	}
 	

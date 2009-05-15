@@ -10,6 +10,9 @@ package main
 	import flash.display.Bitmap;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.ProgressEvent;
+	import flash.media.Sound;
+	import flash.net.URLRequest;
 	import flash.text.Font;
 	import flash.text.StyleSheet;
 	import fr.minuit4.net.loaders.types.MovieLoader;
@@ -19,6 +22,8 @@ package main
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
+		
+		private var _preloaderEvent:PreloaderEvent;
 		
 		private var _imageLoader:MovieLoader;
 		private var _textLoader:TextLoader;
@@ -35,15 +40,26 @@ package main
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
+		private function onLoadProgress(e:ProgressEvent):void 
+		{
+			_preloaderEvent = new PreloaderEvent( PreloaderEvent.PROGRESS );
+			_preloaderEvent.percent = e.bytesLoaded / e.bytesTotal;
+			
+			dispatchEvent( _preloaderEvent );
+		}
+		
 		private function onXMLComplete(e:Event):void 
 		{
 			var xml:XML = XML( ( e.currentTarget as TextLoader ).getItemLoaded() );
 			parseXML( xml );
 			
+			dispatchChangeEvent();
+			
 			( e.currentTarget as TextLoader ).removeEventListener( Event.COMPLETE, onXMLComplete );
 			( e.currentTarget as TextLoader ).destroy();
 			
 			_imageLoader = new MovieLoader();
+			_imageLoader.addEventListener( ProgressEvent.PROGRESS, onLoadProgress );
 			_imageLoader.addEventListener( Event.COMPLETE, onBackgroundComplete );
 			_imageLoader.load( Config.path_img + "background.jpg" );
 		}
@@ -55,7 +71,10 @@ package main
 			_imageLoader.destroy();
 			_imageLoader = null;
 			
+			dispatchChangeEvent();
+			
 			_fonts = new Fonts();
+			_fonts.addEventListener( ProgressEvent.PROGRESS, onLoadProgress );
 			_fonts.addEventListener( Event.COMPLETE, onFontsComplete );
 			_fonts.load( Config.path_swf + "fonts.swf" );
 		}
@@ -66,7 +85,10 @@ package main
 			_fonts.destroy();
 			_fonts = null;
 			
+			dispatchChangeEvent();
+			
 			_textLoader = new TextLoader();
+			_textLoader.addEventListener( ProgressEvent.PROGRESS, onLoadProgress );
 			_textLoader.addEventListener( Event.COMPLETE, onCSSComplete );
 			_textLoader.load( Config.path_css + "floz.css" );			
 		}
@@ -77,6 +99,8 @@ package main
 			s.parseCSS( _textLoader.getItemLoaded() );
 			Config.styleSheet = s;
 			
+			dispatchChangeEvent();
+			
 			_textLoader.removeEventListener( Event.COMPLETE, onCSSComplete );
 			_textLoader.destroy();
 			_textLoader = null;
@@ -85,6 +109,12 @@ package main
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
+		
+		private function dispatchChangeEvent():void
+		{
+			_preloaderEvent = new PreloaderEvent( PreloaderEvent.CHANGE );
+			dispatchEvent( _preloaderEvent );
+		}
 		
 		private function parseXML( xml:XML ):void
 		{
@@ -144,6 +174,7 @@ package main
 		public function init():void
 		{
 			var _xmlLoader:TextLoader = new TextLoader();
+			_xmlLoader.addEventListener( ProgressEvent.PROGRESS, onLoadProgress );
 			_xmlLoader.addEventListener( Event.COMPLETE, onXMLComplete );
 			_xmlLoader.load( Config.path_xml + "datas.xml" );
 		}
