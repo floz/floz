@@ -161,7 +161,6 @@ package main.details
 		
 		private function onLoadComplete(e:Event):void 
 		{
-			trace( "DetailsDiaporama.onLoadComplete > e : " + e );
 			if( _massLoader.hasNext() )
 				_massLoader.loadNext();
 			else
