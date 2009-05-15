@@ -49,15 +49,8 @@ package main.home
 			msk.y = -msk.height;
 			TweenLite.to( msk, .4, { y: 0, ease: Cubic.easeIn, delay: parent.numChildren * .1, onComplete: showTitle } );
 			
-			lastProject.addEventListener( Event.COMPLETE, onLastProjectDestroy );
-			
 			msk.mouseChildren =
 			msk.mouseEnabled = false;
-		}
-		
-		private function onLastProjectDestroy(e:Event):void 
-		{
-			TweenLite.to( msk, .4, { y: msk.height, ease: Cubic.easeOut, onComplete: destroy } );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -68,20 +61,7 @@ package main.home
 			lastProject.init();
 		}
 		
-		private function destroy():void
-		{
-			dispatchEvent( new Event( Event.COMPLETE ) );
-		}
-		
 		// - PUBLIC METHODS --------------------------------------------------------------
-		
-		public function kill( delay:int ):void
-		{
-			if ( !_enable ) return;
-			
-			_enable = false;
-			lastProject.kill( delay );
-		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

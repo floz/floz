@@ -23,7 +23,8 @@ package main.about
 		
 		public var aboutContent:AboutContent;
 		public var aboutPhoto:AboutPhoto;
-		public var msk:Sprite;
+		public var msk1:Sprite;
+		public var msk2:Sprite;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -38,7 +39,8 @@ package main.about
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 			
-			TweenLite.killTweensOf( msk );
+			TweenLite.killTweensOf( msk1 );
+			TweenLite.killTweensOf( msk2 );
 		}		
 		
 		private function onAddedToStage(e:Event):void 
@@ -46,26 +48,18 @@ package main.about
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			msk.y = -msk.height - 5;
+			msk1.y =
+			msk2.y = -msk1.height - 5;
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
-		
-		private function destroy():void
-		{
-			dispatchEvent( new Event( Event.COMPLETE ) );
-		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function activate():void
 		{
-			TweenLite.to( msk, .4, { y: -5, ease: Cubic.easeIn } );
-		}
-		
-		public function deactivate():void
-		{
-			TweenLite.to( msk, .4, { y: -msk.height - 5, ease: Cubic.easeOut, onComplete: destroy } );
+			TweenLite.to( msk1, .4, { y: -5, ease: Cubic.easeIn } );
+			TweenLite.to( msk2, .4, { y: -5, ease: Cubic.easeIn, delay: .1 } );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

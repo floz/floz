@@ -71,8 +71,6 @@ package main.details
 			TweenLite.to( msk1, .4, { y: -5, ease: Cubic.easeIn, onComplete: onDiaporamaAppear } );
 			TweenLite.to( dText, .2, { alpha: 1, ease: Cubic.easeIn, delay: .2 } );
 			
-			dDiaporama.addEventListener( Event.COMPLETE, onPanelComplete );
-			
 			var value:String = Config.detailsSection == Config.WORKS ? Config.WORKS : Config.LAB;
 			
 			btContainer.addEventListener( Bt.PREV, onPrev, true );
@@ -80,12 +78,6 @@ package main.details
 			
 			this.x = 2;			
 			_enable = true;
-		}
-		
-		private function onClick(e:MouseEvent):void 
-		{
-			Config.tempSection = Config.detailsSection == Config.WORKS ? formatText( Config.WORKS ) : formatText( Config.LAB );
-			kill();
 		}
 		
 		private function onPrev(e:Event):void 
@@ -110,14 +102,6 @@ package main.details
 			dispatchEvent( projectEvent );
 		}
 		
-		private function onPanelComplete(e:Event):void 
-		{
-			TweenLite.to( msk1, .4, { y: msk1.height + 10, ease: Cubic.easeOut, onComplete: destroy } );
-			TweenLite.to( dText, .4, { alpha: 0, ease: Cubic.easeOut } );
-			
-			btContainer.kill();
-		}
-		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function onDiaporamaAppear():void
@@ -126,11 +110,6 @@ package main.details
 			
 			btContainer.showNext();
 			btContainer.showPrev();
-		}
-		
-		private function destroy():void
-		{
-			dispatchEvent( new Event( Event.COMPLETE ) );
 		}
 		
 		private function displayBt():void
@@ -142,17 +121,10 @@ package main.details
 			else btContainer.deactivateNext();
 		}
 		
-		private function formatText( txt:String ):String
-		{
-			return txt.substr( 0, 1 ).toUpperCase() + txt.substr( 1 ).toLowerCase();
-		}
-		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function linkToProject( project:Object ):void
 		{
-			trace( "---------DETAILS CONTAINER---------" );
-			trace( "DetailsContainer.linkToProject" );
 			_currentIdx = project.index;
 			_section = project.section.toLowerCase();
 			_datas = project.section.toLowerCase() == Config.WORKS ? Config.worksDatas : Config.labDatas;
@@ -163,20 +135,10 @@ package main.details
 		
 		public function switchProject( index:int ):void
 		{
-			trace( "---------DETAILS CONTAINER---------" );
-			trace( "DetailsContainer.switchProject" );
-			trace( _section );
-			trace( _datas );
-			trace( _idxMax );
 			dDiaporama.linkToProject( _datas[ index ] );
 			dText.linkToProject( _datas[ index ] );
 			
 			displayBt();
-		}
-		
-		public function kill():void
-		{
-			dDiaporama.hidePanel();
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

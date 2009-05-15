@@ -34,15 +34,6 @@ package main.about
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		private function onComplete(e:Event):void 
-		{
-			_aboutContainer.removeEventListener(Event.COMPLETE, onComplete);
-			Config.cntMain.removeChild( _aboutContainer );
-			_aboutContainer = null;
-			
-			_dispatcher.dispatchEvent( new Event( Event.COMPLETE ) );
-		}
-		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function activate():void
@@ -51,13 +42,13 @@ package main.about
 			
 			_aboutContainer = new AboutContainer();
 			_aboutContainer.activate();
-			_aboutContainer.addEventListener( Event.COMPLETE, onComplete );
 			Config.cntMain.addChild( _aboutContainer );
 		}
 		
 		public function deactivate():void
 		{
-			_aboutContainer.deactivate();
+			Config.cntMain.removeChild( _aboutContainer );
+			_aboutContainer = null;
 		}
 		
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
