@@ -161,7 +161,7 @@ package main
 		
 		private function onSWFAdressChange(e:SWFAddressEvent):void 
 		{
-			trace( "Main.onSWFAdressChange > e : " + e );
+			trace( "Main.onSWFAdressChange > e : " + Config.cntMain.numChildren );
 			var a:Array = [];
 			var n:int = e.pathNames.length;
 			for ( var i:int; i < n; ++i )
@@ -175,7 +175,7 @@ package main
 			}			
 			else if ( n == 1 )
 			{
-				if ( a[ 0 ] == Config.currentSection || !isRubrique( a[ 0 ] ) || a[ 0 ] == Config.DETAILS ) 
+				if ( a[ 0 ] == Config.currentSection || !isRubrique( a[ 0 ] ) || a[ 0 ] == Config.DETAILS || Config.cntMain.numChildren ) 
 				{
 					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
 					return;
@@ -197,6 +197,8 @@ package main
 					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
 					return;
 				}
+				
+				trace( "Section : " + Config.currentSection );
 				
 				Config.detailsSection = a[ 0 ];
 				Config.detailsId = a[ 1 ];
