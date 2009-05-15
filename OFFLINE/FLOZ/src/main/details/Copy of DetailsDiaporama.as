@@ -11,7 +11,6 @@ package main.details
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.events.ProgressEvent;
 	import fr.minuit4.animation.Loading;
 	import fr.minuit4.net.loaders.types.MassLoader;
 	import fr.minuit4.tools.diaporama.Diaporama;
@@ -20,7 +19,6 @@ package main.details
 	import gs.easing.Quad;
 	import gs.TweenLite;
 	import main.Config;
-	import main.LoaderBar;
 	
 	public class DetailsDiaporama extends Sprite
 	{
@@ -29,7 +27,7 @@ package main.details
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _loaderBar:LoaderBar;
+		private var _loading:Loading;
 		
 		private var _project:Object;
 		private var _diaporama:SlidingDiaporama;
@@ -66,7 +64,9 @@ package main.details
 			panel.removeEventListener( Panel.PLAYSLIDESHOW, onPlaySlideShow );
 			panel.removeEventListener( Panel.INDEX_CLICK, onIndexClick );
 			
-			TweenLite.killTweensOf( _loaderBar );
+			if ( _loading.playing ) _loading.stop();
+			TweenLite.killTweensOf( _loading );
+			_loading = null;
 			
 			stopDiaporamaMode();
 			_diaporama.clearImages();
@@ -93,10 +93,10 @@ package main.details
 			panel.addEventListener( Panel.PLAYSLIDESHOW, onPlaySlideShow );
 			panel.addEventListener( Panel.INDEX_CLICK, onIndexClick );
 			
-			_loaderBar = new LoaderBar( 200, 10, 0xffffff, 0x444444 );
-			_loaderBar.x = strk.width * .5 - _loaderBar.width * .5;
-			_loaderBar.y = strk.height * .5 - _loaderBar.height * .5;
-			cntLoading.addChild( _loaderBar );
+			_loading = new Loading();
+			cntLoading.addChild( _loading );
+			_loading.x = strk.width * .5 - _loading.width * .5 + 15;
+			_loading.y = strk.height * .5 - _loading.height * .5 + 10;
 			
 			panel.y = 359 - 40;
 			
@@ -161,16 +161,14 @@ package main.details
 		
 		private function onLoadComplete(e:Event):void 
 		{
-			if ( _massLoader.hasNext() )
-			{
+			if( _massLoader.hasNext() )
 				_massLoader.loadNext();
-				_loaderBar.next();
-			}
 			else
 			{
+				trace( "complete here" );
 				_ready = true;
 				
-				if( _loaderBar ) TweenLite.to( _loaderBar, .3, { alpha: 0, ease: Cubic.easeOut } );
+				if( _loading ) TweenLite.to( _loading, .3, { alpha: 0, ease: Cubic.easeOut, onComplete: _loading.stop } );
 				
 				_diaporama.stopDiaporamaMode();
 				_diaporama.clearImages();
@@ -189,11 +187,6 @@ package main.details
 		private function onSwitchComplete(e:Event):void 
 		{
 			panel.setIndexState( _diaporama.currentId );
-		}
-		
-		private function onLoadProgress(e:ProgressEvent):void 
-		{
-			_loaderBar.toPercent( e.bytesLoaded / e.bytesTotal );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -235,10 +228,21 @@ package main.details
 				return;
 			}
 			this._project = project;
+			trace( project );
 			
 			TweenLite.to( shadow, .3, { alpha: 1, ease: Cubic.easeIn } );
 			
+			if ( _loading )
+			{
+				_loading.alpha = 0;
+				TweenLite.to( _loading, .3, { alpha: 1, ease: Cubic.easeIn } );
+				if ( !_loading.playing ) _loading.play();
+			}
+			trace( "4" );
+			
 			panel.resetIndex();
+			
+			trace( "5" );
 			
 			if ( !_diaporama )
 			{
@@ -247,19 +251,24 @@ package main.details
 				cnt.addChild( _diaporama );
 			}
 			
-			var path_img:String = project.section.toLowerCase() == Config.WORKS.toLowerCase() ? Config.path_works : Config.path_lab;
-			var a:Array = [];
-			var n:int = project.diaporama.length;
-			for ( var i:int; i < n; ++i )
-				a.push( Config.path_img + path_img + project.diaporama[ i ] );
+			trace( "6" );
+			trace( project.section );
 			
-			if ( _loaderBar )
+			var path_img:String = project.section.toLowerCase() == Config.WORKS.toLowerCase() ? Config.path_works : Config.path_lab;
+			trace( "6-1" );
+			var a:Array = [];
+			trace( "6-2" );
+			var n:int = project.diaporama.length;
+			trace( "6-3" );
+			for ( var i:int; i < n; ++i )
 			{
-				_loaderBar.alpha = 0;
-				TweenLite.to( _loaderBar, .3, { alpha: 1, ease: Cubic.easeIn } );
-				_loaderBar.totalLoads = a.length;
-				_loaderBar.reset();
+				trace( "6-4-1-" + i );
+				a.push( Config.path_img + path_img + project.diaporama[ i ] );
+				trace( "6-4-2-" + i );
 			}
+			trace( "6-5" );
+			
+			trace( "7" );
 			
 			if ( _massLoader )
 			{
@@ -268,11 +277,12 @@ package main.details
 				_massLoader.removeEventListener( Event.COMPLETE, onLoadComplete );
 				_massLoader = null;
 			}
+			trace( "8" );
 			_massLoader = new MassLoader();
-			_massLoader.addEventListener( Event.COMPLETE, onLoadComplete );		
-			_massLoader.addEventListener( ProgressEvent.PROGRESS, onLoadProgress );
+			_massLoader.addEventListener( Event.COMPLETE, onLoadComplete );			
 			_massLoader.addItems( a );
 			_massLoader.loadNext();
+			trace( "9" );
 		}
 		
 		public function showPanel():void

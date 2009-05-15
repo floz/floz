@@ -63,14 +63,11 @@ package main.details
 		
 		public function activate( section:String, index:int ):void
 		{
-			trace( "---------DETAILS CTRL---------" );
-			trace( "DetailsCtrl.activate > section : " + section + ", index : " + index );
-			if ( _detailContainer && Config.cntMain.numChildren )
+			if ( _detailContainer /*&& Config.cntMain.numChildren*/ )
 			{
 				_detailContainer.switchProject( index );
 				return;
 			}
-			trace( "Nouvelle création" );
 			
 			_datas = section == Config.WORKS ? Config.worksDatas : Config.labDatas;
 			
