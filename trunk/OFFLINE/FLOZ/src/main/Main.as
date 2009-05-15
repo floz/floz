@@ -13,9 +13,6 @@ package main
 	import flash.display.StageScaleMode;
 	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
-	import flash.events.ProgressEvent;
-	import flash.media.SoundMixer;
-	import flash.media.SoundTransform;
 	import flash.system.Security;
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
@@ -40,8 +37,6 @@ package main
 		private var _projectsCtrl:ProjectsCtrl;
 		private var _detailsCtrl:DetailsCtrl;
 		private var _aboutCtrl:AboutCtrl;
-		
-		private var _allowed:Boolean;
 		
 		private var _title:String;
 		
@@ -101,8 +96,6 @@ package main
 			
 			Config.cntMain = cntMain;
 			
-			SoundMixer.soundTransform = new SoundTransform( .3 );
-			
 			cntBackground.removeChild( _loaderBar );
 			
 			_background = new Background();
@@ -110,7 +103,6 @@ package main
 			
 			logo.visible = true;
 			
-			_allowed = true;
 			initSWFAddress();
 			
 			menu.init();
@@ -192,7 +184,7 @@ package main
 					return;
 				}
 				var datas:Array = a[ 0 ] == Config.WORKS ? Config.worksDatas : Config.labDatas;
-				if ( a[ 1 ] < 0 || a[ 1 ] >= datas.length ) 
+				if ( !Number( a[ 1 ] ) || a[ 1 ] < 0 || a[ 1 ] >= datas.length ) 
 				{
 					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
 					return;
