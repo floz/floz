@@ -215,25 +215,20 @@ package main.details
 			}
 		}
 		
-		private function destroy():void
-		{
-			dispatchEvent( new Event( Event.COMPLETE ) );
-		}
-		
-		private function formatText( txt:String ):String
-		{
-			return txt.substr( 0, 1 ).toUpperCase() + txt.substr( 1 ).toLowerCase();
-		}
+		//private function formatText( txt:String ):String
+		//{
+			//return txt.substr( 0, 1 ).toUpperCase() + txt.substr( 1 ).toLowerCase();
+		//}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function linkToProject( project:Object ):void
 		{
-			if ( !project )
-			{
-				SWFAddress.setValue( formatText( Config.HOME ) + "/" );
-				return;
-			}
+			//if ( !project )
+			//{
+				//SWFAddress.setValue( formatText( Config.HOME ) + "/" );
+				//return;
+			//}
 			this._project = project;
 			
 			TweenLite.to( shadow, .3, { alpha: 1, ease: Cubic.easeIn } );
@@ -278,11 +273,6 @@ package main.details
 		public function showPanel():void
 		{
 			TweenLite.to( panel, .3, { y: 359, ease: Quad.easeOut } );
-		}
-		
-		public function hidePanel():void
-		{
-			TweenLite.to( panel, .3, { y: int( 359 - 40 ), ease: Quad.easeOut, onComplete: destroy } );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

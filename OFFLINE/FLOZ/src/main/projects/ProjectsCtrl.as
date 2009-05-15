@@ -194,7 +194,6 @@ package main.projects
 			_btContainer.btNext.x = 875;
 			_btContainer.addEventListener( Bt.PREV, onPrev, true );
 			_btContainer.addEventListener( Bt.NEXT, onNext, true );
-			_btContainer.addEventListener( Event.COMPLETE, onBtComplete );
 			Config.cntMain.addChild( _btContainer );
 			
 			_btContainer.showPrev();
@@ -211,11 +210,11 @@ package main.projects
 		{
 			_killing = true;
 			
-			removeProjects();
-			
 			_btContainer.removeEventListener( Bt.PREV, onPrev, true );
 			_btContainer.removeEventListener( Bt.NEXT, onNext, true );
-			_btContainer.kill();
+			
+			Config.cntMain.removeChild( _btContainer );			
+			Config.cntMain.removeChild( _cntProjects );
 		}
 		
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void

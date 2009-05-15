@@ -118,18 +118,14 @@ package main
 			
 			_homeCtrl = new HomeCtrl();
 			_homeCtrl.addEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelect );
-			_homeCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
 			
 			_projectsCtrl = new ProjectsCtrl();
 			_projectsCtrl.addEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelect );
-			_projectsCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
 			
 			_detailsCtrl = new DetailsCtrl();
-			_detailsCtrl.addEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelectDirect );
-			_detailsCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
+			_detailsCtrl.addEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelect );
 			
 			_aboutCtrl = new AboutCtrl();
-			_aboutCtrl.addEventListener( Event.COMPLETE, onSwitchSectionComplete );
 			
 			onResize( null );
 			
@@ -141,22 +137,13 @@ package main
 			}
 		}
 		
-		private function onProjectSelectDirect(e:ProjectEvent):void 
-		{
-			_allowed = true;
-			SWFAddress.setValue( formatText( e.section ) + "/" + e.index + "/" );
-		}
-		
 		private function onProjectSelect(e:ProjectEvent):void 
 		{
-			Config.tempSection = formatText( e.section ) + "/" + e.index + "/";
-			onRubriqueChange( null );
+			SWFAddress.setValue( formatText( e.section ) + "/" + e.index + "/" );
 		}
 		
 		private function onRubriqueChange(e:Event):void 
 		{
-			_allowed = true;
-			
 			switch( Config.currentSection )
 			{
 				case Config.HOME: _homeCtrl.deactivate(); break;
@@ -167,40 +154,15 @@ package main
 			}
 		}
 		
-		private function onSwitchSectionComplete(e:Event):void 
-		{
-			trace( "------------SWITCH -----------" + _allowed );
-			trace( "SWITCH - Config.tempSection : " + Config.tempSection );
-			trace( "SWITCH - " + Config.currentSection );
-			if ( SWFAddress.getValue() != Config.tempSection )
-			{
-				SWFAddress.setValue( Config.tempSection );
-			}
-			else
-			{
-				trace( "here" );
-			}
-		}
-		
 		private function onSWFAdressMenuItemSelect(e:ContextMenuEvent):void 
 		{
 			if ( e.currentTarget.caption.toLowerCase() == Config.currentSection ) return;
 			
-			Config.tempSection = formatText( e.currentTarget.caption );
-			onRubriqueChange( null );
+			SWFAddress.setValue( formatText( e.currentTarget.caption ) );
 		}
 		
 		private function onSWFAdressChange(e:SWFAddressEvent):void 
 		{
-			trace( "SWF CHANGE" );
-			if ( !_allowed )
-			{
-				trace( SWFAddress.getValue() );
-				Config.tempSection = e.value.substr( 1 );
-				onRubriqueChange( null );
-				return;
-			}
-			
 			var a:Array = [];
 			var n:int = e.pathNames.length;
 			for ( var i:int; i < n; ++i )
@@ -219,6 +181,7 @@ package main
 					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
 					return;
 				}
+				onRubriqueChange( null );
 				Config.currentSection = a[ 0 ];
 			}
 			else if ( n == 2 )
@@ -227,32 +190,22 @@ package main
 				{
 					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
 					return;
-					trace( "4" );
 				}
-				trace( "5" );
 				var datas:Array = a[ 0 ] == Config.WORKS ? Config.worksDatas : Config.labDatas;
 				if ( a[ 1 ] < 0 || a[ 1 ] >= datas.length ) 
 				{
 					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
 					return;
-					trace( "6" );
 				}
 				
-				trace( "7" );
-				trace( "Section : " + Config.currentSection );
-				
+				if( Config.currentSection != Config.DETAILS ) onRubriqueChange( null );;
 				Config.detailsSection = a[ 0 ];
 				Config.detailsId = a[ 1 ];
 				Config.currentSection = Config.DETAILS;
 				Config.detailsTitle = a[ 0 ].toLowerCase() == Config.WORKS ? Config.worksDatas[ a[ 1 ] ].title : Config.labDatas[ a[ 1 ] ].title;
 				a.pop();
 			}
-			else
-			{
-				trace( "non !" );
-			}
 			
-			trace( "8" );
 			switchRubrique();
 			
 			_title = "Floz - Flash Developer";
@@ -321,7 +274,6 @@ package main
 		{
 			menu.update();
 			
-			trace( "RUB - " + Config.currentSection );
 			switch( Config.currentSection )
 			{
 				case Config.HOME: title.update( "Last updates" ); _homeCtrl.activate(); break;
@@ -330,8 +282,6 @@ package main
 				case Config.ABOUT: title.update( "More informations" ); _aboutCtrl.activate(); break;
 				case Config.DETAILS: title.update( Config.detailsTitle ); _detailsCtrl.activate( Config.detailsSection, Config.detailsId ); break;
 			}
-			
-			_allowed = false;
 		}
 		
 		private function formatText( txt:String ):String

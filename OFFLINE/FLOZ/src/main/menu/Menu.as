@@ -40,8 +40,8 @@ package main.menu
 			if ( e.currentTarget.getSectionName().toLowerCase() == Config.currentSection ) 
 				return;
 			
-			Config.tempSection = e.currentTarget.getSectionName().substr( 0, 1 ).toUpperCase() + e.currentTarget.getSectionName().substr( 1 ).toLowerCase() + "/";
-			dispatchEvent( new Event( Event.CHANGE ) );
+			SWFAddress.setValue( e.currentTarget.getSectionName().substr( 0, 1 ).toUpperCase() + e.currentTarget.getSectionName().substr( 1 ).toLowerCase() + "/" );
+			//dispatchEvent( new Event( Event.CHANGE ) );
 		}
 		
 		private function onOver(e:MouseEvent):void 

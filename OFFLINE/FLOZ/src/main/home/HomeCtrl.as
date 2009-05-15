@@ -136,7 +136,6 @@ package main.home
 				lpc.addEventListener( LastProject.OVER, onLastProjectOver, true );
 				lpc.addEventListener( LastProject.OUT, onLastProjectOut, true );
 				lpc.addEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelect, true );
-				lpc.addEventListener( Event.COMPLETE, onLPCComplete );
 				_cntProjects.addChild( lpc );
 				lpc.lastProject.linkToProject( a[ i ].title, a[ i ].preview, a[ i ].section, a[ i ].index );
 			}
@@ -154,8 +153,9 @@ package main.home
 				lpc.removeEventListener( LastProject.OVER, onLastProjectOver, true );
 				lpc.removeEventListener( LastProject.OUT, onLastProjectOut, true );
 				lpc.removeEventListener( ProjectEvent.PROJECT_SELECT, onProjectSelect, true );
-				lpc.kill( i );
 			}
+			
+			Config.cntMain.removeChild( _cntProjects );
 		}
 		
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
