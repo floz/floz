@@ -207,7 +207,6 @@ package main.details
 		
 		private function stopDiaporamaMode():void
 		{
-			trace( "DetailsDiaporama.stopDiaporamaMode" );
 			if ( _diaporama.isPlaying() ) 
 			{
 				_diaporama.stopDiaporamaMode();

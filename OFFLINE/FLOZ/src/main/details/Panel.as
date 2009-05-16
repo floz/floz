@@ -278,12 +278,14 @@ package main.details
 			if ( !cnt.numChildren ) return;
 			
 			var index:Index;			
-			if ( _indexSelect >= 0 )
+			if ( _indexSelect >= 0 && _indexSelect < cnt.numChildren )
 			{
 				index = cnt.getChildAt( _indexSelect ) as Index;
 				index.txt.htmlText = "<span class='index'>" + index.txt.text + "</span>";
 			}
 			_indexSelect = indexToSelect;
+			
+			if ( _indexSelect >= cnt.numChildren ) return;
 			
 			index = cnt.getChildAt( indexToSelect ) as Index;
 			index.txt.htmlText = "<span class='index_selected'>" + index.txt.text + "</span>";
