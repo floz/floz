@@ -25,6 +25,7 @@ package main.about
 		public var txtSkills:TextField;
 		public var txtFlash:TextField;
 		public var txtGraphic:TextField;
+		public var txtMail:TextField;
 		public var softwareGraphic:TextField;
 		public var softwareFlash:TextField;
 		public var flashTitle:TextField;
@@ -88,6 +89,10 @@ package main.about
 			softwareGraphic.filters =
 			graphicTitle.filters = [ filter ];
 			
+			txtMail.embedFonts = true;
+			txtMail.styleSheet = Config.styleSheet;
+			txtMail.htmlText = "<span class='about_details'>MAIL: </span><span class='basic_url'>florian.zumbrunn@gmail.com</span>	<span class='about_details'>|    PHONE: </span><span class='basic_url'> +336 98 86 09 00</span><span class='about_details'>    |     CV: </span><span class='basic_url'><a href='http://www.floz.fr/assets/pdf/cv.pdf' target='_blank'>CLICK HERE</span>";
+			txtMail.filters = [ filter ];
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------

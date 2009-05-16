@@ -15,7 +15,7 @@ package main
 	public class Config 
 	{
 		// Debug mode
-		public static const DEBUG:Boolean = true;
+		public static const DEBUG:Boolean = false;
 		
 		// Rubriques & Menu infos
 		public static const HOME:String = "home";
