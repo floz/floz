@@ -174,7 +174,7 @@ package main.details
 				_diaporama.stopDiaporamaMode();
 				_diaporama.clearImages();
 				_diaporama.addImages( _massLoader.getItemsLoaded() );
-				_diaporama.startDiaporamaMode( 4000 ); //// ?????????????????????????
+				_diaporama.startDiaporamaMode( 4000 );
 				
 				panel.addIndex( _diaporama.totalCount );
 				panel.setIndexState( _diaporama.currentId );
