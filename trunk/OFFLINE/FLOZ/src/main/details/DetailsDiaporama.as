@@ -174,7 +174,7 @@ package main.details
 				_diaporama.stopDiaporamaMode();
 				_diaporama.clearImages();
 				_diaporama.addImages( _massLoader.getItemsLoaded() );
-				_diaporama.startDiaporamaMode( 4000 );
+				_diaporama.startDiaporamaMode( 4000 ); //// ?????????????????????????
 				
 				panel.addIndex( _diaporama.totalCount );
 				panel.setIndexState( _diaporama.currentId );
@@ -207,6 +207,7 @@ package main.details
 		
 		private function stopDiaporamaMode():void
 		{
+			trace( "DetailsDiaporama.stopDiaporamaMode" );
 			if ( _diaporama.isPlaying() ) 
 			{
 				_diaporama.stopDiaporamaMode();
@@ -214,20 +215,10 @@ package main.details
 			}
 		}
 		
-		//private function formatText( txt:String ):String
-		//{
-			//return txt.substr( 0, 1 ).toUpperCase() + txt.substr( 1 ).toLowerCase();
-		//}
-		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function linkToProject( project:Object ):void
 		{
-			//if ( !project )
-			//{
-				//SWFAddress.setValue( formatText( Config.HOME ) + "/" );
-				//return;
-			//}
 			this._project = project;
 			
 			TweenLite.to( shadow, .3, { alpha: 1, ease: Cubic.easeIn } );
