@@ -9,17 +9,13 @@ package main.home
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.PixelSnapping;
-	import flash.display.Shape;
 	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.filters.BitmapFilter;
 	import flash.filters.GlowFilter;
-	import flash.text.Font;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
-	import flash.text.TextFormat;
 	import fr.minuit4.animation.Loading;
 	import fr.minuit4.net.loaders.types.MovieLoader;
 	import fr.minuit4.utils.UImg;

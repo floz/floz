@@ -13,6 +13,8 @@ package main
 	import flash.display.StageScaleMode;
 	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
+	import flash.net.navigateToURL;
+	import flash.net.URLRequest;
 	import flash.system.Security;
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
@@ -60,7 +62,6 @@ package main
 			Config.path_swf = path_swf;
 			Config.path_xml = path_xml;
 			Config.path_css = path_css;
-			Config.path_mp3 = path_mp3;
 			
 			_loaderBar = new LoaderBar( 200, 10, 0xffffff, 0x444444, 4 );
 			_loaderBar.x = stage.stageWidth * .5 - _loaderBar.width * .5;
@@ -184,7 +185,7 @@ package main
 					return;
 				}
 				var datas:Array = a[ 0 ] == Config.WORKS ? Config.worksDatas : Config.labDatas;
-				if ( !Number( a[ 1 ] ) || a[ 1 ] < 0 || a[ 1 ] >= datas.length ) 
+				if ( isNaN( Number( a[ 1 ] ) ) || a[ 1 ] < 0 || a[ 1 ] >= datas.length ) 
 				{
 					SWFAddress.setValue( formatText( Config.HOME ) + "/" );	
 					return;
@@ -233,6 +234,11 @@ package main
 			menu.x = px + 445;
 		}
 		
+		private function onContextMenuItemBackgroundSelect(e:ContextMenuEvent):void 
+		{
+			navigateToURL( new URLRequest( "http://www.flickr.com/photos/luc_viatour/2586540491/" ), "_blank" );
+		}
+		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function initSWFAddress():void
@@ -249,6 +255,10 @@ package main
 			n = ctMenu.customItems.length;
 			for ( i = 0; i < n; ++i )
 				ctMenu.customItems[ i ].addEventListener( ContextMenuEvent.MENU_ITEM_SELECT, onSWFAdressMenuItemSelect );
+			
+			var ctItem:ContextMenuItem = new ContextMenuItem( "Background: Luc Viatour © GFDL", true )
+			ctMenu.customItems.push( ctItem );
+			ctItem.addEventListener( ContextMenuEvent.MENU_ITEM_SELECT, onContextMenuItemBackgroundSelect );
 			
 			SWFAddress.addEventListener( SWFAddressEvent.CHANGE, onSWFAdressChange );
 		}
@@ -287,9 +297,7 @@ package main
 		
 		public function get path_xml():String { return loaderInfo.parameters[ "path_xml" ] || "assets/xml/"; }
 		public function get path_swf():String { return loaderInfo.parameters[ "path_swf" ] || "assets/swf/"; }
-		public function get path_css():String { return loaderInfo.parameters[ "path_css" ] || "assets/css/"; }
-		public function get path_mp3():String { return loaderInfo.parameters[ "path_mp3" ] || "assets/mp3/"; }
-		
+		public function get path_css():String { return loaderInfo.parameters[ "path_css" ] || "assets/css/"; }		
 	}
 	
 }

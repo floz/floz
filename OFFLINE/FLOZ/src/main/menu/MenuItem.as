@@ -15,7 +15,6 @@ package main.menu
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.text.TextField;
-	import flash.text.TextFormat;
 	import gs.easing.Cubic;
 	import gs.easing.Quad;
 	import gs.TweenLite;

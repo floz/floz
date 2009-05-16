@@ -11,8 +11,6 @@ package main
 	import flash.filters.GlowFilter;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	
 	public class Title extends Sprite
 	{
