@@ -11,7 +11,6 @@ package main
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.ProgressEvent;
-	import flash.media.Sound;
 	import flash.net.URLRequest;
 	import flash.text.Font;
 	import flash.text.StyleSheet;

@@ -10,7 +10,6 @@ package main
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.filters.GlowFilter;
-	import flash.media.Sound;
 	import flash.text.StyleSheet;
 	
 	public class Config 
@@ -35,7 +34,6 @@ package main
 		public static var path_swf:String;
 		public static var path_xml:String;
 		public static var path_css:String;
-		public static var path_mp3:String;
 		public static var path_img:String; // Chemin des images
 		public static var path_works:String; // Chemin du dossier works contenu dans img
 		public static var path_lab:String; // Chemin du dossier lab contenu dans img
@@ -44,7 +42,6 @@ package main
 		public static var background:BitmapData;
 		public static var styleSheet:StyleSheet;
 		
-		public static var tempSection:String;
 		public static var currentSection:String;
 		public static var detailsSection:String;
 		public static var detailsId:int;

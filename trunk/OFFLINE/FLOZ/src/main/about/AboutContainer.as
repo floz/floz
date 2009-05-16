@@ -10,7 +10,6 @@ package main.about
 	import flash.events.Event;
 	import gs.easing.Cubic;
 	import gs.TweenLite;
-	import main.about.AboutContent;
 	
 	public class AboutContainer extends Sprite
 	{

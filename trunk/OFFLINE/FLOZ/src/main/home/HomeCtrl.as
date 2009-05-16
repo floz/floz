@@ -71,18 +71,6 @@ package main.home
 			_dispatcher.dispatchEvent( projectEvent );
 		}
 		
-		private function onLPCComplete(e:Event):void 
-		{
-			e.currentTarget.removeEventListener( Event.COMPLETE, onLPCComplete );
-			
-			_cntProjects.removeChild( e.currentTarget as DisplayObject );
-			if ( !_cntProjects.numChildren ) 
-			{
-				Config.cntMain.removeChild( _cntProjects );
-				_dispatcher.dispatchEvent( new Event( Event.COMPLETE ) );
-			}
-		}
-		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function sortProjects():Array
