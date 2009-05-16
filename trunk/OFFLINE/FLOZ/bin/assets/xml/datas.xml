@@ -7,7 +7,7 @@
 		<job>Flash developer, Graphic designer, Project Chief</job>
 		<technos>AS3, Flash, Photoshop, XML</technos>
 		<url>http://www.beatlizeyourself.com</url>
-		<desc><![CDATA[Synerg’Hetic, the HETIC’s junior entreprise, asks to Arno and me to develop a flash  application that give you the possibility to disguise you in one of the four Beatles. <br />Arno was in charge of the PHP part. By the way, I took care of the flash part. <br />The development time took us one week. <br />Date: April 2009]]></desc>
+		<desc><![CDATA[Synerg’Hetic, the HETIC’s junior entreprise, came to Arno and I to develop a flash application that gives you the possibility to insert your face in a Beatles' picture. <br />Arno was in charge of the PHP and I took care of the flash side. <br />The development took us one week. <br />Date: April 2009]]></desc>
 		<diaporama>
 			<image name="beatlize1.jpg" />
 			<image name="beatlize2.jpg" />
@@ -21,7 +21,7 @@
 		<job>Graphic designer</job>
 		<technos>Photoshop, Illustrator</technos>
 		<url>http://www.altizem.fr</url>
-		<desc><![CDATA[Altizem is a client of HETIC. They asked us to remake their website because the old version was not really nice. <br />Date: April 2009]]></desc>
+		<desc><![CDATA[Altizem is a client of HETIC. They asked us to redo their website because the old version was not professional enough. <br />Date: April 2009]]></desc>
 		<diaporama>
 			<image name="altizem1.jpg" />
 			<image name="altizem2.jpg" />
@@ -35,7 +35,7 @@
 		<job>Flash developer</job>
 		<technos>Flash, AS3, Papervision3D, XML</technos>
 		<url>http://www.groupem6.fr/rentree2008/</url>
-		<desc><![CDATA[To have my diploma (DUT SRC, BAC+2), I had to find a job for 3 months in a company. This one was Havas Entertainment. During this time, I worked on a project for M6. I had to build a coverflow/caroussel which is now their show's portfolio. Date: June 2008 ]]></desc>
+		<desc><![CDATA[During an internship at Havas Entertainment, I worked on a project for M6. I had to build a coverflow/caroussel which is now their shows' portfolio. <br />Date: June 2008 ]]></desc>
 		<diaporama>
 			<image name="m6rentree1.jpg" />
 			<image name="m6rentree2.jpg" />
@@ -48,7 +48,7 @@
 		<job>Flash developer, graphic designer, project chief</job>
 		<technos>Flash, AS3, XML</technos>
 		<url>http://www.fredbaudet-editor.com</url>
-		<desc><![CDATA[Fred Baudet, a french editor who lives on Paris, asked me to make his Portfolio. He came to me with some graphics designed by a friend of him. I had to make some arrangements and to work on the website dynamism before to begin to develop the portfolio. <br />Date: February 2009]]></desc>
+		<desc><![CDATA[Fred Baudet, a french editor living in Paris, asked me to make his Portfolio. He came to me with some graphic roughs a friend made for him. I had to finalize them and to work on the website dynamism before beginning to develop the portfolio. <br />Date: February 2009]]></desc>
 		<diaporama>
 			<image name="fredbaudet1.jpg" />
 			<image name="fredbaudet2.jpg" />
@@ -62,7 +62,7 @@
 		<job>Flash developer</job>
 		<technos>Flash, AS3, XML</technos>
 		<url>http://preprod.hetic.net/diner/</url>
-		<desc><![CDATA[This project has been asked by HETIC, my school on the 2008/2009 years. We had 2 weeks to find a concept around the "Diner des illustres" thematic, and to realize it. An english translation, word by word, would look like something as "The illustrous diner". We had the idea to let the user make a self-portrait and invite some peoples at his table. <br />His objective is to make the most perfect diner. <br />Date: December 2009]]></desc>
+		<desc><![CDATA[This was an HETIC assignement. We had 2 weeks to find a concept around the "Diner des illustres" thematic, and to create it. You could translate it as "The diner of illustrous". We had the idea to let the user make a self-portrait and invite some peoples at his table. <br />His goal is to make the most perfect diner. <br />Date: December 2009]]></desc>
 		<diaporama>
 			<image name="dinerillustres2.jpg" />
 			<image name="dinerillustres1.jpg" />
@@ -77,7 +77,7 @@
 		<job>Flash developer</job>
 		<technos>Flash, AS3, Papervision3D, XML</technos>
 		<url>http://wystor.free.fr</url>
-		<desc><![CDATA[This project has been asked by HETIC, my school on the 2008/2009 years. The subject was to build a small website to promote the Apple Itouch. <br />My work on this project was to develop it, and we chose to use Papervision3D.  <br />Date: October 2008]]></desc>
+		<desc><![CDATA[This was an HETIC assignement. We had to build a small website to promote the Apple Itouch. <br />My work on this project was the development, and we chose to use Papervision3D.  <br />Date: October 2008]]></desc>
 		<diaporama>
 			<image name="ipod4.jpg" />
 			<image name="ipod1.jpg" />
@@ -97,7 +97,7 @@
 			<image name="paperchar1.jpg" />
 			<image name="paperchar2.jpg" />
 		</diaporama>
-		<desc><![CDATA[This application has been made to test the combination between AS3DMod, a modifier library for all flash 3D engines, and Papervision3D. <br />I'm planning to create a Website with paper style elements. <br />Date: March 2009]]></desc>
+		<desc><![CDATA[This application has been made to test the combination between AS3DMod, a modifier library for all flash 3D engines, and Papervision3D. <br />I'm planning to create a website with paper like elements. <br />Date: March 2009]]></desc>
 	</item>
 	<item title="Desintegration" preview="desintegration.jpg" pubdate="1244325600000">
 		<client><![CDATA[Me :-)]]></client>
@@ -109,11 +109,11 @@
 			<image name="desintegration2.jpg" />
 			<image name="desintegration3.jpg" />
 		</diaporama>
-		<desc><![CDATA[During the development of this portfolio, I had an idea : make the transition between two section by disintegration of elements. And it worked ! <br />Unfortunately, the effect is too greedy in performances. Anyway, I would like to use it in another project with small images. It could be fun. <br />Date: May 2009]]></desc>
+		<desc><![CDATA[While developing this portfolio, I had an idea : making the transition between two section by disintegration of elements. And it worked ! <br />Unfortunately, the effect is too greedy in performances. However, I would like to use it in another project with small images. It could be fun. <br />Date: May 2009]]></desc>
 	</item>
 </lab>
 <about>
-	<presentation><![CDATA[Passionate by Flash development for now two years, I'm currently following the HETIC formation, after being graduated with a DUT Services et Réseaux de Communication. These two schools gave me a sample group of skills bound to the domains of the New Technologies of the Information and the Communication. <br />I spent 5 months at Havas Entertainement, a web agency, at the status of Flash Developer.]]></presentation>
+	<presentation><![CDATA[I discovered I had a passion for Flash development two years ago. I'm currently at HETIC, a computer sciences school, after graduating with a DUT "Services et Réseaux de Communication" (Services and Communication Networks). These two schools gave me some skills related to the domains of the New Technologies of Information and Communication. <br />Last year, I spent 5 months at Havas Entertainement, a web agency, as a Flash Developer.]]></presentation>
 	<skills>
 		<flash><![CDATA[AS1 / AS2 / AS3 Programming <br />Flash Remoting / XML / etc. <br />PV3D / Away3D / PureMVC / etc. <br />Flex & Air (Basics)]]></flash>
 		<graphic><![CDATA[Identification <br />Web layouts]]></graphic>
