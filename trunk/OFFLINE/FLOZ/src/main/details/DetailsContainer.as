@@ -135,6 +135,7 @@ package main.details
 		
 		public function switchProject( index:int ):void
 		{
+			_currentIdx = index;
 			dDiaporama.linkToProject( _datas[ index ] );
 			dText.linkToProject( _datas[ index ] );
 			
