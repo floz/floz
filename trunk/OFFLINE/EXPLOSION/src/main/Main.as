@@ -38,7 +38,7 @@ package main
 			
 			v = new Bitmap( new Floz( 0, 0 ), PixelSnapping.AUTO, true );
 			v.x = stage.stageWidth * .5 - v.width * .5;
-			v.y = stage.stageHeight * .5 - v.height * .5 + 10;
+			v.y = stage.stageHeight * .5 - v.height * .5 - 20;
 			cnt.addChild( v );
 			
 			addChild( new FPS( 250, 50, false ) );

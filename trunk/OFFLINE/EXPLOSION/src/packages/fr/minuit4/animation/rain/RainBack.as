@@ -126,8 +126,6 @@ package fr.minuit4.animation.rain
 				
 				_image.setPixel32( pixel.px, py, pixel.c );
 				
-				if ( pixel.end ) continue;
-				
 				vy -= Math.random() / ( .5 / PIXEL_MOVE ) - PIXEL_MOVE;
 				vy = vy > 0 ? -vy : vy;
 				vy = vy + vy;		
