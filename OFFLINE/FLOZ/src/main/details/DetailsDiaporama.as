@@ -171,8 +171,8 @@ package main.details
 				
 				if( _loaderBar ) TweenLite.to( _loaderBar, .3, { alpha: 0, ease: Cubic.easeOut } );
 				
-				_diaporama.stopDiaporamaMode();
-				_diaporama.clearImages();
+				//_diaporama.stopDiaporamaMode();
+				//_diaporama.clearImages();
 				_diaporama.addImages( _massLoader.getItemsLoaded() );
 				_diaporama.startDiaporamaMode( 4000 );
 				
@@ -230,6 +230,8 @@ package main.details
 				_diaporama.addEventListener( Diaporama.SWITCH_COMPLETE, onSwitchComplete );
 				cnt.addChild( _diaporama );
 			}
+			stopDiaporamaMode();
+			_diaporama.clearImages();
 			
 			var path_img:String = project.section.toLowerCase() == Config.WORKS.toLowerCase() ? Config.path_works : Config.path_lab;
 			var a:Array = [];

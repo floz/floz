@@ -22,11 +22,9 @@ package fr.minuit4.animation.rain
 		
 		private var _target:DisplayObject;
 		private var _pixels:Array;
-		private var _pixelsEnd:Array;
 		private var _image:BitmapData;
 		
-		private var _numPixels:int;
-		private var _numPixelsEnd:int;
+		private var _tmp:Array;
 		
 		private var _enable:Boolean;
 		
@@ -60,8 +58,7 @@ package fr.minuit4.animation.rain
 			
 			_enable = false;
 			
-			_pixels =
-			_pixelsEnd = null;
+			_pixels = null;
 			
 			removeEventListener( Event.ENTER_FRAME, onFrame );
 			dispatchEvent( new Event( Event.COMPLETE ) );
@@ -73,13 +70,12 @@ package fr.minuit4.animation.rain
 			_image.draw( _target );			
 			
 			_pixels = [];
-			_pixelsEnd = [];
 			var pixel:Pixel;
 			var b:Boolean = true;
 			var x:int = -1;
 			var y:int;
-			const w:Number = _image.width;
-			const h:Number = _image.height;
+			const w:int = _image.width;
+			const h:int = _image.height;
 			var c:uint;
 			while ( true )
 			{
@@ -92,7 +88,6 @@ package fr.minuit4.animation.rain
 					b = !b;
 				}				
 			}
-			_numPixels = _pixels.length;
 			
 			this.bitmapData = _image;
 		}
@@ -105,14 +100,16 @@ package fr.minuit4.animation.rain
 		private function render():void
 		{
 			var pixel:Pixel;
-			var i:int = _numPixels;
-			var py:Number;
+			var i:int = _pixels.length;
+			var py:int;
 			var vy:Number;
 			
 			const h:Number = _image.height - 1;
 			
-			_image.lock();
-			_image.fillRect( _image.rect, 0x00 );			
+			_tmp = [];
+			
+			_image.fillRect( _image.rect, 0x00 );
+			_image.lock();	
 			while ( --i > -1 )
 			{
 				pixel = _pixels[ i ];
@@ -120,9 +117,7 @@ package fr.minuit4.animation.rain
 				py = pixel.py;
 				vy = pixel.vy;
 				
-				_image.setPixel32( pixel.px, py, pixel.c );	
-				
-				if ( pixel.end ) continue;
+				_image.setPixel32( pixel.px, py, pixel.c );
 				
 				vy += Math.random() / ( .5 / PIXEL_MOVE ) - PIXEL_MOVE;
 				vy = vy < 0 ? -vy : vy;
@@ -134,17 +129,14 @@ package fr.minuit4.animation.rain
 					
 					pixel.py = py;
 					pixel.vy = vy;
-				}
-				else 
-				{
-					pixel.end = true;
-					_pixelsEnd.push( 1 );
-					++_numPixelsEnd;
+					
+					_tmp.push( pixel );
 				}
 			}
 			_image.unlock();
 			
-			if ( _numPixelsEnd >= _numPixels ) destroy();
+			_pixels = _tmp;
+			if ( !_pixels.length ) destroy();
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
