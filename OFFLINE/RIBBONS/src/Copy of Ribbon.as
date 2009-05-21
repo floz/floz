@@ -26,11 +26,6 @@ package
 		private var _vx:Number;
 		private var _vy:Number;
 		
-		private var link1x:Number;
-		private var link1y:Number;
-		private var link2x:Number;
-		private var link2y:Number;
-		
 		private var _inited:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
@@ -73,46 +68,14 @@ package
 			_px -= _vx;
 			_py -= _vy;
 			
-			drawSegment( tx, ty, _px, _py, Math.atan2( _py - ty, _px - tx ) );
+			this.graphics.lineTo( _px, _py );
+			
+			drawSegment( tx, ty, _px, _py );
 		}
 		
 		private function drawSegment( x1:Number, y1:Number, x2:Number, y2:Number, a:Number ):void
 		{
-			var dx:Number = x2 - x1;
-			var dy:Number = y2 - y1;
-			var rayon:Number = Math.sqrt( dx * dx + dy *dy ) * .5;	
-
-			var g:Graphics = this.graphics;
 			
-			var posX:Number = Math.cos( toRadians( 80 ) ) * rayon * .5;
-			var posY:Number = Math.sin( toRadians( 80 ) ) * rayon * .5;
-			
-			var ox:Number = x1 + dx * .5;
-			var oy:Number = y1 + dy * .5;
-			
-			g.lineStyle( 1, 0x0000ff );
-			g.moveTo( link2x ? link2x : rayon * Math.cos( Math.atan2( -posY, -posX ) + a ) + ox, link2y ? link2y : rayon * Math.sin( Math.atan2( -posY, -posX ) + a ) + oy );
-			g.lineTo( link1x ? link1x : rayon * Math.cos( Math.atan2( posY, -posX ) + a ) + ox, link1y ? link1y : rayon * Math.sin( Math.atan2( posY, -posX ) + a ) + oy );
-			g.lineTo( rayon * Math.cos( Math.atan2( posY, posX ) + a ) + ox, rayon * Math.sin( Math.atan2( posY, posX ) + a ) + oy );
-			g.lineTo( rayon * Math.cos( Math.atan2( -posY, posX ) + a ) + ox, rayon * Math.sin( Math.atan2( -posY, posX ) + a ) + oy );
-			g.lineTo( link2x ? link2x : rayon * Math.cos( Math.atan2( -posY, -posX ) + a ) + ox, link2y ? link2y : rayon * Math.sin( Math.atan2( -posY, -posX ) + a ) + oy );
-			g.endFill();
-
-			link1x = rayon * Math.cos( Math.atan2( posY, posX ) + a ) + ox;
-			link1y = rayon * Math.sin( Math.atan2( posY, posX ) + a ) + oy;
-			
-			link2x = rayon * Math.cos( Math.atan2( -posY, posX ) + a ) + ox;
-			link2y = rayon * Math.sin( Math.atan2( -posY, posX ) + a ) + oy;
-		}
-		
-		private function toDegres( value:Number ):Number
-		{
-			return ( value * 180 / Math.PI );
-		}
-
-		private function toRadians( value:Number ):Number
-		{
-			return ( value * Math.PI / 180 );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
