@@ -6,9 +6,14 @@
  */
 package  
 {
+	import flash.display.Graphics;
+	import flash.display.GraphicsPathCommand;
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.utils.getTimer;
+	import painting.brushes.Line;
+	import painting.brushes.MultiLine;
+	import painting.Canvas;
 	
 	public class Main extends Sprite
 	{
@@ -17,30 +22,34 @@ package
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _ribbon:Ribbon;
-		private var _ribbon2:Ribbon;
+		private var canvas:Canvas;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main()
+		public function Main() 
 		{
-			_ribbon = new Ribbon( 0xff00ff );
-			addChild( _ribbon );
+			canvas = new Canvas( stage.stageWidth, stage.stageHeight );
+			addChild( canvas );
 			
-			stage.addEventListener( MouseEvent.CLICK, onClick );
-		}
-		
-		private function onClick(e:MouseEvent):void 
-		{
-			if ( _ribbon.drawing )
-				_ribbon.end();
-			else
-				_ribbon.draw();
+			canvas.addBrush( new MultiLine( 6, 0, .01 ) );
+			
+			stage.addEventListener( MouseEvent.MOUSE_DOWN, onDown );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
+		
+		private function onDown(e:MouseEvent):void 
+		{
+			stage.addEventListener( MouseEvent.MOUSE_UP, onUp );
+			canvas.startPainting();
+		}
+		
+		private function onUp(e:MouseEvent):void 
+		{
+			canvas.stopPainting();
+		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		

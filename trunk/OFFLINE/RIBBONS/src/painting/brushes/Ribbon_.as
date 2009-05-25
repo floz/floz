@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package painting.brushes
 {
 	import flash.display.Graphics;
 	import flash.display.Shape;
