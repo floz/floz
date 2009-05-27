@@ -23,8 +23,10 @@ package painting
 		private var _height:Number;
 		private var _fillColor:Number;
 		
-		private var _brushes:Vector.<IBrush> = new Vector.<IBrush>( 4, true );
+		private var _brushes:Vector.<IBrush> = new Vector.<IBrush>( 10, true );
 		private var _brushCount:int;
+		
+		private var _mouseDown:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -85,7 +87,7 @@ package painting
 			++_brushCount;
 		}
 		
-		public function deleteBrush( brush:IBrush ):void
+		public function removeBrush( brush:IBrush ):void
 		{
 			if ( !_brushCount || !hasBrush( brush ) )
 				throw new Error( "Brush invalide" );
@@ -100,6 +102,7 @@ package painting
 			if ( hasEventListener( Event.ENTER_FRAME ) )
 				return;
 			
+			_mouseDown = true;
 			addEventListener( Event.ENTER_FRAME, onFrame );
 		}
 		
@@ -108,6 +111,7 @@ package painting
 			if ( !hasEventListener( Event.ENTER_FRAME ) )
 				return;
 			
+			_mouseDown = false;
 			removeEventListener( Event.ENTER_FRAME, onFrame );
 			
 			var i:int = _brushCount;
