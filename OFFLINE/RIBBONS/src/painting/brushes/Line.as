@@ -32,8 +32,6 @@ package painting.brushes
 		private var _py:Number;
 		private var _vx:Number;
 		private var _vy:Number;
-		private var _tx:Number;
-		private var _ty:Number;
 		
 		private var _inited:Boolean;
 		
@@ -78,14 +76,14 @@ package painting.brushes
 			_g.clear();
 			_g.lineStyle( 1, _color );
 			
-			_datas[ 0 ] = _px;
-			_datas[ 1 ] = _py;
+			_datas[ 0x0 ] = _px;
+			_datas[ 0x1 ] = _py;
 			
 			_px -= _vx = ( _vx + ( _px - mx ) * SLOWDOWN ) * ( FRICTION + _diffX );
 			_py -= _vy = ( _vy + ( _py - my ) * SLOWDOWN ) * ( FRICTION + _diffY );
 			
-			_datas[ 2 ] = _px;
-			_datas[ 3 ] = _py;
+			_datas[ 0x2 ] = _px;
+			_datas[ 0x3 ] = _py;
 			
 			_g.drawPath( _commands, _datas );
 		}
