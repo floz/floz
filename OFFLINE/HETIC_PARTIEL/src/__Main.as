@@ -70,14 +70,15 @@ package
 			
 			var particle:Particle = _particles;
 			
-			_spectrum.lock();
+			var n:int = _bufferLength;
+			while ( --n > -1 ) _buffer[ n ] = 0x11000000;
+			
 			while ( particle )
 			{
 				value = _bytes.readFloat();
 				
 				a = toRadians( Math.random() * 360 );
 				r = value * 300;
-				/*_spectrum.setPixel( particle.px + r * Math.cos( a ), particle.py + r * Math.sin( a ), 0xffffff );*/
 				
 				px = particle.px + r * Math.cos( a );
 				py = particle.py + r * Math.sin( a );
@@ -87,8 +88,9 @@ package
 				
 				particle = particle.next;
 			}
+			
+			_spectrum.lock();
 			_spectrum.setVector( _spectrum.rect, _buffer );
-			_spectrum.applyFilter( _spectrum, _spectrum.rect, new Point(), CMF );
 			_spectrum.unlock();
 			
 		}
