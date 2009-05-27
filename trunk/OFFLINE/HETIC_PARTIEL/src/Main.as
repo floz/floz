@@ -12,6 +12,7 @@ package
 	import flash.display.PixelSnapping;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Point;
 	import flash.media.Sound;
@@ -44,11 +45,6 @@ package
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		/**
-		 * Explications :
-		 * J'ai voulu m'amuser avec BitmapData et comprendre les linked list de Joa Ebert.
-		 * Regarder _spectrum.setVector, mais râté pour le coup...
-		 */
 		public function Main() 
 		{
 			init();
@@ -80,8 +76,7 @@ package
 				particle = particle.next;
 			}
 			_spectrum.applyFilter( _spectrum, _spectrum.rect, new Point(), CMF );
-			_spectrum.unlock();
-			
+			_spectrum.unlock();			
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
