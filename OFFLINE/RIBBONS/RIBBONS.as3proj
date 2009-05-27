@@ -5,7 +5,7 @@
     <movie disabled="False" />
     <movie input="" />
     <movie path="bin/RIBBONS.swf" />
-    <movie fps="30" />
+    <movie fps="50" />
     <movie width="800" />
     <movie height="600" />
     <movie version="10" />
