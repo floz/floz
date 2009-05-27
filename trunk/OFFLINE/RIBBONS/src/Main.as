@@ -12,7 +12,9 @@ package
 	import flash.events.MouseEvent;
 	import flash.utils.getTimer;
 	import painting.brushes.Line;
-	import painting.brushes.MultiLine;
+	import painting.brushes.MultiLines;
+	import painting.brushes.MultiRibbons;
+	import painting.brushes.Ribbon;
 	import painting.Canvas;
 	
 	public class Main extends Sprite
@@ -33,7 +35,9 @@ package
 			canvas = new Canvas( stage.stageWidth, stage.stageHeight );
 			addChild( canvas );
 			
-			canvas.addBrush( new MultiLine( 6, 0, .01 ) );
+			//canvas.addBrush( new MultiLines( 15, 0, .01 ) );
+			canvas.addBrush( new MultiRibbons( 4, 0, .01 ) );
+			//canvas.addBrush( new Ribbon( 0x000000, true ) );
 			
 			stage.addEventListener( MouseEvent.MOUSE_DOWN, onDown );
 		}
