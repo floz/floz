@@ -41,7 +41,7 @@ package
 			//canvas.addBrush( new MultiRibbons( 4, 0, .01 ) );
 			//canvas.addBrush( new Ribbon( 0x000000, true ) );
 			//canvas.addBrush( new SharpLines( 0x000000, 15, 20 ) );
-			canvas.addBrush( new DuplicateLines( 0x000000, 30, 20 ) );
+			canvas.addBrush( new DuplicateLines( 0x000000, 10, 25 ) );
 			
 			stage.addEventListener( MouseEvent.MOUSE_DOWN, onDown );
 		}
