@@ -18,7 +18,8 @@ package painting.brushes
 		private var _linesCount:int;
 		private var _deltaX:Number;
 		private var _deltaY:Number;
-		private var _colors:Vector.<uint>;
+		private var _colors:Vector.<Array>;
+		private var _alphas:Vector.<Array>;
 		
 		private var _ribbons:Vector.<Ribbon>;
 		
@@ -26,12 +27,13 @@ package painting.brushes
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function MultiRibbons( linesCount:int, deltaX:Number = 0, deltaY:Number = 0, colors:Vector.<uint> = null ) 
+		public function MultiRibbons( linesCount:int, deltaX:Number = 0, deltaY:Number = 0, colors:Vector.<Array> = null, alphas:Vector.<Array> = null ) 
 		{
 			this._linesCount = linesCount;
 			this._deltaX = deltaX;
 			this._deltaY = deltaY;
 			this._colors = colors;
+			this._alphas = alphas;
 			
 			init();
 		}
@@ -46,21 +48,22 @@ package painting.brushes
 			
 			if ( !_colors )
 			{
-				_colors = new Vector.<uint>( _linesCount, true );
+				_colors = new Vector.<Array>( _linesCount, true );
 				i = _linesCount;
 				while ( --i > -1 )
-					_colors[ i ] = 0xff000000;
+					_colors[ i ] = [ 0xff000000 ];
 			}
 			
 			_ribbons = new Vector.<Ribbon>( _linesCount, true );
-			_ribbons[ 0 ] = new Ribbon( _colors[ 0 ], true );
+			_ribbons[ 0 ] = new Ribbon( _colors[ 0 ], _alphas[ 0 ], true );
+			addChild( _ribbons[ 0 ] );
 			
 			var mult:int;
 			var n:int = _linesCount;
 			for ( i = 1; i < n; ++i )
 			{
 				mult = i % 2 ? -1 : 1;
-				_ribbons[ i ] = new Ribbon( _colors[ i ], true, _deltaX * i * mult, _deltaY * i * mult );
+				_ribbons[ i ] = new Ribbon( _colors[ i ], _alphas[ i ], true, _deltaX * i * mult, _deltaY * i * mult );
 				addChild( _ribbons[ i ] );
 			}
 		}

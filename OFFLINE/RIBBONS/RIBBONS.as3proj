@@ -9,7 +9,7 @@
     <movie width="800" />
     <movie height="600" />
     <movie version="10" />
-    <movie background="#FFFFFF" />
+    <movie background="#0A494C" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -76,6 +76,6 @@
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />
-    <option testMovie="NewWindow" />
+    <option testMovie="ExternalPlayer" />
   </options>
 </project>

@@ -38,7 +38,7 @@ package painting
 			this._height = h;
 			this._fillColor = fillColor;
 			
-			super( new BitmapData( w, h, transparent, fillColor ), PixelSnapping.AUTO, true );
+			super( new BitmapData( w, h, transparent, fillColor ), PixelSnapping.NEVER, true );
 			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
 		}

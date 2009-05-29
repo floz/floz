@@ -16,13 +16,14 @@ package painting.brushes
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
-		private static var FRICTION:Number = .8;
-		private static var SLOWDOWN:Number = .05;
-		private static var RIBBON_SIZE:Number = 90;
+		public static var FRICTION:Number = .8;
+		public static var SLOWDOWN:Number = .05;
+		public static var RIBBON_SIZE:Number = 40;
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _color:uint;
+		private var _colors:Array;
+		private var _alphas:Array;
 		private var _adaptSize:Boolean;
 		private var _diffX:Number;
 		private var _diffY:Number;
@@ -46,13 +47,17 @@ package painting.brushes
 		private var _inited:Boolean;
 		private var _linked:Boolean;
 		
+		private var _colorIdx:int;
+		private var _colorCount:int;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Ribbon( color:uint, adaptSize:Boolean = false, diffX:Number = 0, diffY:Number = 0 ) 
+		public function Ribbon( colors:Array, alphas:Array, adaptSize:Boolean = false, diffX:Number = 0, diffY:Number = 0 ) 
 		{
-			this._color = color;
+			this._colors = colors;
+			this._alphas = alphas;
 			this._adaptSize = adaptSize;
 			this._diffX = diffX;
 			this._diffY = diffY;
@@ -68,6 +73,8 @@ package painting.brushes
 		private function init():void
 		{
 			_g = this.graphics;
+			
+			_colorCount = _colors.length;
 			
 			this.mouseEnabled =
 			this.mouseChildren = false;
@@ -88,10 +95,13 @@ package painting.brushes
 			var ox:Number = x1 + tx * .5;
 			var oy:Number = y1 + ty * .5;
 			
-			var rot:Number = Math.atan2( posY, posX );
+			var rot:Number = Math.atan2( posY, posX );			
+			
+			_colorIdx = _colorIdx == int( _colorCount - 1 ) ? 0 : ++_colorIdx;
 			
 			_g.clear();
-			_g.lineStyle( 1, _color );
+			_g.lineStyle( 1, _colors[ _colorIdx ], _alphas[ _colorIdx ] );
+			_g.beginFill( _colors[ _colorIdx ], _alphas[ _colorIdx ] );
 			
 			if ( _linked )
 			{
