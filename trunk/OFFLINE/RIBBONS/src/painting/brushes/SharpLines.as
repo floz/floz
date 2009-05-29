@@ -110,17 +110,19 @@ package painting.brushes
 			
 			var newPiece:Piece = new Piece();
 			
-			newPiece.x1 = 
+			newPiece.x1 = _px;
+			newPiece.y1 = _py;
+			
 			_datas[ 0x0 ] = _px;
-			newPiece.y1 =
 			_datas[ 0x1 ] = _py;
 			
 			_px -= _vx = ( _vx + ( _px - mx ) * SLOWDOWN ) * ( FRICTION + _diffX );
 			_py -= _vy = ( _vy + ( _py - my ) * SLOWDOWN ) * ( FRICTION + _diffY );
 			
-			newPiece.x2 =
+			newPiece.x2 = _px;
+			newPiece.y2 = _py;
+			
 			_datas[ 0x2 ] = _px;
-			newPiece.y2 =
 			_datas[ 0x3 ] = _py;
 			
 			piece.next = newPiece;

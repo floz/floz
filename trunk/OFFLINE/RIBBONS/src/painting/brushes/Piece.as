@@ -17,7 +17,6 @@ package painting.brushes
 		
 		public var count:int;
 		
-		public var enabled:Boolean = true;
 		public var next:Piece;
 		
 	}
