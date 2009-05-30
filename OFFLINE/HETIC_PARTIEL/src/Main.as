@@ -12,6 +12,7 @@ package
 	import flash.display.PixelSnapping;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Point;
@@ -48,10 +49,28 @@ package
 		public function Main() 
 		{
 			init();
-			addEventListener( Event.ENTER_FRAME, onFrame );
+			
+			stage.addEventListener( MouseEvent.CLICK, onClick );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
+		
+		private function onClick(e:MouseEvent):void 
+		{
+			if ( hasEventListener( Event.ENTER_FRAME ) )
+			{
+				SoundMixer.stopAll();				
+				_spectrum.fillRect( _spectrum.rect, 0x00 );
+				
+				removeEventListener( Event.ENTER_FRAME, onFrame );
+			}
+			else
+			{
+				_song.play();
+				
+				addEventListener( Event.ENTER_FRAME, onFrame );
+			}
+		}
 		
 		private function onFrame(e:Event):void 
 		{
@@ -84,7 +103,6 @@ package
 		private function init():void
 		{
 			_song = Sound( new SongAssets() );
-			_song.play();
 			
 			_bytes = new ByteArray();
 			
