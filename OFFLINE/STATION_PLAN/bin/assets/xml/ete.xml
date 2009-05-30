@@ -2,9 +2,14 @@
 <data>
 	<infos wait="1.2" logourl="assets/img/logo.jpg" zoom="2" />
 	<list id="Com">
-		<item name="toto" coordX="0" coordY="123" img="" titre="titi tizetre" infoText=" zer zerze raejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://" id="2" />
+		<item name="REstaurant l'auberge de Colombaze" coordX="0" coordY="123" img="" titre="titi tizetre" infoText=" zer zerze raejoazejazoejoaz zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://" id="2" />
 		<item name="tata" coordX="570" coordY="-200" img="test2.jpg" titre="tiazeazeati titre" infoText=" grzeze zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://www.floz.fr" id="4" />
 		<item name="tata" coordX="89" coordY="45" img="test3.jpg" titre="tirezrezti aze" infoText="ezrez trt e zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://www.floz.fr"id="5" />
+		<item name="titi" coordX="200" coordY="30" img="test1.jpg" titre="tit   iutiir titrte" infoText="zer tez zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://www.floz.fr" id="0" />
+		<item name="titi" coordX="200" coordY="30" img="test1.jpg" titre="tit   iutiir titrte" infoText="zer tez zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://www.floz.fr" id="0" />
+		<item name="titi" coordX="200" coordY="30" img="test1.jpg" titre="tit   iutiir titrte" infoText="zer tez zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://www.floz.fr" id="0" />
+		<item name="titi" coordX="200" coordY="30" img="test1.jpg" titre="tit   iutiir titrte" infoText="zer tez zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://www.floz.fr" id="0" />
+		<item name="titi" coordX="200" coordY="30" img="test1.jpg" titre="tit   iutiir titrte" infoText="zer tez zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://www.floz.fr" id="0" />
 		<item name="titi" coordX="200" coordY="30" img="test1.jpg" titre="tit   iutiir titrte" infoText="zer tez zajeoazjeo" text="zeaezaeoazeoaze,zaoeaz,oezaoezakeoaz kozea keoaz" url="http://www.floz.fr" id="0" />
 	</list>
 	<list id="ZE">
