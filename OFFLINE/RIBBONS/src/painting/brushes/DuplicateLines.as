@@ -20,7 +20,7 @@ package painting.brushes
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _color:uint;
+		private var _colors:Array;
 		private var _linesCount:int;
 		private var _spacing:int;
 		private var _inverted:Boolean;
@@ -43,15 +43,18 @@ package painting.brushes
 		private var _xAxe:Boolean;
 		private var _yAxe:Boolean;
 		
+		private var _colorIdx:int;
+		private var _colorCount:int;
+		
 		private var _inited:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function DuplicateLines( color:uint, linesCount:int, spacing:Number, inverted:Boolean = false, invertedGradient:Boolean = false, maxAlpha:Number = 1, diffX:Number = 0, diffY:Number = 0 ) 
+		public function DuplicateLines( colors:Array, linesCount:int, spacing:Number, inverted:Boolean = false, invertedGradient:Boolean = false, maxAlpha:Number = 1, diffX:Number = 0, diffY:Number = 0 ) 
 		{
-			this._color = color;
+			this._colors = colors;
 			this._linesCount = linesCount;
 			this._spacing = spacing;
 			this._inverted = inverted;
@@ -71,6 +74,8 @@ package painting.brushes
 		private function init():void
 		{
 			_g = this.graphics;
+			
+			_colorCount = _colors.length;
 			
 			this.mouseEnabled =
 			this.mouseChildren = false;
@@ -107,7 +112,7 @@ package painting.brushes
 				}
 				
 				percent = piece.count * _maxAlpha / _linesCount;
-				_g.lineStyle( 1, _color, _invertedGradient ? 1 - percent : percent );
+				_g.lineStyle( 1, piece.c, _invertedGradient ? 1 - percent : percent );
 				
 				linesVal = _inverted ? ( _linesCount - piece.count ) : piece.count;
 				
@@ -123,9 +128,13 @@ package painting.brushes
 				piece = piece.next;
 			}
 			
-			_g.lineStyle( 1, _color, piece.count / _linesCount );
+			_colorIdx = _colorIdx == int( _colorCount - 1 ) ? 0 : ++_colorIdx;
+			
+			_g.lineStyle( 1, _colors[ _colorIdx ], piece.count / _linesCount );
 			
 			var newPiece:Piece = new Piece();
+			
+			newPiece.c = _colors[ _colorIdx ]
 			
 			newPiece.x1 = _px;
 			newPiece.y1 = _py;

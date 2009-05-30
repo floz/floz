@@ -84,6 +84,11 @@ package painting.brushes
 				_ribbons[ i ].reset();
 		}
 		
+		public function setColors():void
+		{
+			
+		}
+		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
 	}

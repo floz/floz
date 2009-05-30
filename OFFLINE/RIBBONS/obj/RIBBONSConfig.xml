@@ -5,14 +5,14 @@
   <target-player>10.0.0</target-player>
   <compiler>
     <source-path append="true">
-      <path-element>D:\Projets\Flash\Projets\OFFLINE\RIBBONS\src</path-element>
+      <path-element>D:\Projets\Projets\OFFLINE\RIBBONS\src</path-element>
       <path-element>D:\Appz\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
   </compiler>
   <file-specs>
-    <path-element>D:\Projets\Flash\Projets\OFFLINE\RIBBONS\src\Main.as</path-element>
+    <path-element>D:\Projets\Projets\OFFLINE\RIBBONS\src\IndexOfTests.as</path-element>
   </file-specs>
-  <default-background-color>#0A494C</default-background-color>
+  <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>50</default-frame-rate>
   <default-size>
     <width>800</width>
