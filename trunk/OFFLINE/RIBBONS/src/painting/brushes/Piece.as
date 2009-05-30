@@ -15,6 +15,8 @@ package painting.brushes
 		public var x2:Number = 0;
 		public var y2:Number = 0;
 		
+		public var c:uint = 0x000000;
+		
 		public var count:int;
 		
 		public var next:Piece;
