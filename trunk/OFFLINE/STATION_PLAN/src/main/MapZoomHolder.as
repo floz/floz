@@ -7,6 +7,7 @@
 package main 
 {
 	import fl.controls.ComboBox;
+	import fl.controls.LabelButton;
 	import flash.display.Bitmap;
 	import flash.display.MovieClip;
 	import flash.display.PixelSnapping;
@@ -78,7 +79,7 @@ package main
 		
 		private function onDown(e:MouseEvent):void 
 		{
-			if ( e.target is SimpleButton || e.target is ComboBox || !this.visible ) return;
+			if ( e.target is SimpleButton || e.target is ComboBox || e.target is LabelButton || !this.visible ) return;
 			stage.addEventListener( MouseEvent.MOUSE_MOVE, onMove );
 			_cntPuces.visible = 
 			_tooltip.visible = 
