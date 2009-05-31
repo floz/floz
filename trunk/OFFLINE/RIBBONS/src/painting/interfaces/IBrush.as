@@ -14,9 +14,9 @@ package painting.interfaces
 		
 		function reset():void;
 		
-		function setColors():void;
+		function setColors( colors:Vector.<uint> ):void;
 		
-		function setAlphas():void;
+		function setAlphas( alphas:Vector.<Number> ):void;
 	}
 	
 }

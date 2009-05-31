@@ -21,12 +21,10 @@ package fr.minuit4.animation.rain
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _target:DisplayObject;
-		private var _pixels:Array;
-		private var _pixelsEnd:Array;
+		private var _pixels:Pixel;
 		private var _image:BitmapData;
 		
-		private var _numPixels:int;
-		private var _numPixelsEnd:int;
+		private var _pixelsCount:int;
 		
 		private var _enable:Boolean;
 		
@@ -37,7 +35,7 @@ package fr.minuit4.animation.rain
 		public function RainBack( target:DisplayObject ) 
 		{
 			this._target = target;
-			super( null, PixelSnapping.AUTO, true );
+			super( null, PixelSnapping.NEVER, true );
 			
 			this._enable = true;
 			
@@ -57,14 +55,13 @@ package fr.minuit4.animation.rain
 		{
 			if ( !_enable ) 
 				return;
+				
+			removeEventListener( Event.ENTER_FRAME, onFrame );
+			dispatchEvent( new Event( Event.COMPLETE ) );
 			
 			_enable = false;
 			
-			_pixels =
-			_pixelsEnd = null;
-			
-			removeEventListener( Event.ENTER_FRAME, onFrame );
-			dispatchEvent( new Event( Event.COMPLETE ) );
+			_pixels = null;
 		}
 		
 		private function create():void
@@ -72,9 +69,9 @@ package fr.minuit4.animation.rain
 			_image = new BitmapData( _target.width, _target.height, true, 0x00 );
 			_image.draw( _target );			
 			
-			_pixels = [];
-			_pixelsEnd = [];
-			var pixel:Pixel;
+			_pixels = new Pixel();
+			var currentPixel:Pixel = _pixels;
+			
 			var b:Boolean = true;
 			var x:int = -1;
 			var y:int;
@@ -83,17 +80,20 @@ package fr.minuit4.animation.rain
 			var c:uint;
 			while ( true )
 			{
-				pixel = new Pixel( b ? ++x : --x, y, _image.getPixel32( x, y ) );
-				pixel.py = h - 1;
+				currentPixel.px =  b ? ++x : --x;
+				currentPixel.fy = y;
+				currentPixel.py = h - 1;
+				currentPixel.c = _image.getPixel32( x, y );
 				
-				_pixels.push( pixel );
+				++_pixelsCount;
+				
 				if ( x == w || x == -1 )
 				{
 					if ( ++y == h ) break;
 					b = !b;
-				}				
+				}
+				currentPixel = currentPixel.next = new Pixel();
 			}
-			_numPixels = _pixels.length;
 			
 			_image.fillRect( _image.rect, 0x00 );
 			this.bitmapData = _image;
@@ -106,31 +106,37 @@ package fr.minuit4.animation.rain
 		
 		private function render():void
 		{
-			var pixel:Pixel;
-			var i:int = _numPixels;
+			var pixel:Pixel = _pixels;
+			
+			var i:int = _pixelsCount;
 			var py:Number;
 			var vy:Number;
 			var fy:Number;
+			
+			var count:int;
 			
 			const h:Number = _image.height - 1;
 			
 			_image.lock();
 			_image.fillRect( _image.rect, 0x00 );			
 			while ( --i > -1 )
-			{
-				pixel = _pixels[ i ];
-				
+			{				
 				py = pixel.py;
 				vy = pixel.vy;
 				fy = pixel.fy;
 				
 				_image.setPixel32( pixel.px, py, pixel.c );
 				
-				if ( pixel.end ) continue;
+				if ( pixel.end )
+				{
+					++count;
+					pixel = pixel.next;
+					continue;
+				}
 				
 				vy -= Math.random() / ( .5 / PIXEL_MOVE ) - PIXEL_MOVE;
 				vy = vy > 0 ? -vy : vy;
-				vy = vy + vy;		
+				vy = vy + vy;	
 				
 				if ( py > fy )
 				{	
@@ -143,13 +149,14 @@ package fr.minuit4.animation.rain
 				else 
 				{					
 					pixel.end = true;
-					_pixelsEnd.push( 1 );
-					++_numPixelsEnd;
+					++count;
 				}
+				
+				pixel = pixel.next;
 			}
 			_image.unlock();
 			
-			if ( _numPixelsEnd >= _numPixels ) destroy();
+			if ( count == _pixelsCount ) destroy();
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

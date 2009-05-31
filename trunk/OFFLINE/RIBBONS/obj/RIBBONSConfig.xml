@@ -10,7 +10,7 @@
     </source-path>
   </compiler>
   <file-specs>
-    <path-element>D:\Projets\Projets\OFFLINE\RIBBONS\src\IndexOfTests.as</path-element>
+    <path-element>D:\Projets\Projets\OFFLINE\RIBBONS\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>50</default-frame-rate>
