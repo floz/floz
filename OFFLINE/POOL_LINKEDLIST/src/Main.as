@@ -21,7 +21,11 @@ package
 		
 		public function Main() 
 		{
+			var p1:PooledPoint = PooledPoint.create( 1, 1 );
+			var p2:PooledPoint = PooledPoint.create( 2, 2 );
+			var p3:PooledPoint = PooledPoint.create( 3, 3 );
 			
+			PooledPoint.release( p2 );	
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------

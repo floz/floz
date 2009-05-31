@@ -161,8 +161,11 @@ package painting.brushes
 			_dx = _px;
 			_dy = _py;
 			
-			_px -= _vx = ( _vx + ( _px - mx ) * SLOWDOWN ) * ( FRICTION + _diffX );
-			_py -= _vy = ( _vy + ( _py - my ) * SLOWDOWN ) * ( FRICTION + _diffY );
+			_vx = ( _vx + ( _px - mx ) * SLOWDOWN ) * ( FRICTION + _diffX );
+			_vy = ( _vy + ( _py - my ) * SLOWDOWN ) * ( FRICTION + _diffY );
+			
+			_px -= _vx;
+			_py -= _vy;
 			
 			drawSegment( _dx, _dy, _px, _py, Math.atan2( _py - _dy, _px - _dx ) );
 		}
