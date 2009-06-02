@@ -70,7 +70,7 @@ package
 			var n:int = a.length;
 			
 			for ( ; i < n; ++i )
-				if ( s == a[ i ] ) return i;
+				if ( s === a[ i ] ) return i;
 			
 			return -1;
 		}
@@ -80,7 +80,7 @@ package
 			var i:int = a.length;
 			
 			while ( --i > -1 )
-				if ( s == a[ i ] ) return i;
+				if ( s === a[ i ] ) return i;
 			
 			return -1;
 		}
@@ -91,7 +91,7 @@ package
 			var n:int = a.length;
 			
 			for ( ; i < n; ++i )
-				if ( s == a[ i ] ) return i;
+				if ( s === a[ i ] ) return i;
 			
 			return -1;
 		}
