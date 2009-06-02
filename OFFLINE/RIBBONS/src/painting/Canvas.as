@@ -11,7 +11,7 @@ package painting
 	import flash.display.PixelSnapping;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import painting.brushes.IBrush;
+	import painting.interfaces.IBrush;
 	
 	public class Canvas extends Bitmap
 	{
@@ -27,7 +27,7 @@ package painting
 		private var _brushes:Vector.<IBrush> = new Vector.<IBrush>( 10, true );
 		private var _brushCount:int;
 		
-		private var _mouseDown:Boolean;
+		private var _painting:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -66,65 +66,93 @@ package painting
 		
 		private function update():void
 		{
+			var runningBrushes:int;
+			
 			var i:int = _brushCount;
 			while ( --i > -1 )
 			{
-				_brushes[ i ].update( stage.mouseX, stage.mouseY );
+				if( _painting ) _brushes[ i ].paint( stage.mouseX, stage.mouseY );
+				runningBrushes += _brushes[ i ].completePainting();
+				
 				this.bitmapData.draw( _brushes[ i ] );
 			}
+			
+			if ( !runningBrushes && !_painting )
+				removeEventListener( Event.ENTER_FRAME, onFrame );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
+		/**
+		 * Add a new brush to the canvas.
+		 * @param	brush	IBrush	The brush instance.
+		 */
 		public function addBrush( brush:IBrush ):void
 		{
 			if ( _brushCount == _brushes.length )
-				throw new Error( "Pas plus de 4 brush admis." );
-			
-			if ( hasBrush( brush ) )
-				throw new Error( "Brush déjà ajouté" );
+				throw new Error( "No more " + _brushes.length + " allowed." );
 			
 			_brushes[ _brushCount ] = brush;
 			++_brushCount;
 		}
 		
+		/**
+		 * Remove a brush that had been previously added.
+		 * @param	brush	IBrush	The brush instance.
+		 */
 		public function removeBrush( brush:IBrush ):void
 		{
 			if ( !_brushCount || !hasBrush( brush ) )
-				throw new Error( "Brush invalide" );
+				throw new Error( "Invalid Brush" );
 			
 			_brushes[ getBrushIndex( brush ) ] = null;
 			
 			--_brushCount;
 		}
 		
+		/**
+		 * Start painting.
+		 */
 		public function startPainting():void
 		{
-			if ( hasEventListener( Event.ENTER_FRAME ) )
+			if ( _painting )
 				return;
 			
-			_mouseDown = true;
-			addEventListener( Event.ENTER_FRAME, onFrame );
+			_painting = true;
+			
+			if ( !hasEventListener( Event.ENTER_FRAME ) ) addEventListener( Event.ENTER_FRAME, onFrame );
 		}
 		
+		/**
+		 * Stop painting.
+		 */
 		public function stopPainting():void
 		{
-			if ( !hasEventListener( Event.ENTER_FRAME ) )
+			if ( !_painting )
 				return;
 			
-			_mouseDown = false;
-			//removeEventListener( Event.ENTER_FRAME, onFrame );
+			_painting = false;
 			
 			var i:int = _brushCount;
 			while ( --i > -1 )
-				_brushes[ i ].reset();
+				_brushes[ i ].reset( stage.mouseX, stage.mouseY );
 		}
 		
+		/**
+		 * Return the index of the brush passed in parameter.
+		 * @param	brush	IBrush	The brush instance
+		 * @return
+		 */
 		public function getBrushIndex( brush:IBrush ):int
 		{
 			return _brushes.indexOf( brush );
 		}
 		
+		/**
+		 * Return true if the brush is already used.
+		 * @param	brush	Boolean
+		 * @return
+		 */
 		public function hasBrush( brush:IBrush ):Boolean
 		{
 			return getBrushIndex( brush ) != -1;

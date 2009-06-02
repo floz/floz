@@ -10,13 +10,11 @@ package painting.interfaces
 	
 	public interface IBrush extends IBitmapDrawable
 	{
-		function update( mx:Number, my:Number ):void;
+		function paint( mx:Number, my:Number ):void;
 		
-		function reset():void;
+		function completePainting():int;
 		
-		function setColors( colors:Vector.<uint> ):void;
-		
-		function setAlphas( alphas:Vector.<Number> ):void;
+		function reset( mx:Number, my:Number ):void;
 	}
 	
 }
