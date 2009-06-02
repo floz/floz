@@ -78,6 +78,7 @@ package painting.brushes.ribbons
 					pooledRibbon._nextInPool = _pool;
 					_pool = pooledRibbon;
 				}
+				_availableInPool += POOL_GROWTH_RATE;
 			}
 			
 			pooledRibbon = _pool;

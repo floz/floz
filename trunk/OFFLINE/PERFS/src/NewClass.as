@@ -1,14 +1,13 @@
 ﻿
 /**
  * Written by :
- * @author Floz
+ * @author er
  * www.floz.fr || www.minuit4.fr
  */
-package painting.brushes 
+package  
 {
-	import flash.display.Sprite;
 	
-	public class Brush extends Sprite
+	public class NewClass 
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -17,7 +16,7 @@ package painting.brushes
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Brush() 
+		public function NewClass() 
 		{
 			
 		}

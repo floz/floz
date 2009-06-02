@@ -8,6 +8,7 @@ package
 {
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import fr.minuit4.utils.debug.FPS;
 	import painting.brushes.lines.types.Multiline;
 	import painting.brushes.lines.types.SimpleLine;
 	import painting.brushes.ribbons.type.MultiRibbon;
@@ -46,6 +47,8 @@ package
 			multiRibbon.addRibbon( new SimpleRibbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), 0, .02 ) );
 			multiRibbon.addRibbon( new SimpleRibbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), 0, -.02 ) );
 			canvas.addBrush( multiRibbon );
+			
+			addChild( new FPS() );
 			
 			stage.addEventListener( MouseEvent.MOUSE_DOWN, onDown );			
 		}
