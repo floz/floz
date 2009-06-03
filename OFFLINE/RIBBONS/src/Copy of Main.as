@@ -10,10 +10,10 @@ package
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import fr.minuit4.utils.debug.FPS;
-	import painting.brushes.ribbons.type.Ribbon;
 	//import painting.brushes.lines.types.Multiline;
 	//import painting.brushes.lines.types.SimpleLine;
 	import painting.brushes.ribbons.type.MultiRibbon;
+	import painting.brushes.ribbons.type.SimpleRibbon;
 	import painting.Canvas;
 	
 	public class Main extends Sprite
@@ -42,11 +42,13 @@ package
 			//canvas.addBrush( musltiline );
 			
 			var multiRibbon:MultiRibbon = new MultiRibbon();
-			multiRibbon.addBrush( new Ribbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ) ) );
-			multiRibbon.addBrush( new Ribbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), .02 ) );
-			multiRibbon.addBrush( new Ribbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), -.02 ) );
-			multiRibbon.addBrush( new Ribbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), 0, .02 ) );
-			multiRibbon.addBrush( new Ribbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), 0, -.02 ) );
+			multiRibbon.addRibbon( new SimpleRibbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ) ) );
+			multiRibbon.addRibbon( new SimpleRibbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), .02 ) );
+			multiRibbon.addRibbon( new SimpleRibbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), -.02 ) );
+			multiRibbon.addRibbon( new SimpleRibbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), 0, .02 ) );
+			multiRibbon.addRibbon( new SimpleRibbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), 0, -.02 ) );
+			//multiRibbon.addRibbon( new SimpleRibbon( Vector.<uint>( [ 0xff0000 ] ), Vector.<Number>( [ .7 ] ), 0, .02 ) );
+			//multiRibbon.addRibbon( new SimpleRibbon( Vector.<uint>( [ 0x0000ff ] ), Vector.<Number>( [ .7 ] ), 0, -.02 ) );
 			canvas.addBrush( multiRibbon );
 			addChild( multiRibbon );
 			

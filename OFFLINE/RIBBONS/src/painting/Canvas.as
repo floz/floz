@@ -9,9 +9,12 @@ package painting
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.PixelSnapping;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import painting.events.PaintingEvent;
 	import painting.interfaces.IBrush;
+	import painting.interfaces.IBrushCtrl;
 	
 	public class Canvas extends Bitmap
 	{
@@ -24,7 +27,7 @@ package painting
 		private var _height:Number;
 		private var _fillColor:Number;
 		
-		private var _brushes:Vector.<IBrush> = new Vector.<IBrush>( 10, true );
+		private var _brushes:Vector.<IBrushCtrl> = new Vector.<IBrushCtrl>( 10, true );
 		private var _brushCount:int;
 		
 		private var _painting:Boolean;
@@ -62,20 +65,22 @@ package painting
 			update();
 		}
 		
+		private function onDraw(e:PaintingEvent):void 
+		{
+			this.bitmapData.draw( e.brushHolder );
+			e.brushCtrl.deleteInstance( e.brushHolder );
+		}
+		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function update():void
 		{
 			var runningBrushes:int;
 			
-			var i:int = _brushCount;
-			while ( --i > -1 )
-			{
-				if( _painting ) _brushes[ i ].paint( stage.mouseX, stage.mouseY );
-				runningBrushes += _brushes[ i ].completePainting();
-				
-				this.bitmapData.draw( _brushes[ i ] );
-			}
+			var i:int;
+			var n:int = _brushCount;
+			for ( ; i < n; ++i )
+				runningBrushes += _brushes[ i ].update( stage.mouseX, stage.mouseY );
 			
 			if ( !runningBrushes && !_painting )
 				removeEventListener( Event.ENTER_FRAME, onFrame );
@@ -87,10 +92,12 @@ package painting
 		 * Add a new brush to the canvas.
 		 * @param	brush	IBrush	The brush instance.
 		 */
-		public function addBrush( brush:IBrush ):void
+		public function addBrush( brush:IBrushCtrl ):void
 		{
 			if ( _brushCount == _brushes.length )
 				throw new Error( "No more " + _brushes.length + " allowed." );
+			
+			brush.addEventListener( PaintingEvent.DRAW, onDraw, true );
 			
 			_brushes[ _brushCount ] = brush;
 			++_brushCount;
@@ -100,7 +107,7 @@ package painting
 		 * Remove a brush that had been previously added.
 		 * @param	brush	IBrush	The brush instance.
 		 */
-		public function removeBrush( brush:IBrush ):void
+		public function removeBrush( brush:IBrushCtrl ):void
 		{
 			if ( !_brushCount || !hasBrush( brush ) )
 				throw new Error( "Invalid Brush" );
@@ -117,6 +124,11 @@ package painting
 		{
 			if ( _painting )
 				return;
+			
+			var i:int;
+			var n:int = _brushCount;
+			for ( ; i < n; ++i )
+				_brushes[ i ].createInstance();
 			
 			_painting = true;
 			
@@ -135,7 +147,7 @@ package painting
 			
 			var i:int = _brushCount;
 			while ( --i > -1 )
-				_brushes[ i ].reset( stage.mouseX, stage.mouseY );
+				_brushes[ i ].releaseBrushes( stage.mouseX, stage.mouseY );
 		}
 		
 		/**
@@ -143,7 +155,7 @@ package painting
 		 * @param	brush	IBrush	The brush instance
 		 * @return
 		 */
-		public function getBrushIndex( brush:IBrush ):int
+		public function getBrushIndex( brush:IBrushCtrl ):int
 		{
 			return _brushes.indexOf( brush );
 		}
@@ -153,7 +165,7 @@ package painting
 		 * @param	brush	Boolean
 		 * @return
 		 */
-		public function hasBrush( brush:IBrush ):Boolean
+		public function hasBrush( brush:IBrushCtrl ):Boolean
 		{
 			return getBrushIndex( brush ) != -1;
 		}

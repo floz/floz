@@ -4,26 +4,26 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package painting.brushes.ribbons 
+package painting.brushes.ribbons.type 
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.PixelSnapping;
 	import flash.display.Shape;
-	import flash.utils.getQualifiedClassName;
+	import flash.display.Sprite;
 	
-	public class PooledRibbon extends Shape
+	public class RibbonCore extends Sprite
 	{
+		
+		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private static const POOL_GROWTH_RATE:int = 0x14;
-		
-		private static var _availableInPool:int;
-		private static var _pool:PooledRibbon;
-		private static var _allowInstance:Boolean;
-		
-		private var _nextInPool:PooledRibbon;
-		
 		private var _colors:Vector.<uint>;
-		private var _alphas:Vector.<Number>;		
+		private var _alphas:Vector.<Number>;
+		private var _canvasWidth:Number;
+		private var _canvasHeight:Number;
+		
 		private var _colorsCount:int;
 		private var _alphasCount:int;
 		private var _colorsIdx:int;
@@ -43,77 +43,69 @@ package painting.brushes.ribbons
 		public var x2:Number;
 		public var y2:Number;
 		
+		public var brush:Shape;
+		public var canvas:BitmapData;
+		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function PooledRibbon() 
+		public function RibbonCore( colors:Vector.<uint>, alphas:Vector.<Number>, canvasWidth:Number, canvasHeight:Number ) 
 		{
-			verifyInstanciation();
-			super();
+			this.colors = colors;
+			this.alphas = alphas;
+			this._canvasWidth = canvasWidth;
+			this._canvasHeight = canvasHeight;
+			
+			init();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		private function verifyInstanciation():void
+		private function init():void
 		{
-			if( !_allowInstance ) throw new Error( getQualifiedClassName( PooledRibbon ) + "is a pooled class. Use the static create() method instead" );
+			x1 =
+			y1 =
+			x2 =
+			y2 =
+			dx =
+			dy =
+			px =
+			py = NaN;
+			
+			vx = 
+			vy = 0;
+			
+			colors = colors;
+			alphas = alphas;
+			
+			brush = new Shape();
+			
+			canvas = new BitmapData( _canvasWidth, _canvasHeight, true, 0x00 );
+			addChild( new Bitmap( canvas, PixelSnapping.NEVER, false ) );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		static public function create( colors:Vector.<uint>, alphas:Vector.<Number> ):PooledRibbon
+		public function reset():void
 		{
-			var pooledRibbon:PooledRibbon;
+			x1 =
+			y1 =
+			x2 =
+			y2 =
+			dx =
+			dy =
+			px =
+			py = NaN;
 			
-			if ( !_availableInPool )
-			{
-				var n:int = POOL_GROWTH_RATE;
-				while ( --n > -1 )
-				{
-					_allowInstance = true;
-					pooledRibbon = new PooledRibbon();
-					_allowInstance = false;
-					
-					pooledRibbon._nextInPool = _pool;
-					_pool = pooledRibbon;
-				}
-				_availableInPool += POOL_GROWTH_RATE;
-			}
+			vx = 
+			vy = 0;
 			
-			pooledRibbon = _pool;
-			_pool = pooledRibbon._nextInPool;
-			--_availableInPool;
+			brush.graphics.clear();
+			brush = null;
 			
-			pooledRibbon.x1 =
-			pooledRibbon.y1 =
-			pooledRibbon.x2 =
-			pooledRibbon.y2 =
-			pooledRibbon.dx =
-			pooledRibbon.dy =
-			pooledRibbon.px =
-			pooledRibbon.py = NaN;
-			
-			pooledRibbon.vx = 
-			pooledRibbon.vy = 0;
-			
-			pooledRibbon.colors = colors;
-			pooledRibbon.alphas = alphas;
-			
-			return pooledRibbon;
-		}
-		
-		static public function release( pooledRibbon:PooledRibbon ):void
-		{
-			pooledRibbon._nextInPool = _pool;
-			_pool = pooledRibbon;
-			
-			++_availableInPool;			
-		}
-		
-		public function dispose():void
-		{
-			release( this );
+			canvas.dispose();
+			canvas = null;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

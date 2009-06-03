@@ -11,6 +11,7 @@ package painting
 	import flash.display.PixelSnapping;
 	import flash.events.Event;
 	import painting.brushes.IBrush;
+	import painting.interfaces.IBrush;
 	
 	public class Canvas extends Bitmap
 	{
@@ -101,6 +102,13 @@ package painting
 		{
 			if ( hasEventListener( Event.ENTER_FRAME ) )
 				return;
+			
+			var i:int;
+			var n:int = _brushCount;
+			for ( ; i < n; ++i )
+			{
+				_brushes[ i ].
+			}
 			
 			_mouseDown = true;
 			addEventListener( Event.ENTER_FRAME, onFrame );

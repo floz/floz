@@ -6,13 +6,21 @@
  */
 package painting.brushes.ribbons.type 
 {
+	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import painting.interfaces.IBrush;
+	import painting.interfaces.IBrushCtrl;
+	import painting.interfaces.IBrushHolder;
 	
-	public class MultiRibbon extends Sprite implements IBrush
+	public class MultiRibbon extends Sprite implements IBrushCtrl
 	{
 		
+		// - CONSTS ----------------------------------------------------------------------
+		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
+		
+		private var _ribbonsDatas:Vector.<IBrush>;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -20,7 +28,7 @@ package painting.brushes.ribbons.type
 		
 		public function MultiRibbon() 
 		{
-			
+			_ribbonsDatas = new Vector.<IBrush>();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -29,64 +37,63 @@ package painting.brushes.ribbons.type
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function paint( mx:Number, my:Number ):void
+		public function createInstance():void
 		{
-			var ribbon:SimpleRibbon;
+			var instance:RibbonsHolder = new RibbonsHolder();
+			addChild( instance );
 			
-			var i:int = getRibbonsCount();
-			while ( --i > -1 )
-			{
-				ribbon = getChildAt( i ) as SimpleRibbon;
-				ribbon.paint( mx, my );
-			}
+			var i:int;
+			var n:int = _ribbonsDatas.length;
+			for ( ; i < n; ++i )
+				instance.addBrush( _ribbonsDatas[ i ] );
 		}
 		
-		public function completePainting():int
+		public function deleteInstance( instance:IBrushHolder ):void
 		{
-			var ribbon:SimpleRibbon;
-			
+			removeChild( instance as DisplayObject );
+		}
+		
+		public function update( mx:Number, my:Number ):int
+		{
 			var count:int;
 			
-			var i:int = getRibbonsCount();
+			var i:int = numChildren;
 			while ( --i > -1 )
 			{
-				ribbon = getChildAt( i ) as SimpleRibbon;
-				count += ribbon.completePainting();
+				if ( !numChildren ) break;
+				
+				count += ( getChildAt( i ) as IBrushHolder ).update( mx, my );
 			}
 			
 			return count;
 		}
 		
-		public function reset( mx:Number, my:Number ):void
+		public function releaseBrushes( mx:Number, my:Number ):void
 		{
-			var ribbon:SimpleRibbon;
-			
-			var i:int = getRibbonsCount();
+			var i:int = numChildren;
 			while ( --i > -1 )
-			{
-				ribbon = getChildAt( i ) as SimpleRibbon;
-				ribbon.reset( mx, my );
-			}
+				( getChildAt( i ) as IBrushHolder ).releaseBrushes( mx, my );
 		}
 		
-		public function addRibbon( ribbon:SimpleRibbon ):void
+		public function addBrush( brush:IBrush ):void
 		{
-			addChild( ribbon );
+			_ribbonsDatas.push( brush );
 		}
 		
-		public function releaseRibbon( ribbon:SimpleRibbon ):void
+		public function removeBrush( brush:IBrush ):void
 		{
-			removeChild( ribbon );
+			if ( !hasBrush( brush ) ) return;
+			_ribbonsDatas.splice( getBrushIndex( brush ), 1 );
 		}
 		
-		public function getRibbonsCount():int
+		public function getBrushIndex( brush:IBrush ):int
 		{
-			return this.numChildren;
+			return _ribbonsDatas.indexOf( brush );
 		}
 		
-		public function hasRibbon():Boolean
+		public function hasBrush( brush:IBrush ):Boolean
 		{
-			return this.numChildren ? true : false;
+			return _ribbonsDatas.indexOf( brush ) != -1;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

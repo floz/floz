@@ -6,13 +6,15 @@
  */
 package painting.brushes.ribbons.type 
 {
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Graphics;
 	import flash.display.GraphicsPathCommand;
 	import flash.display.Sprite;
-	import painting.brushes.ribbons.PooledRibbon;
+	import painting.Canvas;
+	import painting.events.PaintingEvent;
 	import painting.interfaces.IBrush;
 	
-	public class SimpleRibbon extends Sprite implements IBrush
+	public class Ribbon extends Sprite implements IBrush
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -26,6 +28,8 @@ package painting.brushes.ribbons.type
 		private var _diffY:Number;
 		private var _adaptSize:Boolean;
 		
+		private var _core:RibbonCore;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		public static var FRICTION:Number = .8;
@@ -34,30 +38,23 @@ package painting.brushes.ribbons.type
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function SimpleRibbon( colors:Vector.<uint>, alphas:Vector.<Number>, diffX:Number = 0, diffY:Number = 0, adaptSize:Boolean = true ) 
+		public function Ribbon( colors:Vector.<uint>, alphas:Vector.<Number>, diffX:Number = 0, diffY:Number = 0, adaptSize:Boolean = true ) 
 		{
 			this._colors = colors;
 			this._alphas = alphas;
 			this._diffX = diffX;
 			this._diffY = diffY;
 			this._adaptSize = adaptSize;
-			
-			init();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		private function init():void
+		private function drawSequence( x1:Number, y1:Number, x2:Number, y2:Number, a:Number ):void
 		{
-			this.mouseChildren =
-			this.mouseEnabled = false;
-		}
-		
-		private function drawSequence( ribbon:PooledRibbon, x1:Number, y1:Number, x2:Number, y2:Number, a:Number ):void
-		{
-			var g:Graphics = ribbon.graphics;
+			var ribbon:RibbonCore = _core;
+			var g:Graphics = _core.brush.graphics;
 			
 			var tx:Number = x2 - x1;
 			var ty:Number = y2 - y1;
@@ -109,16 +106,24 @@ package painting.brushes.ribbons.type
 			_datas[ 0x7 ] = rayon * Math.sin( -rot + a ) + oy;
 			
 			g.drawPath( _commands, _datas );
+			
+			ribbon.canvas.draw( ribbon.brush );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
+		public function create():void
+		{
+			_core = new RibbonCore( _colors, _alphas, stage.stageWidth, stage.stageHeight );
+			addChild( _core );
+			
+			_core.colors = _colors;
+			_core.alphas = _alphas;
+		}
+		
 		public function paint( mx:Number, my:Number ):void
 		{
-			if ( !currentRibbon )
-				addChild( PooledRibbon.create( _colors, _alphas ) );
-			
-			var ribbon:PooledRibbon = currentRibbon;
+			var ribbon:RibbonCore = _core;
 			
 			if ( !ribbon.px )
 			{
@@ -135,15 +140,12 @@ package painting.brushes.ribbons.type
 			ribbon.px -= ribbon.vx;
 			ribbon.py -= ribbon.vy;
 			
-			drawSequence( ribbon, px, py, ribbon.px, ribbon.py, Math.atan2( ribbon.py - py, ribbon.px - px ) );
+			drawSequence( px, py, ribbon.px, ribbon.py, Math.atan2( ribbon.py - py, ribbon.px - px ) );
 		}
 		
 		public function completePainting():int
 		{
-			if( !hasRibbon() )
-				return 0;
-			
-			var ribbon:PooledRibbon;
+			var ribbon:RibbonCore = _core;
 			
 			var px:Number;
 			var py:Number;
@@ -151,57 +153,61 @@ package painting.brushes.ribbons.type
 			var dy:Number;
 			var dist:Number;
 			
-			var i:int = getRibbonsCount() - 1;
-			while ( --i > -1 )
+			px = ribbon.px;
+			py = ribbon.py;
+			
+			ribbon.vx = ( ribbon.vx + ( ribbon.px - ribbon.dx ) * SLOWDOWN ) * ( FRICTION + _diffX );
+			ribbon.vy = ( ribbon.vy + ( ribbon.py - ribbon.dy ) * SLOWDOWN ) * ( FRICTION + _diffY );
+			
+			ribbon.px -= ribbon.vx;
+			ribbon.py -= ribbon.vy;
+			
+			dx = ( ribbon.dx - ribbon.px );
+			dy = ( ribbon.dy - ribbon.dy );
+			dist = Math.sqrt( dx * dx + dy * dy );
+			
+			if ( dist < .1 )
 			{
-				ribbon = getChildAt( i ) as PooledRibbon;
+				dispatchEvent( new PaintingEvent( PaintingEvent.BRUSH_COMPLETE ) );
 				
-				px = ribbon.px;
-				py = ribbon.py;
+				ribbon.graphics.clear();
 				
-				ribbon.vx = ( ribbon.vx + ( ribbon.px - ribbon.dx ) * SLOWDOWN ) * ( FRICTION + _diffX );
-				ribbon.vy = ( ribbon.vy + ( ribbon.py - ribbon.dy ) * SLOWDOWN ) * ( FRICTION + _diffY );
-				
-				ribbon.px -= ribbon.vx;
-				ribbon.py -= ribbon.vy;
-				
-				dx = ( ribbon.dx - ribbon.px );
-				dy = ( ribbon.dy - ribbon.dy );
-				dist = Math.sqrt( dx * dx + dy * dy );
-				
-				if ( dist < .1 )
-				{
-					ribbon.dispose();
-					removeChild( ribbon );
-					continue;
-				}
-				
-				drawSequence( ribbon, px, py, ribbon.px, ribbon.py, Math.atan2( ribbon.py - py, ribbon.px - px ) );
+				return 0;
 			}
 			
-			return int( getRibbonsCount() - 1 );
+			drawSequence( px, py, ribbon.px, ribbon.py, Math.atan2( ribbon.py - py, ribbon.px - px ) );
+			
+			return 1;
 		}
 		
-		public function reset( mx:Number, my:Number ):void
+		public function release( mx:Number, my:Number ):void
 		{
-			currentRibbon.dx = mx;
-			currentRibbon.dy = my;
-			
-			addChild( PooledRibbon.create( _colors, _alphas ) );
+			_core.dx = mx;
+			_core.dy = my;
+		}
+		
+		public function reset():void
+		{
+			_core.reset();
+		}
+		
+		public function copy():IBrush
+		{
+			return new Ribbon( _colors, _alphas, _diffX, _diffY, _adaptSize );
 		}
 		
 		public function setColors( colors:Vector.<uint> ):void
-		{
+		{ 
 			_colors = colors;
-			if ( !currentRibbon ) return;
-			currentRibbon.colors = colors;
+			if ( !_core ) return;
+			_core.colors = colors;
 		}
 		
 		public function setAlphas( alphas:Vector.<Number> ):void
 		{
 			_alphas = alphas;
-			if ( !currentRibbon ) return;
-			currentRibbon.alphas = alphas;
+			if ( !_core ) return;
+			_core.alphas = alphas;
 		}
 		
 		public function getRibbonsCount():int
@@ -215,12 +221,6 @@ package painting.brushes.ribbons.type
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
-		
-		public function get currentRibbon():PooledRibbon
-		{
-			if ( !numChildren ) return null;
-			return getChildAt( int( numChildren - 1 ) ) as PooledRibbon;
-		}
 		
 	}
 	
