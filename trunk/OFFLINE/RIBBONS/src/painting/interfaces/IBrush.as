@@ -7,14 +7,17 @@
 package painting.interfaces 
 {
 	import flash.display.IBitmapDrawable;
+	import flash.events.IEventDispatcher;
 	
-	public interface IBrush extends IBitmapDrawable
+	public interface IBrush extends IBitmapDrawable, IEventDispatcher
 	{
 		function paint( mx:Number, my:Number ):void;
 		
 		function completePainting():int;
 		
-		function reset( mx:Number, my:Number ):void;
+		function release( mx:Number, my:Number ):void;
+		
+		function copy():IBrush;
 	}
 	
 }
