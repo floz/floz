@@ -30,7 +30,7 @@ package
 		
 		public function Main() 
 		{
-			canvas = new Canvas( stage.stageWidth, stage.stageHeight, false, 0xeeeeee );
+			canvas = new Canvas( stage.stageWidth, stage.stageHeight, false, 0x405560 );
 			addChild( canvas );
 			
 			//simpleLine = new SimpleLine( Vector.<uint>( [ 0x000000 ] ), Vector.<Number>( [ 1 ] ) );

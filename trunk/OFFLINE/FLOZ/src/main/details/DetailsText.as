@@ -84,7 +84,7 @@ package main.details
 			txtClient.htmlText = "<span class='basic_text'>" + project.client + "</span>";
 			txtTechno.htmlText = "<span class='basic_text'>" + project.technos + "</span>";
 			txtDesc.htmlText = "<span class='basic_text'>" + project.desc + "</span>";
-			txtUrl.htmlText = "<a href='" + project.url + "' class='basic_url' target='_blank'>" + project.url + "</a>";
+			txtUrl.htmlText = ( project.url && project.url != "" ) ? "<a href='" + project.url + "' class='basic_url' target='_blank'>View the project</a>" : "<span class='basic_url'>Project offline</span>"
 			
 			var filter:GlowFilter = Config.glowFilter.clone() as GlowFilter;
 			filter.strength = 3.
