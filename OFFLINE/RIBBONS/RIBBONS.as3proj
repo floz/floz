@@ -6,10 +6,10 @@
     <movie input="" />
     <movie path="bin/RIBBONS.swf" />
     <movie fps="30" />
-    <movie width="800" />
-    <movie height="600" />
+    <movie width="500" />
+    <movie height="500" />
     <movie version="10" />
-    <movie background="#FFFFFF" />
+    <movie background="#C0C0C0" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
