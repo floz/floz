@@ -30,7 +30,7 @@ package
 		
 		public function Main() 
 		{
-			canvas = new Canvas( stage.stageWidth, stage.stageHeight );
+			canvas = new Canvas( stage.stageWidth, stage.stageHeight, false, 0xeeeeee );
 			addChild( canvas );
 			
 			//simpleLine = new SimpleLine( Vector.<uint>( [ 0x000000 ] ), Vector.<Number>( [ 1 ] ) );
@@ -50,7 +50,7 @@ package
 			canvas.addBrush( multiRibbon );
 			addChild( multiRibbon );
 			
-			addChild( new FPS() );
+			//addChild( new FPS() );
 			
 			stage.addEventListener( MouseEvent.MOUSE_DOWN, onDown );			
 		}
