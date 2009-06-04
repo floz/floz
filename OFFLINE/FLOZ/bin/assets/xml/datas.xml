@@ -6,7 +6,7 @@
 		<client><![CDATA[Nous Production & Synerg'Hetic]]></client>
 		<job>Flash developer, Graphic designer, Project Chief</job>
 		<technos>AS3, Flash, Photoshop, XML</technos>
-		<url>http://www.beatlizeyourself.com</url>
+		<url>http://www.floz.fr/beatlize</url>
 		<desc><![CDATA[Synerg’Hetic, the HETIC’s junior entreprise, came to Arno and I to develop a flash application that gives you the possibility to insert your face in a Beatles' picture. <br />Arno was in charge of the PHP and I took care of the flash side. <br />The development took us one week. <br />Date: April 2009]]></desc>
 		<diaporama>
 			<image name="beatlize1.jpg" />
@@ -103,7 +103,7 @@
 		<client><![CDATA[Me :-)]]></client>
 		<job>Flash developer</job>
 		<technos>Flash, AS3</technos>
-		<url>http://www.minuit4.fr/2009/05/flash/</url>
+		<url>http://www.minuit4.fr/2009/05/flash/effet-de-desintegration-en-as3-via-bitmap-et-bitmapdata/</url>
 		<diaporama>
 			<image name="desintegration1.jpg" />
 			<image name="desintegration2.jpg" />
@@ -111,11 +111,38 @@
 		</diaporama>
 		<desc><![CDATA[While developing this portfolio, I had an idea : making the transition between two section by disintegration of elements. And it worked ! <br />Unfortunately, the effect is too greedy in performances. However, I would like to use it in another project with small images. It could be fun. <br />Date: May 2009]]></desc>
 	</item>
+	<item title="Equalizer" preview="equalizer.jpg" pubdate="1245016800000">
+		<client><![CDATA[Me :-)]]></client>
+		<job>Flash developer</job>
+		<technos>Flash, AS3</technos>
+		<url>http://www.minuit4.fr/2009/05/flash/passer-par-des-linkedlist-pour-gagner-en-performances/</url>
+		<diaporama>
+			<image name="equalizer1.jpg" />
+			<image name="equalizer2.jpg" />
+			<image name="equalizer3.jpg" />
+			<image name="equalizer4.jpg" />
+		</diaporama>
+		<desc><![CDATA[During a HETIC exam, I worked on the development of an equalizer. I chose to deal with some bitmapdata effects and pixels manipulation.<br />Date: May 2009]]></desc>
+	</item>
+	<item title="Ribbons" preview="ribbons.jpg" pubdate="1246658400000">
+		<client><![CDATA[Me :-)]]></client>
+		<job>Flash developer</job>
+		<technos>Flash, AS3</technos>
+		<url>http://www.minuit4.fr/2009/06/flash/playing-with-ribbons-en-flas/</url>
+		<diaporama>
+			<image name="ribbons1.jpg" />
+			<image name="ribbons2.jpg" />
+			<image name="ribbons3.jpg" />
+			<image name="ribbons4.jpg" />
+			<image name="ribbons5.jpg" />
+		</diaporama>
+		<desc><![CDATA[I'm a huge fan of Erik Natzke's work. I've always wanted to try to replicated his workflow to get inspired. This is my first experience with, I hope, a long series of tests brushes creation.<br />Date: June 2009]]></desc>
+	</item>
 </lab>
 <about>
 	<presentation><![CDATA[I discovered I had a passion for Flash development two years ago. I'm currently at HETIC, a computer sciences school, after graduating with a DUT "Services et Réseaux de Communication" (Services and Communication Networks). These two schools gave me some skills related to the domains of the New Technologies of Information and Communication. <br />Last year, I spent 5 months at Havas Entertainement, a web agency, as a Flash Developer.]]></presentation>
 	<skills>
-		<flash><![CDATA[AS1 / AS2 / AS3 Programming <br />Flash Remoting / XML / etc. <br />PV3D / Away3D / PureMVC / etc. <br />Flex & Air (Basics)]]></flash>
+		<flash><![CDATA[AS1 / AS2 / AS3 Programming <br />Flash Remoting / XML / etc. <br />PV3D / Away3D / FLARToolKit / PureMVC / etc. <br />Flex & Air (Basics)]]></flash>
 		<graphic><![CDATA[Identification <br />Web layouts]]></graphic>
 	</skills>
 	<softwares flash="Flash, Flex Builder, Flash Develop" graphic="Photoshop, Illustrator, Pencils & Hands" />
