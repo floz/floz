@@ -5,12 +5,12 @@
   <target-player>10.0.0</target-player>
   <compiler>
     <source-path append="true">
-      <path-element>D:\Projets\Projets\OFFLINE\RIBBONS\src</path-element>
+      <path-element>D:\Projets\Flash\Projets\OFFLINE\RIBBONS\src</path-element>
       <path-element>D:\Appz\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
   </compiler>
   <file-specs>
-    <path-element>D:\Projets\Projets\OFFLINE\RIBBONS\src\Main.as</path-element>
+    <path-element>D:\Projets\Flash\Projets\OFFLINE\RIBBONS\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#C0C0C0</default-background-color>
   <default-frame-rate>30</default-frame-rate>

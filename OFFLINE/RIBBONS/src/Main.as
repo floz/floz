@@ -41,6 +41,9 @@ package
 			//multiline.addLine( new SimpleLine( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ 1 ] ), .0, -.02 ) );
 			//canvas.addBrush( musltiline );
 			
+			Ribbon.FRICTION = .9;
+			Ribbon.RIBBON_SIZE = 45;
+			
 			var multiRibbon:MultiRibbon = new MultiRibbon();
 			multiRibbon.addBrush( new Ribbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ) ) );
 			multiRibbon.addBrush( new Ribbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), .02 ) );
