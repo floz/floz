@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="horizontal"
+				creationComplete="service.send()">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.ResultEvent;
+			
+			[Bindable]
+			private var datas:ArrayCollection;
+			
+			private function onResult( e:ResultEvent ):void
+			{
+				datas = e.result.data.works;
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:HTTPService id="service" url="data/datas.xml" result="onResult( event )" />
+	
+	<mx:Panel title="Exercice de lecture de XML">
+		<mx:DataGrid dataProvider="{datas}" width="100%" height="100%">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Titre" dataField="" />
+			</mx:columns>
+		</mx:DataGrid>
+	</mx:Panel>
+	
+</mx:Application>

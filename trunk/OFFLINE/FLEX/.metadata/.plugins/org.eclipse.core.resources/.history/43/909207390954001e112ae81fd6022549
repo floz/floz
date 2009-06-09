@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			private function onValid( e:MouseEvent ):void
+			{
+				trace( checkLogin.nom );
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Model id="checkLogin">
+		<login>
+			<nom>{nom}</nom>
+			<mail>{mail}</mail>
+		</login>
+	</mx:Model>
+	
+	<mx:EmailValidator source="{mail}" property="text" />
+	<mx:StringValidator source="{nom}" property="text" minLength="4" maxLength="13"/>
+	
+	<mx:Panel>
+		<mx:Form>
+			<mx:FormItem label="Nom :" required="true">
+				<mx:TextInput id="nom" width="200" />
+			</mx:FormItem>
+			
+			<mx:FormItem label="Mail : " required="true">
+				<mx:TextInput id="mail" width="200" />
+			</mx:FormItem>
+			
+			<mx:FormItem>
+				<mx:Button id="btValid" label="Valider" click="onValid( event )" />
+			</mx:FormItem>
+		</mx:Form>
+	</mx:Panel>
+	
+</mx:Application>

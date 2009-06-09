@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.CursorManager;
+			
+			private function onClick( e:MouseEvent ):void
+			{
+				trace( "validation !" );
+				//CursorManager.setBusyCursor();
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Model id="projectInfos">
+		<project>
+			<title>{title.text}</title>
+			<url>{url.text}</url>
+		</project>
+	</mx:Model>
+	
+	<mx:Validator id="checkValid" source="{title}" property="text"
+	
+	<mx:Form>
+		<mx:FormItem label="Titre du projet : ">
+			<mx:TextInput id="title" width="100%" />
+		</mx:FormItem>
+		
+		<mx:FormItem label="URL : ">
+			<mx:TextInput id="url" width="100%" />
+		</mx:FormItem>
+		
+		<mx:FormItem>
+			<mx:Button id="btValid" label="Valider l'ajout" click="onClick( event )" enabled="false" />
+		</mx:FormItem>
+	</mx:Form>
+	
+</mx:Canvas>

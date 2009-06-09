@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="horizontal">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			private function onClick( e:MouseEvent ):void
+			{
+				switch( e.currentTarget )
+				{
+					case btAdd: trace( "add" ); break;
+					case btModif: trace( "modif" ); break;
+					case btDel: trace( "delete" ); break;
+				}
+			}
+			
+		]]>
+	</mx:Script>
+
+	<mx:ApplicationControlBar id="controlBar" dock="true">
+		<mx:HBox width="100%" height="100%" horizontalAlign="center">
+			<mx:LinkButton id="btAdd" label="Ajouter" click="onClick( event )" />
+			<mx:LinkButton id="btModif" label="Modifier" click="onClick( event )" />
+			<mx:LinkButton id="btDel" label="Supprimer" click="onClick( event )" />
+		</mx:HBox>
+	</mx:ApplicationControlBar>
+	
+</mx:Application>

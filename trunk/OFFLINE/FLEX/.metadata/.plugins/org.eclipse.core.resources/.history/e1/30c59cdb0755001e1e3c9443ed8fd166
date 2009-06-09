@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt">
+	
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="hovered"/>
+		<s:State name="selected"/>
+	</s:states>
+	
+	<s:transitions>
+		<s:Transition fromState="normal" toState="hovered" autoReverse="true">
+			<s:Parallel>
+				<s:Parallel target="{rect1}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+		<s:Transition fromState="selected" toState="normal" autoReverse="true">
+			<s:Parallel>
+				<s:Parallel target="{rect1}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+	</s:transitions>
+	
+	<s:Rect d:userLabel="Item Highlight" width="376" height="121" alpha.normal="0" alpha.hovered="0.4" alpha.selected="0.8" id="rect1">
+		<s:fill>
+			<s:SolidColor color="0xCED7EE" color.hovered="#e3e8e9" color.selected="#e3e8e9"/>
+		</s:fill>
+	</s:Rect>
+	<!--<s:BitmapImage source="{data.image2}" resizeMode="scale" d:userLabel="photo" x="20" y="26"/>-->
+	<mx:Image source="{data.image2}" resizeMode="scale" d:userLabel="photo" x="20" y="26"/>
+	<s:BitmapImage source="{data.image3}" resizeMode="scale" d:userLabel="bordures" x="20" y="26"/>
+	<s:RichText d:userLabel="In mi dui, viverra sed viverra ac, scelerisque non ante. Ut lacus felis, vestibulum id lobortis ac, pretium ultrices augue. In hac habitasse platea dictumst. Vestibulum id lobortis ac, pretium ultrices augue. In hac habitasse platea dictums." fontFamily="Myriad Pro" color="0x474747" fontSize="10" lineHeight="14" width="251" height="84" whiteSpaceCollapse="preserve" x="115" y="31" text="{data.text1}">
+	</s:RichText>
+	<s:RichText d:userLabel="PLAYING WITH RIBBONS" fontWeight="bold" fontFamily="Myriad Pro" color="0x474747" fontSize="12" lineHeight="18" whiteSpaceCollapse="preserve" x="20" y="10" text="{data.text2}">
+	</s:RichText>
+</s:ItemRenderer>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
+	
+	<mx:Form>
+		<mx:FormItem label="Titre du projet : " required="true">
+			<mx:TextInput id="title" width="100%" />
+		</mx:FormItem>
+		
+		<mx:FormItem label="URL : ">
+			<mx:TextInput id="client" width="100%" />
+		</mx:FormItem>
+	</mx:Form>
+	
+</mx:Canvas>

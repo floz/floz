@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="horizontal">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			private function onDockClick( e:MouseEvent ):void
+			{
+				//controlBar.dock = false;
+			}
+			
+		]]>
+	</mx:Script>
+
+	<mx:ApplicationControlBar id="controlBar" dock="true">
+		<mx:Button id="btDock" click="onDockClick( event )" />
+	</mx:ApplicationControlBar>
+	
+</mx:Application>
