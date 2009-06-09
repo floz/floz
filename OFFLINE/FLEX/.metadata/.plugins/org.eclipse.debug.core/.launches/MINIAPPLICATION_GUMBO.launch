@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launchConfiguration type="com.adobe.flexbuilder.debug.launchConfigurationType.flash">
+<stringAttribute key="com.adobe.flexbuilder.debug.ATTR_APPLICATION" value="src/MINIAPPLICATION_GUMBO.mxml"/>
+<stringAttribute key="com.adobe.flexbuilder.debug.ATTR_DEBUG_URL" value="file:/D:/Projets/Projets/OFFLINE/FLEX/MINIAPPLICATION_GUMBO/bin-debug/MINIAPPLICATION_GUMBO.html"/>
+<stringAttribute key="com.adobe.flexbuilder.debug.ATTR_PROFILE_URL" value="file:/D:/Projets/Projets/OFFLINE/FLEX/MINIAPPLICATION_GUMBO/bin-debug/MINIAPPLICATION_GUMBO.html"/>
+<stringAttribute key="com.adobe.flexbuilder.debug.ATTR_PROJECT" value="MINIAPPLICATION_GUMBO"/>
+<stringAttribute key="com.adobe.flexbuilder.debug.ATTR_RUN_URL" value="file:/D:/Projets/Projets/OFFLINE/FLEX/MINIAPPLICATION_GUMBO/bin-debug/MINIAPPLICATION_GUMBO.html"/>
+<booleanAttribute key="com.adobe.flexbuilder.debug.ATTR_USE_DEFAULT_URLS" value="true"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/MINIAPPLICATION_GUMBO"/>
+<listEntry value="/MINIAPPLICATION_GUMBO/src/MINIAPPLICATION_GUMBO.mxml"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+<listEntry value="1"/>
+</listAttribute>
+</launchConfiguration>

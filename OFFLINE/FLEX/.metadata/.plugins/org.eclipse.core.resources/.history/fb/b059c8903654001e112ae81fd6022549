@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.ValidationResultEvent;
+			import mx.managers.CursorManager;
+			
+			private function onClick( e:MouseEvent ):void
+			{
+				notification.text = "Enregistrement validé !";
+				//CursorManager.setBusyCursor();
+			}
+			
+			private function onCheckValid( e:ValidationResultEvent ):void
+			{
+				switch( e.type )
+				{
+					case ValidationResultEvent.VALID: btValid.enabled = true; break;
+					case ValidationResultEvent.INVALID: btValid.enabled = false; break;
+				}
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Model id="projectInfos">
+		<project>
+			<title>{title.text}</title>
+			<url>{url.text}</url>
+		</project>
+	</mx:Model>
+	
+	<mx:Validator id="checkValid" source="{title}" property="text" required="true" valid="onCheckValid( event )" invalid="onCheckValid( event )" />
+	
+	<mx:Form>
+		<mx:FormItem label="Titre du projet : ">
+			<mx:TextInput id="title" width="100%" />
+		</mx:FormItem>
+		
+		<mx:FormItem label="URL : ">
+			<mx:TextInput id="url" width="100%" />
+		</mx:FormItem>
+		
+		<mx:FormItem>
+			<mx:Button id="btValid" label="Valider l'ajout" click="onClick( event )" enabled="false" />
+		</mx:FormItem>
+		<mx:Text id="notification" text="" />
+	</mx:Form>
+	
+	
+	
+</mx:Canvas>

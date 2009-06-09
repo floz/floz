@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TabNavigator xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" creationPolicy="all" 
+	xmlns:flextras="http://www.flextras.com/mxml" creationComplete="init()"  >
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import com.flextras.autoCompleteComboBox.AutoCompleteComboBox;
+			import mx.events.DataGridEvent;
+			import mx.controls.TextInput;
+			import mx.controls.NumericStepper;
+			
+			[Bindable] 
+			public var ACCB : AutoCompleteComboBox;
+
+			[Bindable] 
+			public var generatedCode : String = '';
+			
+			[Bindable] 
+			public var dataProvider : ArrayCollection = new ArrayCollection([ 
+				{label:'United States of America',data:0},
+				{label:'Alabama',data:1},
+				{label:'Alaska',data:2},
+				{label:'Arizona',data:3},
+				{label:'Arkansas',data:4},
+				{label:'California',data:5},
+				{label:'Colorado',data:6},
+				{label:'Connecticut',data:7},
+				{label:'Delaware',data:8},
+				{label:'Florida',data:9},
+				{label:'Georgia',data:10},
+				{label:'Hawaii',data:11},
+				{label:'Idaho',data:12},
+				{label:'Illinois',data:13},
+				{label:'Indiana',data:14},
+				{label:'Iowa',data:15},
+				{label:'Kansas',data:16},
+				{label:'Kentucky',data:17},
+				{label:'Louisiana',data:18},
+				{label:'Maine',data:19},
+				{label:'Maryland',data:20},
+				{label:'Massachusetts',data:21},
+				{label:'Michigan',data:22},
+				{label:'Minnesota',data:23},
+				{label:'Mississippi',data:24},
+				{label:'Missouri',data:25},
+				{label:'Montana',data:26},
+				{label:'Nebraska',data:27},
+				{label:'Nevada',data:28},
+				{label:'New Hampshire',data:29},
+				{label:'New Jersey',data:30},
+				{label:'New Mexico',data:31},
+				{label:'New York',data:32},
+				{label:'North Carolina',data:33},
+				{label:'North Dakota',data:3},
+				{label:'Ohio',data:35},
+				{label:'Oklahoma',data:36},
+				{label:'Oregon',data:37},
+				{label:'Pennsylvania',data:38},
+				{label:'Rhode Island',data:39},
+				{label:'South Carolina',data:40},
+				{label:'South Dakota',data:41},
+				{label:'Tennessee',data:42},
+				{label:'Texas',data:43},
+				{label:'Utah',data:44},
+				{label:'Vermont',data:45},
+				{label:'Virginia',data:46},
+				{label:'Washington',data:47},
+				{label:'West Virginia',data:48},
+				{label:'Wisconsin',data:49},
+				{label:'Wyoming',data:50},
+
+			]);
+			
+			public function init():void{
+				generateCode();
+			}
+
+			public function generateCode():void{
+				var code : String = '';
+				// add in the application tag 
+				code += '<?xml version="1.0" encoding="utf-8"?>\r\n';
+				code += '<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:flextras="http://www.flextras.com/mxml"'
+
+				code += ' >\r\n'
+
+				// create the script tag where the dataProvider lies 
+				code += '<mx:Script>\r <![CDATA[\r\n';
+				code += '  import mx.collections.ArrayCollection;\r'
+
+				if((autoCompleteDataProviderFilterBeginGroup.selectedValue == true) || 
+				   (autoCompleteDataProviderFilteredGroup.selectedValue == true)){
+					code += '  import com.flextras.autoCompleteComboBox.AutoCompleteCollectionEvent;\r';
+				}
+
+				if((dropdownWidthExpandBeginGroup.selectedValue == true) || 
+				   (dropdownWidthExpandedGroup.selectedValue == true) || 
+				   (dropdownHeightExpandedGroup.selectedValue == true)){
+					code += '  import com.flextras.autoCompleteComboBox.AutoCompleteComboBoxResizeEvent;\r';
+				}
+
+				if((labelTruncatedGroup.selectedValue == true) || 
+				   (labelNotTruncatedGroup.selectedValue == true) || 
+				   (typeAheadTextChangedGroup.selectedValue == true)){
+					code += '  import com.flextras.autoCompleteComboBox.AutoCompleteComboBoxEvent;\r';
+				}
+
+				if(selectedValueNotFoundGroup.selectedValue == true){
+					code += '  import flash.events.Event;\r';
+				}
+		
+				if((typeAheadReleaseTimerCompleteGroup.selectedValue == true) || 
+					(typeAheadReleaseTimerStartGroup.selectedValue == true) ||
+					(typeAheadReleaseTimerStopGroup.selectedValue == true)){
+					code += '  import com.flextras.autoCompleteComboBox.TypeAheadTimerEvent;'
+				}
+				
+				code += '\n';
+				
+				// generate the dataProvider 
+				code += '  [Bindable] public var dataProvider : ArrayCollection = new ArrayCollection([\r';
+
+				for each (var item : Object in this.dataProvider){
+					code += '   {' + labelFieldInput.text +  ':"' + item.label + '", ' + valueFieldInput.text + ':' + item.data.toString() + '},\r'; 
+				}
+
+				// close off the dataProvider
+				code += '  \]);\r\n'
+
+				if(labelFunctionGroup.selectedValue == true){
+					code += '  public function getLabel(item:Object):String{\r'
+					code += '   // TODO Implement\r'
+					code += '   return "";\r'
+					code += '  }\r\n'
+
+				}
+				
+				if(valueFunctionGroup.selectedValue == true){
+					code += '  public function getValue(item:Object):String{\r'
+					code += '   // TODO Implement\r'
+					code += '   return "";\r'
+					code += '  }\r\n'
+				}
+
+				if(selectedValueNotFoundGroup.selectedValue == true){
+					code += '  public function selectedValueNotFoundHandler(event:Event):void{\r'
+					code += '   // TODO Implement\r'
+					if(selectedValueNotFoundCancelGroup.selectedValue == true){
+						code += '   event.preventDefault();\r'
+					}
+					code += '  }\r\n'
+				}
+
+				if(autoCompleteFilterFunctionGroup.selectedValue == true){
+					code += '  public function autoCompleteFilterFunction(item:Object):Boolean{\r'
+					code += '   // TODO Implement\r'
+					code += '   return true;\r'
+					code += '  }\r\n'
+				}
+
+				if(autoCompleteDataProviderFilterBeginGroup.selectedValue == true){
+					code += '  public function autoCompleteDataProviderFilterBeginHandler(event:AutoCompleteCollectionEvent):void{\r'
+					code += '   // TODO Implement\r'
+					if(autoCompleteDataProviderFilterBeginCancelGroup.selectedValue == true){
+						code += '   event.preventDefault();\r'
+					}
+					code += '  }\r\n'
+				}
+
+				if(autoCompleteDataProviderFilteredGroup.selectedValue == true){
+					code += '  public function autoCompleteDataProviderFilteredHandler(event:AutoCompleteCollectionEvent):void{\r'
+					code += '   // TODO Implement\r'
+					code += '  }\r\n'
+				}
+
+				if(dropdownHeightExpandedGroup.selectedValue == true){
+					code += '  public function dropdownHeightExpandedHandler(event:AutoCompleteComboBoxResizeEvent):void{\r'
+					code += '   // TODO Implement\r'
+					code += '  }\r\n'
+				}
+
+				if(dropdownWidthExpandBeginGroup.selectedValue == true){
+					code += '  public function dropdownWidthExpandBeginHandler(event:AutoCompleteComboBoxResizeEvent):void{\r'
+					code += '   // TODO Implement\r'
+					if(dropdownWidthExpandBeginCancelGroup.selectedValue == true){
+						code += '   event.preventDefault();\r'
+					}
+					code += '  }\r\n'
+				}
+
+				if(dropdownWidthExpandedGroup.selectedValue == true){
+					code += '  public function dropdownWidthExpandedHandler(event:AutoCompleteComboBoxResizeEvent):void{\r'
+					code += '   // TODO Implement\r'
+					code += '  }\r\n'
+				}
+
+				if(labelTruncatedGroup.selectedValue == true){
+					code += '  public function labelTruncatedHandler(event:AutoCompleteComboBoxEvent):void{\r'
+					code += '   // TODO Implement\r'
+					code += '  }\r\n'
+				}
+
+				if(labelNotTruncatedGroup.selectedValue == true){
+					code += '  public function labelNotTruncatedHandler(event:AutoCompleteComboBoxEvent):void{\r'
+					code += '   // TODO Implement\r'
+					code += '  }\r\n'
+				}
+
+				if(typeAheadTextChangedGroup.selectedValue == true){
+					code += '  public function typeAheadTextChangedHandler(event:AutoCompleteComboBoxEvent):void{\r'
+					code += '   // TODO Implement\r'
+					code += '  }\r\n'
+				}
+
+				if(typeAheadReleaseTimerCompleteGroup.selectedValue == true){
+					code += '  public function typeAheadReleaseTimerCompleteHandler(event:TypeAheadTimerEvent):void{\r'
+					code += '   // TODO Implement\r'
+					code += '  }\r\n'
+				}
+				if(typeAheadReleaseTimerStartGroup.selectedValue == true){
+					code += '  public function typeAheadReleaseTimerStartHandler(event:TypeAheadTimerEvent):void{\r'
+					code += '   // TODO Implement\r'
+					code += '  }\r\n'
+				}
+				if(typeAheadReleaseTimerStopGroup.selectedValue == true){
+					code += '  public function typeAheadReleaseTimerStopHandler(event:TypeAheadTimerEvent):void{\r'
+					code += '   // TODO Implement\r'
+					code += '  }\r\n'
+				}
+
+				// close off the script tag 
+				code += ' \]\]>\r<\/mx:Script>\r\n';
+
+				// create the AutoCompleteComboBox
+				code += '<mx:VBox>\r\n'
+				code += '<flextras:AutoCompleteComboBox id="autoCompleteComboBox" \r dataProvider="{dataProvider}" \r'
+
+				if(labelFunctionGroup.selectedValue == true){
+					code += ' labelFunction="getLabel"\r';	
+				} else if(labelFieldInput.text != 'label'){
+					code += ' labelField="' + labelFieldInput.text + '"\r';	
+				}
+
+				if(valueFunctionGroup.selectedValue == true){
+					code += ' valueFunction="getValue"\r';	
+				} else if(valueFieldInput.text != 'data'){
+					code += ' valueField="' + valueFieldInput.text + '"\r';	
+				}
+
+				if(this.selectedValue != ''){
+					code += ' selectedValue="' + this.selectedValue + '"\r';	
+				}
+				
+				if(selectedValueNotFoundGroup.selectedValue == true){
+					code += ' selectedValueNotFound="selectedValueNotFoundHandler(event)" \r';	
+				}
+
+				if(autoCompleteEnabledGroup.selectedValue == true){
+					code += ' autoCompleteEnabled="true" \r';	
+				}
+
+				if(downArrowVisibleGroup.selectedValue == false){
+					code += ' downArrowVisible="false" \r';	
+				}
+
+				if(autoCompleteFilterFunctionGroup.selectedValue == true){
+					code += ' autoCompleteFilterFunction="autoCompleteFilterFunction" \r';	
+				}
+
+				if(autoCompleteDataProviderFilterBeginGroup.selectedValue == true){
+					code += ' autoCompleteDataProviderFilterBegin="autoCompleteDataProviderFilterBeginHandler(event)" \r';	
+				}
+
+				if(autoCompleteDataProviderFilteredGroup.selectedValue == true){
+					code += ' autoCompleteDataProviderFiltered="autoCompleteDataProviderFilteredHandler(event)" \r';	
+				}
+
+				if(dropdownHeightExpandedGroup.selectedValue == true){
+					code += ' dropdownHeightExpanded="dropdownHeightExpandedHandler(event)" \r';	
+				}
+
+				if(typeAheadEnabledGroup.selectedValue == true){
+					code += ' typeAheadEnabled="true"\r';	
+				}
+
+				if(this.resetDelay.value*1000 != 4000){
+					code += ' typeAheadResetDelay="' + this.resetDelay.value*1000 + '"\r';	
+				}
+
+				if(typeAheadTextChangedGroup.selectedValue == true){
+					code += ' typeAheadTextChanged="typeAheadTextChangedHandler(event)" \r';	
+				}
+				if(typeAheadReleaseTimerCompleteGroup.selectedValue == true){
+					code += ' typeAheadReleaseTimerComplete="typeAheadReleaseTimerCompleteHandler(event)" \r';	
+				}
+				if(typeAheadReleaseTimerStartGroup.selectedValue == true){
+					code += ' typeAheadReleaseTimerStart="typeAheadReleaseTimerStartHandler(event)" \r';	
+				}
+				if(typeAheadReleaseTimerStopGroup.selectedValue == true){
+					code += ' typeAheadReleaseTimerStop="typeAheadReleaseTimerStopHandler(event)" \r';	
+				}
+				
+				if((this.comboWidth.value != 100) || 
+					(this.expandDropDownToContentGroup.selectedValue == true) ){
+					code += ' width="' + this.comboWidth.value + '"\r';	
+				}
+
+				if(this.expandDropDownToContentGroup.selectedValue == true){
+					code += ' expandDropDownToContent="' + this.expandDropDownToContentGroup.selectedValue + '"\r';	
+				}
+
+				if(dropdownWidthExpandBeginGroup.selectedValue == true){
+					code += ' dropdownWidthExpandBegin="dropdownWidthExpandBeginHandler(event)" \r';	
+				}
+
+				if(dropdownWidthExpandedGroup.selectedValue == true){
+					code += ' dropdownWidthExpanded="dropdownWidthExpandedHandler(event)" \r';	
+				}
+
+
+
+				if(this.truncateToFitGroup.selectedValue == true){
+					code += ' truncateToFit="' + this.truncateToFitGroup.selectedValue + '"\r';	
+				}
+
+				if(this.truncationIndicatorInput.text != '...'){
+					code += ' truncationIndicator="' + this.truncationIndicatorInput.text + '"\r';	
+				}
+
+				if(this.labelTruncatedGroup.selectedValue == true){
+					code += ' labelTruncated="labelTruncatedHandler(event)"\r';	
+				}
+				if(this.labelNotTruncatedGroup.selectedValue == true){
+					code += ' labelNotTruncated="labelNotTruncatedHandler(event)"\r';	
+				}
+				
+
+				code += '/>\r\n'
+				code += '</mx:VBox>\r\n'
+
+
+				code += '</mx:Application>';
+				this.generatedCode = code;
+			}
+
+			public function onItemEditEnd(event:DataGridEvent):void{
+				// for code generation to work; we need to set the value here
+				if(event.columnIndex == 0){
+					event.currentTarget.editedItemRenderer.data[event.dataField] = TextInput(event.currentTarget.itemEditorInstance).text;
+					if(event.rowIndex == this.ACCB.selectedIndex){
+						// do something tochange the display text
+					}
+//					this.ACCB.selectedLabel = TextInput(event.currentTarget.itemEditorInstance).text;
+				} else if(event.columnIndex == 1){
+					event.currentTarget.editedItemRenderer.data[event.dataField]  = NumericStepper(event.currentTarget.itemEditorInstance).value;
+				}
+				this.ACCB.invalidateDisplayList();
+				this.generateCode();
+				
+			}
+
+			public function addNewItem():void{
+				var newItem : Object = new Object();
+				newItem.label = newLabel.text;
+				newItem.data = newData.data;
+				this.dataProvider.addItem(newItem);
+				this.generateCode();
+			}
+
+			public var selectedValue : String = '';
+			public function onSetSelectedValue(data:String):void{
+				this.ACCB.selectedValue = data;
+				selectedValue = data;
+				this.generateCode();
+			}
+
+		]]>
+	</mx:Script>
+
+
+	<mx:Form label="AutoComplete" height="100%">
+		<mx:FormHeading label="Properties" />
+		<mx:FormItem label="AutoComplete Enabled" direction="horizontal">
+	 		<mx:RadioButtonGroup id="autoCompleteEnabledGroup" selectedValue="True" change="generateCode()"  />
+	 		<mx:RadioButton groupName="autoCompleteEnabledGroup" id="autoCompleteTrue" value="True" 
+			            label="Yes" selected="true"/>
+	 		<mx:RadioButton groupName="autoCompleteEnabledGroup" id="autoCompleteFalse" value="False" 
+			            label="No"   />
+		</mx:FormItem>
+
+		<mx:FormItem label="Down Arrow Visible" direction="horizontal">
+	 		<mx:RadioButtonGroup id="downArrowVisibleGroup" selectedValue="true" change="generateCode()"  />
+	 		<mx:RadioButton groupName="downArrowVisibleGroup" id="downArrowVisibleTrue" value="True" 
+			            label="Yes" selected="true"/>
+	 		<mx:RadioButton groupName="downArrowVisibleGroup" id="downArrowVisibleFalse" value="False" 
+			            label="No"   />
+	
+		</mx:FormItem>
+
+		<mx:FormItem label="autoCompleteFilterFunction" direction="horizontal">
+	 		<mx:RadioButtonGroup id="autoCompleteFilterFunctionGroup" selectedValue="false" change="generateCode()"  />
+	 		<mx:RadioButton groupName="autoCompleteFilterFunctionGroup" id="autoCompleteFilterFunctionTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="autoCompleteFilterFunctionGroup" id="autoCompleteFilterFunctionFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+		<mx:FormHeading label="Events" />
+		<mx:FormItem label="autoCompleteDataProviderFilterBegin" direction="horizontal">
+	 		<mx:RadioButtonGroup id="autoCompleteDataProviderFilterBeginGroup" selectedValue="false" change="generateCode()"  />
+	 		<mx:RadioButton groupName="autoCompleteDataProviderFilterBeginGroup" id="autoCompleteDataProviderFilterBeginTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="autoCompleteDataProviderFilterBeginGroup" id="autoCompleteDataProviderFilterBeginFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+		<mx:FormItem label="Cancel autoCompleteDataProviderFilterBegin?" direction="horizontal">
+	 		<mx:RadioButtonGroup id="autoCompleteDataProviderFilterBeginCancelGroup" selectedValue="false" 
+	 				change="autoCompleteDataProviderFilterBeginGroup.selectedValue = (autoCompleteDataProviderFilterBeginCancelGroup.selectedValue == true) ? true : autoCompleteDataProviderFilterBeginGroup.selectedValue ;generateCode()"  />
+	 		<mx:RadioButton groupName="autoCompleteDataProviderFilterBeginCancelGroup" id="autoCompleteDataProviderFilterBeginCancelTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="autoCompleteDataProviderFilterBeginCancelGroup" id="autoCompleteDataProviderFilterBeginCancelFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+		<mx:FormItem label="autoCompleteDataProviderFiltered" direction="horizontal">
+	 		<mx:RadioButtonGroup id="autoCompleteDataProviderFilteredGroup" selectedValue="false" change="generateCode()"  />
+	 		<mx:RadioButton groupName="autoCompleteDataProviderFilteredGroup" id="autoCompleteDataProviderFilteredTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="autoCompleteDataProviderFilteredGroup" id="autoCompleteDataProviderFilteredFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+		<mx:FormItem label="dropdownHeightExpanded" direction="horizontal">
+	 		<mx:RadioButtonGroup id="dropdownHeightExpandedGroup" selectedValue="false" change="generateCode()"  />
+	 		<mx:RadioButton groupName="dropdownHeightExpandedGroup" id="dropdownHeightExpandedTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="dropdownHeightExpandedGroup" id="dropdownHeightExpandedFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+
+
+
+
+		<mx:FormHeading label="Values" />
+		<mx:FormItem label="typeAheadTextValue" width="100%">
+				<mx:Text text="{ACCB.typeAheadTextValue}" id="autoCompleteValue" width="100%" />
+		</mx:FormItem>
+		<mx:FormItem label="selectedIndex" width="100%">
+				<mx:Text text="{ACCB.selectedIndex}" id="autoCompleteselectedIndexValue" width="100%" />
+		</mx:FormItem>
+		<mx:FormItem label="selectedLabel" width="100%">
+				<mx:Text text="{ACCB.selectedLabel}" id="autoCompleteselectedLabelValue" width="100%" />
+		</mx:FormItem>
+	</mx:Form>
+
+ 	<mx:VBox label="Data Provider">
+
+		<mx:Form >
+			<mx:FormHeading label="Properties" />
+			<mx:FormItem label="labelField">
+				<mx:TextInput text="{ACCB.labelField}" id="labelFieldInput" change="generateCode()" />
+			</mx:FormItem>
+			<mx:FormItem label="labelFunction" direction="horizontal">
+		 		<mx:RadioButtonGroup id="labelFunctionGroup" selectedValue="false" change="generateCode()"  />
+		 		<mx:RadioButton groupName="labelFunctionGroup" id="labelFunctionTrue" value="True" 
+				            label="Yes" />
+		 		<mx:RadioButton groupName="labelFunctionGroup" id="labelFunctionFalse" value="False" 
+				            label="No"  selected="true" />
+			</mx:FormItem>
+			<mx:FormItem label="valueField">
+				<mx:TextInput text="{ACCB.valueField}" id="valueFieldInput" change="generateCode()" />
+			</mx:FormItem>
+			<mx:FormItem label="valueFunction" direction="horizontal">
+		 		<mx:RadioButtonGroup id="valueFunctionGroup" selectedValue="false" change="generateCode()"  />
+		 		<mx:RadioButton groupName="valueFunctionGroup" id="valueFunctionTrue" value="True" 
+				            label="Yes" />
+		 		<mx:RadioButton groupName="valueFunctionGroup" id="valueFunctionFalse" value="False" 
+				            label="No"  selected="true" />
+			</mx:FormItem>
+
+			<mx:FormHeading label="Events" />
+			<mx:FormItem label="selectedValueNotFound" direction="horizontal">
+		 		<mx:RadioButtonGroup id="selectedValueNotFoundGroup" selectedValue="false" change="generateCode()"  />
+		 		<mx:RadioButton groupName="selectedValueNotFoundGroup" id="selectedValueNotFoundTrue" value="True" 
+				            label="Yes" />
+		 		<mx:RadioButton groupName="selectedValueNotFoundGroup" id="selectedValueNotFoundFalse" value="False" 
+				            label="No"  selected="true" />
+			</mx:FormItem>
+		<mx:FormItem label="Cancel selectedValueNotFound?" direction="horizontal">
+	 		<mx:RadioButtonGroup id="selectedValueNotFoundCancelGroup" selectedValue="false" 
+	 				change="selectedValueNotFoundGroup.selectedValue = (selectedValueNotFoundCancelGroup.selectedValue == true) ? true : selectedValueNotFoundGroup.selectedValue ;generateCode()"  />
+	 		<mx:RadioButton groupName="selectedValueNotFoundCancelGroup" id="selectedValueNotFoundCancelTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="selectedValueNotFoundCancelGroup" id="selectedValueNotFoundCancelFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+			
+		</mx:Form>
+
+
+
+		<mx:FormHeading label="Values" />
+		<mx:Canvas>
+				<mx:Text text="Label:" x="5" y="0" />
+ 				<mx:TextInput id="newLabel" x="5" y="20" />
+				<mx:Text text="Data:" x="170" y="0" />
+ 				<mx:NumericStepper id="newData" minimum="0" maximum="100" x="170" y="20"/>
+ 			<mx:Button label="Add New" click="addNewItem()" x="240" y="20" />
+		</mx:Canvas>
+ 		<mx:DataGrid width="100%" height="100%" dataProvider="{dataProvider}" editable="true" itemEditEnd="onItemEditEnd(event)"
+ 			   sortableColumns="false" >
+			<mx:columns>
+                <mx:DataGridColumn dataField="label" headerText="Label" itemEditor="mx.controls.TextInput" />
+                <mx:DataGridColumn dataField="data" headerText="Data" 
+                	editorDataField="value" width="50" >
+                	<mx:itemEditor>
+                		<mx:Component>
+                			<mx:NumericStepper minimum="0" maximum="100" stepSize="1">
+                				
+                			</mx:NumericStepper>
+                		</mx:Component>
+                	</mx:itemEditor>
+                </mx:DataGridColumn>
+                <mx:DataGridColumn editable="false">
+                	<mx:itemRenderer>
+                		<mx:Component>
+							<mx:Button label="Set Selected Value" click="this.outerDocument.onSetSelectedValue(this.data['data'])" >
+							</mx:Button>
+                		</mx:Component>
+                	</mx:itemRenderer>
+                </mx:DataGridColumn> 
+            </mx:columns>
+ 			
+ 		</mx:DataGrid>
+ 	</mx:VBox>
+
+	<mx:Form label="Type Ahead" height="100%">
+		<mx:FormHeading label="Properties" />
+		<mx:FormItem label="typeAheadEnabled" direction="horizontal">
+	 		<mx:RadioButtonGroup id="typeAheadEnabledGroup" selectedValue="False"  change="generateCode()"/>
+	 		<mx:RadioButton groupName="typeAheadEnabledGroup" id="typeAheadTrue" value="True" 
+			            label="Yes"  />
+	 		<mx:RadioButton groupName="typeAheadEnabledGroup" id="typeAheadFalse" value="False" 
+			            label="No" selected="true"/>
+		</mx:FormItem>
+		<mx:FormItem label="typeAheadResetDelay">
+			<mx:HSlider minimum="1" maximum="10" value="4" id="resetDelay" allowTrackClick="true" snapInterval="1" 
+					tickValues="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" change="generateCode()" />
+		</mx:FormItem>
+		<mx:FormHeading label="Events" />
+
+
+		<mx:FormItem label="typeAheadTextChanged" direction="horizontal">
+	 		<mx:RadioButtonGroup id="typeAheadTextChangedGroup" selectedValue="false" change="generateCode()"  />
+	 		<mx:RadioButton groupName="typeAheadTextChangedGroup" id="typeAheadTextChangedTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="typeAheadTextChangedGroup" id="typeAheadTextChangedFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+		<mx:FormItem label="typeAheadReleaseTimerComplete" direction="horizontal">
+	 		<mx:RadioButtonGroup id="typeAheadReleaseTimerCompleteGroup" selectedValue="false" change="generateCode()"  />
+	 		<mx:RadioButton groupName="typeAheadReleaseTimerCompleteGroup" id="typeAheadReleaseTimerCompleteTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="typeAheadReleaseTimerCompleteGroup" id="typeAheadReleaseTimerCompleteFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+		<mx:FormItem label="typeAheadReleaseTimerStart" direction="horizontal">
+	 		<mx:RadioButtonGroup id="typeAheadReleaseTimerStartGroup" selectedValue="false" change="generateCode()"  />
+	 		<mx:RadioButton groupName="typeAheadReleaseTimerStartGroup" id="typeAheadReleaseTimerStartTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="typeAheadReleaseTimerStartGroup" id="typeAheadReleaseTimerStartFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+		<mx:FormItem label="typeAheadReleaseTimerStop" direction="horizontal">
+	 		<mx:RadioButtonGroup id="typeAheadReleaseTimerStopGroup" selectedValue="false" change="generateCode()"  />
+	 		<mx:RadioButton groupName="typeAheadReleaseTimerStopGroup" id="typeAheadReleaseTimerStopTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="typeAheadReleaseTimerStopGroup" id="typeAheadReleaseTimerStopFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+
+		<mx:FormHeading label="Values" />
+		<mx:FormItem label="Type Ahead Value" width="100%">
+			<mx:Text text="{ACCB.typeAheadTextValue}" id="typeAheadValue" width="100%" />
+		</mx:FormItem>
+	</mx:Form>
+
+	<mx:Form width="33%" label="Expand To Content" height="100%">
+		<mx:FormHeading label="Properties" />
+		<mx:FormItem label="width">
+			<mx:HSlider minimum="50" maximum="500" value="100" id="comboWidth" allowTrackClick="true" snapInterval="1" change="generateCode()" />
+		</mx:FormItem>
+		<mx:FormItem label="Expand Drop Down" direction="horizontal">
+ 			<mx:RadioButtonGroup id="expandDropDownToContentGroup" selectedValue="False" change="generateCode()"/>
+ 			<mx:RadioButton groupName="expandDropDownToContentGroup" id="expandDropDownTrue" value="True" 
+			            label="Yes"  />
+ 			<mx:RadioButton groupName="expandDropDownToContentGroup" id="expandDropDownFalse" value="False" 
+			            label="No" selected="true"/>
+		</mx:FormItem>
+		<mx:FormItem label="Truncate To Fit" direction="horizontal">
+ 			<mx:RadioButtonGroup id="truncateToFitGroup" selectedValue="False" change="generateCode()"/>
+ 			<mx:RadioButton groupName="truncateToFitGroup" id="truncateToFitTrue" value="True" 
+			            label="Yes"  />
+ 			<mx:RadioButton groupName="truncateToFitGroup" id="truncateToFiteFalse" value="False" 
+			            label="No"  selected="true"/>
+		</mx:FormItem>
+		<mx:FormItem label="Truncation Indicator">
+			<mx:TextInput text="{ACCB.truncationIndicator}" id="truncationIndicatorInput"  change="generateCode()" />
+		</mx:FormItem>
+
+		<mx:FormHeading label="Events" />
+		<mx:FormItem label="dropdownWidthExpandBegin" direction="horizontal">
+	 		<mx:RadioButtonGroup id="dropdownWidthExpandBeginGroup" selectedValue="false" change="generateCode()"  />
+	 		<mx:RadioButton groupName="dropdownWidthExpandBeginGroup" id="dropdownWidthExpandBeginTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="dropdownWidthExpandBeginGroup" id="dropdownWidthExpandBeginFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+		<mx:FormItem label="Cancel dropdownWidthExpandBegin?" direction="horizontal">
+	 		<mx:RadioButtonGroup id="dropdownWidthExpandBeginCancelGroup" selectedValue="false" 
+	 				change="dropdownWidthExpandBeginGroup.selectedValue = (dropdownWidthExpandBeginCancelGroup.selectedValue == true) ? true : dropdownWidthExpandBeginGroup.selectedValue ;generateCode()"  />
+	 		<mx:RadioButton groupName="dropdownWidthExpandBeginCancelGroup" id="dropdownWidthExpandBeginCancelTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="dropdownWidthExpandBeginCancelGroup" id="dropdownWidthExpandBeginCancelFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+		<mx:FormItem label="dropdownWidthExpanded" direction="horizontal">
+	 		<mx:RadioButtonGroup id="dropdownWidthExpandedGroup" selectedValue="false" change="generateCode()"  />
+	 		<mx:RadioButton groupName="dropdownWidthExpandedGroup" id="dropdownWidthExpandedTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="dropdownWidthExpandederedGroup" id="dropdownWidthExpandedFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+
+		<mx:FormItem label="labelTruncated" direction="horizontal">
+	 		<mx:RadioButtonGroup id="labelTruncatedGroup" selectedValue="false" change="generateCode()"  />
+	 		<mx:RadioButton groupName="labelTruncatedGroup" id="labelTruncatedTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="labelTruncatedGroup" id="labelTruncatedFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+		<mx:FormItem label="labelNotTruncated" direction="horizontal">
+	 		<mx:RadioButtonGroup id="labelNotTruncatedGroup" selectedValue="false" change="generateCode()"  />
+	 		<mx:RadioButton groupName="labelNotTruncatedGroup" id="labelNotTruncatedTrue" value="True" 
+			            label="Yes" />
+	 		<mx:RadioButton groupName="labelNotTruncatedGroup" id="labelNotTruncatedFalse" value="False" 
+			            label="No"  selected="true" />
+		</mx:FormItem>
+
+
+		<mx:FormHeading label="Values" />
+		<mx:FormItem label="aelectedLabel">
+			<mx:Text text="{ACCB.selectedLabel}" id="expandToContentSelectedLabel" />
+		</mx:FormItem>
+		
+	</mx:Form>
+
+</mx:TabNavigator>

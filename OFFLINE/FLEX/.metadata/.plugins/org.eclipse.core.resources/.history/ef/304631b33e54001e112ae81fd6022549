@@ -1,0 +1,73 @@
+<?xml version=”1.0″ encoding=”utf-8″?>
+
+<mx:Application xmlns=”http://ns.adobe.com/mxml/2009“
+
+xmlns:mx=”library:adobe/flex/halo“
+
+backgroundGradientColors=”[0xFFFFFF, 0x000000]“>
+
+<mx:states>
+
+<State name=”default“/>
+
+<State name=”expanded“/>
+
+</mx:states>
+
+<mx:Label text=”@Resource(key=’application.title’,bundle=’resources’)“
+
+text.expanded=”This is the text when the form is in the expanded state“
+
+fontSize=”18” fontWeight=”bold“/>
+
+<mx:Form>
+
+<mx:FormItem label=”@Resource(key=’form.lastname’,bundle=’resources’)” labelWidth=”150“>
+
+<TextInput id=”lastname” width=”150“/>
+
+</mx:FormItem>
+
+<mx:FormItem label=”@Resource(key=’form.firstname’,bundle=’resources’)” labelWidth=”150“>
+
+<TextInput id=”firstname” width=”150“/>
+
+</mx:FormItem>
+
+<mx:FormItem label=”@Resource(key=’form.address’,bundle=’resources’)” labelWidth=”150”
+
+direction=”horizontal” includeIn=”expanded“>
+
+<TextInput id=”street” width=”150“/>
+
+<TextInput id=”number” width=”50“/>
+
+</mx:FormItem>
+
+<mx:FormItem label=”@Resource(key=’form.city’,bundle=’resources’)” labelWidth=”150”
+
+direction=”horizontal” includeIn=”expanded“>
+
+<TextInput id=”zipcode” width=”50“/>
+
+<TextInput id=”city” width=”150“/>
+
+</mx:FormItem>
+
+<mx:FormItem label=”@Resource(key=’form.email’,bundle=’resources’)” labelWidth=”150“>
+
+<TextInput id=”email” width=”150“/>
+
+</mx:FormItem>
+
+</mx:Form>
+
+<Button label=”@Resource(key=’button.add’,bundle=’resources’)“
+
+click=”currentState=’expanded’” excludeFrom=”expanded“/>
+
+<Button label=”@Resource(key=’button.remove’,bundle=’resources’)“
+
+click=”currentState=’default’” includeIn=”expanded“/>
+
+</mx:Application>

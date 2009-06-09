@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="horizontal" backgroundGradientColors="[0x000000,0x323232]">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			
+			
+		]]>
+	</mx:Script>
+
+	<mx:ApplicationControlBar id="controlBar" dock="true">
+		<mx:Label text="ControlBar docked" fontWeight="bold" color="0x444444" />
+		
+		<mx:LinkButton id="state1Button" label="State 1" />
+		<mx:LinkButton id="state2Button" label="State 2" />
+	</mx:ApplicationControlBar>
+	
+</mx:Application>

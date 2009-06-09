@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical">
+
+	<mx:ApplicationControlBar dock="true">
+		<mx:HBox>
+			<mx:LinkButton id="btAdd"
+		</mx:HBox>
+	</mx:ApplicationControlBar>
+	
+</mx:Application>

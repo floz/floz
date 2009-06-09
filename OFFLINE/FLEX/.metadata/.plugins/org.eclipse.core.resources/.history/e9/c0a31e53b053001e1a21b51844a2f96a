@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/halo"
+			 creationComplete="">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.ResultEvent;
+			
+			[Bindable]
+			private var works:ArrayCollection;
+			
+			private function onResult( e:ResultEvent ):void
+			{
+				works = e.result.data.works.item;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Panel title="Liste des works" width="50%" height="80%">
+		<mx:DataGrid dataProvider="{works}" width="100%" height="100%">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Titre" dataField="title" />
+			</mx:columns>
+		</mx:DataGrid>
+	</s:Panel>
+	
+</s:Application>

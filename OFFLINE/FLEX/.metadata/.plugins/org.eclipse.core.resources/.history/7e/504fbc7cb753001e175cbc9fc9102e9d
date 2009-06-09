@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+        xmlns:s="library://ns.adobe.com/flex/spark"
+        xmlns:mx="library://ns.adobe.com/flex/halo">
+        
+    <fx:Declarations>
+        <fx:Model id="checkModel">
+            <User>
+                <nom>{nom.text}</nom>
+				<prenom>{prenom.text}</prenom>
+				<mail>{email.text}</mail>
+            </User>
+        </fx:Model>
+        <mx:StringValidator source="{nom}" property="text" minLength="4" maxLength="12"/>
+        <mx:EmailValidator source="{email}" property="text"/>
+    </fx:Declarations>
+    
+    <s:Panel title="Form Container Example" width="75%" height="75%" horizontalCenter="0" verticalCenter="0">
+           
+		<s:VGroup>
+			<mx:Form width="100%" height="100%">
+				<mx:FormHeading label="Remplissez les champs suivants :"/>
+					
+				<mx:FormItem label="Nom" required="true">
+					<s:TextInput id="nom" width="200"/>
+				</mx:FormItem>
+				
+				<mx:FormItem label="Prénom" required="true">
+					<s:TextInput id="prenom" width="200"/>
+				</mx:FormItem>	
+				
+				<mx:FormItem label="Mail" required="true">
+					<s:TextInput id="email" width="200"/>
+				</mx:FormItem>		
+			</mx:Form>
+		</s:VGroup>
+		
+    </s:Panel>
+</s:Application>

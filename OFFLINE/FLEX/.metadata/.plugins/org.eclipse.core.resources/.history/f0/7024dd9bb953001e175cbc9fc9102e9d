@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	
+	<mx:Panel>
+		<mx:Form>
+			<mx:FormItem label="Nom :">
+				<mx:TextInput id="nom" width="200" />
+			</mx:FormItem>
+			
+			<mx:FormItem label="Mail : ">
+				<mx:TextInput id="mail" width="200" />
+			</mx:FormItem>
+		</mx:Form>
+	</mx:Panel>
+	
+</mx:Application>

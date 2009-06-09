@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" minWidth="1024" minHeight="768">
+	
+	<mx:LinkBar width="75%" horizontalAlign="center" dataProvider="viewStack" />
+	
+	<mx:ViewStack id="viewStack" width="75%" height="75%">
+		<mx:VBox id="cat1" label="test">
+			
+		</mx:VBox>
+		
+		<mx:VBox id="cat2" label="test zeza">
+			
+		</mx:VBox>
+	</mx:ViewStack>
+	
+</mx:Application>
