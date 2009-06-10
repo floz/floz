@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Renommer la ressource &apos;FORMULAIRE&apos; en &apos;FORMULAIRE_GUMBO&apos;" description="Renommer la ressource &apos;FORMULAIRE&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/FORMULAIRE" name="FORMULAIRE_GUMBO" stamp="1244416579046" updateReferences="true"/>
-</session>
