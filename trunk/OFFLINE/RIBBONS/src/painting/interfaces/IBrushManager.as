@@ -6,13 +6,15 @@
  */
 package painting.interfaces 
 {
+	import flash.display.IBitmapDrawable;
+	import flash.display.Sprite;
 	import flash.events.IEventDispatcher;
 	
-	public interface IBrushCtrl extends IEventDispatcher
+	public interface IBrushManager extends IBitmapDrawable, IEventDispatcher
 	{
 		function createInstance():void;
 		
-		function deleteInstance( intance:IBrushHolder ):void;
+		function deleteInstance( intance:Sprite ):void;
 		
 		function update( mx:Number, my:Number ):int;
 		
@@ -21,10 +23,6 @@ package painting.interfaces
 		function addBrush( brush:IBrush ):void;
 		
 		function removeBrush( brush:IBrush ):void;
-		
-		function getBrushIndex( brush:IBrush ):int;
-		
-		function hasBrush( brush:IBrush ):Boolean;
 	}
 	
 }

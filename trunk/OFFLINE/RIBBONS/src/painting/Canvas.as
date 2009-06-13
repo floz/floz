@@ -8,15 +8,16 @@ package painting
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.PixelSnapping;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import painting.events.PaintingEvent;
 	import painting.interfaces.IBrush;
-	import painting.interfaces.IBrushCtrl;
+	import painting.interfaces.IBrushManager;
 	
-	public class Canvas extends Bitmap
+	public class Canvas extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -25,9 +26,12 @@ package painting
 		
 		private var _width:Number;
 		private var _height:Number;
-		private var _fillColor:Number;
+		private var _transparent:Boolean;
+		private var _fillColor:Number;		
+		private var _canvas:Bitmap;
+		private var _brushContainer:Sprite;
 		
-		private var _brushes:Vector.<IBrushCtrl> = new Vector.<IBrushCtrl>( 10, true );
+		private var _brushes:Vector.<IBrushManager> = new Vector.<IBrushManager>( 10, true );
 		private var _brushCount:int;
 		
 		private var _painting:Boolean;
@@ -40,11 +44,10 @@ package painting
 		{
 			this._width = w;
 			this._height = h;
+			this._transparent = transparent;
 			this._fillColor = fillColor;
 			
-			super( new BitmapData( w, h, transparent, fillColor ), PixelSnapping.NEVER, true );
-			
-			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
+			init();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -67,11 +70,22 @@ package painting
 		
 		private function onDraw(e:PaintingEvent):void 
 		{
-			this.bitmapData.draw( e.brushHolder );
-			e.brushCtrl.deleteInstance( e.brushHolder );
+			_canvas.bitmapData.draw( e.instance );
+			e.brushHolder.deleteInstance( e.instance );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
+		
+		private function init():void
+		{
+			_canvas = new Bitmap( new BitmapData( _width, _height, _transparent, _fillColor ), PixelSnapping.NEVER, false );
+			addChild( _canvas );
+			
+			_brushContainer = new Sprite();
+			addChild( _brushContainer );
+			
+			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
+		}
 		
 		private function update():void
 		{
@@ -92,12 +106,14 @@ package painting
 		 * Add a new brush to the canvas.
 		 * @param	brush	IBrush	The brush instance.
 		 */
-		public function addBrush( brush:IBrushCtrl ):void
+		public function addBrush( brush:IBrushManager ):void
 		{
 			if ( _brushCount == _brushes.length )
 				throw new Error( "No more " + _brushes.length + " allowed." );
 			
-			brush.addEventListener( PaintingEvent.DRAW, onDraw, true );
+			brush.addEventListener( PaintingEvent.DRAW, onDraw );
+			
+			_brushContainer.addChild( brush as DisplayObject );
 			
 			_brushes[ _brushCount ] = brush;
 			++_brushCount;
@@ -107,11 +123,12 @@ package painting
 		 * Remove a brush that had been previously added.
 		 * @param	brush	IBrush	The brush instance.
 		 */
-		public function removeBrush( brush:IBrushCtrl ):void
+		public function removeBrush( brush:IBrushManager ):void
 		{
 			if ( !_brushCount || !hasBrush( brush ) )
 				throw new Error( "Invalid Brush" );
 			
+			_brushContainer.removeChild( brush as DisplayObject );
 			_brushes[ getBrushIndex( brush ) ] = null;
 			
 			--_brushCount;
@@ -125,9 +142,8 @@ package painting
 			if ( _painting )
 				return;
 			
-			var i:int;
 			var n:int = _brushCount;
-			for ( ; i < n; ++i )
+			for ( var i:int; i < n; ++i )
 				_brushes[ i ].createInstance();
 			
 			_painting = true;
@@ -155,7 +171,7 @@ package painting
 		 * @param	brush	IBrush	The brush instance
 		 * @return
 		 */
-		public function getBrushIndex( brush:IBrushCtrl ):int
+		public function getBrushIndex( brush:IBrushManager ):int
 		{
 			return _brushes.indexOf( brush );
 		}
@@ -165,7 +181,7 @@ package painting
 		 * @param	brush	Boolean
 		 * @return
 		 */
-		public function hasBrush( brush:IBrushCtrl ):Boolean
+		public function hasBrush( brush:IBrushManager ):Boolean
 		{
 			return getBrushIndex( brush ) != -1;
 		}

@@ -1,9 +1,8 @@
 ﻿package painting.events 
 {
+	import flash.display.Sprite;
 	import flash.events.Event;
-	import painting.Brush;
-	import painting.interfaces.IBrushCtrl;
-	import painting.interfaces.IBrushHolder;
+	import painting.interfaces.IBrushManager;
 	
 	/**
 	 * ...
@@ -14,8 +13,8 @@
 		public static const BRUSH_COMPLETE:String = "paintingevent_brushcomplete";
 		public static const DRAW:String = "paintingevent_draw";
 		
-		public var brushHolder:IBrushHolder;
-		public var brushCtrl:IBrushCtrl;
+		public var brushHolder:IBrushManager;
+		public var instance:Sprite;
 		
 		public function PaintingEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) 
 		{ 

@@ -11,8 +11,9 @@ package painting.brushes.ribbons.type
 	import flash.display.PixelSnapping;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import painting.interfaces.IBrushDatas;
 	
-	public class RibbonCore extends Sprite
+	public class RibbonDatas extends Sprite implements IBrushDatas
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -48,7 +49,7 @@ package painting.brushes.ribbons.type
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function RibbonCore( colors:Vector.<uint>, alphas:Vector.<Number>, canvasWidth:Number, canvasHeight:Number ) 
+		public function RibbonDatas( colors:Vector.<uint>, alphas:Vector.<Number>, canvasWidth:Number, canvasHeight:Number ) 
 		{
 			this.colors = colors;
 			this.alphas = alphas;
@@ -87,20 +88,8 @@ package painting.brushes.ribbons.type
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function reset():void
+		public function dispose():void
 		{
-			x1 =
-			y1 =
-			x2 =
-			y2 =
-			dx =
-			dy =
-			px =
-			py = NaN;
-			
-			vx = 
-			vy = 0;
-			
 			brush.graphics.clear();
 			brush = null;
 			

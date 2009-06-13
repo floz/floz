@@ -10,6 +10,7 @@ package painting.brushes.ribbons.type
 	import flash.display.Graphics;
 	import flash.display.GraphicsPathCommand;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import painting.Canvas;
 	import painting.events.PaintingEvent;
 	import painting.interfaces.IBrush;
@@ -28,7 +29,10 @@ package painting.brushes.ribbons.type
 		private var _diffY:Number;
 		private var _adaptSize:Boolean;
 		
-		private var _core:RibbonCore;
+		private var _core:RibbonDatas;
+		
+		private var _released:Boolean;
+		private var _enable:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -52,9 +56,9 @@ package painting.brushes.ribbons.type
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function drawSequence( x1:Number, y1:Number, x2:Number, y2:Number, a:Number ):void
-		{
-			var ribbon:RibbonCore = _core;
-			var g:Graphics = _core.brush.graphics;
+		{			
+			var ribbon:RibbonDatas = _core;
+			var g:Graphics = ribbon.brush.graphics;
 			
 			var tx:Number = x2 - x1;
 			var ty:Number = y2 - y1;
@@ -114,16 +118,21 @@ package painting.brushes.ribbons.type
 		
 		public function create():void
 		{
-			_core = new RibbonCore( _colors, _alphas, stage.stageWidth, stage.stageHeight );
+			_core = new RibbonDatas( _colors, _alphas, stage.stageWidth, stage.stageHeight );
 			addChild( _core );
 			
 			_core.colors = _colors;
 			_core.alphas = _alphas;
+			
+			_enable = true;
 		}
 		
 		public function paint( mx:Number, my:Number ):void
 		{
-			var ribbon:RibbonCore = _core;
+			if ( !_enable ) 
+				return;
+			
+			var ribbon:RibbonDatas = _core;
 			
 			if ( !ribbon.px )
 			{
@@ -145,7 +154,10 @@ package painting.brushes.ribbons.type
 		
 		public function completePainting():int
 		{
-			var ribbon:RibbonCore = _core;
+			if ( !_enable ) 
+				return 0;
+			
+			var ribbon:RibbonDatas = _core;
 			
 			var px:Number;
 			var py:Number;
@@ -168,7 +180,9 @@ package painting.brushes.ribbons.type
 			
 			if ( dist < .1 )
 			{
-				dispatchEvent( new PaintingEvent( PaintingEvent.BRUSH_COMPLETE ) );
+				var paintingEvent:PaintingEvent = new PaintingEvent( PaintingEvent.BRUSH_COMPLETE );
+				paintingEvent.instance = this.parent as Sprite;
+				dispatchEvent( paintingEvent );
 				
 				ribbon.graphics.clear();
 				
@@ -182,13 +196,17 @@ package painting.brushes.ribbons.type
 		
 		public function release( mx:Number, my:Number ):void
 		{
+			if ( _released ) return;
+			
+			_released = true;
+			
 			_core.dx = mx;
 			_core.dy = my;
 		}
 		
-		public function reset():void
+		public function dispose():void
 		{
-			_core.reset();
+			_core.dispose();
 		}
 		
 		public function copy():IBrush
@@ -210,17 +228,11 @@ package painting.brushes.ribbons.type
 			_core.alphas = alphas;
 		}
 		
-		public function getRibbonsCount():int
-		{
-			return this.numChildren;
-		}
-		
-		public function hasRibbon():Boolean
-		{
-			return this.numChildren ? true : false;
-		}
-		
 		// - GETTERS & SETTERS -----------------------------------------------------------
+		
+		public function get released():Boolean { return _released; }
+		
+		public function set enabled( value:Boolean ):void {	_enable = value; }
 		
 	}
 	
