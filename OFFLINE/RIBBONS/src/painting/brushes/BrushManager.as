@@ -83,14 +83,16 @@ package painting.brushes
 			var instance:Sprite;
 			var ribbon:IBrush;
 			
+			var drawEvent:PaintingEvent = new PaintingEvent( PaintingEvent.DRAW, true );
+			
 			var j:int;
 			var i:int = numChildren;
-			while ( --i > -1 )
+			while( --i > -1 )
 			{
 				instance = getChildAt( i ) as Sprite
 				j = instance.numChildren;
 				
-				while ( --j > -1 )
+				while( --j > -1 )
 				{
 					ribbon = instance.getChildAt( j ) as IBrush;
 					
