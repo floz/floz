@@ -11,6 +11,8 @@ package painting.interfaces
 	
 	public interface IBrush extends IBitmapDrawable, IEventDispatcher
 	{
+		function create():void;
+		
 		function paint( mx:Number, my:Number ):void;
 		
 		function completePainting():int;
@@ -18,6 +20,12 @@ package painting.interfaces
 		function release( mx:Number, my:Number ):void;
 		
 		function copy():IBrush;
+		
+		function dispose():void;
+		
+		function get released():Boolean;
+		
+		function set enabled( value:Boolean ):void;
 	}
 	
 }

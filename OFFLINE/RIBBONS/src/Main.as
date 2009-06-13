@@ -8,12 +8,11 @@ package
 {
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import fr.minuit4.utils.debug.FPS;
+	import painting.brushes.BrushManager;
 	import painting.brushes.ribbons.type.Ribbon;
-	//import painting.brushes.lines.types.Multiline;
-	//import painting.brushes.lines.types.SimpleLine;
-	import painting.brushes.ribbons.type.MultiRibbon;
 	import painting.Canvas;
 	
 	public class Main extends Sprite
@@ -22,7 +21,6 @@ package
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var canvas:Canvas;
-		//private var simpleLine:SimpleLine;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -33,27 +31,15 @@ package
 			canvas = new Canvas( stage.stageWidth, stage.stageHeight, false, 0x405560 );
 			addChild( canvas );
 			
-			//simpleLine = new SimpleLine( Vector.<uint>( [ 0x000000 ] ), Vector.<Number>( [ 1 ] ) );
-			//var multiline:Multiline = new Multiline();
-			//multiline.addLine( simpleLine );
-			//multiline.addLine( new SimpleLine( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ 1 ] ), .02 ) );
-			//multiline.addLine( new SimpleLine( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ 1 ] ), .0, .02 ) );
-			//multiline.addLine( new SimpleLine( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ 1 ] ), .0, -.02 ) );
-			//canvas.addBrush( musltiline );
-			
-			Ribbon.FRICTION = .9;
-			Ribbon.RIBBON_SIZE = 45;
-			
-			var multiRibbon:MultiRibbon = new MultiRibbon();
+			var multiRibbon:BrushManager = new BrushManager();
 			multiRibbon.addBrush( new Ribbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ) ) );
 			multiRibbon.addBrush( new Ribbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), .02 ) );
 			multiRibbon.addBrush( new Ribbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), -.02 ) );
 			multiRibbon.addBrush( new Ribbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), 0, .02 ) );
 			multiRibbon.addBrush( new Ribbon( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff ] ), Vector.<Number>( [ .7, .5 ] ), 0, -.02 ) );
 			canvas.addBrush( multiRibbon );
-			addChild( multiRibbon );
 			
-			//addChild( new FPS() );
+			addChild( new FPS() );
 			
 			stage.addEventListener( MouseEvent.MOUSE_DOWN, onDown );			
 		}
@@ -69,8 +55,6 @@ package
 		private function onUp(e:MouseEvent):void 
 		{
 			canvas.stopPainting();
-			//simpleLine.setColors( Vector.<uint>( [ Math.random() * 0xffffff, Math.random() * 0xffffff, Math.random() * 0xffffff ] ) );
-			//simpleLine.setAlphas( Vector.<Number>( [ 1, .5 ] ) );
 			stage.removeEventListener( MouseEvent.MOUSE_UP, onUp );
 		}
 		
