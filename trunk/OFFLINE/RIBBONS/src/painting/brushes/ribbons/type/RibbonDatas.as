@@ -81,6 +81,7 @@ package painting.brushes.ribbons.type
 			alphas = alphas;
 			
 			brush = new Shape();
+			//addChild( brush );
 			
 			canvas = new BitmapData( _canvasWidth, _canvasHeight, true, 0x00 );
 			addChild( new Bitmap( canvas, PixelSnapping.NEVER, false ) );
