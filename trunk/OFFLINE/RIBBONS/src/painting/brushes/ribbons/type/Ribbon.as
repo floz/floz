@@ -6,12 +6,11 @@
  */
 package painting.brushes.ribbons.type 
 {
-	import flash.display.DisplayObjectContainer;
 	import flash.display.Graphics;
 	import flash.display.GraphicsPathCommand;
+	import flash.display.Shader;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import painting.Canvas;
 	import painting.events.PaintingEvent;
 	import painting.interfaces.IBrush;
 	
