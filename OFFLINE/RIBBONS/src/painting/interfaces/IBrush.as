@@ -19,9 +19,13 @@ package painting.interfaces
 		
 		function release( mx:Number, my:Number ):void;
 		
+		function dispose():void;
+		
 		function copy():IBrush;
 		
-		function dispose():void;
+		function setColors( colors:Vector.<uint> ):void;
+		
+		function setAlphas( alphas:Vector.<Number> ):void;
 		
 		function get released():Boolean;
 		

@@ -9,7 +9,7 @@ package painting.brushes
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import painting.brushes.ribbons.type.Ribbon;
+	import painting.brushes.ribbons.Ribbon;
 	import painting.events.PaintingEvent;
 	import painting.interfaces.IBrush;
 	import painting.interfaces.IBrushManager;

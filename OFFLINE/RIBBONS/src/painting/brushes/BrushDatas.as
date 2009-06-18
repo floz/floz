@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package painting.brushes.ribbons.type 
+package painting.brushes
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -13,7 +13,7 @@ package painting.brushes.ribbons.type
 	import flash.display.Sprite;
 	import painting.interfaces.IBrushDatas;
 	
-	public class RibbonDatas extends Sprite implements IBrushDatas
+	public class BrushDatas extends Sprite implements IBrushDatas
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -49,7 +49,7 @@ package painting.brushes.ribbons.type
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function RibbonDatas( colors:Vector.<uint>, alphas:Vector.<Number>, canvasWidth:Number, canvasHeight:Number ) 
+		public function BrushDatas( colors:Vector.<uint>, alphas:Vector.<Number>, canvasWidth:Number, canvasHeight:Number ) 
 		{
 			this.colors = colors;
 			this.alphas = alphas;
@@ -81,7 +81,6 @@ package painting.brushes.ribbons.type
 			alphas = alphas;
 			
 			brush = new Shape();
-			//addChild( brush );
 			
 			canvas = new BitmapData( _canvasWidth, _canvasHeight, true, 0x00 );
 			addChild( new Bitmap( canvas, PixelSnapping.NEVER, false ) );

@@ -4,17 +4,18 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package painting.brushes.ribbons.type 
+package painting.brushes.ribbons 
 {
 	import flash.display.Graphics;
 	import flash.display.GraphicsPathCommand;
-	import flash.display.Shader;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import painting.brushes.AbstractBrush;
+	import painting.brushes.BrushDatas;
 	import painting.events.PaintingEvent;
 	import painting.interfaces.IBrush;
 	
-	public class Ribbon extends Sprite implements IBrush
+	public class Ribbon extends AbstractBrush
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -22,16 +23,7 @@ package painting.brushes.ribbons.type
 		private const _commands:Vector.<int> = Vector.<int>( [ GraphicsPathCommand.MOVE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.LINE_TO, GraphicsPathCommand.LINE_TO ] );
 		private const _datas:Vector.<Number> = new Vector.<Number>( 10, true );
 		
-		private var _colors:Vector.<uint>;
-		private var _alphas:Vector.<Number>;
-		private var _diffX:Number;
-		private var _diffY:Number;
 		private var _adaptSize:Boolean;
-		
-		private var _core:RibbonDatas;
-		
-		private var _released:Boolean;
-		private var _enable:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -43,11 +35,9 @@ package painting.brushes.ribbons.type
 		
 		public function Ribbon( colors:Vector.<uint>, alphas:Vector.<Number>, diffX:Number = 0, diffY:Number = 0, adaptSize:Boolean = true ) 
 		{
-			this._colors = colors;
-			this._alphas = alphas;
-			this._diffX = diffX;
-			this._diffY = diffY;
 			this._adaptSize = adaptSize;
+			
+			super( colors, alphas, diffX, diffY );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -56,17 +46,18 @@ package painting.brushes.ribbons.type
 		
 		private function drawSequence( x1:Number, y1:Number, x2:Number, y2:Number, a:Number ):void
 		{			
-			var ribbon:RibbonDatas = _core;
+			var ribbon:BrushDatas = _core;
 			var g:Graphics = ribbon.brush.graphics;
 			
 			var tx:Number = x2 - x1;
 			var ty:Number = y2 - y1;
-			var rayon:Number = Math.sqrt( tx * tx + ty * ty ) * .5;
+			var diametre:Number = Math.sqrt( tx * tx + ty * ty );
+			var rayon:Number =  diametre * .5;
 			
 			var newAngle:Number = _adaptSize ? ( a > 0 ? a : -a ) * .5 : RIBBON_SIZE;
 			
-			var posX:Number = Math.cos( newAngle ) * rayon * .5; // * .5 ?
-			var posY:Number = Math.sin( newAngle ) * rayon * .5;
+			var posX:Number = Math.cos( newAngle ) * rayon; // * .5 ?
+			var posY:Number = Math.sin( newAngle ) * rayon; // * .5 ?
 			
 			var ox:Number = x1 + tx * .5;
 			var oy:Number = y1 + ty * .5;
@@ -115,23 +106,12 @@ package painting.brushes.ribbons.type
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function create():void
+		override public function paint( mx:Number, my:Number ):void
 		{
-			_core = new RibbonDatas( _colors, _alphas, stage.stageWidth, stage.stageHeight );
-			addChild( _core );
-			
-			_core.colors = _colors;
-			_core.alphas = _alphas;
-			
-			_enable = true;
-		}
-		
-		public function paint( mx:Number, my:Number ):void
-		{
-			if ( !_enable ) 
+			if ( !_enabled ) 
 				return;
 			
-			var ribbon:RibbonDatas = _core;
+			var ribbon:BrushDatas = _core;
 			
 			if ( !ribbon.px )
 			{
@@ -151,12 +131,12 @@ package painting.brushes.ribbons.type
 			drawSequence( px, py, ribbon.px, ribbon.py, Math.atan2( ribbon.py - py, ribbon.px - px ) );
 		}
 		
-		public function completePainting():int
+		override public function completePainting():int
 		{
-			if ( !_enable ) 
+			if ( !_enabled ) 
 				return 0;
 			
-			var ribbon:RibbonDatas = _core;
+			var ribbon:BrushDatas = _core;
 			
 			var px:Number;
 			var py:Number;
@@ -174,7 +154,7 @@ package painting.brushes.ribbons.type
 			ribbon.py -= ribbon.vy;
 			
 			dx = ( ribbon.dx - ribbon.px );
-			dy = ( ribbon.dy - ribbon.dy );
+			dy = ( ribbon.dy - ribbon.py );
 			dist = Math.sqrt( dx * dx + dy * dy );
 			
 			if ( dist < .1 )
@@ -183,7 +163,7 @@ package painting.brushes.ribbons.type
 				paintingEvent.instance = this.parent as Sprite;
 				dispatchEvent( paintingEvent );
 				
-				ribbon.graphics.clear();
+				//ribbon.graphics.clear();
 				
 				return 0;
 			}
@@ -193,45 +173,12 @@ package painting.brushes.ribbons.type
 			return 1;
 		}
 		
-		public function release( mx:Number, my:Number ):void
-		{
-			if ( _released ) return;
-			
-			_released = true;
-			
-			_core.dx = mx;
-			_core.dy = my;
-		}
-		
-		public function dispose():void
-		{
-			_core.dispose();
-		}
-		
-		public function copy():IBrush
+		override public function copy():IBrush
 		{
 			return new Ribbon( _colors, _alphas, _diffX, _diffY, _adaptSize );
 		}
 		
-		public function setColors( colors:Vector.<uint> ):void
-		{ 
-			_colors = colors;
-			if ( !_core ) return;
-			_core.colors = colors;
-		}
-		
-		public function setAlphas( alphas:Vector.<Number> ):void
-		{
-			_alphas = alphas;
-			if ( !_core ) return;
-			_core.alphas = alphas;
-		}
-		
 		// - GETTERS & SETTERS -----------------------------------------------------------
-		
-		public function get released():Boolean { return _released; }
-		
-		public function set enabled( value:Boolean ):void {	_enable = value; }
 		
 	}
 	
