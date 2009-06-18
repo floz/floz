@@ -27,7 +27,8 @@ package painting
 		private var _width:Number;
 		private var _height:Number;
 		private var _transparent:Boolean;
-		private var _fillColor:Number;		
+		private var _fillColor:Number;
+		private var _background:Bitmap;
 		private var _canvas:Bitmap;
 		private var _brushContainer:Sprite;
 		
@@ -78,7 +79,10 @@ package painting
 		
 		private function init():void
 		{
-			_canvas = new Bitmap( new BitmapData( _width, _height, _transparent, _fillColor ), PixelSnapping.NEVER, false );
+			_background = new Bitmap( new BitmapData( _width, _height, _transparent, _fillColor ), PixelSnapping.NEVER, false );
+			addChild( _background );
+			
+			_canvas = new Bitmap( new BitmapData( _width, _height, true, 0x00 ), PixelSnapping.NEVER, false );
 			addChild( _canvas );
 			
 			_brushContainer = new Sprite();
@@ -184,6 +188,11 @@ package painting
 		public function hasBrush( brush:IBrushManager ):Boolean
 		{
 			return getBrushIndex( brush ) != -1;
+		}
+		
+		public function setBackgroundColor( color:uint ):void
+		{
+			_background.bitmapData = new BitmapData( _width, _height, _transparent, color );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
