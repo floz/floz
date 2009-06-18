@@ -1,0 +1,50 @@
+!SESSION 2009-06-10 12:20:02.093 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.5.0_11
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=fr_FR
+Command-line arguments:  -os win32 -ws win32 -arch x86 -clean
+
+!ENTRY org.eclipse.ui 2 0 2009-06-10 12:20:04.500
+!MESSAGE Warnings while parsing the key bindings from the 'org.eclipse.ui.commands' extension point
+!SUBENTRY 1 org.eclipse.ui 2 0 2009-06-10 12:20:04.500
+!MESSAGE Could not parse key sequence: plug-in='com.adobe.flexbuilder.editorcore', id='com.adobe.flexbuilder.editorcore.modeswitch.toggle.def', keySequence='CTRL+MAJ+`'
+!SESSION 2009-06-10 12:20:33.453 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.5.0_11
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=fr_FR
+Command-line arguments:  -os win32 -ws win32 -arch x86 -clean -clean -data D:\Projets\Projets\OFFLINE\FLEX -clean
+
+!ENTRY org.eclipse.ui 2 0 2009-06-10 12:20:35.875
+!MESSAGE Warnings while parsing the key bindings from the 'org.eclipse.ui.commands' extension point
+!SUBENTRY 1 org.eclipse.ui 2 0 2009-06-10 12:20:35.875
+!MESSAGE Could not parse key sequence: plug-in='com.adobe.flexbuilder.editorcore', id='com.adobe.flexbuilder.editorcore.modeswitch.toggle.def', keySequence='CTRL+MAJ+`'
+!SESSION 2009-06-10 12:40:43.953 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.5.0_11
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=fr_FR
+Command-line arguments:  -os win32 -ws win32 -arch x86 -clean
+
+!ENTRY org.eclipse.core.resources 2 10035 2009-06-10 12:40:46.234
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.ui 2 0 2009-06-10 12:40:46.500
+!MESSAGE Warnings while parsing the key bindings from the 'org.eclipse.ui.commands' extension point
+!SUBENTRY 1 org.eclipse.ui 2 0 2009-06-10 12:40:46.500
+!MESSAGE Could not parse key sequence: plug-in='com.adobe.flexbuilder.editorcore', id='com.adobe.flexbuilder.editorcore.modeswitch.toggle.def', keySequence='CTRL+MAJ+`'
+!SESSION 2009-06-18 11:47:40.890 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.5.0_11
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=fr_FR
+Command-line arguments:  -os win32 -ws win32 -arch x86 -clean
+
+!ENTRY org.eclipse.core.resources 2 10035 2009-06-18 11:47:55.140
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.ui 2 0 2009-06-18 11:47:56.343
+!MESSAGE Warnings while parsing the key bindings from the 'org.eclipse.ui.commands' extension point
+!SUBENTRY 1 org.eclipse.ui 2 0 2009-06-18 11:47:56.343
+!MESSAGE Could not parse key sequence: plug-in='com.adobe.flexbuilder.editorcore', id='com.adobe.flexbuilder.editorcore.modeswitch.toggle.def', keySequence='CTRL+MAJ+`'

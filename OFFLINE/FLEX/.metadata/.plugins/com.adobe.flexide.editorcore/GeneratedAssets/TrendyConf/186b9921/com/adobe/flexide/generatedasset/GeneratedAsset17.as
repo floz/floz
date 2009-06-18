@@ -1,0 +1,19 @@
+
+package com.adobe.flexide.generatedasset
+{
+
+import mx.core.BitmapAsset;
+
+[ExcludeClass]
+[Embed(exportSymbol="com.adobe.flexide.generatedasset.GeneratedAsset17",  source="D:/Projets/Projets/OFFLINE/FLEX/TrendyConf/src/../lib/bt_back.jpg")]
+
+public class GeneratedAsset17 extends mx.core.BitmapAsset 
+{
+    public function GeneratedAsset17() 
+    { 
+	    super(); 
+    }
+
+}
+
+}
