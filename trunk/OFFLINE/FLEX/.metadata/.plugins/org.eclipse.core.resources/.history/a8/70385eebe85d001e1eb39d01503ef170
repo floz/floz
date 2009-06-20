@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt">
+	<s:BitmapImage source="@Embed('/assets/elements/background_2.png')" resizeMode="scale" d:userLabel="background"/>
+	<s:Button skinClass="components.Bouton8" label="(Libellé)"/>
+	<s:RichText d:userLabel="WIDTH :" fontWeight="bold" fontFamily="Futura Std Heavy" color="0xffffff" fontSize="8" trackingRight="0.75" whiteSpaceCollapse="preserve" x="16" y="29">
+		<s:content><s:p><s:span>WIDTH :</s:span></s:p>			</s:content>
+	</s:RichText>
+	<s:RichText d:userLabel="HEIGHT :" fontWeight="bold" fontFamily="Futura Std Heavy" color="0xffffff" fontSize="8" trackingRight="0.75" whiteSpaceCollapse="preserve" x="122" y="29">
+		<s:content><s:p><s:span>HEIGHT :</s:span></s:p>			</s:content>
+	</s:RichText>
+	<s:TextInput x="52" y="21" skinClass="components.Entr_etexte2" text="234"/>
+	<s:TextInput x="161" y="21" skinClass="components.Entr_etexte1" text="234"/>
+</s:Group>
