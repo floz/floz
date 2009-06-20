@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt">
+	<s:BitmapImage source="@Embed('/assets/elements/background_1.png')" resizeMode="scale" d:userLabel="background"/>
+	<s:Button skinClass="components.Bouton9" label="BRUSH CONTENT"/>
+	<s:List y="22" skinClass="components.ListBrushContent">
+		<s:ArrayCollection>
+			<fx:Object image1="@Embed('/assets/elements/hoverState.png')" image2="@Embed('/assets/elements/shadow_2.png')" image3="@Embed('/assets/elements/icon_2.png')" text1="RIBBONS 1"/>
+			<fx:Object image1="@Embed('/assets/elements/hoverState.png')" image2="@Embed('/assets/elements/shadow_2.png')" image3="@Embed('/assets/elements/icon_2.png')" text1="RIBBONS 1"/>
+			<fx:Object image1="@Embed('/assets/elements/hoverState.png')" image2="@Embed('/assets/elements/shadow_2.png')" image3="@Embed('/assets/elements/icon_2.png')" text1="RIBBONS 1"/>
+			<fx:Object image1="@Embed('/assets/elements/hoverState.png')" image2="@Embed('/assets/elements/shadow_2.png')" image3="@Embed('/assets/elements/icon_2.png')" text1="RIBBONS 1"/>
+			<fx:Object image1="@Embed('/assets/elements/hoverState.png')" image2="@Embed('/assets/elements/shadow_2.png')" image3="@Embed('/assets/elements/icon_2.png')" text1="RIBBONS 1"/>
+		</s:ArrayCollection>
+	</s:List>
+	<s:Button x="127" y="118" skinClass="components.SaveButton" label="SAVE"/>
+</s:Group>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt">
+
+	<s:transitions>
+		<s:Transition fromState="selected" toState="normal" autoReverse="true">
+			<s:Parallel>
+				<s:Parallel target="{rect1}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+		<s:Transition fromState="normal" toState="hovered" autoReverse="true">
+			<s:Parallel>
+				<s:Parallel target="{rect1}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+				<s:Parallel target="{bitmapimage1}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+	</s:transitions>
+	
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="hovered"/>
+		<s:State name="selected"/>
+	</s:states>
+	
+	<s:Rect d:userLabel="Item Highlight" width="177" height="16" alpha.normal="0" alpha.hovered="0.4" alpha.selected="0.8" id="rect1">
+		<s:fill>
+			<s:SolidColor color="0xCED7EE"/>
+		</s:fill>
+	</s:Rect>
+	<s:BitmapImage source="{data.image1}" resizeMode="scale" d:userLabel="hoverState" includeIn="hovered,selected" id="bitmapimage1"/>
+	<s:RichText d:userLabel="RIBBONS 1" fontWeight="bold" color="0xffffff" fontSize="8" trackingRight="0.75" whiteSpaceCollapse="preserve" x="14" y="4" text="{data.text1}" fontFamily="Myriad Pro">
+	</s:RichText>
+	<s:BitmapImage source="{data.image2}" resizeMode="scale" d:userLabel="shadow" x="158" y="12"/>
+	<s:BitmapImage source="{data.image3}" resizeMode="scale" d:userLabel="icon" x="162" y="6"/>
+	
+</s:ItemRenderer>
