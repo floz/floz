@@ -48,3 +48,60 @@ Command-line arguments:  -os win32 -ws win32 -arch x86 -clean
 !MESSAGE Warnings while parsing the key bindings from the 'org.eclipse.ui.commands' extension point
 !SUBENTRY 1 org.eclipse.ui 2 0 2009-06-18 11:47:56.343
 !MESSAGE Could not parse key sequence: plug-in='com.adobe.flexbuilder.editorcore', id='com.adobe.flexbuilder.editorcore.modeswitch.toggle.def', keySequence='CTRL+MAJ+`'
+!SESSION 2009-06-21 00:18:29.625 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.5.0_11
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=fr_FR
+Command-line arguments:  -os win32 -ws win32 -arch x86 -clean
+
+!ENTRY org.eclipse.ui 2 0 2009-06-21 00:18:36.500
+!MESSAGE Warnings while parsing the key bindings from the 'org.eclipse.ui.commands' extension point
+!SUBENTRY 1 org.eclipse.ui 2 0 2009-06-21 00:18:36.500
+!MESSAGE Could not parse key sequence: plug-in='com.adobe.flexbuilder.editorcore', id='com.adobe.flexbuilder.editorcore.modeswitch.toggle.def', keySequence='CTRL+MAJ+`'
+
+!ENTRY org.eclipse.ui 4 0 2009-06-21 00:22:46.421
+!MESSAGE Unhandled event loop exception
+!STACK 0
+java.lang.ClassCastException: org.eclipse.core.internal.resources.File
+	at com.adobe.flexbuilder.editors.derived.ui.navigator.FlexPackageExplorerDropAdapter.performDrop(FlexPackageExplorerDropAdapter.java:295)
+	at com.adobe.flexbuilder.as.editor.ui.navigator.FlexPackageExplorerDropAdapterMoveExtension.performDrop(FlexPackageExplorerDropAdapterMoveExtension.java:60)
+	at org.eclipse.jface.viewers.ViewerDropAdapter.drop(ViewerDropAdapter.java:239)
+	at org.eclipse.ui.part.PluginDropAdapter.drop(PluginDropAdapter.java:69)
+	at org.eclipse.swt.dnd.DNDListener.handleEvent(DNDListener.java:90)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1003)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1027)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1012)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:770)
+	at org.eclipse.swt.dnd.DropTarget.Drop(DropTarget.java:455)
+	at org.eclipse.swt.dnd.DropTarget$3.method6(DropTarget.java:257)
+	at org.eclipse.swt.internal.ole.win32.COMObject.callback6(COMObject.java:119)
+	at org.eclipse.swt.internal.ole.win32.COM.DoDragDrop(Native Method)
+	at org.eclipse.swt.dnd.DragSource.drag(DragSource.java:362)
+	at org.eclipse.swt.dnd.DragSource.access$0(DragSource.java:288)
+	at org.eclipse.swt.dnd.DragSource$1.handleEvent(DragSource.java:171)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1003)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:3823)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3422)
+	at org.eclipse.ui.internal.Workbench.runEventLoop(Workbench.java:2382)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:2346)
+	at org.eclipse.ui.internal.Workbench.access$4(Workbench.java:2198)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:493)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:288)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:488)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at com.adobe.flexbuilder.standalone.FlexBuilderApplication.start(FlexBuilderApplication.java:112)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:193)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:110)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:79)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:382)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:179)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:549)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:504)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1236)
