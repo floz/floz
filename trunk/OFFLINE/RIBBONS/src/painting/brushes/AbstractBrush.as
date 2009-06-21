@@ -107,6 +107,10 @@ package painting.brushes
 			_core.alphas = alphas;
 		}
 		
+		public function setDiffX( value:Number ):void { this._diffX = value; }
+		
+		public function setDiffY( value:Number ):void { this._diffY = value; }
+		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
 		public function get released():Boolean { return this._released; }
