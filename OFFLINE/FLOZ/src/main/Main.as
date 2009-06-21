@@ -191,7 +191,7 @@ package main
 					return;
 				}
 				
-				if( Config.currentSection != Config.DETAILS ) onRubriqueChange( null );;
+				if( Config.currentSection != Config.DETAILS ) onRubriqueChange( null );
 				Config.detailsSection = a[ 0 ];
 				Config.detailsId = a[ 1 ];
 				Config.currentSection = Config.DETAILS;

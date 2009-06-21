@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:panels="views.panels.*" layout="absolute" width="1260" height="720"
+				addedToStage="onAddedToStage( event )">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			private function onAddedToStage( e:Event ):void
+			{
+				stage.addEventListener( Event.RESIZE, onResize );
+				onResize( null );
+			}
+			
+			private function onResize( e:Event ):void
+			{
+				configurationPanel.x =
+				configurationPanel.y = 10;
+				
+				cntSidePanels.x = stage.stageWidth - cntSidePanels.width - 10;
+				cntSidePanels.y = 10;
+			}
+			
+			private function onEnterState( e:FlexEvent ):void
+			{
+				while( cntSecPanels.numChildren ) cntSecPanels.removeChildAt( 0 );
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:states>
+		<mx:State name="default" enterState="onEnterState( event )" />
+		<mx:State name="brush_configuration">
+			<mx:AddChild relativeTo="{cntSecPanels}">
+				<mx:HBox>				
+					<panels:CustomizeBrushPanel id="customizeBrushPanel" title="CUSTOMIZE BRUSH" width="150" />
+					<panels:BrushContentPanel id="brushContentPanel" title="BRUSH CONTENT" width="150" />
+				</mx:HBox>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+	
+	<panels:ConfigurationPanel id="configurationPanel" title="CONFIGURATION PANEL" />
+	
+	<mx:VBox id="cntSidePanels">
+		<panels:ToolsPanel id="toolsPanel" title="TOOLS PANEL" width="300"/>
+		<mx:VBox id="cntSecPanels" />
+	</mx:VBox>
+	
+</mx:Application>

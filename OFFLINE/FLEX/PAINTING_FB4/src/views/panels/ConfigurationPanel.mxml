@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			private function onChange( e:Event ):void
+			{
+				switch( e.currentTarget )
+				{
+					case txtWidth: trace( "width change : " + e.currentTarget.text ); break;
+					case txtHeight: trace( "height change : " + e.currentTarget.text ); break;
+					case bgColorPicker: trace( "color change : " + e.currentTarget.selectedColor ); break;
+				}
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:HBox paddingBottom="10" paddingLeft="10" paddingRight="20" paddingTop="10">
+		<mx:Text text="Width :" />
+		<mx:TextInput id="txtWidth" width="50" change="onChange( event )" />
+		
+		<mx:Spacer width="10" />
+		
+		<mx:Text text="Height :" />
+		<mx:TextInput id="txtHeight" width="50" change="onChange( event )" />
+		
+		<mx:Spacer width="10" />
+		
+		<mx:Text text="BackgroundColor :" />
+		<mx:ColorPicker id="bgColorPicker" change="onChange( event )" />
+	</mx:HBox>
+	
+</mx:Panel>
