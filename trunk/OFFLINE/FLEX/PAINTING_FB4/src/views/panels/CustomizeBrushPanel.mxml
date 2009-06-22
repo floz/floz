@@ -16,7 +16,7 @@
 		]]>
 	</mx:Script>
 	
-	<mx:VBox horizontalAlign="right" width="100%" height="100%">
+	<mx:VBox horizontalAlign="right" width="100%" height="100%" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
 		<mx:List id="customList" dataProvider="{datas}" width="100%" height="100%" />
 		<mx:Button id="btReset" label="Reset" click="onClick( event )" />
 	</mx:VBox>
