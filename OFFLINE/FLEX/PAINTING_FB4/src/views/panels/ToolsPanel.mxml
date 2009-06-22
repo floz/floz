@@ -18,7 +18,7 @@
 		]]>
 	</mx:Script>
 	
-	<mx:HBox paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
+	<mx:HBox width="100%" horizontalAlign="center" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10">
 		<mx:Button id="btBrush" label="Brush" click="onClick( event )" />
 		<mx:Button id="btEraser" label="Eraser" click="onClick( event )" />
 	</mx:HBox>
