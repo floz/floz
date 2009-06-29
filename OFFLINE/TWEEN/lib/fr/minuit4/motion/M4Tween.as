@@ -4,32 +4,29 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package fr.minuit4.motion 
 {
-	import flash.display.Graphics;
-	import flash.display.Sprite;
-	import fr.minuit4.motion.M4Tween;
 	
-	public class Main extends Sprite
+	public class M4Tween 
 	{
 		
+		// - CONSTS ----------------------------------------------------------------------
+		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
+		
+		private static var _allowInstanciation:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main() 
+		public function M4Tween() 
 		{
-			var mov:Sprite = new Sprite();
-			addChild( mov );
-			
-			var g:Graphics = mov.graphics;
-			g.beginFill( 0xff00ff );
-			g.drawCircle( 0, 0, 20 );
-			g.endFill();
-			
-			new M4Tween();
+			if ( _allowInstanciation )
+			{
+				//
+			}
+			else throw new Error( "This class cannot be instanciated, use the createTween method instead" );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -37,6 +34,21 @@ package
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public static function createTween( /* params */ ):M4Tween
+		{
+			
+		}
+		
+		public static function disposeTween( /* params */ ):void
+		{
+			
+		}
+		
+		public static function disposeTweenOf( /* params */ ):void
+		{
+			
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
