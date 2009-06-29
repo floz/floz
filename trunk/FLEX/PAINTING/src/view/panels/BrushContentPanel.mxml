@@ -5,20 +5,19 @@
 		<![CDATA[
 			
 			[Bindable]
-			private var datas:Array = [ { label: "elt1", data: "elt1_0" },
-										{ label: "elt2", data: "elt2_0" } ];
+			private var datas:Array = [ { label: "test" }, { label: "test 2" } ];
 			
 			private function onClick( e:MouseEvent ):void
 			{
-				trace( "erase !" );
+				trace( "save !" );
 			}
 			
 		]]>
 	</mx:Script>
 	
 	<mx:VBox horizontalAlign="right" width="100%" height="100%">
-		<mx:List id="customList" dataProvider="{datas}" width="100%" height="100%" />
-		<mx:Button id="btReset" label="Reset" click="onClick( event )" />
+		<mx:List id="contentList" dataProvider="{datas}" width="100%" height="100%" />
+		<mx:Button id="btSave" label="SAVE" click="onClick( event )" />
 	</mx:VBox>
 	
 </mx:Panel>

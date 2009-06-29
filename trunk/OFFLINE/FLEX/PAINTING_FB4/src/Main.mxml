@@ -34,8 +34,8 @@
 		<mx:State name="brush_configuration">
 			<mx:AddChild relativeTo="{cntSecPanels}">
 				<mx:HBox>				
-					<panels:CustomizeBrushPanel id="customizeBrushPanel" title="CUSTOMIZE BRUSH" width="150" />
-					<panels:BrushContentPanel id="brushContentPanel" title="BRUSH CONTENT" width="150" />
+					<panels:CustomizeBrushPanel id="customizeBrushPanel" title="CUSTOMIZE BRUSH" width="150" height="300" />
+					<panels:BrushContentPanel id="brushContentPanel" title="BRUSH CONTENT" width="150" height="300" />
 				</mx:HBox>
 			</mx:AddChild>
 		</mx:State>
