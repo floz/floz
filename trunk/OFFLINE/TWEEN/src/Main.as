@@ -8,9 +8,12 @@ package
 {
 	import flash.display.Graphics;
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
 	import flash.utils.Dictionary;
 	import fr.minuit4.motion.M4Tween;
+	import gs.TweenLite;
 	
 	public class Main extends Sprite
 	{
@@ -31,8 +34,11 @@ package
 			g.drawCircle( 0, 0, 20 );
 			g.endFill();
 			
-			M4Tween.createTween( mov, .5, { } );
-			M4Tween.createTween( this, .2, { } );
+			M4Tween.createTween( mov, .5, { x: 300, y: 20, onComplete: "lol" } );
+			M4Tween.createTween( mov, .5, { x: 500, y: 20, onComplete: "lol" } );
+			M4Tween.createTween( this, .2, { z: 2 } );
+			
+			M4Tween.disposeTweenOf( mov );
 			
 			mov.addEventListener( MouseEvent.CLICK, onClick );
 		}
