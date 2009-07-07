@@ -6,9 +6,7 @@
  */
 package fr.minuit4.motion 
 {
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.utils.Dictionary;
+	import flash.utils.getTimer;
 	import fr.minuit4.motion.easing.Linear;
 	
 	public class M4Tween 
@@ -16,184 +14,139 @@ package fr.minuit4.motion
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
-		private static const GROWTH_RATE:int = 0x14;
-		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private static var _tweens:Dictionary = new Dictionary();
-		private static var _runningTweens:Array = [];
-		
-		private static var _allowInstanciation:Boolean;
-		private static var _availableInPool:int;
-		private static var _currentTweenInPool:M4Tween;
-		private static var _engineStarted:Boolean;
-		private static var _tweenController:Sprite;
-		
-		private var _nextInPool:M4Tween;
-		
 		private var _target:Object;
-		private var _duration:Number;
-		private var _params:Object;
-		private var _tweeningParams:Array;
-		private var _reservedParams:Object = { onInit: 1, onProgress: 1, onComplete: 1 }
+		private var _tweensInfos:/*M4TweenInfos*/Array = [];
+		private var _tweeningProperties:Object;
+		private var _reservedParams:Object = { name: 0, delay: 0, easing: 0, onInit: 0, onUpdate: 0, onComplete: 0, onInitParams: 0, onUpdateParams: 0, onCompleteParams: 0 };
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
+		
+		public var nextInPool:M4Tween;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function M4Tween() 
 		{
-			if ( _allowInstanciation )
+			if ( M4TweenPool.allowInstantiation )
 			{
-				// 
+				//
 			}
-			else throw new Error( "This class cannot be instanciated, use the createTween method instead" );
+			else throw new Error( "This class can't be instanciated, use M4TWeenPool.createTween instead." );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
-		private static function onFrame(e:Event):void 
-		{
-			//trace( _runningTweens.length );
-		}
-		
 		// - PRIVATE METHODS -------------------------------------------------------------
-		
-		// STATIC
-		
-		private static function startEngine():void
-		{
-			if( !_tweenController )
-				_tweenController = new Sprite();
-			
-			if ( _tweenController.hasEventListener( Event.ENTER_FRAME ) )
-				return;
-			
-			_tweenController.addEventListener( Event.ENTER_FRAME, M4Tween.onFrame, false, 0, true );			
-			_engineStarted = true;
-		}
-		
-		private static function stopEngine():void
-		{
-			if ( !_tweenController.hasEventListener( Event.ENTER_FRAME ) )
-				return;
-			
-			_tweenController.removeEventListener( Event.ENTER_FRAME, M4Tween.onFrame );
-			_engineStarted = false;
-		}
-		
-		// NOT STATIC
-		
-		private function initialize( target:Object, duration:Number, params:Object ):void
-		{
-			this._target = target;
-			this._duration = duration;
-			
-			var newParams:Object
-			if ( target in _tweens )
-			{
-				newParams = this._params;
-				
-				var p:String;				
-				for ( p in newParams )
-					newParams[ p ] = params[ p ];
-			}
-			else newParams = params;			
-			
-			newParams = checkParams( newParams );			
-			this._params = newParams;
-			
-			_tweeningParams = [];
-			trace( "---------" );
-			for ( p in this._params )
-			{
-				if ( p in _reservedParams )
-				{
-					trace( "réservé : " + p );
-				}
-				else
-				{
-					_tweeningParams.push( p );
-					trace( "autorisé : " + p );
-				}
-			}
-		}
-		
-		private function checkParams( newParams:Object ):Object
-		{
-			if ( !newParams.easing ) newParams.easing = Linear.easeIn;
-			
-			return newParams;
-		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		// STATIC
-		
-		public static function createTween( target:Object, duration:Number, params:Object ):M4Tween
+		public function initialize( target:Object, duration:Number, params:Object ):void
 		{
-			if ( duration < 0 ) 
-				throw new RangeError( "The duration must have a positive value." );
+			_target = target;
 			
-			var tween:M4Tween;
+			if ( !_tweeningProperties ) _tweeningProperties = { };
 			
-			if ( target in _tweens )
+			var rp:Array = [];
+			var fp:Array = [];
+			var property:String;
+			for ( property in params )
 			{
-				tween = _tweens[ target ];
-				tween.initialize( target, duration, params );
+				if ( property in _reservedParams )
+					rp.push( { property: property, value: params[ property ] } );
+				else
+					fp.push( { property: property, value: params[ property ] } );
 			}
-			else
+			
+			var ti:M4TweenInfos;
+			var value:Number;
+			var j:int;
+			var m:int = rp.length;
+			var i:int = fp.length;
+			while ( --i > -1 )
 			{
-				if ( !_availableInPool )
+				property = fp[ i ].property;
+				value = fp[ i ].value;
+				
+				if ( property in _tweeningProperties )
 				{
-					var i:int = GROWTH_RATE;
-					while ( --i > -1 )
-					{
-						_allowInstanciation = true; {
-							tween = new M4Tween();
-						} _allowInstanciation = false;
-						
-						tween._nextInPool = _currentTweenInPool;
-						_currentTweenInPool = tween;
-					}
-					
-					_availableInPool += GROWTH_RATE;
+					ti = _tweeningProperties[ property ];
+					ti.startValue = target[ property ];
+					ti.endValue = value;
+					ti.duration = duration;
+				}
+				else
+				{
+					ti = new M4TweenInfos( property, target[ property ], value, duration );
+					_tweeningProperties[ property ] = ti;
 				}
 				
-				tween = _currentTweenInPool;
-				_currentTweenInPool = tween._nextInPool;
-				--_availableInPool;
+				j = m;
+				while ( --j > -1 )
+					ti[ rp[ j ].property ] = rp[ j ].value;
 				
-				tween.initialize( target, duration, params );
-				_tweens[ target ] = tween;
+				if ( !ti.delay ) ti.delay = 0;
+				if ( typeof( ti.easing ) != "function" ) ti.easing = Linear.easeIn;
+				ti.startTime = getTimer() + ti.delay * 1000;
+				ti.endTime = ti.startTime + ti.duration * 1000;
+				
+				_tweensInfos.push( ti );
+			}
+		}
+		
+		public function update( time:int ):int
+		{
+			var t:Number; // Specifies the current time, between 0 and duration inclusive. 
+			var b:Number; // Specifies the initial value of the animation property. 
+			var c:Number; // Specifies the total change in the animation property. 
+			var d:Number; // Specifies the duration of the motion.
+			
+			var value:Number;
+			
+			var ti:M4TweenInfos;
+			var count:int = _tweensInfos.length;
+			var i:int = count;
+			while ( --i > -1 )
+			{
+				ti = _tweensInfos[ i ];
+				if ( !ti.complete )
+				{
+					if ( time >= ti.startTime )
+					{
+						t = time - ti.startTime;
+						b = ti.startValue;
+						c = ti.endValue - ti.startValue;
+						d = ti.duration * 1000;
+						value = ti.easing( t, b, c, d );
+						
+						_target[ ti.property ] = value;
+						
+						if ( time >= ti.endTime ) 
+						{
+							_target[ ti.property ] = ti.endValue; // bizarre !
+							ti.complete = true;
+						}
+					}
+				}
+				else
+				{					
+					delete _tweeningProperties[ ti.property ];
+					_tweensInfos.splice( i, 1 );
+				}
 			}
 			
-			M4Tween.startEngine();
-			
-			return tween;
+			return count;
 		}
 		
-		public static function disposeTween( tween:M4Tween ):void
+		public function dispose():void
 		{
-			delete _tweens[ tween._target ];
-			
-			tween._nextInPool = _currentTweenInPool;
-			_currentTweenInPool = tween;
-			
-			++_availableInPool;
+			_target = null;
+			_tweensInfos = [];
+			_tweeningProperties = null;
 		}
 		
-		public static function disposeTweenOf( target:Object ):void
-		{
-			disposeTween( _tweens[ target ] );
-		}
-		
-		// NOT STATIC
-		
-		public function toString():String
-		{
-			return "[object M4Tween target=" + _target + " duration=" + _duration + "]";
-		}
+		public function getTarget():Object { return this._target; }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

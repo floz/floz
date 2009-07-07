@@ -4,10 +4,11 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.motion 
+package  
 {
+	import flash.display.Sprite;
 	
-	public class M4TweenInfos 
+	public class MainPool extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -16,32 +17,24 @@ package fr.minuit4.motion
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
-		public var property:String;
-		public var startValue:Number;
-		public var endValue:Number;
-		public var duration:Number;
-		public var startTime:Number;
-		public var endTime:Number;
-		
-		public var onInit:Function;
-		public var onUpdate:Function;
-		public var onComplete:Function;
-		public var onInitParams:Array;
-		public var onUpdateParams:Array;
-		public var onCompleteParams:Array;
-		public var easing:Function;
-		public var delay:Number;
-		public var active:Boolean;
-		public var complete:Boolean;
-		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function M4TweenInfos( property:String, startValue:Number, endValue:Number, duration:Number ) 
+		public function MainPool() 
 		{
-			this.property = property;
-			this.startValue = startValue;
-			this.endValue = endValue;
-			this.duration = duration;
+			var list:/*Pool*/Array = [];
+			
+			var a:Array = [ "test1", "test2", "test3", "test4", "test5", "test6", "test7" ];
+			var i:int = a.length;
+			while ( --i > -1 )
+			{
+				list.push( Pool.create( 1, 2, a[ i ] ) );
+			}
+			
+			trace( list[ 1 ].getName() );
+			
+			list[ 1 ].dispose();
+			
+			Pool.create( 2, 4, "test8" );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------

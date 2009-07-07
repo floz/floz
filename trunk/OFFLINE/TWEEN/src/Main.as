@@ -12,11 +12,13 @@ package
 	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
 	import flash.utils.Dictionary;
+	import fr.minuit4.motion.easing.Quad;
 	import fr.minuit4.motion.M4Tween;
 	import gs.TweenLite;
 	
 	public class Main extends Sprite
 	{
+		private var mov:Sprite;
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
@@ -26,7 +28,7 @@ package
 		
 		public function Main() 
 		{
-			var mov:Sprite = new Sprite();
+			mov = new Sprite();
 			addChild( mov );
 			
 			var g:Graphics = mov.graphics;
@@ -34,23 +36,38 @@ package
 			g.drawCircle( 0, 0, 20 );
 			g.endFill();
 			
-			M4Tween.createTween( mov, .5, { x: 300, y: 20, onComplete: "lol" } );
-			M4Tween.createTween( mov, .5, { x: 500, y: 20, onComplete: "lol" } );
-			M4Tween.createTween( this, .2, { z: 2 } );
+			//mov.y = stage.stageHeight * .5;
+			//M4Tween.createTween( mov, .5, { x: 300, y: 20, easing: Quad.easeOut } );
+			//M4Tween.createTween( mov, .5, { x: 800, y: 500, easing: Quad.easeOut } );
 			
-			M4Tween.disposeTweenOf( mov );
-			
-			mov.addEventListener( MouseEvent.CLICK, onClick );
+			stage.addEventListener( MouseEvent.CLICK, onClick );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			trace( e.toString() );
+			M4Tween.createTween( mov, .5, { x: stage.mouseX, y: stage.mouseY, easing: Quad.easeOut } );
+			//TweenLite.to( mov, .5, { x: stage.mouseX, y: stage.mouseY, ease: Quad.easeOut } );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
+		
+		private function test():void
+		{
+			trace( "test ok" );
+		}
+		
+		private function createBt():Sprite
+		{
+			var s:Sprite = new Sprite();			
+			var g:Graphics = s.graphics;
+			g.beginFill( 0x00ffff );
+			g.drawRect( 0, 0, 100, 30 );
+			g.endFill();
+			
+			return s;
+		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
