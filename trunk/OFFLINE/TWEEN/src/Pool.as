@@ -7,13 +7,14 @@
 package  
 {
 	import flash.geom.Point;
+	import fr.minuit4.motion.M4Tween;
 	
 	public class Pool extends Point
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
-		private static const GROWTH_RATE:int = 0x14;
+		private static const GROWTH_RATE:int = 1;
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
@@ -21,7 +22,8 @@ package
 		private static var _allowInstanciation:Boolean;
 		private static var _currentPoint:Pool;
 		
-		private var nextInPool:Pool;
+		private var previous:Pool;
+		private var next:Pool;
 		
 		private var _name:String;
 		
@@ -52,14 +54,14 @@ package
 						poolPoint = new Pool();
 					} _allowInstanciation = false;
 					
-					poolPoint.nextInPool = _currentPoint;
+					poolPoint.next = _currentPoint;
 					_currentPoint = poolPoint;
 				}
 				_availableInPool += GROWTH_RATE;
 			}
 			
 			poolPoint = _currentPoint;
-			_currentPoint = poolPoint.nextInPool;
+			_currentPoint = poolPoint.next;
 			--_availableInPool;
 			
 			poolPoint.x = x;
@@ -71,13 +73,9 @@ package
 		
 		public static function release( poolPoint:Pool ):void
 		{
-			trace( "release : " + poolPoint._name );
-			trace( "current : " + _currentPoint );
-			trace( _currentPoint.nextInPool );
-			poolPoint.nextInPool = _currentPoint;
-			trace( "current : " + _currentPoint );
+			trace( _currentPoint );
+			poolPoint.next = _currentPoint;
 			_currentPoint = poolPoint;
-			trace( "current : " + _currentPoint );
 			
 			++_availableInPool;
 		}

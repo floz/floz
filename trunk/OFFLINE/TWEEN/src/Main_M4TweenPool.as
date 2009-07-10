@@ -24,7 +24,7 @@ package
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private const _tweenType:String = TWEENLITE;
+		private const _tweenType:String = M4;
 		private const _spritesCount:int = 1000;
 		
 		private var _sList:Array;
