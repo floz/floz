@@ -3,6 +3,10 @@
  * Written by :
  * @author Floz
  * www.floz.fr || www.minuit4.fr
+ * 
+ * CHANGE LOG :
+ * 
+ * 12/07/09		0.1		Floz		+ Création de la première version de M4Tween.
  */
 package fr.minuit4.motion.v4 
 {
@@ -17,14 +21,21 @@ package fr.minuit4.motion.v4
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private static const GROWTH_RATE:int = 15;
-		private static const RESERVED_PARAMS:Object = { name: 0, delay: 0, easing: 0, onInit: 0, onUpdate: 0, onComplete: 0, onInitParams: 0, onUpdateParams: 0, onCompleteParams: 0 };
+		/** Le nombre de tweens créées chaque fois qu'il n'y en a plus de disponibles dans la liste. */
+		private static const GROWTH_RATE:int = 0x10;
+		/** Les paramètres réservés au fonctionnement de M4Tween. */
+		private static const RESERVED_PARAMS:Object = { delay: 0, easing: 0, onInit: 0, onUpdate: 0, onComplete: 0, onInitParams: 0, onUpdateParams: 0, onCompleteParams: 0 };
 		
-		private static var _tweensByTarget:Dictionary = new Dictionary( true );
+		/** Recense toutes les tweens créées en fonction de leur cible. */
+		private static var _tweensByTarget:Dictionary = new Dictionary( false );
+		/** Indique si le moteur de tween est initialisé (si la méthode initiliaze a été appellée ou non) */
 		private static var _initialized:Boolean;
 		
+		/** Permet de gérer le ENTER_FRAME event. */
 		private static var _tweensController:Sprite;
+		/** Permet de savoir si la méthode startEngine a été appellée, et donc si l'ENTER_FRAME se joue bien. */
 		private static var _engineStarted:Boolean;
+		/** Contient la valeur de getTimer, rafraichit à chaque frame par secondes. */
 		private static var _currentTime:int;
 		
 		private static var _allowInstanciation:Boolean;
@@ -59,6 +70,7 @@ package fr.minuit4.motion.v4
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
+		/** Rafraichit chaque tween actuellement en liste. */
 		private static function render( e:Event ):void
 		{
 			_currentTime = getTimer();
@@ -67,6 +79,7 @@ package fr.minuit4.motion.v4
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
+		/** Lance le moteur : déclenche l'évènement ENTER_FRAME. */
 		private static function startEngine():void
 		{
 			if ( _engineStarted ) return;
@@ -75,6 +88,7 @@ package fr.minuit4.motion.v4
 			_engineStarted = true;
 		}
 		
+		/** Stop le moteur : stop l'évènement ENTER_FRAME. */
 		private static function stopEngine():void
 		{
 			if ( !_engineStarted ) return;
@@ -83,23 +97,23 @@ package fr.minuit4.motion.v4
 			_engineStarted = false;
 		}
 		
+		/** Rafraichit toutes les tweens actuellement en liste. */
 		private static function updateAllTweens():void
 		{
-			var tmpTween:M4Tween;
-			
 			var tween:M4Tween = _firstTween;
-			while ( tween && tween._enabled ) // tween && tween._enabled ?
+			while ( tween && tween._enabled ) // tween._enabled seulement ?
 			{
-				tmpTween = tween._next;
-				if ( !tween.update() )
-				{
-					tween = tmpTween;
-					continue;
-				}
-				tween = tmpTween;
+				tween.update();
+				tween = tween._next;
 			}
 		}
 		
+		/**
+		 * Cette méthode se charge d'initialiser la tween nouvellement créée.
+		 * @param	target	Object	L'object qui va être tweené.
+		 * @param	duration	Number	La durée totale de la tween en secondes.
+		 * @param	params	Object	Les paramètres supplémentaires pour la définition de la tween (x, y, z... delay, onComplete, onUpdate, easing...)
+		 */
 		private function initialize( target:Object, duration:Number, params:Object ):void
 		{
 			this._target = target;
@@ -131,6 +145,7 @@ package fr.minuit4.motion.v4
 			this._enabled = true;
 		}
 		
+		/** Met à jours les différents paramètres de la cible tweenée. */
 		private function update():void
 		{
 			if ( _currentTime < _startTime )
@@ -180,10 +195,12 @@ package fr.minuit4.motion.v4
 				if ( _params.onComplete )
 					_params.onComplete.apply( null, _params.onCompleteParams );
 				
+				_enabled = false;
 				_tweensInfos = null;
 			}
 		}
 		
+		/** Libère la mémoire en nettoyant les différents références aux objets. */
 		private function clean():void
 		{
 			_prev =	_next = null;
@@ -254,8 +271,6 @@ package fr.minuit4.motion.v4
 			{
 				tween = _tweensByTarget[ target ];
 				tween.initialize( target, duration, params );
-				
-				startEngine();
 				
 				return tween;
 			}
