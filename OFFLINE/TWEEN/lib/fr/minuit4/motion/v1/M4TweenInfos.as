@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.motion 
+package fr.minuit4.motion.v1
 {
 	
 	public class M4TweenInfos 
@@ -12,7 +12,15 @@ package fr.minuit4.motion
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
+		private static const GROWTH_RATE:int = 25;
+		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
+		
+		private static var _allowInstanciation:Boolean;
+		private static var _availableInPool:int;
+		private static var _currentTweenInfos:M4TweenInfos;
+		
+		private var _next:M4TweenInfos;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -36,7 +44,7 @@ package fr.minuit4.motion
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function M4TweenInfos( property:String, startValue:Number, endValue:Number, duration:Number ) 
+		public function M4TweenInfos( property:String, startValue:Number, endValue:Number, duration:Number )
 		{
 			this.property = property;
 			this.startValue = startValue;
