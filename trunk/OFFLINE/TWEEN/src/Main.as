@@ -13,7 +13,7 @@ package
 	import flash.events.MouseEvent;
 	import flash.utils.Dictionary;
 	import fr.minuit4.motion.easing.Quad;
-	import fr.minuit4.motion.M4Tween;
+	import fr.minuit4.motion.M4Motion;
 	import gs.TweenLite;
 	
 	public class Main extends Sprite
@@ -47,7 +47,7 @@ package
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			M4Tween.createTween( mov, .5, { x: stage.mouseX, y: stage.mouseY, easing: Quad.easeOut } );
+			M4Motion.createTween( mov, .5, { x: stage.mouseX, y: stage.mouseY, easing: Quad.easeOut } );
 			//TweenLite.to( mov, .5, { x: stage.mouseX, y: stage.mouseY, ease: Quad.easeOut } );
 		}
 		

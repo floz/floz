@@ -6,11 +6,14 @@
  * 
  * Version log :
  * 
- * 07.05.09		1.3		Floz		+ Ajout d'un parametre dans le constructeur pour rendre partiellement visible l'outil
- * 24.03.09		1.2		Floz		+ Courbe supplémentaire pour les millisecondes
- * 08.03.09		1.1		Floz		+ Possibilité de déplacer le composant, et de cacher/afficher le graphique.
- * 08.03.09		1.0		Floz		+ Refonte pour ajout d'un graphique de performances
- * 28.08.08		0.9		Floz		+ Première version
+ * 11.07.09		1.0		Floz		+ Correction de quelques morceaux de codes.
+ * 									+ Ajout d'une valeur "moyenne" des fps.
+ * 									+ Ajout d'une courbe représentative de la moyenne des fps.
+ * 07.05.09		0.5		Floz		+ Ajout d'un parametre dans le constructeur pour rendre partiellement visible l'outil
+ * 24.03.09		0.4		Floz		+ Courbe supplémentaire pour les millisecondes
+ * 08.03.09		0.3		Floz		+ Possibilité de déplacer le composant, et de cacher/afficher le graphique.
+ * 08.03.09		0.2		Floz		+ Refonte pour ajout d'un graphique de performances
+ * 28.08.08		0.1		Floz		+ Première version
  */
 package fr.minuit4.utils.debug 
 {
@@ -51,21 +54,28 @@ package fr.minuit4.utils.debug
 		
 		private var _prevFps:int;
 		private var _prevMem:int;
+		private var _prevMoy:int;
 		private var _prevMS:int;
 		private var _rect:Rectangle;
 		
 		private var _tFps:TextField;
 		private var _tMem:TextField;
+		private var _tMoy:TextField;
 		private var _tMs:TextField;
 		
-		private var _fps:Number = 0;
-		private var _mem:Number = 0;
-		private var _ms:Number;
+		private var _fps:int;
+		private var _mem:int;
+		private var _moy:int;
+		private var _ms:int;
 		
 		private var _count:int;
 		private var _currentTime:int;
 		private var _prevIntervalTime:int;
 		private var _prevTime:int;
+		
+		private var _moyValue:Number = 0;
+		private var _moyCount:int;
+		private var _moyRefresh:int = 20;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -198,13 +208,22 @@ package fr.minuit4.utils.debug
 			
 			_ms = int( _currentTime - _prevTime );
 			
-			if ( _count++ >+ _interval )
-			{
+			if ( ++_count >+ _interval )
+			{				
 				_fps = int( ( 1000 * _count ) / ( _currentTime - _prevIntervalTime ) );
-				_count = 0;
-				_prevIntervalTime = _currentTime;
+				if ( _fps > stage.frameRate ) _fps = stage.frameRate;
 				
 				_mem = int( System.totalMemory / 1048576 );
+				
+				_moyValue += _fps;
+				if ( ( ++_moyCount % _moyRefresh ) == 0 )
+				{
+					_moy = int( ( _moy + _moyValue ) / ( _moyRefresh + 1 ) );
+					_moyValue = 0;
+				}
+				
+				_count = 0;
+				_prevIntervalTime = _currentTime;
 				
 				if ( _graphicShown )
 				{
@@ -220,6 +239,11 @@ package fr.minuit4.utils.debug
 					var nextMem:int = ( 1 - rm ) * ( _curves.height - 1 );			
 					drawLine( _curves.width - _scroll, _prevMem, _curves.width - 1, nextMem, 0xff00ff00 );
 					_prevMem = nextMem;
+					
+					var rmf:Number = Math.min( 1, _moy / stage.frameRate );
+					var nextMoy:int = ( 1 - rmf ) * ( _curves.height - 1 );
+					drawLine( _curves.width - _scroll, _prevMoy, _curves.width - 1, nextMoy, 0xffff6600 );
+					_prevMoy = nextMoy;
 					
 					var rms:Number = Math.min( 1, _ms / _MSMAX );
 					var nextMs:int = ( 1 - rms ) * ( _curves.height - 1 );
@@ -269,27 +293,33 @@ package fr.minuit4.utils.debug
 			
 			_tFps = new TextField();
 			_tFps.x = 5; _tFps.y = 2;
+			_tMoy = new TextField();
+			_tMoy.x = 75; _tMoy.y = 2;			
 			_tMem = new TextField();
-			_tMem.x = 75; _tMem.y = 2;
+			_tMem.x = 150; _tMem.y = 2;
 			_tMs = new TextField();
 			_tMs.x = _width - 50; _tMs.y = 2;
 			
 			_tFps.textColor = 0xff0000;
 			_tMem.textColor = 0x00ff00;
+			_tMoy.textColor = 0xff6600;
 			_tMs.textColor = 0x0099ff;
 			
 			_tFps.selectable = 
 			_tMem.selectable =
+			_tMoy.selectable =
 			_tMs.selectable = false;
 			
 			_tFps.defaultTextFormat =
 			_tMem.defaultTextFormat =
+			_tMoy.defaultTextFormat =
 			_tMs.defaultTextFormat = tf;
 			
 			refreshTexts();
 			
 			_infos.addChild( _tFps );
 			_infos.addChild( _tMem );
+			_infos.addChild( _tMoy );
 			_infos.addChild( _tMs );
 		}
 		
@@ -301,12 +331,14 @@ package fr.minuit4.utils.debug
 				_tFps.text = "FPS : ...";
 				_tMem.text = "MEM : ...";
 				_tMs.text = "MS : ...";
+				_tMoy.text = "MS : ...";
 				
 				return;
 			}
 			_tFps.text = "FPS : " + _fps.toString() + " / " + stage.frameRate;
 			_tMem.text = "MEM : " + _mem.toString();
 			_tMs.text = "MS : " + _ms.toString();
+			_tMoy.text = "MOY FPS : " + _moy.toString();
 		}
 		
 		/**
@@ -386,6 +418,15 @@ package fr.minuit4.utils.debug
 		
 		/** Permet de savoir si le composant est actif ou non */
 		public function isRunning():Boolean { return _isRunning; }
+		
+		/**
+		 * Change le nombre de secondes entre chaque rafraichissement de la moyenne des FPS.
+		 * @param	refreshTime	int	Temps entre chaque rafraichissement (en secondes).
+		 */
+		public function setMoyRefreshValue( refreshTime:int ):void
+		{
+			this._moyRefresh = refreshTime;
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.motion 
+package fr.minuit4.motion.v2
 {
 	import flash.utils.getTimer;
 	import fr.minuit4.motion.easing.Linear;
@@ -17,23 +17,21 @@ package fr.minuit4.motion
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _target:Object;
-		private var _tweensInfos:/*M4TweenInfos*/Array = [];
-		private var _tweeningProperties:Object;
+		private var _tweensInfos:M4TweenInfos;
 		private var _reservedParams:Object = { name: 0, delay: 0, easing: 0, onInit: 0, onUpdate: 0, onComplete: 0, onInitParams: 0, onUpdateParams: 0, onCompleteParams: 0 };
+		
+		private var _enabled:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
-		public var nextInPool:M4Tween = null;
+		public var prev:M4Tween;
+		public var next:M4Tween;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function M4Tween() 
 		{
-			if ( M4TweenPool.allowInstantiation )
-			{
-				//
-			}
-			else throw new Error( "This class can't be instanciated, use M4TWeenPool.createTween instead." );
+			//
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -46,8 +44,6 @@ package fr.minuit4.motion
 		{
 			_target = target;
 			
-			if ( !_tweeningProperties ) _tweeningProperties = { };
-			
 			var rp:Array = [];
 			var fp:Array = [];
 			var property:String;
@@ -59,7 +55,9 @@ package fr.minuit4.motion
 					fp.push( { property: property, value: params[ property ] } );
 			}
 			
-			var ti:M4TweenInfos;
+			_tweensInfos = new M4TweenInfos();
+			var ti:M4TweenInfos = _tweensInfos;
+			
 			var value:Number;
 			var j:int;
 			var m:int = rp.length;
@@ -69,18 +67,10 @@ package fr.minuit4.motion
 				property = fp[ i ].property;
 				value = fp[ i ].value;
 				
-				if ( property in _tweeningProperties )
-				{
-					ti = _tweeningProperties[ property ];
-					ti.startValue = target[ property ];
-					ti.endValue = value;
-					ti.duration = duration;
-				}
-				else
-				{
-					ti = new M4TweenInfos( property, target[ property ], value, duration );
-					_tweeningProperties[ property ] = ti;
-				}
+				ti.property = property;
+				ti.startValue = target[ property ];
+				ti.endValue = value;
+				ti.duration = duration;
 				
 				j = m;
 				while ( --j > -1 )
@@ -91,8 +81,10 @@ package fr.minuit4.motion
 				ti.startTime = getTimer() + ti.delay * 1000;
 				ti.endTime = ti.startTime + ti.duration * 1000;
 				
-				_tweensInfos.push( ti );
+				if( i > 0 ) ti = ti.next = new M4TweenInfos();
 			}
+			
+			this._enabled = true;
 		}
 		
 		public function update( time:int ):int
@@ -104,12 +96,10 @@ package fr.minuit4.motion
 			
 			var value:Number;
 			
-			var ti:M4TweenInfos;
-			var count:int = _tweensInfos.length;
-			var i:int = count;
-			while ( --i > -1 )
+			var ti:M4TweenInfos = _tweensInfos;
+			var count:int;
+			while ( ti )
 			{
-				ti = _tweensInfos[ i ];
 				if ( !ti.complete )
 				{
 					if ( time >= ti.startTime )
@@ -128,12 +118,9 @@ package fr.minuit4.motion
 							ti.complete = true;
 						}
 					}
+					++count;
 				}
-				else
-				{					
-					delete _tweeningProperties[ ti.property ];
-					_tweensInfos.splice( i, 1 );
-				}
+				ti = ti.next;
 			}
 			
 			return count;
@@ -141,9 +128,15 @@ package fr.minuit4.motion
 		
 		public function dispose():void
 		{
+			prev = next = null;			
 			_target = null;
-			_tweensInfos = [];
-			_tweeningProperties = null;
+			
+			this._enabled = false;
+		}
+		
+		public function isEnabled():Boolean
+		{
+			return this._enabled;
 		}
 		
 		public function getTarget():Object { return this._target; }

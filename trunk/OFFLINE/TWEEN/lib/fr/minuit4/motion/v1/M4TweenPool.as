@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.motion 
+package fr.minuit4.motion.v1
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
