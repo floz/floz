@@ -88,17 +88,17 @@ package
 			if ( _tweenType == M4V4 )
 			{
 				while ( --i > -1 )
-					M4Tween.create( _sList[ i ], .5, { x: Math.random() * stage.stageWidth, y: Math.random() * stage.stageHeight, rotation: Math.random() * 380, alpha: Math.random() * .9 + .1, easing: Quad.easeIn } );
+					M4Tween.create( _sList[ i ], .5, { x: Math.random() * stage.stageWidth, y: Math.random() * stage.stageHeight, rotation: Math.random() * 380, scaleX: Math.random() * 1 + .2, scaleY: Math.random() * 1 + .2, alpha: Math.random() * .9 + .1, easing: Quad.easeIn } );
 			}
 			else if ( _tweenType == TWEENER )
 			{
 				while ( --i > -1 )
-					Tweener.addTween( _sList[ i ], { x: Math.random() * stage.stageWidth, y: Math.random() * stage.stageHeight, rotation: Math.random() * 380, alpha: Math.random() * .9 + .1, time: .5, transition: "easeinquad" } );
+					Tweener.addTween( _sList[ i ], { x: Math.random() * stage.stageWidth, y: Math.random() * stage.stageHeight, rotation: Math.random() * 380, scaleX: Math.random() * 1 + .2, scaleY: Math.random() * 1 + .2, alpha: Math.random() * .9 + .1, time: .5, transition: "easeinquad" } );
 			}
 			else if ( _tweenType == TWEENLITE )
 			{
 				while ( --i > -1 )
-					TweenLite.to( _sList[ i ], .5, { x: Math.random() * stage.stageWidth, y: Math.random() * stage.stageHeight, rotation: Math.random() * 380, alpha: Math.random() * .9 + .1, ease: Quad.easeIn } );
+					TweenLite.to( _sList[ i ], .5, { x: Math.random() * stage.stageWidth, y: Math.random() * stage.stageHeight, rotation: Math.random() * 380, scaleX: Math.random() * 1 + .2, scaleY: Math.random() * 1 + .2, alpha: Math.random() * .9 + .1, ease: Quad.easeIn } );
 			}
 		}
 		
