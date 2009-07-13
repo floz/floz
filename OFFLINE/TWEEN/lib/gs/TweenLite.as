@@ -387,7 +387,7 @@ package gs {
 				time = this.duration;
 				factor = (this.ease == this.vars.ease || this.duration == 0.001) ? 1 : 0; //to accommodate TweenMax.reverse(). Without this, the last frame would render incorrectly
 			} else {
-				factor = this.ease(time, 0, 1, this.duration);			
+				factor = this.ease(time, 0, 1, this.duration);
 			}
 			for (i = this.tweens.length - 1; i > -1; i--) {
 				ti = this.tweens[i];
