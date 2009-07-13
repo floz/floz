@@ -5,9 +5,9 @@
     <movie disabled="False" />
     <movie input="" />
     <movie path="bin/TWEEN.swf" />
-    <movie fps="30" />
-    <movie width="700" />
-    <movie height="700" />
+    <movie fps="50" />
+    <movie width="500" />
+    <movie height="500" />
     <movie version="9" />
     <movie background="#FFFFFF" />
   </output>

@@ -8,7 +8,7 @@
  * 
  * 12/07/09		0.1		Floz		+ Création de la première version de M4Tween.
  */
-package fr.minuit4.motion.v4 
+package fr.minuit4.motion 
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -53,7 +53,6 @@ package fr.minuit4.motion.v4
 		private var _tweensInfos:M4TweenInfos;
 		private var _enabled:Boolean;
 		private var _startTime:Number;
-		private var _endTime:Number;
 		private var _easing:Function;
 		private var _delay:Number;
 		private var _hasUpdate:Boolean;
@@ -100,10 +99,11 @@ package fr.minuit4.motion.v4
 		/** Rafraichit toutes les tweens actuellement en liste. */
 		private static function updateAllTweens():void
 		{
+			var tmpTween:M4Tween;
 			var tween:M4Tween = _firstTween;
-			while ( tween && tween._enabled ) // tween._enabled seulement ?
+			while ( tween && tween._enabled ) // tween && tween._enabled ? SI BUG CHECK HERE
 			{
-				tween.update();
+				tween.update( _currentTime );
 				tween = tween._next;
 			}
 		}
@@ -122,17 +122,21 @@ package fr.minuit4.motion.v4
 			
 			_tweensInfos = new M4TweenInfos();
 			var tweenInfos:M4TweenInfos = _tweensInfos;
+			var init:Boolean;
 			
 			var property:String;
 			for ( property in params )
 			{
 				if ( !( property in RESERVED_PARAMS ) )
 				{
+					if ( init ) 
+						tweenInfos = tweenInfos.next = new M4TweenInfos();
+					
 					tweenInfos.property = property;
 					tweenInfos.startValue = _target[ property ];
-					tweenInfos.endValue = params[ property ];
+					tweenInfos.changeValue = params[ property ] - tweenInfos.startValue;
 					
-					tweenInfos = tweenInfos.next = new M4TweenInfos();
+					init = true;
 				}
 			}
 			
@@ -140,64 +144,42 @@ package fr.minuit4.motion.v4
 			_easing = typeof( params.easing ) == "function" ? params.easing : Linear.easeIn;
 			_hasUpdate = params.onUpdate ? true : false;
 			_startTime = getTimer() + _delay * 1000;
-			_endTime = _startTime + _duration * 1000;
 			
 			this._enabled = true;
 		}
 		
 		/** Met à jours les différents paramètres de la cible tweenée. */
-		private function update():void
+		private function update( time:Number ):void
 		{
-			if ( _currentTime < _startTime )
+			if ( time < _startTime )
 				return;
 			
-			var t:Number; // Specifies the current time, between 0 and duration inclusive. 
-			var b:Number; // Specifies the initial value of the animation property. 
-			var c:Number; // Specifies the total change in the animation property. 
-			var d:Number; // Specifies the duration of the motion.
-			
-			var value:Number;
+			time = ( time - _startTime ) * .001;	
+			var factor:Number = time < _duration ? _easing( time, 0, 1, _duration ) : 1;
 			
 			var tweenInfos:M4TweenInfos = _tweensInfos;
-			var count:int;
-			while ( tweenInfos && tweenInfos.property )
-			{
-				if ( !tweenInfos.complete )
-				{
-					if ( _currentTime >= _startTime )
-					{
-						t = _currentTime - _startTime;
-						b = tweenInfos.startValue;
-						c = tweenInfos.endValue - tweenInfos.startValue;
-						d = _duration * 1000;
-						value = _easing( t, b, c, d );
-						
-						_target[ tweenInfos.property ] = value;
-						
-						if ( _hasUpdate )
-							_params.onUpdate.apply( null, _params.onUpdateParams );
-						
-						if ( _currentTime >= _endTime )
-						{
-							_target[ tweenInfos.property ] = tweenInfos.endValue;
-							tweenInfos.complete = true;
-							
-							continue;
-						}
-						++count;
-					}
-				}
+			while ( tweenInfos )
+			{						
+				_target[ tweenInfos.property ] = tweenInfos.startValue + ( factor * tweenInfos.changeValue );
 				tweenInfos = tweenInfos.next;
 			}
 			
-			if ( !count )
-			{
-				if ( _params.onComplete )
-					_params.onComplete.apply( null, _params.onCompleteParams );
-				
-				_enabled = false;
-				_tweensInfos = null;
-			}
+			if ( _hasUpdate )
+				_params.onUpdate.apply( null, _params.onUpdateParams );
+			
+			if ( time >= _duration )
+				complete();
+		}
+		
+		/** Invalide la tween en la désactivant. */
+		private function complete():void
+		{
+			_enabled = false;
+			
+			if ( _params.onComplete )
+				_params.onComplete.apply( null, _params.onCompleteParams );			
+			
+			_tweensInfos = null;
 		}
 		
 		/** Libère la mémoire en nettoyant les différents références aux objets. */
@@ -326,10 +308,8 @@ package fr.minuit4.motion.v4
 			}
 			else if ( tween == _firstTween )
 			{
-				var newFirst:M4Tween = _firstTween._next;
-				newFirst._prev = null;
-				
-				_firstTween = newFirst;
+				_firstTween = _firstTween._next;
+				_firstTween._prev = null;
 			}
 			else
 			{
