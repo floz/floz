@@ -6,10 +6,10 @@
     <movie input="" />
     <movie path="bin/TWEEN.swf" />
     <movie fps="50" />
-    <movie width="500" />
-    <movie height="500" />
+    <movie width="700" />
+    <movie height="700" />
     <movie version="9" />
-    <movie background="#FFFFFF" />
+    <movie background="#B2DF6C" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>

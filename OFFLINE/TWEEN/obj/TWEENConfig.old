@@ -12,10 +12,10 @@
   <file-specs>
     <path-element>D:\Projets\Projets\OFFLINE\TWEEN\src\Main_M4TweenPool.as</path-element>
   </file-specs>
-  <default-background-color>#FFFFFF</default-background-color>
+  <default-background-color>#B2DF6C</default-background-color>
   <default-frame-rate>50</default-frame-rate>
   <default-size>
-    <width>500</width>
-    <height>500</height>
+    <width>700</width>
+    <height>700</height>
   </default-size>
 </flex-config>
