@@ -31,7 +31,7 @@ package
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private const _tweenType:String = TWEENER;
+		private const _tweenType:String = M4V4;
 		private const _spritesCount:int = 1000;
 		
 		private var _sList:Array;
@@ -50,7 +50,7 @@ package
 			
 			addChild( new FPS() );
 			
-			_timer = new Timer( 500 );
+			_timer = new Timer( 1000 );
 			_timer.addEventListener( TimerEvent.TIMER, onTimer );		
 			
 			var z:Sprite = new Sprite();
@@ -72,7 +72,7 @@ package
 			if ( _tweenType == M4V4 )
 			{
 				while ( --i > -1 )
-					M4Tween.create( _sList[ i ], .5, { x: Math.random() * stage.stageWidth, y: Math.random() * stage.stageHeight, rotation: Math.random() * 380, alpha: Math.random() * .9 + .1, easing: Quad.easeIn } );
+					M4Tween.create( _sList[ i ], 1, { x: Math.random() * stage.stageWidth, y: Math.random() * stage.stageHeight, rotation: Math.random() * 380, alpha: Math.random() * .9 + .1, easing: Quad.easeIn } );
 			}
 			else if ( _tweenType == TWEENER )
 			{
@@ -82,7 +82,7 @@ package
 			else if ( _tweenType == TWEENLITE )
 			{
 				while ( --i > -1 )
-					TweenLite.to( _sList[ i ], .5, { x: Math.random() * stage.stageWidth, y: Math.random() * stage.stageHeight, rotation: Math.random() * 380, alpha: Math.random() * .9 + .1, ease: Quad.easeIn } );
+					TweenLite.to( _sList[ i ], 1, { x: Math.random() * stage.stageWidth, y: Math.random() * stage.stageHeight, rotation: Math.random() * 380, alpha: Math.random() * .9 + .1, ease: Quad.easeIn } );
 			}
 		}
 		
