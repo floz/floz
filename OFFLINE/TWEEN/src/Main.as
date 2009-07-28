@@ -10,6 +10,7 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.utils.Dictionary;
 	import fr.minuit4.motion.easing.Quad;
@@ -39,6 +40,8 @@ package
 			//mov.y = stage.stageHeight * .5;
 			//M4Tween.createTween( mov, .5, { x: 300, y: 20, easing: Quad.easeOut } );
 			//M4Tween.createTween( mov, .5, { x: 800, y: 500, easing: Quad.easeOut } );
+			
+			stage.addEventListener( KeyboardEvent.KEY_DOWN, onKeyDown );
 			
 			stage.addEventListener( MouseEvent.CLICK, onClick );
 		}
