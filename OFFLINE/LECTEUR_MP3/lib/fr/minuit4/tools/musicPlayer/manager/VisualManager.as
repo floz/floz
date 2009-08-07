@@ -19,6 +19,7 @@ package fr.minuit4.tools.musicPlayer.manager
 		
 		private var _backgroundColor:uint = 0xffffff;
 		private var _backgroundElementColor:uint = 0x000000;
+		private var _elementColor:uint = 0xffffff;
 		private var _linesColor:uint = 0x888888;
 		private var _playerWidth:Number = 300;
 		private var _deviceHeight:Number = 200;
@@ -57,6 +58,9 @@ package fr.minuit4.tools.musicPlayer.manager
 		
 		public function setBackgroundElementColor( value:uint ):void { this._backgroundElementColor = value; }
 		public function getBackgroundElementColor():uint { return this._backgroundElementColor; }
+		
+		public function setElementColor( value:uint ):void { this._elementColor = value; }
+		public function getElementColor():uint { return this._elementColor; }
 		
 		public function setLinesColor( value:uint ):void { this._linesColor = value; }
 		public function getLinesColor():uint { return this._linesColor; }
