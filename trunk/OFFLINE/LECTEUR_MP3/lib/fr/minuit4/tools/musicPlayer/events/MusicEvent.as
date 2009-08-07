@@ -10,11 +10,12 @@ package fr.minuit4.tools.musicPlayer.events
 	
 	public class MusicEvent extends Event 
 	{
+		public static const STOP:String = "musicevent_stop";
+		public static const PLAY:String = "musicevent_play";
 		
 		public function MusicEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) 
 		{ 
-			super(type, bubbles, cancelable);
-			
+			super(type, bubbles, cancelable);			
 		} 
 		
 		public override function clone():Event 

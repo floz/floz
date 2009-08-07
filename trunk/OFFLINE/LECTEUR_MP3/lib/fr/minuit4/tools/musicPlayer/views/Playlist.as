@@ -7,14 +7,19 @@
 package fr.minuit4.tools.musicPlayer.views 
 {
 	import flash.display.Graphics;
-	import fr.minuit4.tools.musicPlayer.core.AbstractDisplay;
+	import flash.display.Shape;
+	import fr.minuit4.tools.musicPlayer.core.views.PlaylistComponent;
+	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 	
-	public class Playlist extends AbstractDisplay
+	public class Playlist extends PlaylistComponent 
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
+		
+		private var _visualManager:VisualManager;
+		private var _background:Shape;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -22,16 +27,23 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		public function Playlist() 
 		{
-			
+			_visualManager = VisualManager.getInstance();
+			super();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		override protected function drawBackground():void 
+		override protected function init():void
 		{
-			super.drawBackground();
+			drawBackground();
+		}
+		
+		private function drawBackground():void 
+		{
+			_background = new Shape();
+			addChild( _background );
 			
 			var g:Graphics = _background.graphics;
 			g.lineStyle( 1, _visualManager.getLinesColor() );
@@ -41,13 +53,6 @@ package fr.minuit4.tools.musicPlayer.views
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
-		
-		public function build():void
-		{
-			while ( this.numChildren ) this.removeChildAt( 0 );
-			
-			drawBackground();
-		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
