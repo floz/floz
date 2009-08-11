@@ -62,6 +62,7 @@ package fr.minuit4.tools.musicPlayer.views
 			addChild( _iconCnt );
 			
 			_musicManager.addEventListener( MusicEvent.PLAY, switchState );
+			_musicManager.addEventListener( MusicEvent.PAUSE, switchState );
 			_musicManager.addEventListener( MusicEvent.STOP, switchState );
 			switchState( null );
 		}

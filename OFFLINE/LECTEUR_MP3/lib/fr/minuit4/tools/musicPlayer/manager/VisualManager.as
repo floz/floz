@@ -22,7 +22,7 @@ package fr.minuit4.tools.musicPlayer.manager
 		private var _elementColor:uint = 0xffffff;
 		private var _linesColor:uint = 0x888888;
 		private var _playerWidth:Number = 300;
-		private var _deviceHeight:Number = 200;
+		private var _deviceHeight:Number = 90;
 		private var _playlistHeight:Number = 100;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
