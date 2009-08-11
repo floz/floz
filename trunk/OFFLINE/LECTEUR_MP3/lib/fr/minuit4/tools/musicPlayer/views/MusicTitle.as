@@ -4,34 +4,27 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.tools.musicPlayer.core 
+package fr.minuit4.tools.musicPlayer.views 
 {
-	import flash.display.Sprite;
+	import flash.text.TextField;
 	import fr.minuit4.tools.musicPlayer.core.managers.MusicManager;
-	import fr.minuit4.tools.musicPlayer.core.views.DeviceComponent;
-	import fr.minuit4.tools.musicPlayer.core.views.PlaylistComponent;
+	import fr.minuit4.tools.musicPlayer.events.MusicEvent;
 	
-	public class AbstractMusicPlayer extends Sprite
+	public class MusicTitle extends TextField
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		protected var _musicManager:MusicManager;
-		
-		protected var _device:DeviceComponent;
-		protected var _playlist:PlaylistComponent;
+		private var _musicManager:MusicManager;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function AbstractMusicPlayer( device:DeviceComponent, playlist:PlaylistComponent = null ) 
+		public function MusicTitle() 
 		{
-			_device = device;
-			_playlist = playlist;			
-			
 			_musicManager = MusicManager.getInstance();
 			
 			init();
@@ -39,18 +32,20 @@ package fr.minuit4.tools.musicPlayer.core
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
+		private function onID3Loaded(e:MusicEvent):void 
+		{
+			this.text = _musicManager.getCurrentArtist() + " - " + _musicManager.getCurrentSong();
+		}
+		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		protected function init():void
+		private function init():void
 		{
-			addChild( _device );
-			if( _playlist ) addChild( _playlist );
+			_musicManager.addEventListener( MusicEvent.ID3_LOADED, onID3Loaded );			
+			this.text = "... - ...";
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
-		
-		public function addSong( song:Object ):void { _musicManager.addSong( song ); }
-		public function addSongs( songs:Array ):void { _musicManager.addSongs( songs ); }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

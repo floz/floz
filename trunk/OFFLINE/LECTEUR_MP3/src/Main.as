@@ -36,7 +36,7 @@ package
 			mPlayer.y = stage.stageHeight * .5 - mPlayer.height * .5;
 			addChild( mPlayer );
 			
-			mPlayer.addTrack( path_mp3 + "01  Feist - So Sorry.mp3" );
+			mPlayer.addSong( { url: String( path_mp3 + "08 - Boards Of Canada - Kaini Industries.mp3" ), duration: 59000 } );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
