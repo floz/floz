@@ -10,10 +10,10 @@ package fr.minuit4.tools.musicPlayer.views
 	import flash.display.Graphics;
 	import flash.display.LineScaleMode;
 	import flash.display.Shape;
-	import fr.minuit4.tools.musicPlayer.core.views.AbstractTimeline;
+	import fr.minuit4.tools.musicPlayer.core.views.AbstractPrevButton;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 	
-	public class Timeline extends AbstractTimeline
+	public class PrevButton extends AbstractPrevButton
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -21,16 +21,13 @@ package fr.minuit4.tools.musicPlayer.views
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _visualManager:VisualManager;
-		
 		private var _background:Shape;
-		private var _bufferBar:Shape;
-		private var _playingBar:Shape;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Timeline() 
+		public function PrevButton() 
 		{
 			_visualManager = VisualManager.getInstance();
 			init();
@@ -43,41 +40,39 @@ package fr.minuit4.tools.musicPlayer.views
 		private function init():void
 		{
 			drawBackground();
-			drawTimeline();
-			
-			setBufferBar( _bufferBar );
-			setPlayingBar( _playingBar );
+			drawIcon();
 		}
 		
 		private function drawBackground():void
 		{
 			_background = new Shape();
+			addChild( _background );
+			
 			var g:Graphics = _background.graphics;
-			g.lineStyle( 1, _visualManager.getBackgroundElementColor(), 1, true );
-			g.beginFill( 0xffffff );
-			g.drawRect( 0, 0, _visualManager.getPlayerWidth() - 20, 12 );
+			g.lineStyle( 0, 0, 1, true );
+			g.beginFill( _visualManager.getBackgroundElementColor() );
+			g.drawRect( 0, 0, 16, 16 );
 			g.endFill();
-			addBackgroundElement( _background );
 		}
 		
-		private function drawTimeline():void
+		private function drawIcon():void
 		{
-			getTimelineCnt().x = getTimelineCnt().y = 1.35;
+			var icon:Shape = new Shape();
+			icon.x = 4;
+			icon.y = 3;
+			addChild( icon );
 			
-			_bufferBar = new Shape();			
-			var g:Graphics = _bufferBar.graphics;
-			g.beginFill( 0x999999 );
-			g.lineStyle( 0, _visualManager.getElementColor(), 1, true );
-			g.drawRect( 0, 0, _background.width - 3, _background.height - 3 );
+			var g:Graphics = icon.graphics;
+			g.lineStyle( 0, 0, 1, true, LineScaleMode.NONE, CapsStyle.NONE );
+			g.beginFill( _visualManager.getElementColor() );
+			g.moveTo( 0, 5 );
+			g.lineTo( 4, 0 );
+			g.lineTo( 4, 5 );
+			g.lineTo( 8, 0 );
+			g.lineTo( 8, 10 );
+			g.lineTo( 4, 5 );
+			g.lineTo( 4, 10 );
 			g.endFill();
-			addTimelineElement( _bufferBar );
-			
-			_playingBar = new Shape();
-			g = _playingBar.graphics;
-			g.beginFill( _visualManager.getBackgroundElementColor() );
-			g.drawRect( 0, 0, _background.width - 4, _background.height - 4 );
-			g.endFill();
-			addTimelineElement( _playingBar );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

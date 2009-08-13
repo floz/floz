@@ -6,14 +6,12 @@
  */
 package fr.minuit4.tools.musicPlayer.views 
 {
-	import flash.display.CapsStyle;
 	import flash.display.Graphics;
-	import flash.display.LineScaleMode;
 	import flash.display.Shape;
-	import fr.minuit4.tools.musicPlayer.core.views.AbstractTimeline;
+	import fr.minuit4.tools.musicPlayer.core.views.AbstractVolumeBar;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 	
-	public class Timeline extends AbstractTimeline
+	public class VolumeBar extends AbstractVolumeBar
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -23,14 +21,12 @@ package fr.minuit4.tools.musicPlayer.views
 		private var _visualManager:VisualManager;
 		
 		private var _background:Shape;
-		private var _bufferBar:Shape;
-		private var _playingBar:Shape;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Timeline() 
+		public function VolumeBar() 
 		{
 			_visualManager = VisualManager.getInstance();
 			init();
@@ -43,10 +39,7 @@ package fr.minuit4.tools.musicPlayer.views
 		private function init():void
 		{
 			drawBackground();
-			drawTimeline();
-			
-			setBufferBar( _bufferBar );
-			setPlayingBar( _playingBar );
+			drawVolumeBar();
 		}
 		
 		private function drawBackground():void
@@ -55,29 +48,32 @@ package fr.minuit4.tools.musicPlayer.views
 			var g:Graphics = _background.graphics;
 			g.lineStyle( 1, _visualManager.getBackgroundElementColor(), 1, true );
 			g.beginFill( 0xffffff );
-			g.drawRect( 0, 0, _visualManager.getPlayerWidth() - 20, 12 );
+			g.drawRect( 0, 0, 50, 10 );
 			g.endFill();
 			addBackgroundElement( _background );
 		}
 		
-		private function drawTimeline():void
+		private function drawVolumeBar():void
 		{
-			getTimelineCnt().x = getTimelineCnt().y = 1.35;
-			
-			_bufferBar = new Shape();			
-			var g:Graphics = _bufferBar.graphics;
-			g.beginFill( 0x999999 );
-			g.lineStyle( 0, _visualManager.getElementColor(), 1, true );
+			var backgroundBar:Shape = new Shape();
+			var g:Graphics = backgroundBar.graphics;
+			g.lineStyle( 0, 0xffffff, 1, true );
+			g.beginFill( 0x999999, 1 );
 			g.drawRect( 0, 0, _background.width - 3, _background.height - 3 );
 			g.endFill();
-			addTimelineElement( _bufferBar );
 			
-			_playingBar = new Shape();
-			g = _playingBar.graphics;
-			g.beginFill( _visualManager.getBackgroundElementColor() );
+			var volumeBar:Shape = new Shape();
+			g = volumeBar.graphics;
+			g.beginFill( _visualManager.getBackgroundElementColor(), 1 );
 			g.drawRect( 0, 0, _background.width - 4, _background.height - 4 );
 			g.endFill();
-			addTimelineElement( _playingBar );
+			
+			addVolumeBarElement( backgroundBar );
+			addVolumeBarElement( volumeBar );
+			setVolumeBar( volumeBar );
+			
+			setVolumeBarCntX( 1.35 );
+			setVolumeBarCntY( 1.35 );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
