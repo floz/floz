@@ -23,9 +23,12 @@ package fr.minuit4.tools.musicPlayer.core.views
 		
 		private var _musicManager:MusicManager;
 		
-		protected var _bufferPercent:Number;
-		protected var _background:Sprite;
-		protected var _timelineCnt:Sprite;
+		private var _bufferPercent:Number;
+		private var _backgroundCnt:Sprite;
+		private var _timelineCnt:Sprite;
+		
+		private var _beginX:Number;
+		private var _endX:Number;
 		
 		private var _aBufferBar:DisplayObject;
 		private var _aPlayingBar:DisplayObject;
@@ -72,22 +75,26 @@ package fr.minuit4.tools.musicPlayer.core.views
 		protected function onTimelinePressed( e:MouseEvent ):void
 		{
 			stage.addEventListener( MouseEvent.MOUSE_UP, onTimelineReleased );
-			_timelineCnt.addEventListener( MouseEvent.MOUSE_MOVE, onMouseMove );
+			stage.addEventListener( MouseEvent.MOUSE_MOVE, onMouseMove );
+			
+			_beginX = e.stageX - e.localX;
+			_endX = e.stageX + ( _timelineCnt.width - e.localX );
 			
 			onMouseMove( e );
 		}
 		
 		private function onTimelineReleased(e:MouseEvent):void 
 		{
-			_timelineCnt.removeEventListener( MouseEvent.MOUSE_MOVE, onMouseMove );
+			stage.removeEventListener( MouseEvent.MOUSE_MOVE, onMouseMove );
 		}
 		
-		private function onMouseMove( e:MouseEvent ):void 
+		private function onMouseMove(e:MouseEvent):void 
 		{
-			var percent:Number = e.localX / _timelineCnt.width;
-			if ( percent > _bufferPercent ) 
-				return;
+			var position:Number = e.stageX - _beginX;
+			if ( position < 0 ) position = 0;
+			if ( position > _timelineCnt.width ) position = _timelineCnt.width;
 			
+			var percent:Number = position / _timelineCnt.width;
 			_musicManager.moveTo( percent );
 			refreshPlayingBar();
 		}
@@ -96,8 +103,8 @@ package fr.minuit4.tools.musicPlayer.core.views
 		
 		private function init():void
 		{
-			_background = new Sprite();
-			addChild( _background );
+			_backgroundCnt = new Sprite();
+			addChild( _backgroundCnt );
 			
 			_timelineCnt = new Sprite();
 			_timelineCnt.addEventListener( MouseEvent.MOUSE_DOWN, onTimelinePressed );
@@ -125,6 +132,18 @@ package fr.minuit4.tools.musicPlayer.core.views
 			_aPlayingBar = playingBar;
 			_aPlayingBar.scaleX = 0;
 		}
+		
+		protected function addTimelineElement( element:DisplayObject ):void
+		{
+			_timelineCnt.addChild( element );
+		}
+		
+		protected function addBackgroundElement( element:DisplayObject ):void
+		{
+			_backgroundCnt.addChild( element );
+		}
+		
+		protected function getTimelineCnt():Sprite { return _timelineCnt; }
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		

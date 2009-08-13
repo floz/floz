@@ -15,6 +15,7 @@ package fr.minuit4.tools.musicPlayer.events
 		public static const PAUSE:String = "musicevent_pause";
 		public static const SONG_LOADED:String = "musicevent_song_loaded";
 		public static const ID3_LOADED:String = "musicevent_id3_loaded";
+		public static const VOLUME_CHANGED:String = "musicevent_volume_changed";
 		
 		public function MusicEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) 
 		{ 

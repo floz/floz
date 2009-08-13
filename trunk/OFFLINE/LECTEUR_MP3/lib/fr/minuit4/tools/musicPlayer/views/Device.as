@@ -29,7 +29,6 @@ package fr.minuit4.tools.musicPlayer.views
 		private var _title:TextField;
 		private var _buttonsCnt:Sprite;
 		private var _playPauseButton:PlayPauseButton;
-		private var _stopButton:StopButton;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -62,17 +61,31 @@ package fr.minuit4.tools.musicPlayer.views
 			title.defaultTextFormat = new TextFormat( "_sans", 9, 0x000000 );
 			title.autoSize = TextFieldAutoSize.LEFT;
 			
+			var prevButton:PrevButton = new PrevButton();
+			_buttonsCnt.addChild( prevButton );
+			
 			_playPauseButton = new PlayPauseButton();
+			_playPauseButton.x = prevButton.width + 10;
 			_buttonsCnt.addChild( _playPauseButton );
 			
-			_stopButton = new StopButton();
-			_stopButton.x = _playPauseButton.width + 10;
-			_buttonsCnt.addChild( _stopButton );
+			var nextButton:NextButton = new NextButton();
+			nextButton.x = _playPauseButton.x + _playPauseButton.width + 10;
+			_buttonsCnt.addChild( nextButton );
 			
 			var timeline:Timeline = new Timeline();
 			timeline.x = 10;
 			timeline.y = 45;
 			addChild( timeline );
+			
+			var volumeBar:VolumeBar = new VolumeBar();
+			volumeBar.x = timeline.x + timeline.width - volumeBar.width;
+			volumeBar.y = 68;
+			addChild( volumeBar );
+			
+			var muteButton:MuteButton = new MuteButton();
+			muteButton.x = volumeBar.x - muteButton.width - 10;
+			muteButton.y = 65;
+			addChild( muteButton );
 		}
 		
 		private function drawBackground():void 

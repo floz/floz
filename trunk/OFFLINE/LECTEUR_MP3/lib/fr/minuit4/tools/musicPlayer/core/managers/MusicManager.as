@@ -12,6 +12,8 @@ package fr.minuit4.tools.musicPlayer.core.managers
 	import flash.events.ProgressEvent;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
+	import flash.media.SoundMixer;
+	import flash.media.SoundTransform;
 	import flash.net.URLRequest;
 	import fr.minuit4.tools.musicPlayer.events.MusicEvent;
 	
@@ -27,6 +29,7 @@ package fr.minuit4.tools.musicPlayer.core.managers
 		private const _pauseEvent:MusicEvent = new MusicEvent( MusicEvent.PAUSE );
 		private const _songLoadedEvent:MusicEvent = new MusicEvent( MusicEvent.SONG_LOADED );
 		private const _id3LoadedEvent:MusicEvent = new MusicEvent( MusicEvent.ID3_LOADED );
+		private const _volumeChangedEvent:MusicEvent = new MusicEvent( MusicEvent.VOLUME_CHANGED );
 		private const _progressEvent:ProgressEvent = new ProgressEvent( ProgressEvent.PROGRESS );
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -41,6 +44,10 @@ package fr.minuit4.tools.musicPlayer.core.managers
 		private var _currentSongIndex:int;
 		private var _bufferPosition:Number = 0;
 		private var _songDuration:Number;
+		
+		private var _volume:SoundTransform;
+		private var _bufferVolume:Number;
+		private var _mute:Boolean;
 		
 		private var _playing:Boolean;
 		
@@ -96,11 +103,15 @@ package fr.minuit4.tools.musicPlayer.core.managers
 		private function init():void
 		{
 			_songs = [];
+			_volume = new SoundTransform();
+			
 			initSoundManager();
 		}
 		
 		private function initSoundManager():void
 		{
+			if ( isPlaying() ) stop();
+			
 			if ( _soundManager )
 			{
 				_soundManager.removeEventListener( ProgressEvent.PROGRESS, onLoadProgress );
@@ -114,6 +125,8 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			_soundManager.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
 			_soundManager.addEventListener( Event.COMPLETE, onLoadComplete );
 			_soundManager.addEventListener( Event.ID3, onID3 );
+			
+			_currentSong = null;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
@@ -133,12 +146,14 @@ package fr.minuit4.tools.musicPlayer.core.managers
 		public function nextTrack():void
 		{
 			_currentSongIndex = _currentSongIndex + 1 >= songsCount ? 0 : _currentSongIndex + 1;
+			initSoundManager();
 			play();
 		}
 		
 		public function prevTrack():void
 		{
-			_currentSongIndex = _currentSongIndex - 1 >= 0 ? _currentSongIndex - 1 : 0;
+			_currentSongIndex = _currentSongIndex - 1 >= 0 ? _currentSongIndex - 1 : songsCount - 1;
+			initSoundManager();
 			play();
 		}
 		
@@ -214,8 +229,49 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			dispatchEvent( _pauseEvent );
 		}
 		
-		public function isPlaying():Boolean { return this._playing; }		
+		public function setVolume( percent:Number ):void
+		{
+			if ( percent > 1 ) percent = 1;
+			if ( percent < 0 ) percent = 0;
+			
+			_volume.volume = percent;
+			SoundMixer.soundTransform = _volume;
+			
+			if ( percent == 0 )
+			{
+				_mute = true;
+				_bufferVolume = 0;
+			}
+			else _mute = false;
+			
+			dispatchEvent( _volumeChangedEvent );
+		}
+		
+		public function getVolume():Number { return _volume.volume; }
+		
+		public function mute():void
+		{
+			_mute = true;
+			
+			_bufferVolume = _volume.volume;			
+			_volume.volume = 0;
+			SoundMixer.soundTransform = _volume;
+			
+			dispatchEvent( _volumeChangedEvent );
+		}
+		
+		public function unmute():void
+		{
+			_mute = false;			
+			setVolume( _bufferVolume );			
+		}
+		
+		public function isPlaying():Boolean { return this._playing; }
+		
+		public function isMute():Boolean { return this._mute; }
+		
 		public function getCurrentArtist():String { return _soundManager.id3.artist; }
+		
 		public function getCurrentSong():String { return _soundManager.id3.songName; }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
@@ -230,7 +286,10 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			else
 				percent = _bufferPosition / ( _songDuration || _soundManager.length );
 			
-			return percent; 
+			if ( percent < 0 ) percent = 0;
+			if ( percent > 1 ) percent = 1;
+			
+			return percent || 0; 
 		}
 		
 	}
