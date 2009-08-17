@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="600" height="400" frameRate="100" currentState="MainMenu"
+				creationComplete="onCreationComplete()"
+				enterFrame="onFrame( event )">
+				
+	<mx:Script>
+		<![CDATA[
+			
+			private var inGame:Boolean;
+			
+			private function onCreationComplete():void
+			{
+				
+			}
+			
+			private function onFrame( e:Event ):void
+			{
+				if( inGame )
+				{
+					GameObjectManager.getInstance().render();
+					
+					canvas.graphics.clear();
+					canvas.graphics.beginBitmapFill( GameObjectManager.getInstance().backBuffer, null, false, false );
+					canvas.graphics.drawRect( 0, 0, this.width, this.height );
+					canvas.graphics.endFill();
+				}
+			}
+			
+			private function onStartClick( e:MouseEvent ):void
+			{
+				currentState = "Game";
+			}
+			
+			private function onEnterGame( e:Event ):void
+			{
+				GameObjectManager.getInstance().startUp();
+				inGame = true;
+			}
+			
+			private function onExitGame( e:Event ):void
+			{
+				GameObjectManager.getInstance().shutDown();
+				inGame = false;
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:states>
+		<mx:State name="Game" enterState="onEnterGame( event )" exitState="onExitGame( event )" />
+		<mx:State name="MainMenu">
+			<mx:AddChild>
+				<mx:Button id="btStart" x="525" y="368" label="Start" click="onStartClick( event )" />
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+	
+	<mx:Canvas id="canvas" x="0" y="0" width="100%" height="100%" />
+	
+</mx:Application>
