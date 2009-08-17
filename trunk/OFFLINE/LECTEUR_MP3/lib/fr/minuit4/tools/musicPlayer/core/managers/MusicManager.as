@@ -114,6 +114,9 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			
 			if ( _soundManager )
 			{
+				try { _soundManager.close(); }
+				catch ( e:Error ) {}
+				
 				_soundManager.removeEventListener( ProgressEvent.PROGRESS, onLoadProgress );
 				_soundManager.removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
 				_soundManager.removeEventListener( Event.COMPLETE, onLoadComplete );
@@ -143,6 +146,10 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			return _instance;
 		}
 		
+		/**
+		 * Switch to the next track.
+		 * If the current song is the last of the list, the first will be selected.
+		 */
 		public function nextTrack():void
 		{
 			_currentSongIndex = _currentSongIndex + 1 >= songsCount ? 0 : _currentSongIndex + 1;
@@ -150,6 +157,10 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			play();
 		}
 		
+		/**
+		 * Switch to the previous track.
+		 * If the current song is the first of the list, the last will be selected.
+		 */
 		public function prevTrack():void
 		{
 			_currentSongIndex = _currentSongIndex - 1 >= 0 ? _currentSongIndex - 1 : songsCount - 1;
@@ -157,11 +168,23 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			play();
 		}
 		
+		/**
+		 * Add a song at the list.
+		 * @param	song	Object	An object containing the url of the song and his duration.
+		 * If no duration is given, it will automaticaly been attribute after the song loading.
+		 * The object must be write like this : { url: String, duration: Number (milliseconds) }
+		 */
 		public function addSong( song:Object ):void
 		{
 			_songs.push( song );
 		}
 		
+		/**
+		 * Add multiple songs at the list.
+		 * @param	songs	Array	An array which contains multiple objects holding the url and the duration of the song.
+		 * The object must be write like this : { url: String, duration: Number (milliseconds) }.
+		 * The duration parameter is facultative.
+		 */
 		public function addSongs( songs:Array ):void
 		{
 			var n:int = songs.length;
@@ -169,6 +192,9 @@ package fr.minuit4.tools.musicPlayer.core.managers
 				_songs.push( songs[ i ] );
 		}
 		
+		/**
+		 * Play the current song.
+		 */
 		public function play():void
 		{
 			if ( !_currentSong )
@@ -192,6 +218,10 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			dispatchEvent( _playEvent );
 		}
 		
+		/**
+		 * Jump to the percent p of the song.
+		 * @param	percent	Number	The percent of the song.
+		 */
 		public function moveTo( percent:Number ):void
 		{
 			var position:Number = percent * ( _songDuration || _soundManager.length );
@@ -204,11 +234,18 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			}
 		}
 		
+		/**
+		 * Jump to the second s of the song.
+		 * @param	seconds	Number	The number of seconds.
+		 */
 		public function moveToSecond( seconds:Number ):void
 		{
 			_bufferPosition = seconds;
 		}
 		
+		/**
+		 * Stop the reading of any songs.
+		 */
 		public function stop():void
 		{
 			if ( !_currentSong ) return;
@@ -220,6 +257,9 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			dispatchEvent( _stopEvent );
 		}
 		
+		/**
+		 * Pause the reading of the current song.
+		 */
 		public function pause():void
 		{
 			_bufferPosition = _currentSong.position;
@@ -264,6 +304,11 @@ package fr.minuit4.tools.musicPlayer.core.managers
 		{
 			_mute = false;			
 			setVolume( _bufferVolume );			
+		}
+		
+		public function destroy():void
+		{
+			// TODO
 		}
 		
 		public function isPlaying():Boolean { return this._playing; }

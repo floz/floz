@@ -51,6 +51,7 @@ package fr.minuit4.tools.musicPlayer.core
 		
 		public function addSong( song:Object ):void { _musicManager.addSong( song ); }
 		public function addSongs( songs:Array ):void { _musicManager.addSongs( songs ); }
+		public function destroy():void { _musicManager.destroy(); }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
