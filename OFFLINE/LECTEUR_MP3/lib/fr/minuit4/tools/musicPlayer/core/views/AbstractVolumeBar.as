@@ -65,6 +65,7 @@ package fr.minuit4.tools.musicPlayer.core.views
 		
 		private function onVolumeBarReleased(e:MouseEvent):void 
 		{
+			stage.removeEventListener( MouseEvent.MOUSE_UP, onVolumeBarReleased );
 			stage.removeEventListener( MouseEvent.MOUSE_MOVE, onMouseMove );
 		}
 		

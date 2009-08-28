@@ -134,6 +134,7 @@ package fr.minuit4.tools.musicPlayer.core.managers
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
+		/** The way of getting the instance of the MusicManager. It's a singleton class. */
 		public static function getInstance():MusicManager
 		{
 			if ( !_instance )
