@@ -8,6 +8,8 @@ package fr.minuit4.tools.musicPlayer.views
 {
 	import flash.display.Graphics;
 	import flash.display.Shape;
+	import flash.display.Sprite;
+	import flash.events.Event;
 	import fr.minuit4.tools.musicPlayer.core.views.AbstractVolumeBar;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 	
@@ -21,6 +23,8 @@ package fr.minuit4.tools.musicPlayer.views
 		private var _visualManager:VisualManager;
 		
 		private var _background:Shape;
+		private var _volumeBar:Sprite;
+		private var _dragableBar:Shape;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -40,6 +44,10 @@ package fr.minuit4.tools.musicPlayer.views
 		{
 			drawBackground();
 			drawVolumeBar();
+			
+			// Those two functions are necessary to setup the volume bar.
+			setVolumeBar( _volumeBar );
+			setDragableBar( _dragableBar );
 		}
 		
 		private function drawBackground():void
@@ -50,30 +58,34 @@ package fr.minuit4.tools.musicPlayer.views
 			g.beginFill( 0xffffff );
 			g.drawRect( 0, 0, 50, 10 );
 			g.endFill();
-			addBackgroundElement( _background );
+			addChild( _background );
 		}
 		
 		private function drawVolumeBar():void
 		{
+			_volumeBar = new Sprite();
+			addChild( _volumeBar );
+			_volumeBar.x = _volumeBar.y = 1.35;
+			
+			// NOTE: A background is needed to be able to click on the 
+			// entire volume bar.
+			// If no background bar is added to the volume bar container, 
+			// when the volume will be at 0, you won't be able to change
+			// it by pressing the bar.
 			var backgroundBar:Shape = new Shape();
 			var g:Graphics = backgroundBar.graphics;
 			g.lineStyle( 0, 0xffffff, 1, true );
 			g.beginFill( 0x999999, 1 );
 			g.drawRect( 0, 0, _background.width - 3, _background.height - 3 );
 			g.endFill();
+			_volumeBar.addChild( backgroundBar );
 			
-			var volumeBar:Shape = new Shape();
-			g = volumeBar.graphics;
+			_dragableBar = new Shape();
+			g = _dragableBar.graphics;
 			g.beginFill( _visualManager.getBackgroundElementColor(), 1 );
 			g.drawRect( 0, 0, _background.width - 4, _background.height - 4 );
 			g.endFill();
-			
-			addVolumeBarElement( backgroundBar );
-			addVolumeBarElement( volumeBar );
-			setVolumeBar( volumeBar );
-			
-			setVolumeBarCntX( 1.35 );
-			setVolumeBarCntY( 1.35 );
+			_volumeBar.addChild( _dragableBar );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

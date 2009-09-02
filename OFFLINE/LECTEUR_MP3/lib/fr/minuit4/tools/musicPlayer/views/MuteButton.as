@@ -73,12 +73,14 @@ package fr.minuit4.tools.musicPlayer.views
 			g.endFill();
 		}
 		
-		override protected function switchState():void 
+		override protected function setMuteState():void 
 		{
-			if ( _mute )
-				_icon.alpha = .5;
-			else
-				_icon.alpha = 1;
+			_icon.alpha = .5;
+		}
+		
+		override protected function setUnmuteState():void 
+		{
+			_icon.alpha = 1;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

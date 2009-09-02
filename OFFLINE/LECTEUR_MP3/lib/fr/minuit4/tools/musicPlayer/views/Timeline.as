@@ -10,6 +10,8 @@ package fr.minuit4.tools.musicPlayer.views
 	import flash.display.Graphics;
 	import flash.display.LineScaleMode;
 	import flash.display.Shape;
+	import flash.display.Sprite;
+	import flash.events.Event;
 	import fr.minuit4.tools.musicPlayer.core.views.AbstractTimeline;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 	
@@ -25,6 +27,7 @@ package fr.minuit4.tools.musicPlayer.views
 		private var _background:Shape;
 		private var _bufferBar:Shape;
 		private var _playingBar:Shape;
+		private var _timeline:Sprite;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -45,8 +48,10 @@ package fr.minuit4.tools.musicPlayer.views
 			drawBackground();
 			drawTimeline();
 			
+			// Those three functions call are necessary to setup the timeline.
 			setBufferBar( _bufferBar );
 			setPlayingBar( _playingBar );
+			setTimeline( _timeline );
 		}
 		
 		private function drawBackground():void
@@ -57,27 +62,41 @@ package fr.minuit4.tools.musicPlayer.views
 			g.beginFill( 0xffffff );
 			g.drawRect( 0, 0, _visualManager.getPlayerWidth() - 20, 12 );
 			g.endFill();
-			addBackgroundElement( _background );
+			addChild( _background );
 		}
 		
 		private function drawTimeline():void
 		{
-			getTimelineCnt().x = getTimelineCnt().y = 1.35;
+			_timeline = new Sprite();
+			addChild( _timeline );
+			_timeline.x = _timeline.y = 1.35;
+			
+			// NOTE: A timeline background is needed to be able to click on the 
+			// entier timeline. The background must have the width and the height
+			// of the complete timeline.
+			// If no background is added, graphics bug will occur if the timeline 
+			// is pressed during the buffering state.
+			var timelineBackground:Shape = new Shape();
+			var g:Graphics = timelineBackground.graphics;
+			g.lineStyle( 0, 0xffffff, 1, true );
+			g.drawRect( 0, 0, _background.width - 3, _background.height - 3 );
+			g.endFill();
+			_timeline.addChild( timelineBackground );
 			
 			_bufferBar = new Shape();			
-			var g:Graphics = _bufferBar.graphics;
+			g = _bufferBar.graphics;
 			g.beginFill( 0x999999 );
 			g.lineStyle( 0, _visualManager.getElementColor(), 1, true );
 			g.drawRect( 0, 0, _background.width - 3, _background.height - 3 );
 			g.endFill();
-			addTimelineElement( _bufferBar );
+			_timeline.addChild( _bufferBar );
 			
 			_playingBar = new Shape();
 			g = _playingBar.graphics;
 			g.beginFill( _visualManager.getBackgroundElementColor() );
 			g.drawRect( 0, 0, _background.width - 4, _background.height - 4 );
 			g.endFill();
-			addTimelineElement( _playingBar );
+			_timeline.addChild( _playingBar );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

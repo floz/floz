@@ -21,34 +21,59 @@ package fr.minuit4.tools.musicPlayer.core.views
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private var _playingOnDrag:Boolean;
+		private var _playState:Boolean;
+		
 		private var _musicManager:MusicManager;
 		
-		private var _bufferPercent:Number;
-		private var _backgroundCnt:Sprite;
-		private var _timelineCnt:Sprite;
-		
+		private var _bufferPercent:Number;		
 		private var _beginX:Number;
 		private var _endX:Number;
 		
-		private var _aBufferBar:DisplayObject;
-		private var _aPlayingBar:DisplayObject;
+		private var _timeline:DisplayObject;
+		private var _bufferBar:DisplayObject;
+		private var _playingBar:DisplayObject;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function AbstractTimeline() 
+		public function AbstractTimeline( playingOnDrag:Boolean = true ) 
 		{
-			_musicManager = MusicManager.getInstance();
-			_musicManager.addEventListener( ProgressEvent.PROGRESS, onLoadProgress );
-			_musicManager.addEventListener( MusicEvent.PLAY, onSoundPlay );
-			_musicManager.addEventListener( MusicEvent.PAUSE, onSoundPause );
-			_musicManager.addEventListener( MusicEvent.STOP, onSoundStop );
-			
-			init();
+			this._playingOnDrag = playingOnDrag;
+			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true );			
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
+		
+		private function onRemovedFromStage(e:Event):void 
+		{
+			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+			
+			_musicManager.removeEventListener( ProgressEvent.PROGRESS, onLoadProgress );
+			_musicManager.removeEventListener( MusicEvent.PLAY, onSoundPlay );
+			_musicManager.removeEventListener( MusicEvent.PAUSE, onSoundPause );
+			_musicManager.removeEventListener( MusicEvent.STOP, onSoundStop );
+			_musicManager = null;
+			
+			if( _timeline ) _timeline.removeEventListener( MouseEvent.MOUSE_DOWN, onTimelinePressed );
+			
+			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true );
+		}
+		
+		private function onAddedToStage(e:Event):void 
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			
+			_musicManager = MusicManager.getInstance();
+			_musicManager.addEventListener( ProgressEvent.PROGRESS, onLoadProgress, false, 0, true );
+			_musicManager.addEventListener( MusicEvent.PLAY, onSoundPlay, false, 0, true );
+			_musicManager.addEventListener( MusicEvent.PAUSE, onSoundPause, false, 0, true );
+			_musicManager.addEventListener( MusicEvent.STOP, onSoundStop, false, 0, true );
+			
+			if ( _timeline && !_timeline.hasEventListener( MouseEvent.MOUSE_DOWN ) ) _timeline.addEventListener( MouseEvent.MOUSE_DOWN, onTimelinePressed, false, 0, true );
+		}
 		
 		private function onLoadProgress( e:ProgressEvent ):void 
 		{
@@ -59,7 +84,7 @@ package fr.minuit4.tools.musicPlayer.core.views
 		private function onSoundStop(e:MusicEvent):void 
 		{
 			removeEventListener( Event.ENTER_FRAME, refreshPlayingBar );
-			_aPlayingBar.scaleX = 0;
+			_playingBar.scaleX = 0;
 		}
 		
 		private function onSoundPause(e:MusicEvent):void 
@@ -69,16 +94,22 @@ package fr.minuit4.tools.musicPlayer.core.views
 		
 		private function onSoundPlay(e:MusicEvent):void 
 		{
-			addEventListener( Event.ENTER_FRAME, refreshPlayingBar );
+			addEventListener( Event.ENTER_FRAME, refreshPlayingBar, false, 0, true );
 		}
 		
 		protected function onTimelinePressed( e:MouseEvent ):void
 		{
-			stage.addEventListener( MouseEvent.MOUSE_UP, onTimelineReleased );
-			stage.addEventListener( MouseEvent.MOUSE_MOVE, onMouseMove );
+			stage.addEventListener( MouseEvent.MOUSE_UP, onTimelineReleased, false, 0, true );
+			stage.addEventListener( MouseEvent.MOUSE_MOVE, onMouseMove, false, 0, true );
+			
+			if ( !_playingOnDrag ) 
+			{
+				_playState = _musicManager.isPlaying();
+				_musicManager.pause();
+			}
 			
 			_beginX = e.stageX - e.localX;
-			_endX = e.stageX + ( _timelineCnt.width - e.localX );
+			_endX = e.stageX + ( _timeline.width - e.localX );
 			
 			onMouseMove( e );
 		}
@@ -86,66 +117,86 @@ package fr.minuit4.tools.musicPlayer.core.views
 		private function onTimelineReleased(e:MouseEvent):void 
 		{
 			stage.removeEventListener( MouseEvent.MOUSE_MOVE, onMouseMove );
+			stage.removeEventListener( MouseEvent.MOUSE_UP, onTimelineReleased );
+			
+			if( !_playingOnDrag && _playState ) _musicManager.play();
 		}
 		
 		private function onMouseMove(e:MouseEvent):void 
 		{
 			var position:Number = e.stageX - _beginX;
 			if ( position < 0 ) position = 0;
-			if ( position > _timelineCnt.width ) position = _timelineCnt.width;
+			if ( position > _timeline.width ) position = _timeline.width - 1; // -1 pour correction de bug en cas de drag jusqu'à la fin.
 			
-			var percent:Number = position / _timelineCnt.width;
+			var percent:Number = position / _timeline.width;
+			if ( percent > _bufferPercent ) percent = _bufferPercent;
 			_musicManager.moveTo( percent );
 			refreshPlayingBar();
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		private function init():void
-		{
-			_backgroundCnt = new Sprite();
-			addChild( _backgroundCnt );
-			
-			_timelineCnt = new Sprite();
-			_timelineCnt.addEventListener( MouseEvent.MOUSE_DOWN, onTimelinePressed );
-			addChild( _timelineCnt );
-		}
-		
 		private function refreshBufferBar():void
 		{
-			_aBufferBar.scaleX = _bufferPercent;
+			_bufferBar.scaleX = _bufferPercent;
 		}
 		
 		private function refreshPlayingBar( e:Event = null ):void
 		{
-			_aPlayingBar.scaleX = _musicManager.songPercent;
+			_playingBar.scaleX = _musicManager.songPercent;
 		}
 		
+		/**
+		 * Set the buffer bar skin, and link it to the MusicPlayer.
+		 * A buffer bar allow the user to see the load part of the song.
+		 * If the buffer bar is full, then the song is fully loaded.
+		 * @param	bufferBar	DisplayObject	The element which will be considered as the buffer bar.
+		 */
 		protected function setBufferBar( bufferBar:DisplayObject ):void
 		{
-			_aBufferBar = bufferBar;
-			_aBufferBar.scaleX = 0;
+			_bufferBar = bufferBar;
+			_bufferBar.scaleX = 0;
 		}
 		
+		/**
+		 * Set the playing bar skin, and link it to the MusicPlayer.
+		 * The playing bar indicates to the user how many percent of the song has been played.
+		 * @param	playingBar	DisplayObject	The element which will be considered as the playing bar.
+		 */
 		protected function setPlayingBar( playingBar:DisplayObject ):void
 		{
-			_aPlayingBar = playingBar;
-			_aPlayingBar.scaleX = 0;
+			_playingBar = playingBar;
+			_playingBar.scaleX = 0;
 		}
 		
-		protected function addTimelineElement( element:DisplayObject ):void
+		/**
+		 * Set the timeline container. Globaly, it contains :
+		 * - A background.
+		 * - A playing bar.
+		 * - A buffer bar.
+		 * By setting the timeline skin, you will determinate the interactive part.
+		 * @param	timeline	DisplayObject	The interactive element.
+		 */
+		protected function setTimeline( timeline:DisplayObject ):void
 		{
-			_timelineCnt.addChild( element );
+			_timeline = timeline;
+			_timeline.addEventListener( MouseEvent.MOUSE_DOWN, onTimelinePressed, false, 0, true );
 		}
-		
-		protected function addBackgroundElement( element:DisplayObject ):void
-		{
-			_backgroundCnt.addChild( element );
-		}
-		
-		protected function getTimelineCnt():Sprite { return _timelineCnt; }
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		/**
+		 * This method has to be called to completely destroy the component.
+		 */
+		public function dispose():void
+		{
+			onRemovedFromStage( null );
+			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
+			
+			_playingBar = null;
+			_bufferBar = null;
+			_timeline = null;
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

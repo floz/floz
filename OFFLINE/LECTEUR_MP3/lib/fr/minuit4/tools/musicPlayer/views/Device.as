@@ -76,6 +76,8 @@ package fr.minuit4.tools.musicPlayer.views
 			timeline.x = 10;
 			timeline.y = 45;
 			addChild( timeline );
+			removeChild( timeline );
+			addChild( timeline );
 			
 			var volumeBar:VolumeBar = new VolumeBar();
 			volumeBar.x = timeline.x + timeline.width - volumeBar.width;
