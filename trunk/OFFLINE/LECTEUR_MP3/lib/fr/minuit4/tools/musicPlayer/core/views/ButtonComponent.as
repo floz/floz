@@ -24,26 +24,29 @@ package fr.minuit4.tools.musicPlayer.core.views
 		
 		public function ButtonComponent() 
 		{
-			_musicManager = MusicManager.getInstance();
-			this.buttonMode = true;
-			
-			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
+			this.buttonMode = true;			
+			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
-		private function onRemovedFromStage(e:Event):void 
+		protected function onRemovedFromStage(e:Event):void 
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);			
 			removeEventListener( MouseEvent.CLICK, onClick );
+			
+			_musicManager = null;
+			
+			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true );
 		}
 		
-		private function onAddedToStage(e:Event):void 
+		protected function onAddedToStage(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );			
-			addEventListener( MouseEvent.CLICK, onClick );	
+			_musicManager = MusicManager.getInstance();			
+			addEventListener( MouseEvent.CLICK, onClick, false, 0, true );	
 		}
 		
 		protected function onClick(e:MouseEvent):void 

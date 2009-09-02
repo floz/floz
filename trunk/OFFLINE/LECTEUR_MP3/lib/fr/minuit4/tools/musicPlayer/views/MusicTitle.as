@@ -25,8 +25,7 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		public function MusicTitle() 
 		{
-			_musicManager = MusicManager.getInstance();
-			
+			_musicManager = MusicManager.getInstance();			
 			init();
 		}
 		

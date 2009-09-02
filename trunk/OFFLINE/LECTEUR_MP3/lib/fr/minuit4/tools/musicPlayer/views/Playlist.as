@@ -35,7 +35,7 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		override protected function init():void
+		protected function init():void
 		{
 			drawBackground();
 		}

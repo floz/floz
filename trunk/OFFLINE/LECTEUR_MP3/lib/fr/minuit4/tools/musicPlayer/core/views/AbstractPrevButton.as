@@ -8,6 +8,10 @@ package fr.minuit4.tools.musicPlayer.core.views
 {
 	import flash.events.MouseEvent;
 	
+	/**
+	 * The AbstractPrevButton class has to be extended.
+	 * It's relied with the use of the AbstractMusicPlayer.
+	 */
 	public class AbstractPrevButton extends ButtonComponent
 	{
 		

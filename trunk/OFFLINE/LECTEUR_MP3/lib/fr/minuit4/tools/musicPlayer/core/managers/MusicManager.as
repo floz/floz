@@ -17,6 +17,18 @@ package fr.minuit4.tools.musicPlayer.core.managers
 	import flash.net.URLRequest;
 	import fr.minuit4.tools.musicPlayer.events.MusicEvent;
 	
+	/**
+	 * The MusicManager class contains all the commands and the actions 
+	 * of a music player.
+	 * 
+	 * As it is a singleton class, you will only be able to instanciate only
+	 * one of this object in a project.
+	 * Anyway, I don't see any reason to create more than one music player in
+	 * a web application.
+	 * 
+	 * The MusicManager is the brain that any classes in the core folder will need
+	 * to control the AbstractMusicPlayer extended class.
+	 */
 	public class MusicManager extends EventDispatcher
 	{
 		
@@ -55,6 +67,10 @@ package fr.minuit4.tools.musicPlayer.core.managers
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
+		/**
+		 * Create a new MusicManager object.
+		 * As it is a Singleton class, you have to call the getInstance() method to proceed.
+		 */
 		public function MusicManager() 
 		{
 			if ( !_allowInstanciation ) throw new Error( "This is a Singleton class, use getInstance() methode instead." );	
@@ -95,11 +111,15 @@ package fr.minuit4.tools.musicPlayer.core.managers
 		
 		private function onID3(e:Event):void 
 		{
+			_soundManager.removeEventListener( Event.ID3, onID3 );
 			dispatchEvent( _id3LoadedEvent );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
+		/**
+		 * Setup the MusicManager.
+		 */
 		private function init():void
 		{
 			_songs = [];
@@ -108,6 +128,9 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			initSoundManager();
 		}
 		
+		/**
+		 * Initialize, or re-initialize, the Sound instance.
+		 */
 		private function initSoundManager():void
 		{
 			if ( isPlaying() ) stop();
@@ -124,10 +147,10 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			}
 			
 			_soundManager = new Sound();
-			_soundManager.addEventListener( ProgressEvent.PROGRESS, onLoadProgress );
-			_soundManager.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
-			_soundManager.addEventListener( Event.COMPLETE, onLoadComplete );
-			_soundManager.addEventListener( Event.ID3, onID3 );
+			_soundManager.addEventListener( ProgressEvent.PROGRESS, onLoadProgress, false, 0, true );
+			_soundManager.addEventListener( IOErrorEvent.IO_ERROR, onIOError, false, 0, true );
+			_soundManager.addEventListener( Event.COMPLETE, onLoadComplete, false, 0, true );
+			_soundManager.addEventListener( Event.ID3, onID3, false, 0, true );
 			
 			_currentSong = null;
 		}
@@ -206,12 +229,12 @@ package fr.minuit4.tools.musicPlayer.core.managers
 				
 				_soundManager.load( _request );
 				_currentSong = _soundManager.play();
-				_currentSong.addEventListener( Event.SOUND_COMPLETE, onSoundComplete );
+				_currentSong.addEventListener( Event.SOUND_COMPLETE, onSoundComplete, false, 0, true );
 			}
 			else 
 			{
 				_currentSong = _soundManager.play( _bufferPosition );
-				_currentSong.addEventListener( Event.SOUND_COMPLETE, onSoundComplete );
+				_currentSong.addEventListener( Event.SOUND_COMPLETE, onSoundComplete, false, 0, true );
 			}
 			
 			_playing = true;
@@ -270,6 +293,10 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			dispatchEvent( _pauseEvent );
 		}
 		
+		/**
+		 * Set the volume.
+		 * @param	percent	Number	The percent value, must be between 0 and 1.
+		 */
 		public function setVolume( percent:Number ):void
 		{
 			if ( percent > 1 ) percent = 1;
@@ -288,8 +315,15 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			dispatchEvent( _volumeChangedEvent );
 		}
 		
+		/** 
+		 * Get the current value of the volume (between 0 and 1).
+		 */
 		public function getVolume():Number { return _volume.volume; }
 		
+		/**
+		 * Mute the music player. 
+		 * The current value of the volume is saved and will be reattributed automaticaly when unmute.
+		 */
 		public function mute():void
 		{
 			_mute = true;
@@ -301,29 +335,74 @@ package fr.minuit4.tools.musicPlayer.core.managers
 			dispatchEvent( _volumeChangedEvent );
 		}
 		
+		/** 
+		 * Unmute the music player and set the volume value as before the mute.
+		 */
 		public function unmute():void
 		{
 			_mute = false;			
 			setVolume( _bufferVolume );			
 		}
 		
-		public function destroy():void
+		/** 
+		 * Destroy the music player and clean the memory.
+		 */
+		public function dispose():void
 		{
-			// TODO
+			_songs = null;
+			_request = null;
+			_volume.volume = 1;
+			_volume = null;
+			
+			_currentSong.stop();
+			_currentSong = null;
+			
+			try { _soundManager.close(); }
+			catch ( e:Error ) {}
+			
+			_soundManager.removeEventListener( ProgressEvent.PROGRESS, onLoadProgress );
+			_soundManager.removeEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			_soundManager.removeEventListener( Event.COMPLETE, onLoadComplete );
+			_soundManager.removeEventListener( Event.ID3, onID3 );
+			_soundManager = null;
+			
+			_instance = null;
 		}
 		
+		/**
+		 * Return a Boolean to indicate if a song is playing or not.
+		 * @return	Boolean
+		 */
 		public function isPlaying():Boolean { return this._playing; }
 		
+		/**
+		 * Return a Boolean to indicate if the music player is mute or not.
+		 * @return	Boolean
+		 */
 		public function isMute():Boolean { return this._mute; }
 		
+		/**
+		 * Return a String which contains the artist's name of the current song.
+		 * @return	String
+		 */
 		public function getCurrentArtist():String { return _soundManager.id3.artist; }
 		
+		/**
+		 * Return a String which contains the song's name.
+		 * @return	String
+		 */
 		public function getCurrentSong():String { return _soundManager.id3.songName; }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
+		/**
+		 * Return the number of songs.
+		 */
 		public function get songsCount():int { return _songs.length; }
 		
+		/**
+		 * Return the playing percent of the actual song.
+		 */
 		public function get songPercent():Number
 		{ 
 			var percent:Number;

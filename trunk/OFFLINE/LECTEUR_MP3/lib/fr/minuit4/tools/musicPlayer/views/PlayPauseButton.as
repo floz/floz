@@ -34,21 +34,11 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		public function PlayPauseButton() 
 		{
-			_visualManager = VisualManager.getInstance();			
+			_visualManager = VisualManager.getInstance();
 			init();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
-		
-		private function switchState( e:MusicEvent ):void 
-		{
-			while ( _iconCnt.numChildren ) _iconCnt.removeChildAt( 0 );
-			
-			if ( _musicManager.isPlaying() )
-				_iconCnt.addChild( _pauseIcon );
-			else
-				_iconCnt.addChild( _playIcon );
-		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
@@ -60,11 +50,6 @@ package fr.minuit4.tools.musicPlayer.views
 			
 			_iconCnt = new Sprite();
 			addChild( _iconCnt );
-			
-			_musicManager.addEventListener( MusicEvent.PLAY, switchState );
-			_musicManager.addEventListener( MusicEvent.PAUSE, switchState );
-			_musicManager.addEventListener( MusicEvent.STOP, switchState );
-			switchState( null );
 		}
 		
 		private function drawBackground():void
@@ -108,6 +93,18 @@ package fr.minuit4.tools.musicPlayer.views
 			g.beginFill( _visualManager.getElementColor() );
 			g.drawRect( 5, 0, 3, 8 );
 			g.endFill();
+		}
+		
+		override protected function setPlayState():void 
+		{
+			while ( _iconCnt.numChildren ) _iconCnt.removeChildAt( 0 );
+			_iconCnt.addChild( _playIcon );
+		}
+		
+		override protected function setPauseState():void 
+		{
+			while ( _iconCnt.numChildren ) _iconCnt.removeChildAt( 0 );
+			_iconCnt.addChild( _pauseIcon );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

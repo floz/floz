@@ -8,6 +8,7 @@ package fr.minuit4.tools.musicPlayer.core.views
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import fr.minuit4.tools.musicPlayer.core.managers.MusicManager;
 	import fr.minuit4.tools.musicPlayer.events.MusicEvent;
@@ -20,13 +21,12 @@ package fr.minuit4.tools.musicPlayer.core.views
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _musicManager:MusicManager;
-		private var _backgroundCnt:Sprite;
-		private var _barCnt:Sprite;
 		
 		private var _beginX:Number;
 		private var _endX:Number;
 		
-		private var _aVolumeBar:DisplayObject;
+		private var _volumeBar:DisplayObject;
+		private var _dragableBar:DisplayObject;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -34,21 +34,41 @@ package fr.minuit4.tools.musicPlayer.core.views
 		
 		public function AbstractVolumeBar() 
 		{
-			_musicManager = MusicManager.getInstance();
-			_musicManager.addEventListener( MusicEvent.VOLUME_CHANGED, refreshVolumeBar );
-			
-			init();
+			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
+		private function onRemovedFromStage(e:Event):void 
+		{
+			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+			
+			_musicManager.removeEventListener( MusicEvent.VOLUME_CHANGED, refreshVolumeBar );
+			_musicManager = null;
+			
+			if ( _volumeBar ) _volumeBar.removeEventListener( MouseEvent.MOUSE_DOWN, onVolumeBarPressed );
+			
+			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true );
+		}
+		
+		private function onAddedToStage(e:Event):void 
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage, false, 0, true );
+			
+			_musicManager = MusicManager.getInstance();
+			_musicManager.addEventListener( MusicEvent.VOLUME_CHANGED, refreshVolumeBar, false, 0, true );
+			
+			if ( _volumeBar ) _volumeBar.addEventListener( MouseEvent.MOUSE_DOWN, onVolumeBarPressed, false, 0, true );
+		}
+		
 		private function onVolumeBarPressed(e:MouseEvent):void 
 		{
-			stage.addEventListener( MouseEvent.MOUSE_UP, onVolumeBarReleased );
-			stage.addEventListener( MouseEvent.MOUSE_MOVE, onMouseMove );
+			stage.addEventListener( MouseEvent.MOUSE_UP, onVolumeBarReleased, false, 0, true );
+			stage.addEventListener( MouseEvent.MOUSE_MOVE, onMouseMove, false, 0, true );
 			
 			_beginX = e.stageX - e.localX;
-			_endX = e.stageX + ( _barCnt.width - e.localX );
+			_endX = e.stageX + ( _volumeBar.width - e.localX );
 			
 			onMouseMove( e );
 		}
@@ -57,9 +77,9 @@ package fr.minuit4.tools.musicPlayer.core.views
 		{
 			var position:Number = e.stageX - _beginX;
 			if ( position < 0 ) position = 0;
-			if ( position > _barCnt.width ) position = _barCnt.width;
+			if ( position > _volumeBar.width ) position = _volumeBar.width;
 			
-			var percent:Number = position / _barCnt.width;
+			var percent:Number = position / _volumeBar.width;
 			_musicManager.setVolume( percent );
 		}
 		
@@ -71,41 +91,47 @@ package fr.minuit4.tools.musicPlayer.core.views
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		private function init():void
-		{
-			_backgroundCnt = new Sprite();
-			addChild( _backgroundCnt );
-			
-			_barCnt = new Sprite();
-			addChild( _barCnt );
-			
-			_barCnt.addEventListener( MouseEvent.MOUSE_DOWN, onVolumeBarPressed );
-		}
-		
 		private function refreshVolumeBar( e:MusicEvent ):void
 		{
-			_aVolumeBar.scaleX = _musicManager.getVolume();
+			_dragableBar.scaleX = _musicManager.getVolume();
 		}
 		
-		protected function addVolumeBarElement( element:DisplayObject ):void
-		{
-			_barCnt.addChild( element );
-		}
-		
-		protected function addBackgroundElement( element:DisplayObject ):void
-		{
-			_backgroundCnt.addChild( element );
-		}
-		
+		/**
+		 * Set the global volume bar. Generally, it contains :
+		 * - A background
+		 * - The dragable bar
+		 * It's the interactive part of the volume bar, as it's the one which will have the MouseEvent listener.
+		 * @param	volumeBar	DisplayObject	The interactive zone.
+		 */
 		protected function setVolumeBar( volumeBar:DisplayObject ):void
 		{
-			_aVolumeBar = volumeBar;
+			_volumeBar = volumeBar;
+			_volumeBar.addEventListener( MouseEvent.MOUSE_DOWN, onVolumeBarPressed, false, 0, true );
 		}
 		
-		protected function setVolumeBarCntX( value:Number ):void { _barCnt.x = value; }
-		protected function setVolumeBarCntY( value:Number ):void { _barCnt.y = value; }
+		/**
+		 * Set the dragable bar. When the volumeBar will be pressed, or when the volume whill changed,
+		 * the dragable bar will automaticaly be refresh.
+		 * @param	dragableBar	DisplayObject	The dragable bar.
+		 */
+		protected function setDragableBar( dragableBar:DisplayObject ):void
+		{
+			_dragableBar = dragableBar;
+		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		/**
+		 * This method has to be called to completely destroy the component.
+		 */
+		public function dispose():void
+		{
+			onRemovedFromStage( null );
+			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
+			
+			_dragableBar = null;
+			_volumeBar = null;
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

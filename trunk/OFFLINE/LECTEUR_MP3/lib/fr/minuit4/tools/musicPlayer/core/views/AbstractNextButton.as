@@ -8,6 +8,10 @@ package fr.minuit4.tools.musicPlayer.core.views
 {
 	import flash.events.MouseEvent;
 	
+	/**
+	 * The AbstractNextButton class has to be extended.
+	 * It's relied with the use of the AbstractMusicPlayer.
+	 */
 	public class AbstractNextButton extends ButtonComponent
 	{
 		
@@ -26,6 +30,9 @@ package fr.minuit4.tools.musicPlayer.core.views
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
+		/**
+		 * Switch to next track.
+		 */
 		override protected function onClick(e:MouseEvent):void 
 		{
 			_musicManager.nextTrack();

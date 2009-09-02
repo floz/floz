@@ -21,17 +21,12 @@ package fr.minuit4.tools.musicPlayer.core.views
 		
 		public function PlaylistComponent() 
 		{
-			init();
+			
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
-		
-		protected function init():void
-		{
-			// ABSTRACT METHOD - Must be overrided.
-		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
