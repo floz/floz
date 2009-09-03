@@ -13,6 +13,14 @@ package fr.minuit4.tools.musicPlayer.core.views
 	import fr.minuit4.tools.musicPlayer.core.managers.MusicManager;
 	import fr.minuit4.tools.musicPlayer.events.MusicEvent;
 	
+	/**
+	 * The AbstractNextButton class has to be extended.
+	 * It's relied with the use of the AbstractMusicPlayer.
+	 * 
+	 * You will have to call the following method in your final Volume bar class :
+	 * - setVolumeBar
+	 * - setDragableBar
+	 */
 	public class AbstractVolumeBar extends Sprite
 	{
 		

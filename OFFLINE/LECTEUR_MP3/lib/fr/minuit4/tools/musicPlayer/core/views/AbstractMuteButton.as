@@ -10,6 +10,14 @@ package fr.minuit4.tools.musicPlayer.core.views
 	import flash.events.MouseEvent;
 	import fr.minuit4.tools.musicPlayer.events.MusicEvent;
 	
+	/**
+	 * The AbstractMuteButton class has to be extended.
+	 * It's relied with the use of the AbstractMusicPlayer.
+	 * 
+	 * Your MuteButton will have to overidde the following methods :
+	 * - setMuteState
+	 * - setUnmuteState
+	 */
 	public class AbstractMuteButton extends ButtonComponent
 	{
 		
@@ -47,6 +55,9 @@ package fr.minuit4.tools.musicPlayer.core.views
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
+		/**
+		 * Handle the changes of the MouseEvent.CLICK event.
+		 */
 		override protected function onClick(e:MouseEvent):void 
 		{
 			if ( _musicManager.isMute() )
@@ -87,6 +98,12 @@ package fr.minuit4.tools.musicPlayer.core.views
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		override public function dispose():void 
+		{
+			_musicManager.removeEventListener( MusicEvent.VOLUME_CHANGED, onVolumeChanged );
+			super.dispose();
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

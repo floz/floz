@@ -40,9 +40,9 @@ package fr.minuit4.tools.musicPlayer.core.managers
 		private const _stopEvent:MusicEvent = new MusicEvent( MusicEvent.STOP );
 		private const _pauseEvent:MusicEvent = new MusicEvent( MusicEvent.PAUSE );
 		private const _songLoadedEvent:MusicEvent = new MusicEvent( MusicEvent.SONG_LOADED );
-		private const _id3LoadedEvent:MusicEvent = new MusicEvent( MusicEvent.ID3_LOADED );
 		private const _volumeChangedEvent:MusicEvent = new MusicEvent( MusicEvent.VOLUME_CHANGED );
 		private const _progressEvent:ProgressEvent = new ProgressEvent( ProgressEvent.PROGRESS );
+		private const _id3Event:Event = new Event( Event.ID3 );
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
@@ -112,7 +112,7 @@ package fr.minuit4.tools.musicPlayer.core.managers
 		private function onID3(e:Event):void 
 		{
 			_soundManager.removeEventListener( Event.ID3, onID3 );
-			dispatchEvent( _id3LoadedEvent );
+			dispatchEvent( _id3Event );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------

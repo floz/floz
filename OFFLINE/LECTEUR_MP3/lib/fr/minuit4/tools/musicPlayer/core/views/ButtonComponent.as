@@ -56,6 +56,17 @@ package fr.minuit4.tools.musicPlayer.core.views
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
+		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function dispose():void
+		{
+			if ( hasEventListener( Event.REMOVED_FROM_STAGE ) ) removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
+			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
+			removeEventListener( MouseEvent.CLICK, onClick );
+			
+			_musicManager = null;
+		}
+		
 	}
 	
 }
