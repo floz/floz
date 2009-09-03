@@ -17,6 +17,10 @@ package fr.minuit4.tools.musicPlayer.core.views
 	 * 
 	 * It will permite you to create a custom Play/Pause button for
 	 * a music player.
+	 * 
+	 * Your Play/Pause button will have to overidde those following methods :
+	 * - setPlayState
+	 * - setPauseState
 	 */
 	public class AbstractPlayPauseButton extends ButtonComponent
 	{
@@ -92,6 +96,15 @@ package fr.minuit4.tools.musicPlayer.core.views
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		override public function dispose():void 
+		{
+			_musicManager.removeEventListener( MusicEvent.PLAY, switchState );
+			_musicManager.removeEventListener( MusicEvent.PAUSE, switchState );
+			_musicManager.removeEventListener( MusicEvent.STOP, switchState );
+			
+			super.dispose();
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

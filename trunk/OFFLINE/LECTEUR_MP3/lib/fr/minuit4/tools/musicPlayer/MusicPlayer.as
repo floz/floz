@@ -15,6 +15,11 @@ package fr.minuit4.tools.musicPlayer
 	import fr.minuit4.tools.musicPlayer.views.Device;
 	import fr.minuit4.tools.musicPlayer.views.Playlist;
 	
+	/**
+	 * The minuit4 music player.
+	 * You have to configure a device to interact with.
+	 * The playlist is optionnal.
+	 */
 	public class MusicPlayer extends AbstractMusicPlayer
 	{
 		

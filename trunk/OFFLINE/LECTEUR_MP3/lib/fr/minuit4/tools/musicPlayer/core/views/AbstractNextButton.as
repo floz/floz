@@ -11,6 +11,8 @@ package fr.minuit4.tools.musicPlayer.core.views
 	/**
 	 * The AbstractNextButton class has to be extended.
 	 * It's relied with the use of the AbstractMusicPlayer.
+	 * 
+	 * This button will jumpt to the next track.
 	 */
 	public class AbstractNextButton extends ButtonComponent
 	{
