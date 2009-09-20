@@ -1,0 +1,8 @@
+what,kind,bundleId,bundleVersion,description,time
+stopped,bundle,org.eclipse.wst.common.emfworkbench.integration,1.1.300.v200811200330,"org.eclipse.wst.common.emfworkbench.integration",1252530771093
+stopped,bundle,org.eclipse.wst.common.emf,1.1.300.v200905060430,"org.eclipse.wst.common.emf",1252530771093
+stopped,bundle,org.eclipse.wst.command.env.ui,1.1.2.v200811200248,"org.eclipse.wst.command.env.ui",1252530771093
+stopped,bundle,org.eclipse.wst.command.env,1.0.408.v200903110045,"org.eclipse.wst.command.env",1252530771093
+stopped,bundle,org.eclipse.wst.validation.ui,1.2.104.v200904232035,"org.eclipse.wst.validation.ui",1252530771093
+stopped,bundle,org.eclipse.wst.common.frameworks.ui,1.1.300.v200904160730,"org.eclipse.wst.common.frameworks.ui",1252530771093
+stopped,bundle,org.eclipse.wst.validation,1.2.102.v200905201610,"org.eclipse.wst.validation",1252530771093

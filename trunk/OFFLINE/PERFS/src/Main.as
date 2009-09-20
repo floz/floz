@@ -10,8 +10,11 @@
 	{
 		private var phase:int;
 		
+		private var _list:Dictionary = new Dictionary();
+		
 		public function Main():void 
 		{
+			_list[ "test" ] = "toto";
 			stage.addEventListener( MouseEvent.CLICK, onClick );
 		}
 		
@@ -21,18 +24,13 @@
 			if ( phase == 0 ) 
 			{
 				f = ppi;
-				trace( "++i" );
+				trace( "\"test\" in _list" );
 			}
 			else if ( phase == 1 )
 			{
 				f = ipp;
-				trace( "i++" );
-			}
-			else
-			{
-				f = ipeu;
-				trace( "i+=1" );
-			}			
+				trace( "_list[ \"test\" ]" );
+			}		
 			
 			var debut:Number = 0;
 			var compteur:int;
@@ -44,32 +42,30 @@
 			}
 			trace ( compteur );
 			
-			phase = phase == 2 ? phase = 0 : phase + 1;
+			phase = phase == 1 ? phase = 0 : phase + 1;
 		}
 		
 		private function ppi():void
 		{
+			var b:Boolean;
+			
 			var j:int;
-			var n:int = 120000;
+			var n:int = 10000;
 			for ( j = 0; j < n; ++j )
 			{
+				if( "test" in _list ) {}
 			}
 		}
 		
 		private function ipp():void
 		{
+			var b:Boolean;
+			
 			var j:int;
-			const n:int = 120000;
-			for ( j = 0; j < n; j++ )
+			var n:int = 10000;
+			for ( j = 0; j < n; ++j )
 			{
-			}
-		}
-		
-		private function ipeu():void
-		{
-			var j:int;
-			for ( j = 0; j < 120000; j+=1 )
-			{
+				if( _list[ "test" ] ) {}
 			}
 		}
 		
