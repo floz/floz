@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<datas>
+	<baseURL>.</baseURL>
+	
+	<minuit4><![CDATA[minuit4forthewin]]></minuit4>
+	<testnode><![CDATA[${minuit4}, blabla]]></testnode>
+	
+	<imgPath><![CDATA[img/]]></imgPath>
+	<xmlPath><![CDATA[${baseURL}/xml/]]></xmlPath>
+	
+	<xmlToLoad>
+		<file id="datas1"><![CDATA[${xmlPath}/datas1.xml]]></file>
+		<file id="datas2"><![CDATA[${xmlPath}/datas2.xml]]></file>
+	</xmlToLoad>
+	
+	<mediasToLoad>
+		<file id="chapin"><![CDATA[${baseURL}/${imgPath}/chapin2.jpg]]></file>
+		<file id="chapin2"><![CDATA[${baseURL}/${imgPath}/chapin2.jpg]]></file>
+	</mediasToLoad>
+	
+	<testXml>
+		<items>
+			<item>toto</item>
+			<item>tata</item>
+			<item>titi</item>
+		</items>
+	</testXml>
+</datas>
