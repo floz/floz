@@ -11,6 +11,8 @@ package fr.minuit4.core.datas.dynamics
 	{
 		function hasProperty( propertyName:String ):Boolean;
 		
-		function getData( propertyName:String ):*
+		function setProperty( propertyName:String, propertyValue:* ):void;
+		
+		function getProperty( propertyName:String ):*;
 	}
 }
