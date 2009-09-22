@@ -6,18 +6,18 @@
 	<minuit4><![CDATA[minuit4forthewin]]></minuit4>
 	<testnode><![CDATA[${minuit4}, blabla]]></testnode>
 	
-	<imgPath><![CDATA[img/]]></imgPath>
-	<xmlPath><![CDATA[${baseURL}/xml/]]></xmlPath>
+	<pathIMG><![CDATA[img/]]></pathIMG>
+	<pathXML><![CDATA[${baseURL}/xml/]]></pathXML>
 	
-	<xmlToLoad>
-		<file id="datas1"><![CDATA[${xmlPath}/datas1.xml]]></file>
-		<file id="datas2"><![CDATA[${xmlPath}/datas2.xml]]></file>
-	</xmlToLoad>
+	<datasToLoad>
+		<file id="datas1"><![CDATA[${pathXML}/datas1.xml]]></file>
+		<file id="datas2"><![CDATA[${pathXML}/datas2.xml]]></file>
+	</datasToLoad>
 	
-	<mediasToLoad>
-		<file id="chapin"><![CDATA[${baseURL}/${imgPath}/chapin2.jpg]]></file>
-		<file id="chapin2"><![CDATA[${baseURL}/${imgPath}/chapin2.jpg]]></file>
-	</mediasToLoad>
+	<assetsToLoad>
+		<file id="chapin"><![CDATA[${baseURL}/${pathIMG}/chapin2.jpg]]></file>
+		<file id="chapin2"><![CDATA[${baseURL}/${pathIMG}/chapin2.jpg]]></file>
+	</assetsToLoad>
 	
 	<testXml>
 		<items>

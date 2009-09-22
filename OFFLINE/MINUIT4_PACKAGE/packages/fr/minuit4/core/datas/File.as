@@ -1,1 +1,0 @@
-/*** Written by :* @author Floz* www.floz.fr || www.minuit4.fr*/package fr.minuit4.core.datas{	import fr.minuit4.core.commands.ICommand;	public class File	{				// - PUBLIC VARIABLES ------------------------------------------------------------				public var id:String;		public var url:String;		public var command:ICommand;		}	}
