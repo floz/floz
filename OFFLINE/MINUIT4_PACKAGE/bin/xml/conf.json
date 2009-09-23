@@ -1,0 +1,28 @@
+{ 
+	"baseURL": ".",
+	
+	"minuit4": "minuit4forthewin",
+	"testnode": "${minuit4}, blabla",
+	
+	"pathIMG": "img/",
+	"pathXML": "${baseURL}/xml/",
+	
+	"datasToLoad": [
+		{ "id": "datas1", "url": "${pathXML}/datas1.xml" },
+		{ "id": "datas2", "url": "${pathXML}/datas2.xml" },
+	],
+	
+	"assetsToLoad": [
+		{ "id": "chapin", "url": "${pathXML}/datas1.xml" },
+		{ "id": "chapin2", "url": "${pathXML}/datas2.xml" },
+	],
+	
+	"testXml": 
+	{
+		"items" : 
+		{
+			[ "toto", "tata", "titi" ]
+		}
+	}
+	
+}
