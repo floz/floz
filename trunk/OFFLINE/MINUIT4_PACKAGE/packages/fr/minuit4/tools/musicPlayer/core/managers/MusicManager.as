@@ -35,8 +35,6 @@ package fr.minuit4.tools.musicPlayer.core.managers
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
-		private static const AUTOPLAY:Boolean = false;
-		
 		private const _playEvent:MusicEvent = new MusicEvent( MusicEvent.PLAY );
 		private const _stopEvent:MusicEvent = new MusicEvent( MusicEvent.STOP );
 		private const _pauseEvent:MusicEvent = new MusicEvent( MusicEvent.PAUSE );
