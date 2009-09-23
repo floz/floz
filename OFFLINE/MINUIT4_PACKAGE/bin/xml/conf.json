@@ -9,20 +9,17 @@
 	
 	"datasToLoad": [
 		{ "id": "datas1", "url": "${pathXML}/datas1.xml" },
-		{ "id": "datas2", "url": "${pathXML}/datas2.xml" },
+		{ "id": "datas2", "url": "${pathXML}/datas2.xml" }
 	],
 	
 	"assetsToLoad": [
-		{ "id": "chapin", "url": "${pathXML}/datas1.xml" },
-		{ "id": "chapin2", "url": "${pathXML}/datas2.xml" },
+		{ "id": "chapin", "url": "${baseURL}/${pathIMG}/chapin2.jpg" },
+		{ "id": "chapin2", "url": "${baseURL}/${pathIMG}/chapin2.jpg" }
 	],
 	
 	"testXml": 
 	{
-		"items" : 
-		{
-			[ "toto", "tata", "titi" ]
-		}
+		"items" : [ "toto", "tata", "titi" ]
 	}
 	
 }
