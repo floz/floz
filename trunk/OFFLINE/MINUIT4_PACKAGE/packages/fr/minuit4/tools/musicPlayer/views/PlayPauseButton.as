@@ -6,7 +6,7 @@
  */
 package fr.minuit4.tools.musicPlayer.views 
 {
-	import fr.minuit4.tools.musicPlayer.core.views.AbstractPlayPauseButton;
+	import fr.minuit4.tools.musicPlayer.core.views.device.AbstractPlayPauseButton;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 
 	import flash.display.Graphics;

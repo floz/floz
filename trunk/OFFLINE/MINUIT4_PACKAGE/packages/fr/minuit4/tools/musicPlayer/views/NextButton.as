@@ -6,13 +6,14 @@
  */
 package fr.minuit4.tools.musicPlayer.views 
 {
+	import fr.minuit4.tools.musicPlayer.core.views.device.AbstractNextButton;
+	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
+
 	import flash.display.CapsStyle;
 	import flash.display.Graphics;
 	import flash.display.LineScaleMode;
 	import flash.display.Shape;
-	import fr.minuit4.tools.musicPlayer.core.views.AbstractNextButton;
-	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
-	
+
 	public class NextButton extends AbstractNextButton
 	{
 		

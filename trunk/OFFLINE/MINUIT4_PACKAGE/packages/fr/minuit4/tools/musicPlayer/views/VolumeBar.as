@@ -6,7 +6,7 @@
  */
 package fr.minuit4.tools.musicPlayer.views 
 {
-	import fr.minuit4.tools.musicPlayer.core.views.AbstractVolumeBar;
+	import fr.minuit4.tools.musicPlayer.core.views.device.AbstractVolumeBar;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 
 	import flash.display.Graphics;

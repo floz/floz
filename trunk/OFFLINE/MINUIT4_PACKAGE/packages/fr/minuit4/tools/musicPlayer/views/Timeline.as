@@ -6,7 +6,7 @@
  */
 package fr.minuit4.tools.musicPlayer.views 
 {
-	import fr.minuit4.tools.musicPlayer.core.views.AbstractTimeline;
+	import fr.minuit4.tools.musicPlayer.core.views.device.AbstractTimeline;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 
 	import flash.display.Graphics;
@@ -47,9 +47,8 @@ package fr.minuit4.tools.musicPlayer.views
 			drawTimeline();
 			
 			// Those three functions call are necessary to setup the timeline.
-			setBufferBar( _bufferBar );
-			setPlayingBar( _playingBar );
-			setTimeline( _timeline );
+			bufferBar = _bufferBar;
+			playingBar = _playingBar;
 		}
 		
 		private function drawBackground():void
@@ -69,20 +68,8 @@ package fr.minuit4.tools.musicPlayer.views
 			addChild( _timeline );
 			_timeline.x = _timeline.y = 1.35;
 			
-			// NOTE: A timeline background is needed to be able to click on the 
-			// entier timeline. The background must have the width and the height
-			// of the complete timeline.
-			// If no background is added, graphics bug will occur if the timeline 
-			// is pressed during the buffering state.
-			var timelineBackground:Shape = new Shape();
-			var g:Graphics = timelineBackground.graphics;
-			g.lineStyle( 0, 0xffffff, 1, true );
-			g.drawRect( 0, 0, _background.width - 3, _background.height - 3 );
-			g.endFill();
-			_timeline.addChild( timelineBackground );
-			
 			_bufferBar = new Shape();			
-			g = _bufferBar.graphics;
+			var g:Graphics = _bufferBar.graphics;
 			g.beginFill( 0x999999 );
 			g.lineStyle( 0, _visualManager.getElementColor(), 1, true );
 			g.drawRect( 0, 0, _background.width - 3, _background.height - 3 );

@@ -6,7 +6,7 @@
  */
 package fr.minuit4.tools.musicPlayer.core.managers
 {
-	import fr.minuit4.tools.musicPlayer.events.MusicEvent;
+	import fr.minuit4.tools.musicPlayer.core.events.MusicEvent;
 
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -40,6 +40,7 @@ package fr.minuit4.tools.musicPlayer.core.managers
 		private const _pauseEvent:MusicEvent = new MusicEvent( MusicEvent.PAUSE );
 		private const _songLoadedEvent:MusicEvent = new MusicEvent( MusicEvent.SONG_LOADED );
 		private const _volumeChangedEvent:MusicEvent = new MusicEvent( MusicEvent.VOLUME_CHANGED );
+		private const _songAddedEvent:MusicEvent = new MusicEvent( MusicEvent.SONG_ADDED );
 		private const _progressEvent:ProgressEvent = new ProgressEvent( ProgressEvent.PROGRESS );
 		private const _id3Event:Event = new Event( Event.ID3 );
 		
@@ -200,6 +201,7 @@ package fr.minuit4.tools.musicPlayer.core.managers
 		public function addSong( song:Object ):void
 		{
 			_songs.push( song );
+			dispatchEvent( _songAddedEvent );
 		}
 		
 		/**
@@ -384,15 +386,21 @@ package fr.minuit4.tools.musicPlayer.core.managers
 		 * Return a String which contains the artist's name of the current song.
 		 * @return	String
 		 */
-		public function getCurrentArtist():String { return _soundManager.id3.artist; }
+		public function getCurrentArtist():String { return _songs[ _currentSongIndex ].artist || _soundManager.id3.artist; }
 		
 		/**
 		 * Return a String which contains the song's name.
 		 * @return	String
 		 */
-		public function getCurrentSong():String { return _soundManager.id3.songName; }
+		public function getCurrentSong():String { return _songs[ _currentSongIndex ].title || _soundManager.id3.songName; }
+		
+		public function getSong( idx:int ):Object { return this._songs[ idx ]; }
+		
+		public function getSongs():Array { return this._songs; }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
+		
+		public function get songIdx():int { return _currentSongIndex; }
 		
 		/**
 		 * Return the number of songs.
