@@ -6,15 +6,16 @@
  */
 package fr.minuit4.tools.musicPlayer.views 
 {
+	import fr.minuit4.tools.musicPlayer.core.views.DeviceComponent;
+	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
+
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
-	import fr.minuit4.tools.musicPlayer.core.views.DeviceComponent;
-	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
-	
+
 	public class Device extends DeviceComponent
 	{
 		

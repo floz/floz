@@ -28,7 +28,7 @@ package fr.minuit4.tools.musicPlayer.views
 		public function Playlist() 
 		{
 			_visualManager = VisualManager.getInstance();
-			super();
+			init();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
