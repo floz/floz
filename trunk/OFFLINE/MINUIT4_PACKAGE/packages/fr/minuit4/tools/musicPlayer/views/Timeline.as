@@ -10,7 +10,6 @@ package fr.minuit4.tools.musicPlayer.views
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 
 	import flash.display.Graphics;
-	import flash.display.Shape;
 	import flash.display.Sprite;
 
 	public class Timeline extends AbstractTimeline
@@ -21,11 +20,6 @@ package fr.minuit4.tools.musicPlayer.views
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _visualManager:VisualManager;
-		
-		private var _background:Shape;
-		private var _bufferBar:Shape;
-		private var _playingBar:Shape;
-		private var _timeline:Sprite;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -43,45 +37,33 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		private function init():void
 		{
-			drawBackground();
 			drawTimeline();
-			
-			// Those three functions call are necessary to setup the timeline.
-			bufferBar = _bufferBar;
-			playingBar = _playingBar;
-		}
-		
-		private function drawBackground():void
-		{
-			_background = new Shape();
-			var g:Graphics = _background.graphics;
-			g.lineStyle( 1, _visualManager.getBackgroundElementColor(), 1, true );
-			g.beginFill( 0xffffff );
-			g.drawRect( 0, 0, _visualManager.getPlayerWidth() - 20, 12 );
-			g.endFill();
-			addChild( _background );
 		}
 		
 		private function drawTimeline():void
-		{
-			_timeline = new Sprite();
-			addChild( _timeline );
-			_timeline.x = _timeline.y = 1.35;
-			
-			_bufferBar = new Shape();			
-			var g:Graphics = _bufferBar.graphics;
+		{			
+			bufferBar = new Sprite();			
+			var g:Graphics = ( bufferBar as Sprite ).graphics;
 			g.beginFill( 0x999999 );
 			g.lineStyle( 0, _visualManager.getElementColor(), 1, true );
-			g.drawRect( 0, 0, _background.width - 3, _background.height - 3 );
+			g.drawRect( 0, 0, _visualManager.getPlayerWidth() - 20 - 2, 12 - 2 );
 			g.endFill();
-			_timeline.addChild( _bufferBar );
 			
-			_playingBar = new Shape();
-			g = _playingBar.graphics;
+			//playingBar = new Sprite();
+			var pb:Sprite = new Sprite();
+			g = pb.graphics;
 			g.beginFill( _visualManager.getBackgroundElementColor() );
-			g.drawRect( 0, 0, _background.width - 4, _background.height - 4 );
+			g.drawRect( 0, 0, _visualManager.getPlayerWidth() - 20 - 3, 12 - 3 );
 			g.endFill();
-			_timeline.addChild( _playingBar );
+			
+			playingBar = pb;
+			
+			background = new Sprite();
+			g = ( background as Sprite ).graphics;
+			g.beginFill( 0xff00ff, 1 );
+			g.drawRect( 0, 0, playingBar.width, playingBar.height);
+			g.endFill();
+			background.alpha = 0;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

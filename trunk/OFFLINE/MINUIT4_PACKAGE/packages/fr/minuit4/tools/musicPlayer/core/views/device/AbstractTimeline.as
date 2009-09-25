@@ -11,7 +11,6 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
-	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -38,12 +37,16 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		
 		private var _musicManager:MusicManager;
 		
-		private var _background:Shape;
+		private var _cntGlobal:Sprite;
+		private var _cntBackground:Sprite;
+		private var _cntBufferBar:Sprite;
+		private var _cntPlayingBar:Sprite;
 		
 		private var _bufferPercent:Number;		
 		private var _beginX:Number;
 		private var _endX:Number;
 		
+		private var _background:DisplayObject;
 		private var _bufferBar:DisplayObject;
 		private var _playingBar:DisplayObject;
 		
@@ -55,8 +58,20 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		{
 			this._playingOnDrag = playingOnDrag;
 			
-			_background = new Shape();
-			addChild( _background );
+			_musicManager = MusicManager.getInstance();
+			
+			_cntGlobal = new Sprite();
+			_cntGlobal.mouseChildren = false;
+			addChild( _cntGlobal );
+			
+			_cntBackground = new Sprite();
+			_cntGlobal.addChild( _cntBackground );
+			
+			_cntBufferBar = new Sprite();
+			_cntGlobal.addChild( _cntBufferBar );
+			
+			_cntPlayingBar = new Sprite();
+			_cntGlobal.addChild( _cntPlayingBar );
 			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true );			
 		}
@@ -73,7 +88,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 			_musicManager.removeEventListener( MusicEvent.STOP, onSoundStop );
 			_musicManager = null;
 			
-			if( _background ) _background.removeEventListener( MouseEvent.MOUSE_DOWN, onTimelinePressed );
+			_cntGlobal.removeEventListener( MouseEvent.MOUSE_DOWN, onTimelinePressed );
 			
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true );
 		}
@@ -83,13 +98,15 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			_musicManager = MusicManager.getInstance();
+			_bufferBar.scaleX = 0;
+			_playingBar.scaleX = 0;
+			
 			_musicManager.addEventListener( ProgressEvent.PROGRESS, onLoadProgress, false, 0, true );
 			_musicManager.addEventListener( MusicEvent.PLAY, onSoundPlay, false, 0, true );
 			_musicManager.addEventListener( MusicEvent.PAUSE, onSoundPause, false, 0, true );
 			_musicManager.addEventListener( MusicEvent.STOP, onSoundStop, false, 0, true );
 			
-			if ( _background && !_background.hasEventListener( MouseEvent.MOUSE_DOWN ) ) _background.addEventListener( MouseEvent.MOUSE_DOWN, onTimelinePressed, false, 0, true );
+			_cntGlobal.addEventListener( MouseEvent.MOUSE_DOWN, onTimelinePressed, false, 0, true );
 		}
 		
 		private function onLoadProgress( e:ProgressEvent ):void 
@@ -126,7 +143,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 			}
 			
 			_beginX = e.stageX - e.localX;
-			_endX = e.stageX + ( _background.width - e.localX );
+			_endX = e.stageX + ( _cntGlobal.width - e.localX );
 			
 			onMouseMove( e );
 		}
@@ -143,9 +160,9 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		{
 			var position:Number = e.stageX - _beginX;
 			if ( position < 0 ) position = 0;
-			if ( position > _background.width ) position = _background.width - 1; // -1 pour correction de bug en cas de drag jusqu'à la fin.
-			
-			var percent:Number = position / _background.width;
+			if ( position > _cntGlobal.width ) position = _cntGlobal.width - 1; // -1 pour correction de bug en cas de drag jusqu'à la fin.
+
+			var percent:Number = position / _cntGlobal.width;
 			if ( percent > _bufferPercent ) percent = _bufferPercent;
 			_musicManager.moveTo( percent );
 			refreshPlayingBar();
@@ -163,14 +180,6 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 			_playingBar.scaleX = _musicManager.songPercent;
 		}
 		
-		private function buildBackground():void
-		{
-			var g:Graphics = _background.graphics;
-			g.beginFill( 0xff00ff, 0 );
-			g.drawRect( _playingBar.x, _playingBar.y, _playingBar.width, _playingBar.height );
-			g.endFill();
-		}
-		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		/**
@@ -180,10 +189,6 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		{
 			onRemovedFromStage( null );
 			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
-			
-			_playingBar = null;
-			_bufferBar = null;
-			_background = null;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
@@ -194,26 +199,32 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		 * If the buffer bar is full, then the song is fully loaded.
 		 * @param	bufferBar	DisplayObject	The element which will be considered as the buffer bar.
 		 */
-		protected function set bufferBar( bufferBar:DisplayObject ):void
+		public function set bufferBar( bufferBar:DisplayObject ):void
 		{
-			_bufferBar = bufferBar;
-			_bufferBar.scaleX = 0;
-			
-			_elts
+			_bufferBar = bufferBar;			
+			_cntBufferBar.addChild( _bufferBar );
 		}
-		
+		public function get bufferBar():DisplayObject { return _bufferBar; }
+
 		/**
 		 * Set the playing bar skin, and link it to the MusicPlayer.
 		 * The playing bar indicates to the user how many percent of the song has been played.
 		 * @param	playingBar	DisplayObject	The element which will be considered as the playing bar.
 		 */
-		protected function set playingBar( playingBar:DisplayObject ):void
+		public function set playingBar( playingBar:DisplayObject ):void
 		{
-			_playingBar = playingBar;
-			_playingBar.scaleX = 0;
-			
-			 buildBackground();
+			_playingBar = playingBar;						
+			_cntPlayingBar.addChild( _playingBar );
 		}
+		public function get playingBar():DisplayObject { return _playingBar; }
+		
+		public function set background( background:DisplayObject ):void
+		{
+			_background = background;	
+			_cntBackground.addChild( _background );
+		}
+
+		public function get background():DisplayObject { return _background; }
 		
 	}
 	

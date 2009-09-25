@@ -73,16 +73,36 @@ package fr.minuit4.tools.musicPlayer.views
 			nextButton.x = _playPauseButton.x + _playPauseButton.width + 10;
 			_buttonsCnt.addChild( nextButton );
 			
+			var backgroundTL:Shape = new Shape();
+			backgroundTL.x = 10;
+			backgroundTL.y = 45;			
+			var g:Graphics = backgroundTL.graphics;
+			g.lineStyle( 1, _visualManager.getBackgroundElementColor(), 1, true );
+			g.beginFill( 0xffffff );
+			g.drawRect( 0, 0, _visualManager.getPlayerWidth() - 20, 12 );
+			g.endFill();
+			addChild( backgroundTL );
+			
 			var timeline:Timeline = new Timeline();
-			timeline.x = 10;
-			timeline.y = 45;
+			timeline.x = backgroundTL.x + 1.35;
+			timeline.y = backgroundTL.y + 1.35;
 			addChild( timeline );
 			removeChild( timeline );
 			addChild( timeline );
 			
+			var backgroundVB:Shape = new Shape();
+			g = backgroundVB.graphics;
+			g.lineStyle( 1, _visualManager.getBackgroundElementColor(), 1, true );
+			g.beginFill( 0xffffff );
+			g.drawRect( 0, 0, 50, 10 );
+			g.endFill();
+			backgroundVB.x = backgroundTL.x + backgroundTL.width - backgroundVB.width;
+			backgroundVB.y = 68;
+			addChild( backgroundVB );
+			
 			var volumeBar:VolumeBar = new VolumeBar();
-			volumeBar.x = timeline.x + timeline.width - volumeBar.width;
-			volumeBar.y = 68;
+			volumeBar.x = backgroundVB.x + 1.35;
+			volumeBar.y = backgroundVB.y + 1.35;
 			addChild( volumeBar );
 			
 			var muteButton:MuteButton = new MuteButton();
