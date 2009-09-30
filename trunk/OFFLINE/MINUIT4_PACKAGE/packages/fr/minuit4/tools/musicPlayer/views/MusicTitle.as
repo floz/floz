@@ -41,7 +41,7 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		private function init():void
 		{
-			_musicManager.addEventListener( Event.ID3, onID3 );			
+			_musicManager.addEventListener( Event.ID3, onID3, false, 0, true );			
 			this.text = "... - ...";
 		}
 		

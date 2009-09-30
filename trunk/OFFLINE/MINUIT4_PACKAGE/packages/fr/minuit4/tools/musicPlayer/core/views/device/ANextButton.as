@@ -4,19 +4,19 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.tools.musicPlayer.core.views.device 
+package fr.minuit4.tools.musicPlayer.core.views.device
 {
 	import fr.minuit4.tools.musicPlayer.core.views.ButtonComponent;
 
 	import flash.events.MouseEvent;
 
 	/**
-	 * The AbstractPrevButton class has to be extended.
+	 * The AbstractNextButton class has to be extended.
 	 * It's relied with the use of the AbstractMusicPlayer.
 	 * 
-	 * This button will jump to the previous track.
+	 * This button will jumpt to the next track.
 	 */
-	public class AbstractPrevButton extends ButtonComponent
+	public class ANextButton extends ButtonComponent
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -27,16 +27,19 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function AbstractPrevButton() 
+		public function ANextButton() 
 		{
 			super();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
+		/**
+		 * Switch to next track.
+		 */
 		override protected function onClick(e:MouseEvent):void 
 		{
-			_musicManager.prevTrack();
+			_musicManager.nextTrack();
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------

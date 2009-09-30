@@ -11,21 +11,13 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.ProgressEvent;
 
-	/**
-	 * The AbstractNextButton class has to be extended.
-	 * It's relied with the use of the AbstractMusicPlayer.
-	 * 
-	 * You will have to call the following method in your final Timeline class :
-	 * - setBufferBar
-	 * - setPlayingBar
-	 * - setTimeline
-	 */
-	public class AbstractTimeline extends Sprite
+	public class ATimeline extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -46,7 +38,6 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		private var _beginX:Number;
 		private var _endX:Number;
 		
-		private var _background:DisplayObject;
 		private var _bufferBar:DisplayObject;
 		private var _playingBar:DisplayObject;
 		
@@ -54,7 +45,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function AbstractTimeline( playingOnDrag:Boolean = true ) 
+		public function ATimeline( playingOnDrag:Boolean = true ) 
 		{
 			this._playingOnDrag = playingOnDrag;
 			
@@ -180,6 +171,16 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 			_playingBar.scaleX = _musicManager.songPercent;
 		}
 		
+		private function drawBackground():void
+		{
+			var bg:Shape = new Shape();
+			var g:Graphics = bg.graphics;
+			g.beginFill( 0xff00ff, 0 );
+			g.drawRect( _playingBar.x, _playingBar.y, _playingBar.width, _playingBar.height );
+			g.endFill( );
+			_cntBackground.addChild( bg );
+		}
+
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		/**
@@ -213,19 +214,12 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		 */
 		public function set playingBar( playingBar:DisplayObject ):void
 		{
-			_playingBar = playingBar;						
+			_playingBar = playingBar;
+			if( !_playingBar.width ) throw new Error( "The playing bar must be skinned." );
+			drawBackground();		
 			_cntPlayingBar.addChild( _playingBar );
 		}
 		public function get playingBar():DisplayObject { return _playingBar; }
-		
-		public function set background( background:DisplayObject ):void
-		{
-			_background = background;	
-			_cntBackground.addChild( _background );
-		}
-
-		public function get background():DisplayObject { return _background; }
-		
 	}
 	
 }

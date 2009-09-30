@@ -6,13 +6,13 @@
  */
 package fr.minuit4.tools.musicPlayer.views 
 {
-	import fr.minuit4.tools.musicPlayer.core.views.device.AbstractStopButton;
+	import fr.minuit4.tools.musicPlayer.core.views.device.AStopButton;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 
 	import flash.display.Graphics;
 	import flash.display.Shape;
 
-	public class StopButton extends AbstractStopButton
+	public class StopButton extends AStopButton
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------

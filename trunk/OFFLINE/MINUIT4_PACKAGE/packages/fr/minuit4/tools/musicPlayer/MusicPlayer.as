@@ -6,7 +6,7 @@
  */
 package fr.minuit4.tools.musicPlayer 
 {
-	import fr.minuit4.tools.musicPlayer.core.AbstractMusicPlayer;
+	import fr.minuit4.tools.musicPlayer.core.AMusicPlayer;
 	import fr.minuit4.tools.musicPlayer.core.views.DeviceComponent;
 	import fr.minuit4.tools.musicPlayer.core.views.PlaylistComponent;
 
@@ -15,7 +15,7 @@ package fr.minuit4.tools.musicPlayer
 	 * You have to configure a device to interact with.
 	 * The playlist is optionnal.
 	 */
-	public class MusicPlayer extends AbstractMusicPlayer
+	public class MusicPlayer extends AMusicPlayer
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -24,7 +24,7 @@ package fr.minuit4.tools.musicPlayer
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function MusicPlayer( device:DeviceComponent, playlist:PlaylistComponent = null ) 
+		public function MusicPlayer( device:DeviceComponent = null, playlist:PlaylistComponent = null ) 
 		{
 			super( device, playlist );
 		}

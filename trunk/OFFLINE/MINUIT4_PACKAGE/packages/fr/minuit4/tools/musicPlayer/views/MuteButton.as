@@ -6,13 +6,13 @@
  */
 package fr.minuit4.tools.musicPlayer.views 
 {
-	import fr.minuit4.tools.musicPlayer.core.views.device.AbstractMuteButton;
+	import fr.minuit4.tools.musicPlayer.core.views.device.AMuteButton;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 
 	import flash.display.Graphics;
 	import flash.display.Shape;
 
-	public class MuteButton extends AbstractMuteButton
+	public class MuteButton extends AMuteButton
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -72,16 +72,6 @@ package fr.minuit4.tools.musicPlayer.views
 			g.lineTo( 4, 8 );
 			g.lineTo( 0, 8 );
 			g.endFill();
-		}
-		
-		override protected function setMuteState():void 
-		{
-			_icon.alpha = .5;
-		}
-		
-		override protected function setUnmuteState():void 
-		{
-			_icon.alpha = 1;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

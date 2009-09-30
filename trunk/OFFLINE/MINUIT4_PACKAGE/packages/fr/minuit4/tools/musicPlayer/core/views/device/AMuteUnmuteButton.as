@@ -7,10 +7,10 @@
 package fr.minuit4.tools.musicPlayer.core.views.device
 {
 	import fr.minuit4.tools.musicPlayer.core.events.MusicEvent;
-	import fr.minuit4.tools.musicPlayer.core.views.ButtonComponent;
+	import fr.minuit4.tools.musicPlayer.core.managers.MusicManager;
 
+	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 
 	/**
 	 * The AbstractMuteButton class has to be extended.
@@ -20,33 +20,44 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 	 * - setMuteState
 	 * - setUnmuteState
 	 */
-	public class AbstractMuteButton extends ButtonComponent
+	public class AMuteUnmuteButton extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private var _musicManager:MusicManager;
+		
+		private var _muteButton:AMuteButton;
+		private var _unmuteButton:AUnmuteButton;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function AbstractMuteButton() 
+		public function AMuteUnmuteButton() 
 		{
-			super();
+			_musicManager = MusicManager.getInstance();
+			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true );
 		}
-		
+
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
-		override protected function onRemovedFromStage(e:Event):void 
+		private function onRemovedFromStage(e:Event):void 
 		{
-			super.onRemovedFromStage( e );			
+			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );	
+						
 			_musicManager.removeEventListener( MusicEvent.VOLUME_CHANGED, onVolumeChanged );
+			
+			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true );
 		}
 		
-		override protected function onAddedToStage(e:Event):void 
+		private function onAddedToStage(e:Event):void 
 		{
-			super.onAddedToStage( e );			
+			removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );	
+			addEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage, false, 0, true );	
+				
 			_musicManager.addEventListener( MusicEvent.VOLUME_CHANGED, onVolumeChanged, false, 0, true );
 		}
 		
@@ -58,27 +69,14 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		/**
-		 * Handle the changes of the MouseEvent.CLICK event.
-		 */
-		override protected function onClick(e:MouseEvent):void 
-		{
-			if ( _musicManager.isMute() )
-				_musicManager.unmute();
-			else 
-				_musicManager.mute();
-			
-			switchState();
-		}
-		
-		/**
 		 * Switch the template of the button.
 		 */
 		private function switchState():void
 		{
 			if ( _musicManager.isMute() )
-				setMuteState();
-			else
 				setUnmuteState();
+			else
+				setMuteState();
 		}
 		
 		/**
@@ -87,7 +85,10 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		 */
 		protected function setMuteState():void
 		{
-			// ABSTRACT METHOD, MUST BE OVERRIDED.
+			if( !_muteButton ) return;
+			
+			while ( numChildren ) removeChildAt( 0 );
+			addChild( _muteButton );
 		}
 		
 		/**
@@ -96,18 +97,48 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		 */
 		protected function setUnmuteState():void
 		{
-			// ABSTRACT METHOD, MUST BE OVERRIDED.
+			if( !_unmuteButton ) return;
+			
+			while ( numChildren ) removeChildAt( 0 );
+			addChild( _unmuteButton );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		override public function dispose():void 
+		public function dispose():void 
 		{
 			_musicManager.removeEventListener( MusicEvent.VOLUME_CHANGED, onVolumeChanged );
-			super.dispose();
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
+		
+		public function set unmuteButton( value:AUnmuteButton ):void
+		{
+			if( _unmuteButton )
+			{
+				_unmuteButton.dispose();
+				if( _unmuteButton.parent ) removeChild( _unmuteButton );
+			}
+			_unmuteButton = value;
+			addChild( _unmuteButton );
+			
+			switchState();
+		}
+		public function get unmuteButton():AUnmuteButton { return _unmuteButton; }
+		
+		public function set muteButton( value:AMuteButton ):void
+		{
+			if( _muteButton )
+			{
+				_muteButton.dispose();
+				if( _muteButton.parent ) removeChild( _muteButton );
+			}
+			_muteButton = value;
+			addChild( _muteButton );
+			
+			switchState();
+		}
+		public function get muteButton():AMuteButton { return _muteButton; }
 		
 	}
 	

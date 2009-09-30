@@ -10,6 +10,8 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 	import fr.minuit4.tools.musicPlayer.core.managers.MusicManager;
 
 	import flash.display.DisplayObject;
+	import flash.display.Graphics;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -22,7 +24,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 	 * - setVolumeBar
 	 * - setDragableBar
 	 */
-	public class AbstractVolumeBar extends Sprite
+	public class AVolumeBar extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -38,14 +40,13 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		private var _cntBackground:Sprite;
 		private var _cntDragableBar:Sprite;
 		
-		private var _background:DisplayObject;
 		private var _dragableBar:DisplayObject;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function AbstractVolumeBar() 
+		public function AVolumeBar() 
 		{
 			_musicManager = MusicManager.getInstance();
 			
@@ -121,6 +122,16 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 			_dragableBar.scaleX = _musicManager.getVolume();
 		}
 		
+		private function drawBackground():void
+		{
+			var bg:Shape = new Shape();
+			var g:Graphics = bg.graphics;
+			g.beginFill( 0xff00ff, 0 );
+			g.drawRect( _dragableBar.x, _dragableBar.y, _dragableBar.width, _dragableBar.height );
+			g.endFill( );
+			_cntBackground.addChild( bg );
+		}
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		/**
@@ -144,17 +155,12 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		public function set dragableBar( dragableBar:DisplayObject ):void
 		{
 			_dragableBar = dragableBar;
+			if( !_dragableBar.width ) throw new Error( "The playing bar must be skinned." );
+			drawBackground();		
 			_cntDragableBar.addChild( _dragableBar );
 		}
 
 		public function get dragableBar():DisplayObject { return _dragableBar; }
-		
-		public function set background( background:DisplayObject ):void
-		{
-			_background = background;
-			_cntBackground.addChild( _background );
-		}
-		public function get background():DisplayObject { return _background; }
 		
 	}
 	

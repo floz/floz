@@ -16,7 +16,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 	 * 
 	 * This button will stop the current song.
 	 */
-	public class AbstractStopButton extends ButtonComponent
+	public class AStopButton extends ButtonComponent
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -27,7 +27,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function AbstractStopButton() 
+		public function AStopButton() 
 		{
 			super();
 		}

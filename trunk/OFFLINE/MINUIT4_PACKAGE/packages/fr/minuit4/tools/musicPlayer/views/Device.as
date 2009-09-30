@@ -105,7 +105,7 @@ package fr.minuit4.tools.musicPlayer.views
 			volumeBar.y = backgroundVB.y + 1.35;
 			addChild( volumeBar );
 			
-			var muteButton:MuteButton = new MuteButton();
+			var muteButton:MuteUnmuteButton = new MuteUnmuteButton();
 			muteButton.x = volumeBar.x - muteButton.width - 10;
 			muteButton.y = 65;
 			addChild( muteButton );
