@@ -104,10 +104,10 @@ package fr.minuit4.net.loaders
 		protected function register( ed:IEventDispatcher ):void
 		{
 			_loadDispatcher = ed;
-			_loadDispatcher.addEventListener( Event.INIT, onInit, false, 0, true );
-			_loadDispatcher.addEventListener( IOErrorEvent.IO_ERROR, onIOError, false, 0, true );
-			_loadDispatcher.addEventListener( ProgressEvent.PROGRESS, onProgress, false, 0, true );
-			_loadDispatcher.addEventListener( Event.COMPLETE, onComplete, false, 0, true );
+			_loadDispatcher.addEventListener( Event.INIT, onInit );
+			_loadDispatcher.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			_loadDispatcher.addEventListener( ProgressEvent.PROGRESS, onProgress );
+			_loadDispatcher.addEventListener( Event.COMPLETE, onComplete );
 		}
 		
 		protected function unregister():void
