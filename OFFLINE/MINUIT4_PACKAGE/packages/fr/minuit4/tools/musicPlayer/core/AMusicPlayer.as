@@ -11,7 +11,7 @@ package fr.minuit4.tools.musicPlayer.core
 	import fr.minuit4.tools.musicPlayer.core.views.DeviceComponent;
 	import fr.minuit4.tools.musicPlayer.core.views.PlaylistComponent;
 	
-	public class AbstractMusicPlayer extends Sprite
+	public class AMusicPlayer extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -27,25 +27,20 @@ package fr.minuit4.tools.musicPlayer.core
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function AbstractMusicPlayer( device:DeviceComponent, playlist:PlaylistComponent = null ) 
+		public function AMusicPlayer( device:DeviceComponent = null, playlist:PlaylistComponent = null ) 
 		{
 			_device = device;
 			_playlist = playlist;			
 			
 			_musicManager = MusicManager.getInstance();
 			
-			init();
+			if( _device ) addChild( _device );
+			if( _playlist ) addChild( _playlist );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
-		
-		protected function init():void
-		{
-			addChild( _device );
-			if( _playlist ) addChild( _playlist );
-		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
@@ -54,6 +49,25 @@ package fr.minuit4.tools.musicPlayer.core
 		public function dispose():void { _musicManager.dispose(); }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
+		
+		public function set device( device:DeviceComponent ):void
+		{
+			if( _device )
+				removeChild( _device );
+			
+			_device = device;
+			addChild( _device );
+		}
+		public function get device():DeviceComponent { return _device; }
+		
+		public function set playlist( playlist:PlaylistComponent ):void
+		{
+			if( _playlist )
+				removeChild( _playlist );
+			
+			_playlist = playlist;
+			addChild( _playlist );
+		}
 		
 	}
 	

@@ -6,7 +6,7 @@
  */
 package fr.minuit4.tools.musicPlayer.views 
 {
-	import fr.minuit4.tools.musicPlayer.core.views.device.AbstractNextButton;
+	import fr.minuit4.tools.musicPlayer.core.views.device.ANextButton;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 
 	import flash.display.CapsStyle;
@@ -14,7 +14,7 @@ package fr.minuit4.tools.musicPlayer.views
 	import flash.display.LineScaleMode;
 	import flash.display.Shape;
 
-	public class NextButton extends AbstractNextButton
+	public class NextButton extends ANextButton
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------

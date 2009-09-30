@@ -6,13 +6,13 @@
  */
 package fr.minuit4.tools.musicPlayer.views 
 {
-	import fr.minuit4.tools.musicPlayer.core.views.device.ATimeline;
+	import fr.minuit4.tools.musicPlayer.core.views.device.AUnmuteButton;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 
 	import flash.display.Graphics;
-	import flash.display.Sprite;
+	import flash.display.Shape;
 
-	public class Timeline extends ATimeline
+	public class UnmuteButton extends AUnmuteButton
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -21,11 +21,13 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		private var _visualManager:VisualManager;
 		
+		private var _icon:Shape;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Timeline() 
+		public function UnmuteButton() 
 		{
 			_visualManager = VisualManager.getInstance();
 			init();
@@ -37,25 +39,41 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		private function init():void
 		{
-			drawTimeline();
+			drawBackground();
+			drawIcon();
+			
+			_icon.alpha = .5;
 		}
 		
-		private function drawTimeline():void
-		{			
-			bufferBar = new Sprite();			
-			var g:Graphics = ( bufferBar as Sprite ).graphics;
-			g.beginFill( 0x999999 );
-			g.lineStyle( 0, _visualManager.getElementColor(), 1, true );
-			g.drawRect( 0, 0, _visualManager.getPlayerWidth() - 20 - 2, 12 - 2 );
-			g.endFill();
+		private function drawBackground():void
+		{
+			var background:Shape = new Shape();
+			addChild( background );
 			
-			var pb:Sprite = new Sprite();
-			g = pb.graphics;
+			var g:Graphics = background.graphics;
+			g.lineStyle( 0, 0, 1, true );
 			g.beginFill( _visualManager.getBackgroundElementColor() );
-			g.drawRect( 0, 0, _visualManager.getPlayerWidth() - 20 - 3, 12 - 3 );
+			g.drawRect( 0, 0, 16, 16 );
 			g.endFill();
+		}
+		
+		private function drawIcon():void
+		{
+			_icon = new Shape();
+			_icon.x = 3;
+			_icon.y = 2;
+			addChild( _icon );
 			
-			playingBar = pb;
+			var g:Graphics = _icon.graphics;
+			g.lineStyle( 0, 0, 1, true );
+			g.beginFill( _visualManager.getElementColor() );
+			g.moveTo( 0, 4 );
+			g.lineTo( 4, 4 );
+			g.lineTo( 8, 0 );
+			g.lineTo( 8, 12 );
+			g.lineTo( 4, 8 );
+			g.lineTo( 0, 8 );
+			g.endFill();
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
