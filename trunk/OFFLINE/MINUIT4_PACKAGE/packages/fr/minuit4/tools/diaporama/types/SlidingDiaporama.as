@@ -11,7 +11,7 @@
 package fr.minuit4.tools.diaporama.types 
 {
 	import fr.minuit4.motion.easing.Cubic;
-	import fr.minuit4.motion.M4Tween;
+	import fr.minuit4.motion.M4Tween_old;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -59,7 +59,7 @@ package fr.minuit4.tools.diaporama.types
 		final override protected function show():void
 		{
 			dispatchEvent( _initEvent );
-			M4Tween.create( _diaporamaCnt, _transitionTime, { x: -_width * _nextId, easing: Cubic.easeOut, onComplete: finalStep } );
+			M4Tween_old.create( _diaporamaCnt, _transitionTime, { x: -_width * _nextId, easing: Cubic.easeOut, onComplete: finalStep } );
 			_currentId = _nextId;
 		}
 		
@@ -71,7 +71,7 @@ package fr.minuit4.tools.diaporama.types
 		/** Method called after the EVENT.REMOVED_FROM_STAGE event to clean the memory */
 		final override protected function destroy():void 
 		{
-			M4Tween.releaseTweenOf( _diaporamaCnt );
+			M4Tween_old.releaseTweenOf( _diaporamaCnt );
 			
 			_images = null;
 			_imgHolder = null;

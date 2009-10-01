@@ -11,7 +11,7 @@
 package fr.minuit4.tools.diaporama.types 
 {
 	import fr.minuit4.motion.easing.Quad;
-	import fr.minuit4.motion.M4Tween;
+	import fr.minuit4.motion.M4Tween_old;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -75,7 +75,7 @@ package fr.minuit4.tools.diaporama.types
 		{
 			dispatchEvent( _initEvent );
 			_currentId = _nextId;
-			M4Tween.create( _fadingImg, _transitionTime * .5, { alpha: 1, easing: Quad.easeOut, onComplete: secondStep } );
+			M4Tween_old.create( _fadingImg, _transitionTime * .5, { alpha: 1, easing: Quad.easeOut, onComplete: secondStep } );
 		}
 		
 		private function secondStep():void
@@ -83,7 +83,7 @@ package fr.minuit4.tools.diaporama.types
 			if( _imgTmp ) _imgTmp.dispose();
 			draw();
 			
-			M4Tween.create( _fadingImg, _transitionTime * .5, { alpha: 0, easing: Quad.easeOut, onComplete: finalStep } );
+			M4Tween_old.create( _fadingImg, _transitionTime * .5, { alpha: 0, easing: Quad.easeOut, onComplete: finalStep } );
 		}
 		
 		private function finalStep():void
@@ -95,7 +95,7 @@ package fr.minuit4.tools.diaporama.types
 		/** Method called after the EVENT.REMOVED_FROM_STAGE event to clean the memory */
 		final override protected function destroy():void
 		{
-			M4Tween.releaseTweenOf( _fadingImg );;
+			M4Tween_old.releaseTweenOf( _fadingImg );;
 			
 			_imgTmp.dispose();
 			_imgTmp = null;
