@@ -6,13 +6,15 @@
  */
 package fr.minuit4.tools.musicPlayer.views 
 {
-	import fr.minuit4.tools.musicPlayer.core.views.device.AVolumeBar;
+	import fr.minuit4.tools.musicPlayer.core.views.device.NextButton;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 
+	import flash.display.CapsStyle;
 	import flash.display.Graphics;
+	import flash.display.LineScaleMode;
 	import flash.display.Shape;
 
-	public class VolumeBar extends AVolumeBar
+	public class NextButtonSkin extends NextButton
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -21,13 +23,11 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		private var _visualManager:VisualManager;
 		
-		private var _dragableBar:Shape;
-		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function VolumeBar() 
+		public function NextButtonSkin() 
 		{
 			_visualManager = VisualManager.getInstance();
 			init();
@@ -39,18 +39,40 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		private function init():void
 		{
-			drawVolumeBar();
+			drawBackground();
+			drawIcon();
 		}
 		
-		private function drawVolumeBar():void
-		{			
-			_dragableBar = new Shape();
-			var g:Graphics = _dragableBar.graphics;
-			g.beginFill( _visualManager.getBackgroundElementColor(), 1 );
-			g.drawRect( 0, 0, 50 - 3, 10 - 3 );
-			g.endFill();
+		private function drawBackground():void
+		{
+			var background:Shape = new Shape();
+			addChild( background );
 			
-			dragableBar = _dragableBar;
+			var g:Graphics = background.graphics;
+			g.lineStyle( 0, 0, 1, true );
+			g.beginFill( _visualManager.getBackgroundElementColor() );
+			g.drawRect( 0, 0, 16, 16 );
+			g.endFill();
+		}
+		
+		private function drawIcon():void
+		{
+			var icon:Shape = new Shape();
+			icon.x = 4;
+			icon.y = 3;
+			addChild( icon );
+			
+			var g:Graphics = icon.graphics;
+			g.lineStyle( 0, 0, 1, true, LineScaleMode.NONE, CapsStyle.NONE );
+			g.beginFill( _visualManager.getElementColor() );			
+			g.moveTo( 0, 0 );
+			g.lineTo( 4, 5 );
+			g.lineTo( 4, 0 );
+			g.lineTo( 8, 5 );
+			g.lineTo( 4, 10 );
+			g.lineTo( 4, 5 );
+			g.lineTo( 0, 10 );
+			g.endFill();
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

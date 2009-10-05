@@ -24,7 +24,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 	 * - setVolumeBar
 	 * - setDragableBar
 	 */
-	public class AVolumeBar extends Sprite
+	public class VolumeBar extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -46,7 +46,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function AVolumeBar() 
+		public function VolumeBar() 
 		{
 			_musicManager = MusicManager.getInstance();
 			

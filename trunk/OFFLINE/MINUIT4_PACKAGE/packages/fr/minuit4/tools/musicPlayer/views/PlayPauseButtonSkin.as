@@ -4,40 +4,33 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.tools.musicPlayer.core.views.device 
+package fr.minuit4.tools.musicPlayer.views 
 {
-	import fr.minuit4.tools.musicPlayer.core.views.ButtonComponent;
+	import fr.minuit4.tools.musicPlayer.core.views.device.PlayPauseButton;
+	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 
-	import flash.events.MouseEvent;
-
-	/**
-	 * The AbstractPrevButton class has to be extended.
-	 * It's relied with the use of the AbstractMusicPlayer.
-	 * 
-	 * This button will jump to the previous track.
-	 */
-	public class APrevButton extends ButtonComponent
+	public class PlayPauseButtonSkin extends PlayPauseButton
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private var _visualManager:VisualManager;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function APrevButton() 
+		public function PlayPauseButtonSkin() 
 		{
-			super();
+			_visualManager = VisualManager.getInstance();
+			
+			this.playButton = new PlayButtonSkin();
+			this.pauseButton = new PauseButtonSkin();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
-		
-		override protected function onClick(e:MouseEvent):void 
-		{
-			_musicManager.prevTrack();
-		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		

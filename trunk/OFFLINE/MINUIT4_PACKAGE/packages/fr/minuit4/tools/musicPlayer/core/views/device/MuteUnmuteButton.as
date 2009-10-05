@@ -20,7 +20,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 	 * - setMuteState
 	 * - setUnmuteState
 	 */
-	public class AMuteUnmuteButton extends Sprite
+	public class MuteUnmuteButton extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -29,14 +29,14 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		
 		private var _musicManager:MusicManager;
 		
-		private var _muteButton:AMuteButton;
-		private var _unmuteButton:AUnmuteButton;
+		private var _muteButton:MuteButton;
+		private var _unmuteButton:UnmuteButton;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function AMuteUnmuteButton() 
+		public function MuteUnmuteButton() 
 		{
 			_musicManager = MusicManager.getInstance();
 			addEventListener( Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true );
@@ -112,7 +112,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
-		public function set unmuteButton( value:AUnmuteButton ):void
+		public function set unmuteButton( value:UnmuteButton ):void
 		{
 			if( _unmuteButton )
 			{
@@ -124,9 +124,9 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 			
 			switchState();
 		}
-		public function get unmuteButton():AUnmuteButton { return _unmuteButton; }
+		public function get unmuteButton():UnmuteButton { return _unmuteButton; }
 		
-		public function set muteButton( value:AMuteButton ):void
+		public function set muteButton( value:MuteButton ):void
 		{
 			if( _muteButton )
 			{
@@ -138,7 +138,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 			
 			switchState();
 		}
-		public function get muteButton():AMuteButton { return _muteButton; }
+		public function get muteButton():MuteButton { return _muteButton; }
 		
 	}
 	

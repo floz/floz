@@ -6,13 +6,13 @@
  */
 package fr.minuit4.tools.musicPlayer.views 
 {
-	import fr.minuit4.tools.musicPlayer.core.views.device.AUnmuteButton;
+	import fr.minuit4.tools.musicPlayer.core.views.device.UnmuteButton;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 
 	import flash.display.Graphics;
 	import flash.display.Shape;
 
-	public class UnmuteButton extends AUnmuteButton
+	public class UnmuteButtonSkin extends UnmuteButton
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -27,7 +27,7 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function UnmuteButton() 
+		public function UnmuteButtonSkin() 
 		{
 			_visualManager = VisualManager.getInstance();
 			init();

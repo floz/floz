@@ -29,7 +29,7 @@ package fr.minuit4.tools.musicPlayer.views
 		private var _titleBar:Sprite;
 		private var _title:TextField;
 		private var _buttonsCnt:Sprite;
-		private var _playPauseButton:PlayPauseButton;
+		private var _playPauseButton:PlayPauseButtonSkin;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -62,14 +62,14 @@ package fr.minuit4.tools.musicPlayer.views
 			title.defaultTextFormat = new TextFormat( "_sans", 9, 0x000000 );
 			title.autoSize = TextFieldAutoSize.LEFT;
 			
-			var prevButton:PrevButton = new PrevButton();
+			var prevButton:PrevButtonSkin = new PrevButtonSkin();
 			_buttonsCnt.addChild( prevButton );
 			
-			_playPauseButton = new PlayPauseButton();
+			_playPauseButton = new PlayPauseButtonSkin();
 			_playPauseButton.x = prevButton.width + 10;
 			_buttonsCnt.addChild( _playPauseButton );
 			
-			var nextButton:NextButton = new NextButton();
+			var nextButton:NextButtonSkin = new NextButtonSkin();
 			nextButton.x = _playPauseButton.x + _playPauseButton.width + 10;
 			_buttonsCnt.addChild( nextButton );
 			
@@ -83,7 +83,7 @@ package fr.minuit4.tools.musicPlayer.views
 			g.endFill();
 			addChild( backgroundTL );
 			
-			var timeline:Timeline = new Timeline();
+			var timeline:TimelineSkin = new TimelineSkin();
 			timeline.x = backgroundTL.x + 1.35;
 			timeline.y = backgroundTL.y + 1.35;
 			addChild( timeline );
@@ -100,12 +100,12 @@ package fr.minuit4.tools.musicPlayer.views
 			backgroundVB.y = 68;
 			addChild( backgroundVB );
 			
-			var volumeBar:VolumeBar = new VolumeBar();
+			var volumeBar:VolumeBarSkin = new VolumeBarSkin();
 			volumeBar.x = backgroundVB.x + 1.35;
 			volumeBar.y = backgroundVB.y + 1.35;
 			addChild( volumeBar );
 			
-			var muteButton:MuteUnmuteButton = new MuteUnmuteButton();
+			var muteButton:MuteUnmuteButtonSkin = new MuteUnmuteButtonSkin();
 			muteButton.x = volumeBar.x - muteButton.width - 10;
 			muteButton.y = 65;
 			addChild( muteButton );

@@ -23,7 +23,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 	 * - setPlayState
 	 * - setPauseState
 	 */
-	public class APlayPauseButton extends Sprite
+	public class PlayPauseButton extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -32,14 +32,14 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		
 		private var _musicManager:MusicManager;
 		
-		private var _playButton:APlayButton;
-		private var _pauseButton:APauseButton;
+		private var _playButton:PlayButton;
+		private var _pauseButton:PauseButton;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function APlayPauseButton() 
+		public function PlayPauseButton() 
 		{
 			_musicManager = MusicManager.getInstance();
 			addEventListener( Event.ADDED_TO_STAGE , onAddedToStage, false, 0, true );
@@ -122,7 +122,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
-		public function set playButton( value:APlayButton ):void
+		public function set playButton( value:PlayButton ):void
 		{
 			if( _playButton )
 			{
@@ -135,9 +135,9 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 			
 			switchState();
 		}
-		public function get playButton():APlayButton { return this._playButton; }
+		public function get playButton():PlayButton { return this._playButton; }
 		
-		public function set pauseButton( value:APauseButton ):void
+		public function set pauseButton( value:PauseButton ):void
 		{
 			if( _pauseButton )
 			{
@@ -150,7 +150,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 			
 			switchState();
 		}
-		public function get pauseButton():APauseButton { return this._pauseButton; }
+		public function get pauseButton():PauseButton { return this._pauseButton; }
 		
 	}
 }
