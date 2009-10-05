@@ -4,19 +4,19 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.tools.musicPlayer.core.views.device
+package fr.minuit4.tools.musicPlayer.core.views.device 
 {
 	import fr.minuit4.tools.musicPlayer.core.views.ButtonComponent;
 
 	import flash.events.MouseEvent;
 
 	/**
-	 * The AbstractNextButton class has to be extended.
+	 * The AbstractPrevButton class has to be extended.
 	 * It's relied with the use of the AbstractMusicPlayer.
 	 * 
-	 * This button will jumpt to the next track.
+	 * This button will stop the current song.
 	 */
-	public class ANextButton extends ButtonComponent
+	public class StopButton extends ButtonComponent
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -27,19 +27,16 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function ANextButton() 
+		public function StopButton() 
 		{
 			super();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
-		/**
-		 * Switch to next track.
-		 */
 		override protected function onClick(e:MouseEvent):void 
 		{
-			_musicManager.nextTrack();
+			_musicManager.stop();
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------

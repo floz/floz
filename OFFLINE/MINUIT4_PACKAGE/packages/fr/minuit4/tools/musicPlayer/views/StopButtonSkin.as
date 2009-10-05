@@ -6,13 +6,13 @@
  */
 package fr.minuit4.tools.musicPlayer.views 
 {
-	import fr.minuit4.tools.musicPlayer.core.views.device.AMuteButton;
+	import fr.minuit4.tools.musicPlayer.core.views.device.StopButton;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 
 	import flash.display.Graphics;
 	import flash.display.Shape;
 
-	public class MuteButton extends AMuteButton
+	public class StopButtonSkin extends StopButton
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -21,13 +21,14 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		private var _visualManager:VisualManager;
 		
+		private var _background:Shape;
 		private var _icon:Shape;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function MuteButton() 
+		public function StopButtonSkin() 
 		{
 			_visualManager = VisualManager.getInstance();
 			init();
@@ -45,10 +46,10 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		private function drawBackground():void
 		{
-			var background:Shape = new Shape();
-			addChild( background );
+			_background = new Shape();
+			addChild( _background );
 			
-			var g:Graphics = background.graphics;
+			var g:Graphics = _background.graphics;
 			g.lineStyle( 0, 0, 1, true );
 			g.beginFill( _visualManager.getBackgroundElementColor() );
 			g.drawRect( 0, 0, 16, 16 );
@@ -58,19 +59,14 @@ package fr.minuit4.tools.musicPlayer.views
 		private function drawIcon():void
 		{
 			_icon = new Shape();
-			_icon.x = 3;
-			_icon.y = 2;
+			_icon.x = 
+			_icon.y = 4;
 			addChild( _icon );
 			
 			var g:Graphics = _icon.graphics;
 			g.lineStyle( 0, 0, 1, true );
 			g.beginFill( _visualManager.getElementColor() );
-			g.moveTo( 0, 4 );
-			g.lineTo( 4, 4 );
-			g.lineTo( 8, 0 );
-			g.lineTo( 8, 12 );
-			g.lineTo( 4, 8 );
-			g.lineTo( 0, 8 );
+			g.drawRect( 0, 0, 8, 8 );
 			g.endFill();
 		}
 		

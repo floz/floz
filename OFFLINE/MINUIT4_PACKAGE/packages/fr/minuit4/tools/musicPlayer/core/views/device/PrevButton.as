@@ -14,9 +14,9 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 	 * The AbstractPrevButton class has to be extended.
 	 * It's relied with the use of the AbstractMusicPlayer.
 	 * 
-	 * This button will stop the current song.
+	 * This button will jump to the previous track.
 	 */
-	public class AStopButton extends ButtonComponent
+	public class PrevButton extends ButtonComponent
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -27,7 +27,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function AStopButton() 
+		public function PrevButton() 
 		{
 			super();
 		}
@@ -36,7 +36,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		
 		override protected function onClick(e:MouseEvent):void 
 		{
-			_musicManager.stop();
+			_musicManager.prevTrack();
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------

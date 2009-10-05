@@ -17,7 +17,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 	import flash.events.MouseEvent;
 	import flash.events.ProgressEvent;
 
-	public class ATimeline extends Sprite
+	public class Timeline extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -45,7 +45,7 @@ package fr.minuit4.tools.musicPlayer.core.views.device
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function ATimeline( playingOnDrag:Boolean = true ) 
+		public function Timeline( playingOnDrag:Boolean = true ) 
 		{
 			this._playingOnDrag = playingOnDrag;
 			

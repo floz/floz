@@ -6,13 +6,13 @@
  */
 package fr.minuit4.tools.musicPlayer.views 
 {
-	import fr.minuit4.tools.musicPlayer.core.views.device.AStopButton;
+	import fr.minuit4.tools.musicPlayer.core.views.device.VolumeBar;
 	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
 
 	import flash.display.Graphics;
 	import flash.display.Shape;
 
-	public class StopButton extends AStopButton
+	public class VolumeBarSkin extends VolumeBar
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -21,14 +21,13 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		private var _visualManager:VisualManager;
 		
-		private var _background:Shape;
-		private var _icon:Shape;
+		private var _dragableBar:Shape;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function StopButton() 
+		public function VolumeBarSkin() 
 		{
 			_visualManager = VisualManager.getInstance();
 			init();
@@ -40,34 +39,18 @@ package fr.minuit4.tools.musicPlayer.views
 		
 		private function init():void
 		{
-			drawBackground();
-			drawIcon();
+			drawVolumeBar();
 		}
 		
-		private function drawBackground():void
-		{
-			_background = new Shape();
-			addChild( _background );
-			
-			var g:Graphics = _background.graphics;
-			g.lineStyle( 0, 0, 1, true );
-			g.beginFill( _visualManager.getBackgroundElementColor() );
-			g.drawRect( 0, 0, 16, 16 );
+		private function drawVolumeBar():void
+		{			
+			_dragableBar = new Shape();
+			var g:Graphics = _dragableBar.graphics;
+			g.beginFill( _visualManager.getBackgroundElementColor(), 1 );
+			g.drawRect( 0, 0, 50 - 3, 10 - 3 );
 			g.endFill();
-		}
-		
-		private function drawIcon():void
-		{
-			_icon = new Shape();
-			_icon.x = 
-			_icon.y = 4;
-			addChild( _icon );
 			
-			var g:Graphics = _icon.graphics;
-			g.lineStyle( 0, 0, 1, true );
-			g.beginFill( _visualManager.getElementColor() );
-			g.drawRect( 0, 0, 8, 8 );
-			g.endFill();
+			dragableBar = _dragableBar;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
