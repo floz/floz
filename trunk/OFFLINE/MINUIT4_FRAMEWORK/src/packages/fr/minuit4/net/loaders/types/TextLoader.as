@@ -15,7 +15,7 @@ package fr.minuit4.net.loaders.types
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.net.URLLoader;
-	import fr.minuit4.tools.loaders.BasicLoader;
+	import fr.minuit4.net.loaders.BasicLoader;
 	
 	public class TextLoader extends BasicLoader
 	{
@@ -34,7 +34,7 @@ package fr.minuit4.net.loaders.types
 		 * Call the load() method and pass an url as parameter to launch the loader.
 		 * @param	isPersistent	Boolean	If false, all the data loaded will expire after the call of the destroy method.
 		 */
-		public function TextLoader( isPersistent = false ) 
+		public function TextLoader( isPersistent:Boolean = false ) 
 		{
 			super( isPersistent );
 			

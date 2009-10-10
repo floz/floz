@@ -24,17 +24,17 @@
 			if ( phase == 0 ) 
 			{
 				f = ppi;
-				trace( "\"test\" in _list" );
+				trace( "externe class" );
 			}
 			else if ( phase == 1 )
 			{
 				f = ipp;
-				trace( "_list[ \"test\" ]" );
+				trace( "inside class" );
 			}		
 			
 			var debut:Number = 0;
 			var compteur:int;
-			for ( var i:int; i < 10000; i++ )
+			for ( var i:int; i < 1000; i++ )
 			{
 				debut = getTimer();
 				f();
@@ -50,10 +50,10 @@
 			var b:Boolean;
 			
 			var j:int;
-			var n:int = 10000;
+			var n:int = 1000;
 			for ( j = 0; j < n; ++j )
 			{
-				if( "test" in _list ) {}
+				new NewClass();
 			}
 		}
 		
@@ -62,13 +62,21 @@
 			var b:Boolean;
 			
 			var j:int;
-			var n:int = 10000;
+			var n:int = 1000;
 			for ( j = 0; j < n; ++j )
 			{
-				if( _list[ "test" ] ) {}
+				new InsideClass();
 			}
 		}
 		
 	}
 	
+}
+
+final class InsideClass
+{
+	public function InsideClass()
+	{
+		
+	}
 }

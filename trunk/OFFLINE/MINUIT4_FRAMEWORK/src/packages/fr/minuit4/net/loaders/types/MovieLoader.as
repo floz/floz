@@ -15,7 +15,7 @@ package fr.minuit4.net.loaders.types
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
-	import fr.minuit4.tools.loaders.BasicLoader;
+	import fr.minuit4.net.loaders.BasicLoader;
 	
 	public class MovieLoader extends BasicLoader
 	{
