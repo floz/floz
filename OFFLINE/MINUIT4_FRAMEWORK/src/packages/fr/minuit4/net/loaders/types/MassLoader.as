@@ -16,7 +16,7 @@ package fr.minuit4.net.loaders.types
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.net.URLRequest;
-	import fr.minuit4.tools.loaders.BasicLoader;
+	import fr.minuit4.net.loaders.BasicLoader;
 	
 	public class MassLoader extends BasicLoader
 	{
