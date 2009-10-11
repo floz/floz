@@ -1,0 +1,67 @@
+Je demande les détails d'un user.
+- Affichage des 5 dernières actions en fonction de : settings actions protected="false|true"
+
+Je présente ici la version complète donc avec protected="true"
+Dans le cas de protected="false", actions serait simplement vide.
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	<user>
+		<id>12</id>
+			id unique de l'utilisateur
+		<login>floz</login>
+			login de l'utilisateur = pseudo affiché
+		<location>Paris</location>
+			lieu géographique histoire que les potes sachent si la cible pourra géographiquement réaliser le défis
+		<skill>2554</skill>
+			nombre de points gagnés pour faire varie la bestiole
+		<url>http://minuit4.fr</url>
+			url du site de l'utilisateur
+		<stats>
+			<pending>2</pending>
+				Nombre d'actions en attente
+			<current>4</current>
+				Nombre d'actions en cours
+			<refused>10</refused>
+				Nombre d'actions refusées
+			<lost>15</lost>
+				Nombre d'actions perdues
+			Ici je compte uniquement les acceptés mais perdus
+			<bad>25</bad>
+				Nombre de fois ou j'ai été un looser!!!
+			Ici je compte "refused+lost"
+			<won>200</won>
+				Nombre d'actions gagnées
+		</stats>
+	</user>
+	<actions protected="true">
+		false = L'utilisateur ne veut pas montrer ses dernières actions
+		true = L'utilisateur veut montrer ses dernières actions
+		<action id="10">
+			id = id de l'action
+			<title>Chocolat sur la tête</title>
+				titre de l'action
+			<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+				définition et détails de l'action
+			<start>TIMESTAMP</start>
+				début du défis au format timestamp
+			<end>TIMESTAMP</end>
+				fin du défis au format timestamp
+			<created_at>TIMESTAMP</created_at>
+				création du défis au format timestamp
+			<status>pending</status>
+				Ici j'affiche le status de l'action pour moi.
+				Je peux donc voir que pour le moment l'action est en attente à mon sujet.
+				pending = en attente
+				current = en cours
+				refused = refusé
+				lost = perdu
+				won = gagné
+		</action>
+		<action />
+		<action />
+		<action />
+		<action />
+	</actions>
+</settings>

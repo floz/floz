@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.macromedia.com/2003/mxml" 
+		xmlns="*" 
+		creationComplete="initializeApplication( event )">
+
+	<mx:Script>
+	<![CDATA[
+
+	var myData:Array;
+	function initializeApplication( event )
+	{
+		//We are called by the creation complete event of the application tag
+		//Instantiate a new Array
+		myData = new Array();
+
+		//Connect to the flash communication server.
+		//we are using rtmp as our first protocol attempt
+		my_fcs.connect('rtmp://{your server}/horse_race_02');
+	}
+
+	function syncHorseData( event ) 
+	{ 
+		var currentIndex:Number; 
+		var currentNode:Object; 
+
+		for ( var i=0; i<event.actions.length; i++ ) 
+		{ 
+			currentNode = event.actions[i]; 
+
+			switch (currentNode.code) 
+			{ 
+				case "change" : 
+					if ( myData[ currentNode.name ] == undefined ) 
+					{ 
+						myData.addItemAt( currentNode.name, 
+															{ label:event.data[ currentNode.name ].label, 
+															image:event.data[ currentNode.name ].image } ); 
+					} 
+					else 
+					{ 
+						//We have seen data for this slot before, so we update our data structure 
+						var existingObject:Object;
+						
+						existingObject = myData[ currentNode.name ];
+						existingObject.image = event.data[ currentNode.name ].image;
+						existingObject.label = event.data[ currentNode.name ].label;
+
+						myData.replaceItemAt( currentNode.name, existingObject ); 
+					} 
+					break; 
+				case "clear" : 
+					//FCS has instructed us to clear all of our existing data 
+					myData.removeAll(); 
+				break; 
+			} 
+		} 
+	} 
+
+	function syncHorsePosition( event ) 
+	{ 
+		var currentIndex:Number; 
+		var currentNode:Object; 
+		
+		for ( var i=0; i<event.actions.length; i++ ) 
+		{ 
+			currentNode = event.actions[i]; 
+
+			switch (currentNode.code) 
+			{ 
+				case "change" : 
+					if ( myData[ currentNode.name ] == undefined ) 
+					{ 
+						myData.addItemAt( currentNode.name, { position:event.data[ currentNode.name ].position } ); 
+					} 
+					else 
+					{ 
+						//We have seen data for this slot before, so we update our data structure 
+						var existingObject:Object;
+						
+						existingObject = myData[ currentNode.name ];
+						existingObject.position = event.data[ currentNode.name ].position;
+
+						myData.replaceItemAt( currentNode.name, existingObject ); 
+					} 
+					break; 
+				case "clear" : 
+					//FCS has instructed us to clear all of our existing data 
+					myData.removeAll(); 
+				break; 
+			} 
+		} 
+	} 
+
+	]]>
+	</mx:Script>
+
+	<mx:Panel title="Flex/FCS Horse Race" backgroundColor="#CCCCCC">
+		<mx:TileList id="myTile" 
+					 dataProvider="{myData}" 
+					 cellRenderer="HorsePath"
+					 columnCount="1"
+					 width="600" 
+					 height="500"
+					 backgroundColor="#CCCCCC"/>
+	</mx:Panel>
+
+	<!--Instantiate an FCSService component-->
+	<FCSService id="my_fcs"
+			closed=" alert( 'server closed connection' )"
+			rejected=" alert('Server rejected connection')"
+			failed=" alert('Server connection failed')"/>
+
+	<!--Instantiate an SharedRemote component and bind it to the FCSService tag above-->
+	<!--The name property of this tag must match the argument in the SharedObject.get command on the server file main.asc-->
+	<SharedRemote id="my_remote_1" 
+			name="horseData"
+			persistent="false"
+			service="{my_fcs}"
+			failed="alert('Shared Object Failed')"
+			status="alert('Status ' + event.info.level + ' ' + event.info.code );"
+			sync="syncHorseData( event )"/>
+
+	<SharedRemote id="my_remote_2" 
+			name="horsePosition"
+			persistent="false"
+			service="{my_fcs}"
+			failed="alert('Shared Object Failed')"
+			status="alert('Status ' + event.info.level + ' ' + event.info.code );"
+			sync="syncHorsePosition( event )"/>
+
+</mx:Application>

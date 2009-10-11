@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas width="600" height="60" backgroundColor="#CCCCCC" xmlns:mx="http://www.macromedia.com/2003/mxml" >
+<mx:Script>
+	var dataProvider: Object;
+
+	function setValue(str: String, item: Object) {
+		if (dataProvider == item) return;
+		if (item==undefined) {
+			visible = false;
+			return;
+		} else {
+			dataProvider=item;
+			visible=true;
+		}
+	}
+</mx:Script>
+
+	<mx:Label text="{dataProvider.label}" x="0" y="0"/>
+	<mx:Image source="{dataProvider.image}" x="{dataProvider.position}" y="0"/>
+</mx:Canvas>

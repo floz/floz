@@ -1,0 +1,59 @@
+Je ne met aucun mot de passe dans les échanges XML. Ils doivent être stocké en dur ou redemandés à chaque fois.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	<user>
+		<id>12</id>
+			id unique de l'utilisateur
+		<login>floz</login>
+			login de l'utilisateur = pseudo affiché
+		<email>floz@gmail.com</email>
+			email : Qui servira aussi pour le login comme ça ils sont moins tanté de mettre des emails de merde
+		<location>Paris</location>
+			lieu géographique histoire que les potes sachent si la cible pourra géographiquement réaliser le défis
+		<skill>2554</skill>
+			nombre de points gagnés pour faire varie la bestiole
+		<url>http://minuit4.fr</url>
+			url du site de l'utilisateur
+		<stats pending="2" current="4" refused="10" lost="15" bad="25" won="200" />
+			pending = en attente
+			current = en cours
+			refused = refusés
+			lost = perdus -> Ici je compte uniquement les acceptés mais perdus
+			bad = mauvais -> Ici je compte "refused+lost"
+			won = gagnés
+	</user>
+	<actions protected="false">
+		false = L'utilisateur ne veut pas montrer ses dernières actions
+		true = L'utilisateur veut montrer ses dernières actions
+		<action id="10">
+			id = id de l'action
+			<title>Chocolat sur la tête</title>
+				titre de l'action
+			<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+				définition et détails de l'action
+			<start>TIMESTAMP</start>
+				début du défis au format timestamp
+			<end>TIMESTAMP</end>
+				fin du défis au format timestamp
+			<created_at>TIMESTAMP</created_at>
+				création du défis au format timestamp
+			<status>pending</status>
+				Ici j'affiche le status de l'action pour moi.
+				Je peux donc voir que pour le moment l'action est en attente à mon sujet.
+				pending = en attente
+				current = en cours
+				refused = refusé
+				lost = perdu
+				won = gagné
+			<picture width="" height="" url="" />
+				width = largeur
+				height = hauteur
+				url = url de l'image
+		</action>
+		<action />
+		<action />
+		<action />
+		<action />
+	</actions>
+</settings>
