@@ -20,7 +20,7 @@ package fr.minuit4.net.loaders.types
 	import flash.display.Bitmap;
 	import flash.display.Loader;
 
-	public class AssetLoader extends AbstractLoader
+	public class AssetsLoader extends AbstractLoader
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -37,7 +37,7 @@ package fr.minuit4.net.loaders.types
 		 * Call the load() method and pass an url as parameter to launch the loader.
 		 * @param	isPersistent	Boolean	If false, all the data loaded will expire after the call of the destroy method.
 		 */
-		public function AssetLoader( url:String = null, isPersistent:Boolean = false ) 
+		public function AssetsLoader( url:String = null, isPersistent:Boolean = false ) 
 		{
 			super( url, isPersistent );
 			
