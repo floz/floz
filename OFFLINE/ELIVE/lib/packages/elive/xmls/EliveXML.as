@@ -6,7 +6,9 @@
  */
 package elive.xmls 
 {
+	import elive.core.challenges.Challenge;
 	import elive.core.users.User;
+	import elive.core.users.UserStats;
 	
 	public class EliveXML 
 	{
@@ -15,12 +17,11 @@ package elive.xmls
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
-		// - CONSTRUCTOR -----------------------------------------------------------------
+		public static const USER:String = "user";
+		public static const CHALLENGE:String = "action";
+		public static const LIST:String = "list";
 		
-		public function EliveXML() 
-		{
-			
-		}
+		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
@@ -28,18 +29,105 @@ package elive.xmls
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public static function parseUser( user:XML ):User
+		/**
+		 * Renvoie un User.
+		 * @param	datas	XML	Le noeud XML à partir du quel la rechercher sera faite.
+		 * @return	User
+		 */
+		public static function parseUser( datas:XML ):User
 		{
-			return null;
+			if ( !datas ) return null;
+			
+			var stats:XMLList = datas.stats;			
+			
+			var user:User = new User();
+			user.config( datas.id || datas.@id, datas.login, datas.location, datas.points, datas.url );			
+			user.setStats( new UserStats( stats.pending, stats.current, stats.refused, stats.lost, stats.bad, stats.won ) );
+			
+			return user;
 		}
 		
-		public static function parseUsers( datas:XML ):Vector.<User>
+		/**
+		 * Renvoie un Vector qui contient des User.
+		 * @param	datas	XML	Le noeud XML à partir du quel la rechercher sera faite.
+		 * @param	scanDeeper	Boolean	Si vrai, la recherche sera aussi faite sur tous les enfants.
+		 * @return	Vector.<User>
+		 */
+		public static function parseUsers( datas:XML, scanDeeper:Boolean = false ):Vector.<User>
 		{
-			var list:XMLList = datas.children().( localName() == "user" );
-			var n:int = list.length();
-			var users:Vector.<User> = new Vector.<User>( n, true );
+			var list:XMLList = !scanDeeper ? datas.children() : datas.descendants();
+			list = list.( localName() == USER );
 			
-			return null;
+			var n:int = list.length();
+			
+			if ( n == 0 ) return null;
+			
+			var users:Vector.<User> = new Vector.<User>( n, true );
+			for ( var i:int; i < n; ++i )
+				users[ i ] = parseUser( list[ i ] );
+			
+			return users;
+		}
+		
+		/**
+		 * Renvoie un Challenge.
+		 * @param	datas	XML	Le noeud XML à partir du quel la rechercher sera faite.
+		 * @return	Challenge
+		 */
+		public static function parseChallenge( datas:XML ):Challenge
+		{
+			var challenge:Challenge = new Challenge();
+			challenge.config( datas.id || datas.@id, datas.title, datas.details, datas.end );
+			challenge.setStatus( datas.status );
+			challenge.setSender( parseUser( datas.sender.user[ 0 ] ) );
+			challenge.setMediasUrls( parseMedias( datas.medias[ 0 ] ) );
+			
+			return challenge;
+		}
+		
+		/**
+		 * Renvoie un Vector qui contient des Challenges.
+		 * @param	datas	XML	Le noeud XML à partir du quel la rechercher sera faite.
+		 * @param	scanDeeper	Boolean	Si vrai, la recherche sera aussi faite sur tous les enfants.
+		 * @return	Vector.<Challenge>
+		 */
+		public static function parseChallenges( datas:XML, scanDeeper:Boolean = false ):Vector.<Challenge>
+		{
+			var list:XMLList = !scanDeeper ? datas.children() : datas.descendants();
+			list = list.( localName() == CHALLENGE );
+			
+			var n:int = list.length();
+			
+			if ( n == 0 ) return null;
+			
+			var challenges:Vector.<Challenge> = new Vector.<Challenge>( n, true );
+			for ( var i:int; i < n; ++i )
+				challenges[ i ] = parseChallenge( list[ i ] );
+			
+			return challenges;
+		}
+		
+		/**
+		 * Renvoie un objet de type Vector qui contient des String.
+		 * Ces chaines de caractères correspondent aux urls des medias à télécharger.
+		 * @param	datas	XML	Le noeud medias.
+		 * @param	type	String	Le type de médias à récupérer.
+		 * @return	Vector.<String>	La chaine des urls.
+		 */
+		public static function parseMedias( datas:XML, type:String = MediasEnum.PICTURE ):Vector.<String>
+		{
+			if ( !datas ) return null;
+			
+			var list:XMLList = datas.children().( localName() == type );
+			var n:int = list.length();
+			
+			if ( n == 0 ) return null;
+			
+			var medias:Vector.<String> = new Vector.<String>( n, true );
+			for ( var i:int; i < n; ++i )
+				medias[ i ] = list[ i ].@url;
+			
+			return medias;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
