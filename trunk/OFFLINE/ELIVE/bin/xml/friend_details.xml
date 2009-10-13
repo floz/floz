@@ -1,4 +1,9 @@
-Je ne met aucun mot de passe dans les échanges XML. Ils doivent être stocké en dur ou redemandés à chaque fois.
+Je demande les détails d'un user.
+- Affichage des 5 dernières actions en fonction de : settings actions protected="false|true"
+
+Je présente ici la version complète donc avec protected="true"
+Dans le cas de protected="false", actions serait simplement vide.
+
 
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
@@ -7,23 +12,30 @@ Je ne met aucun mot de passe dans les échanges XML. Ils doivent être stocké e
 			id unique de l'utilisateur
 		<login>floz</login>
 			login de l'utilisateur = pseudo affiché
-		<email>floz@gmail.com</email>
-			email : Qui servira aussi pour le login comme ça ils sont moins tanté de mettre des emails de merde
 		<location>Paris</location>
 			lieu géographique histoire que les potes sachent si la cible pourra géographiquement réaliser le défis
-		<skill>2554</skill>
+		<points>2554</points>
 			nombre de points gagnés pour faire varie la bestiole
 		<url>http://minuit4.fr</url>
 			url du site de l'utilisateur
-		<stats pending="2" current="4" refused="10" lost="15" bad="25" won="200" />
-			pending = en attente
-			current = en cours
-			refused = refusés
-			lost = perdus -> Ici je compte uniquement les acceptés mais perdus
-			bad = mauvais -> Ici je compte "refused+lost"
-			won = gagnés
+		<stats>
+			<pending>2</pending>
+				Nombre d'actions en attente
+			<current>4</current>
+				Nombre d'actions en cours
+			<refused>10</refused>
+				Nombre d'actions refusées
+			<lost>15</lost>
+				Nombre d'actions perdues
+			Ici je compte uniquement les acceptés mais perdus
+			<bad>25</bad>
+				Nombre de fois ou j'ai été un looser!!!
+			Ici je compte "refused+lost"
+			<won>200</won>
+				Nombre d'actions gagnées
+		</stats>
 	</user>
-	<actions protected="false">
+	<actions protected="true">
 		false = L'utilisateur ne veut pas montrer ses dernières actions
 		true = L'utilisateur veut montrer ses dernières actions
 		<action id="10">
@@ -46,10 +58,12 @@ Je ne met aucun mot de passe dans les échanges XML. Ils doivent être stocké e
 				refused = refusé
 				lost = perdu
 				won = gagné
+		<medias>
 			<picture width="" height="" url="" />
 				width = largeur
 				height = hauteur
 				url = url de l'image
+		</medias>
 		</action>
 		<action />
 		<action />

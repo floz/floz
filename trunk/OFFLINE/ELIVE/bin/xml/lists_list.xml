@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lists>
+	<list id="41">
+		<name>elive team</name>
+		<users>
+			<user id="12">
+				<login>floz</login>
+				<location>Paris</location>
+				<points>2554</points>
+				<url>http://minuit4.fr</url>
+				<stats>
+					<pending>2</pending>
+					<current>4</current>
+					<refused>10</refused>
+					<lost>15</lost>
+					<bad>25</bad>
+					<won>200</won>
+				</stats>
+			</user>
+			<user />
+			<user />
+			<user />
+			<user />
+			<user />
+		</users>
+	</list>
+	<list />
+	<list />
+	<list />
+	<list />
+	<list />
+	<list />
+
+</lists>
