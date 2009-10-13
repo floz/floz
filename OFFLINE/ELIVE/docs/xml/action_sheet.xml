@@ -1,0 +1,186 @@
+Je suis la cible et je veux afficher la fiche d'une action :
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<action id="10">
+	id = id de l'action
+	<title>Chocolat sur la tête</title>
+		titre de l'action
+	<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+		définition et détails de l'action
+	<start>TIMESTAMP</start>
+		début du défis au format timestamp
+	<end>TIMESTAMP</end>
+		fin du défis au format timestamp
+	<created_at>TIMESTAMP</created_at>
+		création du défis au format timestamp
+	<status>pending</status>
+		Ici j'affiche le status de l'action pour moi. Non le status global de l'action.
+		Je peux donc voir que pour le moment l'action est en attente à mon sujet.
+		pending = en attente
+		current = en cours
+		refused = refusé
+		lost = perdu
+		won = gagné
+	<medias>
+		<picture width="" height="" url="" />
+			width = largeur
+			height = hauteur
+			url = url de l'image
+	</medias>
+	<sender>
+		Qui a envoyé cette action
+		<user>
+			<id>12</id>
+				id unique de l'utilisateur
+			<login>floz</login>
+				login de l'utilisateur = pseudo affiché
+			<location>Paris</location>
+				lieu géographique histoire que les potes sachent si la cible pourra géographiquement réaliser le défis
+			<points>2554</points>
+				nombre de points gagnés pour faire varie la bestiole
+			<url>http://minuit4.fr</url>
+				url du site de l'utilisateur
+			<stats>
+				<pending>2</pending>
+					Nombre d'actions en attente
+				<current>4</current>
+					Nombre d'actions en cours
+				<refused>10</refused>
+					Nombre d'actions refusées
+				<lost>15</lost>
+					Nombre d'actions perdues
+				Ici je compte uniquement les acceptés mais perdus
+				<bad>25</bad>
+					Nombre de fois ou j'ai été un looser!!!
+				Ici je compte "refused+lost"
+				<won>200</won>
+					Nombre d'actions gagnées
+			</stats>
+		</user>
+		<actions protected="true">
+			false = L'utilisateur ne veut pas montrer ses dernières actions
+			true = L'utilisateur veut montrer ses dernières actions
+			<action id="10">
+				id = id de l'action
+				<title>Chocolat sur la tête</title>
+					titre de l'action
+				<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+					définition et détails de l'action
+				<start>TIMESTAMP</start>
+					début du défis au format timestamp
+				<end>TIMESTAMP</end>
+					fin du défis au format timestamp
+				<created_at>TIMESTAMP</created_at>
+					création du défis au format timestamp
+				<status>pending</status>
+					Ici j'affiche le status de l'action pour moi.
+					Je peux donc voir que pour le moment l'action est en attente à mon sujet.
+					pending = en attente
+					current = en cours
+					refused = refusé
+					lost = perdu
+					won = gagné
+			</action>
+			<action />
+			<action />
+			<action />
+			<action />
+		</actions>
+	</sender>
+	<targets>
+		Ici je met tous les participants à l'action. Pour que la cible sache si elle est en compétition ou non.
+		Une action peut être lancée à : user, list, users, lists, list(s)+user(s)
+		Dans une version future je pense implémenter le choix lors du lancement d'une action donc je prévois le coup
+		Pour le moment on peut choisir qu'un user ou qu'une liste.
+
+		<list id="25">
+		L'action a été lancé à une liste
+		id = id unique de la liste
+			<user id="12">
+				id = id unique de l'utilisateur
+				<login>floz</login>
+					login de l'utilisateur = pseudo affiché
+				<points>2554</points>
+					nombre de points gagnés pour faire varie la bestiole
+				<status>pending</status>
+					Ici j'affiche le status de l'action par rapport à la cible en question.
+					L'idée est de savoir ou la cible en est.
+					pending = en attente
+					current = en cours
+					refused = refusé
+					lost = perdu
+					won = gagné
+			</user>
+			<user id="10">
+				id = id unique de l'utilisateur
+				<login>spyesx</login>
+					login de l'utilisateur = pseudo affiché
+				<points>1102</points>
+					nombre de points gagnés pour faire varie la bestiole
+				<status>pending</status>
+					Ici j'affiche le status de l'action par rapport à la cible en question.
+					L'idée est de savoir ou la cible en est.
+					pending = en attente
+					current = en cours
+					refused = refusé
+					lost = perdu
+					won = gagné
+			</user>
+		</list>
+
+		<user id="12">
+			L'action a été lancé à un user simple
+			<login>floz</login>
+				login de l'utilisateur = pseudo affiché
+			<points>2554</points>
+				nombre de points gagnés pour faire varie la bestiole
+			<status>pending</status>
+				Ici j'affiche le status de l'action par rapport à la cible en question.
+				L'idée est de savoir ou la cible en est.
+				Je peux donc voir que pour le moment l'action est en attente au sujet de floz.
+				pending = en attente
+				current = en cours
+				refused = refusé
+				lost = perdu
+				won = gagné
+		</user>
+	</targets>
+	<comments>
+		<comment id="2">
+			id = id unique du commentaire
+			<text>Ouha c'était génial !!</text>
+				Texte du commentaire
+			<date>89792873</date>
+				Timestamp de la date
+			<user>
+				<id>12</id>
+					id unique de l'utilisateur
+				<login>floz</login>
+					login de l'utilisateur = pseudo affiché
+				<location>Paris</location>
+					lieu géographique histoire que les potes sachent si la cible pourra géographiquement réaliser le défis
+				<points>2554</points>
+					nombre de points gagnés pour faire varie la bestiole
+				<url>http://minuit4.fr</url>
+					url du site de l'utilisateur
+				<stats>
+					<pending>2</pending>
+						Nombre d'actions en attente
+					<current>4</current>
+						Nombre d'actions en cours
+					<refused>10</refused>
+						Nombre d'actions refusées
+					<lost>15</lost>
+						Nombre d'actions perdues
+					Ici je compte uniquement les acceptés mais perdus
+					<bad>25</bad>
+						Nombre de fois ou j'ai été un looser!!!
+					Ici je compte "refused+lost"
+					<won>200</won>
+						Nombre d'actions gagnées
+				</stats>
+			</user>
+		</comment>
+	</comments>
+</action>

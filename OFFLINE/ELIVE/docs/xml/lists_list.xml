@@ -1,0 +1,54 @@
+Je demande la liste de toutes mes listes d'amis
+
+<?xml version="1.0" encoding="UTF-8"?>
+<lists>
+	<list id="41">
+		id = id unique de la liste
+		<name>elive team</name>
+			Nom de la liste
+		<users>
+			Nous pouvons mettre des "user" ou des list
+			<user id="12">
+				Nous avons affaire à un user simple
+				id = id unique de l'utilisateur
+				type = user / list
+				<login>floz</login>
+					login de l'utilisateur = pseudo affiché
+				<location>Paris</location>
+					lieu géographique histoire que les potes sachent si la cible pourra géographiquement réaliser le défis
+				<points>2554</points>
+					nombre de points gagnés pour faire varie la bestiole
+				<url>http://minuit4.fr</url>
+					url du site de l'utilisateur
+				<stats>
+					<pending>2</pending>
+						Nombre d'actions en attente
+					<current>4</current>
+						Nombre d'actions en cours
+					<refused>10</refused>
+						Nombre d'actions refusées
+					<lost>15</lost>
+						Nombre d'actions perdues
+					Ici je compte uniquement les acceptés mais perdus
+					<bad>25</bad>
+						Nombre de fois ou j'ai été un looser!!!
+					Ici je compte "refused+lost"
+					<won>200</won>
+						Nombre d'actions gagnées
+				</stats>
+			</user>
+			<user />
+			<user />
+			<user />
+			<user />
+			<user />
+		</users>
+	</list>
+	<list />
+	<list />
+	<list />
+	<list />
+	<list />
+	<list />
+
+</lists>

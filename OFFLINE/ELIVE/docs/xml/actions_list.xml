@@ -1,0 +1,108 @@
+Liste des actions
+Remarque : Le tri des Reçus et envoyés ne t'importe qu'à l'appel du XML car la structure est la même.
+Remarque : Le tri par status ne t'importe qu'à l'appel du XML car la structure est la même.
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+	<action />
+	<action />
+	<action />
+	<action />
+	<action />
+	<action />
+	<action id="10">
+		id = id de l'action
+		<title>Chocolat sur la tête</title>
+			titre de l'action
+		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+			définition et détails de l'action
+		<start>TIMESTAMP</start>
+			début du défis au format timestamp
+		<end>TIMESTAMP</end>
+			fin du défis au format timestamp
+		<created_at>TIMESTAMP</created_at>
+			création du défis au format timestamp
+		<status>pending</status>
+			Ici j'affiche le status de l'action pour moi. Non le status global de l'action.
+			Je peux donc voir que pour le moment l'action est en attente à mon sujet.
+			pending = en attente
+			current = en cours
+			refused = refusé
+			lost = perdu
+			won = gagné
+		<medias>
+			<picture width="" height="" url="" />
+				width = largeur
+				height = hauteur
+				url = url de l'image
+		</medias>
+		<sender>
+			Qui a envoyé cette action
+			<user>
+				<id>12</id>
+					id unique de l'utilisateur
+				<login>floz</login>
+					login de l'utilisateur = pseudo affiché
+				<location>Paris</location>
+					lieu géographique histoire que les potes sachent si la cible pourra géographiquement réaliser le défis
+				<points>2554</points>
+					nombre de points gagnés pour faire varie la bestiole
+				<url>http://minuit4.fr</url>
+					url du site de l'utilisateur
+				<stats>
+					<pending>2</pending>
+						Nombre d'actions en attente
+					<current>4</current>
+						Nombre d'actions en cours
+					<refused>10</refused>
+						Nombre d'actions refusées
+					<lost>15</lost>
+						Nombre d'actions perdues
+					Ici je compte uniquement les acceptés mais perdus
+					<bad>25</bad>
+						Nombre de fois ou j'ai été un looser!!!
+					Ici je compte "refused+lost"
+					<won>200</won>
+						Nombre d'actions gagnées
+				</stats>
+			</user>
+			<actions protected="true">
+				false = L'utilisateur ne veut pas montrer ses dernières actions
+				true = L'utilisateur veut montrer ses dernières actions
+				<action id="10">
+					id = id de l'action
+					<title>Chocolat sur la tête</title>
+						titre de l'action
+					<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+						définition et détails de l'action
+					<start>TIMESTAMP</start>
+						début du défis au format timestamp
+					<end>TIMESTAMP</end>
+						fin du défis au format timestamp
+					<created_at>TIMESTAMP</created_at>
+						création du défis au format timestamp
+					<status>pending</status>
+						Ici j'affiche le status de l'action pour moi.
+						Je peux donc voir que pour le moment l'action est en attente à mon sujet.
+						pending = en attente
+						current = en cours
+						refused = refusé
+						lost = perdu
+						won = gagné
+					<medias>
+						<picture width="" height="" url="" />
+							width = largeur
+							height = hauteur
+							url = url de l'image
+					</medias>
+				</action>
+				Ici les 5 dernières actions du sender
+				<action />
+				<action />
+				<action />
+				<action />
+			</actions>
+		</sender>
+	</action>
+</actions>
