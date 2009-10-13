@@ -22,10 +22,12 @@ Je suis la cible et je veux afficher la fiche d'une action :
 		refused = refusé
 		lost = perdu
 		won = gagné
-	<picture width="" height="" url="" />
-		width = largeur
-		height = hauteur
-		url = url de l'image
+	<medias>
+		<picture width="" height="" url="" />
+			width = largeur
+			height = hauteur
+			url = url de l'image
+	</medias>
 	<sender>
 		Qui a envoyé cette action
 		<user>
@@ -35,7 +37,7 @@ Je suis la cible et je veux afficher la fiche d'une action :
 				login de l'utilisateur = pseudo affiché
 			<location>Paris</location>
 				lieu géographique histoire que les potes sachent si la cible pourra géographiquement réaliser le défis
-			<skill>2554</skill>
+			<points>2554</points>
 				nombre de points gagnés pour faire varie la bestiole
 			<url>http://minuit4.fr</url>
 				url du site de l'utilisateur
@@ -99,7 +101,7 @@ Je suis la cible et je veux afficher la fiche d'une action :
 				id = id unique de l'utilisateur
 				<login>floz</login>
 					login de l'utilisateur = pseudo affiché
-				<skill>2554</skill>
+				<points>2554</points>
 					nombre de points gagnés pour faire varie la bestiole
 				<status>pending</status>
 					Ici j'affiche le status de l'action par rapport à la cible en question.
@@ -114,7 +116,7 @@ Je suis la cible et je veux afficher la fiche d'une action :
 				id = id unique de l'utilisateur
 				<login>spyesx</login>
 					login de l'utilisateur = pseudo affiché
-				<skill>1102</skill>
+				<points>1102</points>
 					nombre de points gagnés pour faire varie la bestiole
 				<status>pending</status>
 					Ici j'affiche le status de l'action par rapport à la cible en question.
@@ -131,7 +133,7 @@ Je suis la cible et je veux afficher la fiche d'une action :
 			L'action a été lancé à un user simple
 			<login>floz</login>
 				login de l'utilisateur = pseudo affiché
-			<skill>2554</skill>
+			<points>2554</points>
 				nombre de points gagnés pour faire varie la bestiole
 			<status>pending</status>
 				Ici j'affiche le status de l'action par rapport à la cible en question.
@@ -143,8 +145,42 @@ Je suis la cible et je veux afficher la fiche d'une action :
 				lost = perdu
 				won = gagné
 		</user>
-		
-		
-		
 	</targets>
+	<comments>
+		<comment id="2">
+			id = id unique du commentaire
+			<text>Ouha c'était génial !!</text>
+				Texte du commentaire
+			<date>89792873</date>
+				Timestamp de la date
+			<user>
+				<id>12</id>
+					id unique de l'utilisateur
+				<login>floz</login>
+					login de l'utilisateur = pseudo affiché
+				<location>Paris</location>
+					lieu géographique histoire que les potes sachent si la cible pourra géographiquement réaliser le défis
+				<points>2554</points>
+					nombre de points gagnés pour faire varie la bestiole
+				<url>http://minuit4.fr</url>
+					url du site de l'utilisateur
+				<stats>
+					<pending>2</pending>
+						Nombre d'actions en attente
+					<current>4</current>
+						Nombre d'actions en cours
+					<refused>10</refused>
+						Nombre d'actions refusées
+					<lost>15</lost>
+						Nombre d'actions perdues
+					Ici je compte uniquement les acceptés mais perdus
+					<bad>25</bad>
+						Nombre de fois ou j'ai été un looser!!!
+					Ici je compte "refused+lost"
+					<won>200</won>
+						Nombre d'actions gagnées
+				</stats>
+			</user>
+		</comment>
+	</comments>
 </action>

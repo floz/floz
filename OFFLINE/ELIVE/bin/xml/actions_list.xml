@@ -31,10 +31,12 @@ Remarque : Le tri par status ne t'importe qu'à l'appel du XML car la structure 
 			refused = refusé
 			lost = perdu
 			won = gagné
-		<picture width="" height="" url="" />
-			width = largeur
-			height = hauteur
-			url = url de l'image
+		<medias>
+			<picture width="" height="" url="" />
+				width = largeur
+				height = hauteur
+				url = url de l'image
+		</medias>
 		<sender>
 			Qui a envoyé cette action
 			<user>
@@ -44,7 +46,7 @@ Remarque : Le tri par status ne t'importe qu'à l'appel du XML car la structure 
 					login de l'utilisateur = pseudo affiché
 				<location>Paris</location>
 					lieu géographique histoire que les potes sachent si la cible pourra géographiquement réaliser le défis
-				<skill>2554</skill>
+				<points>2554</points>
 					nombre de points gagnés pour faire varie la bestiole
 				<url>http://minuit4.fr</url>
 					url du site de l'utilisateur
@@ -88,7 +90,14 @@ Remarque : Le tri par status ne t'importe qu'à l'appel du XML car la structure 
 						refused = refusé
 						lost = perdu
 						won = gagné
+					<medias>
+						<picture width="" height="" url="" />
+							width = largeur
+							height = hauteur
+							url = url de l'image
+					</medias>
 				</action>
+				Ici les 5 dernières actions du sender
 				<action />
 				<action />
 				<action />

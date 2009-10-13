@@ -4,17 +4,12 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package elive.xmls 
 {
-	import elive.xmls.EliveXML;
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import fr.minuit4.net.loaders.types.DataLoader;
+	import elive.core.users.User;
 	
-	public class Main extends Sprite
+	public class EliveXML 
 	{
-		
-		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
@@ -22,26 +17,30 @@ package
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main() 
+		public function EliveXML() 
 		{
-			var url:String = "xml/friends_list.xml";
-			var datasLoader:DataLoader = new DataLoader( url );
-			datasLoader.addEventListener( Event.COMPLETE, handleLoadComplete );
-			datasLoader.load();
+			
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
-		private function handleLoadComplete(e:Event):void 
-		{
-			var datasLoader:DataLoader = e.currentTarget as DataLoader;
-			var data:String = datasLoader.getItemLoaded();
-			EliveXML.parseUsers( XML( data ) );
-		}
-		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public static function parseUser( user:XML ):User
+		{
+			return null;
+		}
+		
+		public static function parseUsers( datas:XML ):Vector.<User>
+		{
+			var list:XMLList = datas.children().( localName() == "user" );
+			var n:int = list.length();
+			var users:Vector.<User> = new Vector.<User>( n, true );
+			
+			return null;
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
