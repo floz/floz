@@ -137,6 +137,11 @@ package elive.xmls
 			return medias;
 		}
 		
+		/**
+		 * Renvoie un Comment.
+		 * @param	datas	XML	Le noeud XML à partir du quel la rechercher sera faite.
+		 * @return	Comment
+		 */
 		public static function parseComment( datas:XML ):Comment
 		{
 			var comment:Comment = new Comment();
@@ -146,6 +151,12 @@ package elive.xmls
 			return comment;
 		}
 		
+		/**
+		 * Renvoie un Vector qui contient des Comment.
+		 * @param	datas	XML	Le noeud XML à partir du quel la rechercher sera faite.
+		 * @param	scanDeeper	Boolean	Si vrai, la recherche sera aussi faite sur tous les enfants.
+		 * @return	Vector.<Comment>
+		 */
 		public static function parseComments( datas:XML, scanDeeper:Boolean = false ):Vector.<Comment>
 		{
 			if ( !datas ) return null;
