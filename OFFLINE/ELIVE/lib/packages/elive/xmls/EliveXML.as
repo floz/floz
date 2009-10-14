@@ -141,11 +141,12 @@ package elive.xmls
 		{
 			var comment:Comment = new Comment();
 			comment.config( datas.text, datas.date );
+			comment.setUser( parseUser( datas.user[ 0 ] ) );
 			
 			return comment;
 		}
 		
-		public static function parseComments( datas:XML, scaneDeeper:Boolean = false ):Vector.<Comment>
+		public static function parseComments( datas:XML, scanDeeper:Boolean = false ):Vector.<Comment>
 		{
 			if ( !datas ) return null;
 			

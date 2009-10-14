@@ -6,6 +6,7 @@
  */
 package elive.core.comments 
 {
+	import elive.core.users.User;
 	
 	public class Comment 
 	{
@@ -14,10 +15,12 @@ package elive.core.comments
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private var _user:User;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
-		public function text:String;
-		public function date:Number;
+		public var text:String;
+		public var date:Number;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -37,6 +40,12 @@ package elive.core.comments
 			this.text = text;
 			this.date = date;
 		}
+		
+		public function setUser( user:User ):void
+		{
+			this._user = user;
+		}
+		public function getUser():User { return this._user; }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
