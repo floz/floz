@@ -16,6 +16,9 @@ package elive.core.comments
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
+		public function text:String;
+		public function date:Number;
+		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function Comment() 
@@ -28,6 +31,12 @@ package elive.core.comments
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function config( text:String, date:Number ):void
+		{
+			this.text = text;
+			this.date = date;
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
