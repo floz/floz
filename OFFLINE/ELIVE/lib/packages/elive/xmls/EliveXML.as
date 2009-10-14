@@ -7,6 +7,7 @@
 package elive.xmls 
 {
 	import elive.core.challenges.Challenge;
+	import elive.core.comments.Comment;
 	import elive.core.users.User;
 	import elive.core.users.UserStats;
 	
@@ -19,7 +20,7 @@ package elive.xmls
 		
 		public static const USER:String = "user";
 		public static const CHALLENGE:String = "action";
-		public static const LIST:String = "list";
+		public static const COMMENT:String = "comment";
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -55,6 +56,8 @@ package elive.xmls
 		 */
 		public static function parseUsers( datas:XML, scanDeeper:Boolean = false ):Vector.<User>
 		{
+			if ( !datas ) return null;
+			
 			var list:XMLList = !scanDeeper ? datas.children() : datas.descendants();
 			list = list.( localName() == USER );
 			
@@ -76,6 +79,8 @@ package elive.xmls
 		 */
 		public static function parseChallenge( datas:XML ):Challenge
 		{
+			if ( !datas ) return null;
+			
 			var challenge:Challenge = new Challenge();
 			challenge.config( datas.id || datas.@id, datas.title, datas.details, datas.end );
 			challenge.setStatus( datas.status );
@@ -93,6 +98,8 @@ package elive.xmls
 		 */
 		public static function parseChallenges( datas:XML, scanDeeper:Boolean = false ):Vector.<Challenge>
 		{
+			if ( !datas ) return null;
+			
 			var list:XMLList = !scanDeeper ? datas.children() : datas.descendants();
 			list = list.( localName() == CHALLENGE );
 			
@@ -111,10 +118,10 @@ package elive.xmls
 		 * Renvoie un objet de type Vector qui contient des String.
 		 * Ces chaines de caractères correspondent aux urls des medias à télécharger.
 		 * @param	datas	XML	Le noeud medias.
-		 * @param	type	String	Le type de médias à récupérer.
+		 * @param	type	String	Le type de médias à récupérer. (Constantes dans MediasEnum)
 		 * @return	Vector.<String>	La chaine des urls.
 		 */
-		public static function parseMedias( datas:XML, type:String = MediasEnum.PICTURE ):Vector.<String>
+		public static function parseMedias( datas:XML, type:String = "picture" ):Vector.<String>
 		{
 			if ( !datas ) return null;
 			
@@ -128,6 +135,32 @@ package elive.xmls
 				medias[ i ] = list[ i ].@url;
 			
 			return medias;
+		}
+		
+		public static function parseComment( datas:XML ):Comment
+		{
+			var comment:Comment = new Comment();
+			comment.config( datas.text, datas.date );
+			
+			return comment;
+		}
+		
+		public static function parseComments( datas:XML, scaneDeeper:Boolean = false ):Vector.<Comment>
+		{
+			if ( !datas ) return null;
+			
+			var list:XMLList = !scanDeeper ? datas.children() : datas.descendants();
+			list = list.( localName() == COMMENT );
+			
+			var n:int = list.length();
+			
+			if ( n == 0 ) return null;
+			
+			var comments:Vector.<Comment> = new Vector.<Comment>( n, true );
+			for ( var i:int; i < n; ++i )
+				comments[ i ] = parseComment( list[ i ] );
+			
+			return comments;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

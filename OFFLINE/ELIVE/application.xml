@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <application xmlns="http://ns.adobe.com/air/application/1.5">
 	
-	<id>ELIVE</id> 
+	<id>fr.gobelins.crma2011.elive</id> 
 	<version>1.0</version> 
 	<filename>ELIVE</filename> 
 	
@@ -10,15 +10,15 @@
 	<copyright></copyright> 
 	
 	<initialWindow> 
-		<title>ELIVE</title> 
+		<title>(e)live</title> 
 		<content>ELIVE.swf</content> 
-		<systemChrome>standard</systemChrome> 
-		<transparent>false</transparent> 
+		<systemChrome>none</systemChrome> 
+		<transparent>true</transparent> 
 		<visible>true</visible> 
 		<minimizable>true</minimizable> 
 		<maximizable>true</maximizable> 
 		<resizable>true</resizable> 
-	</initialWindow> 
+	</initialWindow>
 	
 	<!-- 
 	More options:
