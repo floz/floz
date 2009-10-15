@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+
+	<nav>
+		<rub>
+			<id><![CDATA[elives]]></id>
+			<title><![CDATA[Mes (e)lives]]></title>
+		</rub>
+		<rub>
+			<id><![CDATA[amis]]></id>
+			<title><![CDATA[Mes amis]]></title>
+		</rub>
+		<rub>
+			<id><![CDATA[profil]]></id>
+			<title><![CDATA[Mon profil]]></title>
+		</rub>
+	</nav>
+	
+	<assetsToLoad>
+		<file id="elives"></file>
+		<file id="amis"></file>
+		<file id="profil"></file>
+	</assetsToLoad>
+	
+</data>
