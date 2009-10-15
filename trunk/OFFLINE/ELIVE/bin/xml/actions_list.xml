@@ -41,7 +41,27 @@
 					<created_at>TIMESTAMP</created_at>
 					<status>pending</status>
 					<medias>
-						<picture width="" height="" url="" />
+						<picture>
+							<width></width>
+							<height></height>
+							<title></title>
+							<url></url>
+							<user>
+								<id>12</id>
+								<login>floz</login>
+								<location>Paris</location>
+								<points>2554</points>
+								<url>http://minuit4.fr</url>
+								<stats>
+									<pending>2</pending>
+									<current>4</current>
+									<refused>10</refused>
+									<lost>15</lost>
+									<bad>25</bad>
+									<won>200</won>
+								</stats>
+							</user>
+						</picture>
 					</medias>
 				</action>
 				<action />
