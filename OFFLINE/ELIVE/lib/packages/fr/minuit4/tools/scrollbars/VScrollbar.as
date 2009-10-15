@@ -1,4 +1,4 @@
-﻿
+
 /**
  * Written by :
  * @author Floz
@@ -7,16 +7,26 @@
 package fr.minuit4.tools.scrollbars
 {
 	import flash.display.DisplayObject;
+	import flash.display.Graphics;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
+	import flash.filters.BlurFilter;
 	import flash.geom.Rectangle;
+	import flash.utils.Timer;
+	import fr.minuit4.motion.easing.Linear;
+	import fr.minuit4.motion.easing.Quad;
+	import fr.minuit4.motion.M4Tween;
 	
 	public class VScrollbar extends Sprite implements IScrollbar
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
+		
+		private const BLUR:BlurFilter = new BlurFilter( 0, 0, 3 );
+		private const DRAG_RECTANGLE:Rectangle = new Rectangle();
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
@@ -31,23 +41,34 @@ package fr.minuit4.tools.scrollbars
 		private var _posMax:Number;
 		private var _percentScroll:Number;
 		private var _posScrollMax:Number;
+		private var _finalScrollY:Number;
+		private var _finalSliderY:Number;
 		
 		private var _scrollTarget:DisplayObject;
 		private var _scrollRect:Rectangle;
 		
-		private var _scrollSpeed:Number = 2;
+		private var _scrollSpeed:Number = 10;
+		private var _delta:Number;
+		
+		private var _scrollTimer:Timer;
 		
 		private var _background:DisplayObject;
 		private var _slider:DisplayObject;
 		private var _btUp:DisplayObject;
 		private var _btDown:DisplayObject;
 		
+		private var _enableBlur:Boolean;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function VScrollbar( resizeSliderOnResize:Boolean = false ) 
+		public function VScrollbar( background:DisplayObject = null, slider:DisplayObject = null, btUp:DisplayObject = null, btDown:DisplayObject = null, resizeSliderOnResize:Boolean = false ) 
 		{
+			setBackground( background );
+			setSlider( slider );
+			setBtUp( btUp );
+			setBtDown( btDown );
 			_resizeSliderOnResize = resizeSliderOnResize;
 			
 			if ( !_cntBackground ) _cntBackground = new Sprite();
@@ -63,7 +84,13 @@ package fr.minuit4.tools.scrollbars
 		private function handleRemovedFromStage(e:Event):void 
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage);
-			addEventListener( Event.ADDED_TO_STAGE, handleAddedToStage );			
+			addEventListener( Event.ADDED_TO_STAGE, handleAddedToStage );
+			
+			_cntSlider.removeEventListener( MouseEvent.MOUSE_DOWN, handleSliderDown );
+			_cntBtUp.removeEventListener( MouseEvent.MOUSE_DOWN, handleButtonDown );
+			_cntBtDown.removeEventListener( MouseEvent.MOUSE_DOWN, handleButtonDown );
+			
+			removeEventListener( Event.ENTER_FRAME, handleEnterFrame );
 		}
 		
 		private function handleAddedToStage(e:Event):void 
@@ -73,10 +100,13 @@ package fr.minuit4.tools.scrollbars
 			
 			reorganize( true );
 			
-			_percentScroll = 0;
-			refresh();
+			_scrollTimer = new Timer( 200 );
 			
 			_cntSlider.addEventListener( MouseEvent.MOUSE_DOWN, handleSliderDown, false, 0, true );
+			_cntBtUp.addEventListener( MouseEvent.MOUSE_DOWN, handleButtonDown, false, 0, true );
+			_cntBtDown.addEventListener( MouseEvent.MOUSE_DOWN, handleButtonDown, false, 0, true );
+			
+			addEventListener( Event.ENTER_FRAME, handleEnterFrame, false, 0, true );
 		}
 		
 		private function handleSliderDown(e:MouseEvent):void 
@@ -85,7 +115,11 @@ package fr.minuit4.tools.scrollbars
 			stage.addEventListener( MouseEvent.MOUSE_MOVE, handleMouseMove );
 			
 			_beginY = e.stageY - ( _cntSlider.y - e.localY );
-			_posMax = _cntBackground.height - _cntSlider.height;
+			setPosMax();
+			
+			DRAG_RECTANGLE.y = _cntBtUp.height;
+			DRAG_RECTANGLE.height = _cntBackground.height - _cntSlider.height + 1;
+			_cntSlider.startDrag( false, DRAG_RECTANGLE );
 			
 			handleMouseMove( e );
 		}
@@ -94,6 +128,9 @@ package fr.minuit4.tools.scrollbars
 		{
 			stage.removeEventListener( MouseEvent.MOUSE_UP, handleMouseUp );
 			stage.removeEventListener( MouseEvent.MOUSE_MOVE, handleMouseMove );
+			_cntSlider.stopDrag();
+			
+			_finalSliderY = _cntSlider.y;
 		}
 		
 		private function handleMouseMove(e:MouseEvent):void 
@@ -103,7 +140,69 @@ package fr.minuit4.tools.scrollbars
 			else if ( position > _posMax ) position = _posMax;
 			
 			_percentScroll = position / _posMax;
-			refresh();
+			refresh( false );
+		}
+		
+		private function handleButtonDown(e:MouseEvent):void 
+		{			
+			var scrollSpeed:Number = _scrollSpeed * .01;
+			switch( e.currentTarget )
+			{
+				case _cntBtUp: _delta = -scrollSpeed; break;
+				case _cntBtDown: _delta = scrollSpeed; break;
+			}
+			
+			onScroll();
+			
+			stage.addEventListener( MouseEvent.MOUSE_UP, handleButtonUp );
+			_scrollTimer.addEventListener( TimerEvent.TIMER, handleTimer, false, 0, true );
+			_scrollTimer.start();
+		}
+		
+		private function handleTimer(e:TimerEvent):void 
+		{
+			onScroll();
+		}
+		
+		private function handleButtonUp(e:MouseEvent):void 
+		{
+			_scrollTimer.stop();
+			_scrollTimer.removeEventListener( TimerEvent.TIMER, handleTimer );
+			stage.removeEventListener( MouseEvent.MOUSE_UP, handleButtonUp );
+		}
+		
+		private function handleMouseWheel(e:MouseEvent):void 
+		{			
+			var scrollSpeed:Number = _scrollSpeed * .01;
+			if( e.delta > 0 ) _delta = -scrollSpeed;
+			else _delta = scrollSpeed;
+			
+			onScroll();
+		}
+		
+		private function handleEnterFrame(e:Event):void 
+		{
+			if ( _scrollRect.height != _scrollTarget.height )
+			{
+				_scrollRect.height = _scrollTarget.height;
+				refresh();
+			}
+			
+			if ( int( _scrollRect.y ) != int( _finalScrollY ) )
+			{
+				_scrollRect.y -= ( _scrollRect.y - _finalScrollY ) * .3;
+				_scrollTarget.scrollRect = _scrollRect;
+				
+				if ( _enableBlur )
+				{
+					var diff:Number = _finalScrollY - _scrollRect.y;
+					diff *= .2;
+					BLUR.blurY = diff > 0 ? diff : -diff;
+					_scrollTarget.filters = [ BLUR ];
+					
+					if ( int( _scrollRect.y ) == int( _finalScrollY ) ) _scrollTarget.filters = [];
+				}
+			}
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -123,13 +222,28 @@ package fr.minuit4.tools.scrollbars
 			_cntBtDown.y = _cntBackground.y + _cntBackground.height;
 		}
 		
-		private function refresh():void
+		private function refresh( refreshSlider:Boolean = true ):void
 		{
 			if ( !_scrollTarget ) return;
 			
-			_cntSlider.y = _posMax * _percentScroll + _btUp.height;
-			_scrollRect.y = _posScrollMax * _percentScroll;
-			_scrollTarget.scrollRect = _scrollRect;
+			if( refreshSlider ) _cntSlider.y = _posMax * _percentScroll + _btUp.height;
+			_finalScrollY = _posScrollMax * _percentScroll;
+		}
+		
+		private function onScroll():void
+		{
+			_percentScroll += _delta;
+			
+			if ( _percentScroll < 0 ) _percentScroll = 0;
+			else if ( _percentScroll > 1 ) _percentScroll = 1;
+			
+			setPosMax();
+			refresh();
+		}
+		
+		private function setPosMax():void
+		{
+			_posMax = _cntBackground.height - _cntSlider.height;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
@@ -141,14 +255,19 @@ package fr.minuit4.tools.scrollbars
 			this._scrollTarget = scrollTarget;
 			this._scrollRect = scrollRect;
 			
-			scrollTarget.scrollRect = scrollRect;
+			_scrollTarget.scrollRect = _scrollRect;
+			_scrollTarget.addEventListener( MouseEvent.MOUSE_WHEEL, handleMouseWheel );
 			
-			_posScrollMax = ( scrollTarget.height - scrollRect.height );
+			_percentScroll = 0;
+			_posScrollMax = ( _scrollTarget.height - _scrollRect.height );
+			setPosMax();
 			refresh();
 		}
 		
 		public function setBackground( value:DisplayObject ):void
 		{
+			if ( !value ) return;
+			
 			if ( !_cntBackground ) _cntBackground = new Sprite();		
 			
 			while ( _cntBackground.numChildren ) _cntBackground.removeChildAt( 0 );
@@ -160,6 +279,8 @@ package fr.minuit4.tools.scrollbars
 		
 		public function setSlider( value:DisplayObject ):void
 		{
+			if ( !value ) return;
+			
 			if ( !_cntSlider ) _cntSlider = new Sprite();
 			
 			while ( _cntSlider.numChildren ) _cntSlider.removeChildAt( 0 );
@@ -171,27 +292,27 @@ package fr.minuit4.tools.scrollbars
 		
 		public function setBtUp( value:DisplayObject ):void
 		{
+			if ( !value ) return;
+			
 			if ( !_cntBtUp ) _cntBtUp = new Sprite();
 			
 			while ( _cntBtUp.numChildren ) _cntBtUp.removeChildAt( 0 );
 			
 			_btUp = value;
 			_cntBtUp.addChild( _btUp );
-			
-			reorganize();
 		}
 		public function getBtUp():DisplayObject { return _btUp; }
 		
 		public function setBtDown( value:DisplayObject ):void
 		{
+			if ( !value ) return;
+			
 			if ( !_cntBtDown ) _cntBtDown = new Sprite();
 			
 			while ( _cntBtDown.numChildren ) _cntBtDown.removeChildAt( 0 );
 			
 			_btDown = value;
 			_cntBtDown.addChild( _btDown );
-			
-			reorganize();
 		}
 		public function getBtDown():DisplayObject { return _btDown; }
 		
@@ -208,6 +329,12 @@ package fr.minuit4.tools.scrollbars
 			_resizeSliderOnResize = value;
 		}
 		public function get resizeSliderOnResize():Boolean { return _resizeSliderOnResize; }
+		
+		public function set enableBlur( value:Boolean ):void
+		{
+			this._enableBlur = value;
+		}
+		public function get enableBlur():Boolean { return this._enableBlur; }
 		
 		override public function set height(value:Number):void 
 		{
