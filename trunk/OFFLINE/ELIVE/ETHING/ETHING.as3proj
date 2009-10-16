@@ -4,7 +4,7 @@
   <output>
     <movie disabled="False" />
     <movie input="" />
-    <movie path="..\MAIN\bin\swfs\rubs\profil.swf" />
+    <movie path="..\MAIN\bin\swfs\rubs\ething.swf" />
     <movie fps="30" />
     <movie width="800" />
     <movie height="600" />
@@ -23,7 +23,7 @@
     <option benchmark="False" />
     <option es="False" />
     <option loadConfig="" />
-    <option optimize="True" />
+    <option optimize="False" />
     <option showActionScriptWarnings="True" />
     <option showBindingWarnings="True" />
     <option showDeprecationWarnings="True" />
@@ -64,7 +64,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="src\profil\Main.as" />
+    <compile path="src\ething\Main.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
@@ -77,6 +77,6 @@
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />
-    <option testMovie="NewWindow" />
+    <option testMovie="Default" />
   </options>
 </project>

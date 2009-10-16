@@ -5,13 +5,13 @@
   <target-player>10.0.0</target-player>
   <compiler>
     <source-path append="true">
-      <path-element>C:\Documents and Settings\fzumbrunn\Bureau\ELIVE\MAIN\src</path-element>
+      <path-element>C:\Documents and Settings\fzumbrunn\Bureau\ELIVE\PROFIL\src</path-element>
       <path-element>C:\Documents and Settings\fzumbrunn\Bureau\ELIVE\COMMON\src</path-element>
       <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Documents and Settings\fzumbrunn\Bureau\ELIVE\MAIN\src\Main.as</path-element>
+    <path-element>C:\Documents and Settings\fzumbrunn\Bureau\ELIVE\PROFIL\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>

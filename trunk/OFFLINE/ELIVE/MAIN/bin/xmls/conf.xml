@@ -4,28 +4,29 @@
 	<baseURL>.</baseURL>
 	
 	<pathSWF><![CDATA[${baseURL}/swfs]]></pathSWF>
+	
 	<pathIcon><![CDATA[${pathSWF}/icons]]></pathIcon>
+	<pathRub><![CDATA[${pathSWF}/rubs]]></pathRub>
 	
 	<nav>
 		<rub>
 			<id><![CDATA[elives]]></id>
 			<title><![CDATA[Mes (e)lives]]></title>
+			<url><![CDATA[${pathRub}/elives.swf]]></url>
+			<icon><![CDATA[${pathIcon}/elives.swf]]></icon>
 		</rub>
 		<rub>
 			<id><![CDATA[amis]]></id>
 			<title><![CDATA[Mes amis]]></title>
+			<url><![CDATA[${pathRub}/amis.swf]]></url>
+			<icon><![CDATA[${pathIcon}/amis.swf]]></icon>
 		</rub>
 		<rub>
 			<id><![CDATA[profil]]></id>
 			<title><![CDATA[Mon profil]]></title>
+			<url><![CDATA[${pathRub}/profil.swf]]></url>
+			<icon><![CDATA[${pathIcon}/profil.swf]]></icon>
 		</rub>
 	</nav>
-	
-	<assetsToLoad>
-		<file id="ami"><![CDATA[${baseURL}/swf/amislol.swf]]></file>
-		<file id="amis_icon"><![CDATA[${pathIcon}/elives.swf]]></file>
-		<file id="elives_icon"><![CDATA[${pathIcon}/amis.swf]]></file>
-		<file id="profil_icon"><![CDATA[${pathIcon}/profil.swf]]></file>		
-	</assetsToLoad>
 	
 </data>
