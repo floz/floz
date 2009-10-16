@@ -6,24 +6,22 @@
  */
 package elive.navigation 
 {
+	import flash.display.Sprite;
 	
-	public class NavigationManager
+	public class NavContainer extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private static var _allowInstanciation:Boolean;
-		private static var _instance:NavigationManager;
-		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function NavigationManager() 
+		public function NavContainer() 
 		{
-			if ( !_allowInstanciation ) throw new Error( "This is a Singleton class, use getInstance method instead." );
+			
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -31,17 +29,6 @@ package elive.navigation
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
-		
-		public static function getInstance():NavigationManager
-		{
-			if ( !_instance )
-			{
-				_allowInstanciation = true; {
-					_instance = new NavigationManager();
-				} _allowInstanciation = false;
-			}
-			return _instance;
-		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

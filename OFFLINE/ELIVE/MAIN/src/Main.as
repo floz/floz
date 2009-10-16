@@ -7,6 +7,7 @@
 package  
 {
 	import elive.events.EliveEvent;
+	import elive.events.NavEvent;
 	import elive.navigation.NavManager;
 	import flash.display.Loader;
 	import flash.display.Sprite;
@@ -34,6 +35,7 @@ package
 			Configuration.DEBUG = true;
 			
 			_navManager = NavManager.getInstance();
+			_navManager.addEventListener( NavEvent.RUBRIQUE_CHANGE, rubriqueChangeHandler, false, 0, true );
 			
 			Config.addEventListener( Event.COMPLETE, configCompleteHandler );
 			Config.load( "xmls/conf.xml", new DynamicXML() );
@@ -45,6 +47,11 @@ package
 		{
 			_navManager.parseNav( XML( Config.getProperty( "nav" ) ) );
 			createNav();
+		}
+		
+		private function rubriqueChangeHandler(e:NavEvent):void 
+		{
+			
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
