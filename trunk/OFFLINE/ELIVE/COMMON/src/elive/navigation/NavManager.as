@@ -6,6 +6,7 @@
  */
 package elive.navigation 
 {
+	import elive.events.NavEvent;
 	import flash.events.EventDispatcher;
 	
 	public class NavManager extends EventDispatcher
@@ -18,18 +19,13 @@ package elive.navigation
 		private static var _allowInstanciation:Boolean;
 		private static var _instance:NavManager;
 		
-		private var _items:Object;
-		private var _itemsModels:Vector.<ItemModel>;
-		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function NavManager() 
 		{
-			if ( !_allowInstanciation ) throw new Error( "This is a Singleton class, use getInstance method instead." );
-			
-			_items = { };
+			if ( !_allowInstanciation ) throw new Error( "This is a Singleton class, use getInstance methode instead." );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -49,28 +45,14 @@ package elive.navigation
 			return _instance;
 		}
 		
-		public function parseNav( datas:XML ):void
+		public function switchRub( rubId:String, sectionId:int = 0, id:int = -1 ):void
 		{
-			var itemModel:ItemModel;
-			
-			var n:int = datas.rub.length();
-			_itemsModels = new Vector.<ItemModel>( n, true );
-			
-			var x:XML;
-			for ( var i:int; i < n; ++i )
-			{
-				x = datas.rub[ i ];
-				_itemsModels[ i ] = itemModel = new ItemModel( x.id, x.title, x.url, x.icon );
-				_items[ itemModel.id ] = itemModel.url;
-			}
+			var navEvent:NavEvent = new NavEvent( NavEvent.SWITCH_RUBRIQUE );
+			navEvent.rubId = rubId;
+			navEvent.sectionId = sectionId;
+			navEvent.id = id;
+			dispatchEvent( navEvent );
 		}
-		
-		public function switchRub( rubId:String ):void
-		{
-			
-		}
-		
-		public function getItemsModel():Vector.<ItemModel> { return this._itemsModels; }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

@@ -4,13 +4,12 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package elive.navigation 
 {
-	import flash.display.Graphics;
-	import flash.display.Shape;
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
-	public class Main extends Sprite
+	public class NavItem extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -19,16 +18,19 @@ package
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
+		public var id:String;
+		public var title:String;
+		public var url:String;
+		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main() 
+		public function NavItem( id:String, title:String, url:String ) 
 		{
-			var s:Shape = new Shape();
-			var g:Graphics = s.graphics;
-			g.beginFill( 0xff00ff );
-			g.drawCircle( 0, 0, 50 );
-			g.endFill();
-			addChild( s );
+			this.id = id;
+			this.title = title;
+			this.url = url;
+			
+			this.mouseChildren = false;
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -36,6 +38,11 @@ package
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function setSkin( skin:DisplayObject ):void
+		{
+			addChild( skin );
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
