@@ -6,8 +6,9 @@
  */
 package elive.navigation 
 {
+	import flash.events.EventDispatcher;
 	
-	public class NavManager
+	public class NavManager extends EventDispatcher
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -18,6 +19,7 @@ package elive.navigation
 		private static var _instance:NavManager;
 		
 		private var _items:Object;
+		private var _itemsModels:Vector.<ItemModel>;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -51,18 +53,24 @@ package elive.navigation
 		{
 			var itemModel:ItemModel;
 			
+			var n:int = datas.rub.length();
+			_itemsModels = new Vector.<ItemModel>( n, true );
+			
 			var x:XML;
-			for each( x in datas.rub )
+			for ( var i:int; i < n; ++i )
 			{
-				itemModel = new ItemModel();
-				itemModel.id = x.id;
-				itemModel.title = x.title;
-				itemModel.url = x.url;
-				itemModel.icon = x.icon;
-				
+				x = datas.rub[ i ];
+				_itemsModels[ i ] = itemModel = new ItemModel( x.id, x.title, x.url, x.icon );
 				_items[ itemModel.id ] = itemModel.url;
 			}
 		}
+		
+		public function switchRub( rubId:String ):void
+		{
+			
+		}
+		
+		public function getItemsModel():Vector.<ItemModel> { return this._itemsModels; }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

@@ -4,14 +4,14 @@
 	
 	public class NavEvent extends Event 
 	{
-		public static const READY:String;
 		public static const RUBRIQUE_CHANGE:String;
 		
 		public var rubId:String;
 		
-		public function NavEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) 
+		public function NavEvent( type:String, bubbles:Boolean=false, cancelable:Boolean=false, rubId:String = null ) 
 		{ 
 			super(type, bubbles, cancelable);
+			this.rubId = rubId;
 		} 
 		
 		public override function clone():Event 
