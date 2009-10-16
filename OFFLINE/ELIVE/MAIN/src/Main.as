@@ -6,13 +6,12 @@
  */
 package  
 {
-	import elive.events.EliveEvent;
 	import elive.events.NavEvent;
+	import elive.navigation.NavContainer;
+	import elive.navigation.NavIds;
 	import elive.navigation.NavManager;
-	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.net.URLRequest;
 	import fr.minuit4.core.configuration.Config;
 	import fr.minuit4.core.configuration.Configuration;
 	import fr.minuit4.core.datas.dynamics.DynamicXML;
@@ -35,7 +34,7 @@ package
 			Configuration.DEBUG = true;
 			
 			_navManager = NavManager.getInstance();
-			_navManager.addEventListener( NavEvent.RUBRIQUE_CHANGE, rubriqueChangeHandler, false, 0, true );
+			_navManager.addEventListener( NavEvent.SWITCH_RUBRIQUE, switchRubriqueHandler, false, 0, true );
 			
 			Config.addEventListener( Event.COMPLETE, configCompleteHandler );
 			Config.load( "xmls/conf.xml", new DynamicXML() );
@@ -45,18 +44,38 @@ package
 		
 		private function configCompleteHandler(e:Event):void 
 		{
-			_navManager.parseNav( XML( Config.getProperty( "nav" ) ) );
 			createNav();
+			createEthing();
+			createElivePanel();
 		}
 		
-		private function rubriqueChangeHandler(e:NavEvent):void 
+		private function switchRubriqueHandler(e:NavEvent):void 
 		{
+			switch( e.rubId )
+			{
+				case NavIds.ELIVES: trace( NavIds.ELIVES ); break;
+				case NavIds.AMIS: trace( NavIds.AMIS ); break;
+				case NavIds.PROFIL: trace( NavIds.PROFIL ); break;
+			}
 			
+			// La rubrique devra etendre d'une classe genre "Rubrique"
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function createNav():void
+		{
+			var navContainer:NavContainer = new NavContainer();
+			navContainer.createNav();
+			addChild( navContainer );
+		}
+		
+		private function createEthing():void
+		{
+			
+		}
+		
+		private function createElivePanel():void
 		{
 			
 		}
