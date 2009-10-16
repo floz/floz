@@ -10,6 +10,7 @@ package elive.events
 	
 	public class EliveEvent extends Event 
 	{
+		public static const RUBRIQUE_CHANGE:String = "elive_rubrique_change";
 		
 		public function EliveEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) 
 		{ 
