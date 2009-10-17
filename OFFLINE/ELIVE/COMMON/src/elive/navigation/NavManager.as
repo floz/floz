@@ -45,12 +45,13 @@ package elive.navigation
 			return _instance;
 		}
 		
-		public function switchRub( rubId:String, sectionId:int = 0, id:int = -1 ):void
+		public function switchRub( navId:String, sectionId:int = 0, id:int = -1 ):void
 		{
 			var navEvent:NavEvent = new NavEvent( NavEvent.SWITCH_RUBRIQUE );
-			navEvent.rubId = rubId;
+			navEvent.navId = navId;
 			navEvent.sectionId = sectionId;
 			navEvent.id = id;
+			
 			dispatchEvent( navEvent );
 		}
 		

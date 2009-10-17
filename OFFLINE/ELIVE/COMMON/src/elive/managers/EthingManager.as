@@ -4,33 +4,26 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elive.navigation 
+package elive.managers 
 {
-	import flash.display.DisplayObject;
-	import flash.display.Sprite;
 	
-	public class NavItem extends Sprite
+	public class EthingManager 
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		// - PUBLIC VARIABLES ------------------------------------------------------------
+		private static var _instance:EthingManager;
+		private static var _allowInstanciation:Boolean;
 		
-		public var id:String;
-		public var title:String;
-		public var url:String;
+		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function NavItem( id:String, title:String, url:String ) 
+		public function EthingManager() 
 		{
-			this.id = id;
-			this.title = title;
-			this.url = url;
-			
-			this.mouseChildren = false;
+			if ( !_allowInstanciation ) throw new Error( "This is a Singleton class, please use the getInstance method." );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -39,19 +32,15 @@ package elive.navigation
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function select():void
+		public static function getInstance():EthingManager
 		{
-			this.alpha = .5;
-		}
-		
-		public function deselect():void
-		{
-			this.alpha = 1;
-		}
-		
-		public function setSkin( skin:DisplayObject ):void
-		{
-			addChild( skin );
+			if ( !_instance )
+			{
+				_allowInstanciation = true; {
+					_instance = new EthingManager();
+				} _allowInstanciation = false;
+			}
+			return _instance;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

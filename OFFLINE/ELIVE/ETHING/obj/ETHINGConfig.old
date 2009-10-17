@@ -14,7 +14,7 @@
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>D:\Projets\Projets\OFFLINE\ELIVE\ETHING\src\ething\Main.as</path-element>
+    <path-element>D:\Projets\Projets\OFFLINE\ELIVE\ETHING\src\ething\Ething.as</path-element>
   </file-specs>
   <default-background-color>#FF00FF</default-background-color>
   <default-frame-rate>30</default-frame-rate>
