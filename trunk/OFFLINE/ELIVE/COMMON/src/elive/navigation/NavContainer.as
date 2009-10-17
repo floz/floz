@@ -29,6 +29,8 @@ package elive.navigation
 		
 		private var _itemsById:Object;
 		
+		private var _selectedItem:NavItem;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
@@ -42,7 +44,13 @@ package elive.navigation
 		
 		private function switchRubriqueHandler(e:NavEvent):void 
 		{
-			trace( "2:TODO: NavContainer.switchRubriqueHandler > Changer l'état des boutons du menu." );
+			if ( _selectedItem )
+				_selectedItem.deselect();
+			
+			_selectedItem = _itemsById[ e.navId ];
+			if ( !_selectedItem ) return;
+			
+			_selectedItem.select();
 		}
 		
 		private function mouseDownHandler(e:MouseEvent):void 
@@ -84,6 +92,10 @@ package elive.navigation
 			profilItem.setSkin( new GIconProfil() );
 			profilItem.x = 140;
 			_cnt.addChild( profilItem );
+			
+			_itemsById[ NavIds.ELIVES ] = elivesItem;
+			_itemsById[ NavIds.AMIS ] = amisItem;
+			_itemsById[ NavIds.PROFIL ] = profilItem;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

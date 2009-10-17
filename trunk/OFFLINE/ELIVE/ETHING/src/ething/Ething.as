@@ -7,10 +7,12 @@
 package ething 
 {
 	import assets.ething.GEthing;
-	import flash.display.Sprite;
+	import flash.events.Event;
 	
-	public class Main extends Sprite
+	public class Ething extends GEthing
 	{
+		
+		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
@@ -18,12 +20,17 @@ package ething
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main() 
+		public function Ething() 
 		{
-			addChild( new Ething() );
+			addEventListener( Event.ADDED_TO_STAGE, handleAddedToStage, false, 0, true );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
+		
+		private function handleAddedToStage(e:Event):void 
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
+		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		

@@ -6,13 +6,13 @@
 	{
 		public static const SWITCH_RUBRIQUE:String = "navevent_switch_rubrique";
 		
-		public var rubId:String;
+		public var navId:String;
 		public var sectionId:int;
 		public var id:int;
 		
 		public function NavEvent( type:String, bubbles:Boolean=false, cancelable:Boolean=false, rubId:String = null, sectionId:int = 0, id:int = -1 ) 
 		{ 
-			this.rubId = rubId;
+			this.navId = navId;
 			this.sectionId = sectionId;
 			this.id = id;
 			
