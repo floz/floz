@@ -4,10 +4,12 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elive.ui 
+package elive.rubriques 
 {
+	import flash.display.Sprite;
+	import fr.minuit4.core.configuration.Configuration;
 	
-	public class EliveConnection extends ElivePanel
+	public class Rubrique extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -18,9 +20,12 @@ package elive.ui
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function EliveConnection() 
+		public function Rubrique() 
 		{
-			
+			if ( !stage )
+			{
+				Configuration.baseURL = "../../";
+			}
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------

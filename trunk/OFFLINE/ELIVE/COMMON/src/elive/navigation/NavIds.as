@@ -14,6 +14,8 @@ package elive.navigation
 		public static const AMIS:String = "amis";
 		public static const PROFIL:String = "profil";
 		
+		public static const HOME:String = "home";
+		
 	}
 	
 }

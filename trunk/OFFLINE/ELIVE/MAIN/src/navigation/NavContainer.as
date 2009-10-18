@@ -4,12 +4,14 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elive.navigation 
+package navigation
 {
 	import assets.icons.GIconAmis;
 	import assets.icons.GIconElives;
 	import assets.icons.GIconProfil;
 	import elive.events.NavEvent;
+	import elive.navigation.NavIds;
+	import elive.navigation.NavManager;
 	import flash.display.Sprite;
 	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
@@ -59,6 +61,22 @@ package elive.navigation
 			_navManager.switchRub( navItem.id );
 		}
 		
+		private function mouseOverHandler(e:MouseEvent):void 
+		{
+			var navItem:NavItem = e.target as NavItem;
+			if ( navItem == _selectedItem ) return;
+			
+			navItem.over();
+		}
+		
+		private function mouseOutHandler(e:MouseEvent):void 
+		{
+			var navItem:NavItem = e.target as NavItem;
+			if ( navItem == _selectedItem ) return;
+			
+			navItem.out();
+		}
+		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function init():void
@@ -70,6 +88,8 @@ package elive.navigation
 			
 			_cnt = new Sprite();
 			_cnt.addEventListener( MouseEvent.MOUSE_DOWN, mouseDownHandler, false, 0, true );
+			_cnt.addEventListener( MouseEvent.MOUSE_OVER, mouseOverHandler, false, 0, true );
+			_cnt.addEventListener( MouseEvent.MOUSE_OUT, mouseOutHandler, false, 0, true );
 			addChild( _cnt );
 		}
 		

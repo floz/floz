@@ -4,10 +4,11 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elive.navigation 
+package navigation 
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	
 	public class NavItem extends Sprite
 	{
@@ -38,6 +39,16 @@ package elive.navigation
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function over():void
+		{
+			this.alpha = .75;
+		}
+		
+		public function out():void
+		{
+			this.alpha = 1;
+		}
 		
 		public function select():void
 		{
