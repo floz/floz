@@ -19,6 +19,8 @@ package elive.navigation
 		private static var _allowInstanciation:Boolean;
 		private static var _instance:NavManager;
 		
+		private var _currentRubId:String = NavIds.HOME;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
@@ -47,8 +49,10 @@ package elive.navigation
 		
 		public function switchRub( navId:String, sectionId:int = 0, id:int = -1 ):void
 		{
+			if ( navId == _currentRubId ) return;
+			
 			var navEvent:NavEvent = new NavEvent( NavEvent.SWITCH_RUBRIQUE );
-			navEvent.navId = navId;
+			_currentRubId = navEvent.navId = navId;
 			navEvent.sectionId = sectionId;
 			navEvent.id = id;
 			

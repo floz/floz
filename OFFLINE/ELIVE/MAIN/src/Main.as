@@ -6,11 +6,11 @@
  */
 package  
 {
+	import ui.panel.ElivePanel;
+	import navigation.NavContainer;
 	import elive.events.NavEvent;
-	import elive.navigation.NavContainer;
 	import elive.navigation.NavIds;
 	import elive.navigation.NavManager;
-	import elive.ui.ElivePanel;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import fr.minuit4.core.configuration.Config;
@@ -61,13 +61,17 @@ package
 		{
 			switch( e.navId )
 			{
-				case NavIds.ELIVES: trace( NavIds.ELIVES ); break;
-				case NavIds.AMIS: trace( NavIds.AMIS ); break;
-				case NavIds.PROFIL: trace( NavIds.PROFIL ); break;
-				default: trace( "fermeture !" ); break;
+				case NavIds.ELIVES:
+				case NavIds.AMIS:
+				case NavIds.PROFIL:
+					_elivePanel.loadRub( e.navId, e.sectionId, e.id );
+					if( !_elivePanel.parent ) _globalContainer.addChild( _elivePanel );
+					break;
+				
+				default:
+					_globalContainer.removeChild( _elivePanel );
+					break;
 			}
-			
-			// La rubrique devra etendre d'une classe genre "Rubrique"
 		}
 		
 		private function ethingLoadedHandler(e:Event):void 
@@ -100,8 +104,8 @@ package
 			createElivePanel();
 			if ( Configuration.DEBUG )
 			{
-				_globalContainer.x = stage.stageWidth * .5 - _globalContainer.width * .5;
-				_globalContainer.y = stage.stageHeight * .5 - _globalContainer.height * .5;
+				_globalContainer.x = int( stage.stageWidth * .5 - 219.75 );
+				_globalContainer.y = int( stage.stageHeight * .5 - 368.45 );
 			}
 		}
 		
@@ -117,7 +121,6 @@ package
 		private function createElivePanel():void
 		{
 			_elivePanel = new ElivePanel();
-			_globalContainer.addChild( _elivePanel );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

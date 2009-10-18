@@ -4,11 +4,13 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package ui.panel.header 
 {
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.geom.ColorTransform;
 	
-	public class Main extends Sprite
+	public class Cloud extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -19,9 +21,9 @@ package
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main() 
+		public function Cloud( display:DisplayObject = null, color:uint = 0xffffff ) 
 		{
-			trace( "3: Main_Elives" );
+			if ( display ) setDisplay( display, color );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -29,6 +31,17 @@ package
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function setDisplay( display:DisplayObject, color:uint ):void
+		{
+			var r:uint = color >> 16;
+			var g:uint = ( color >> 8 ) & 0xff;
+			var b:uint = color & 0xff;
+			var colorTransform:ColorTransform = new ColorTransform( 1, 1, 1, 1, r, g, b );
+			display.transform.colorTransform = colorTransform;
+			
+			addChild( display );
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
