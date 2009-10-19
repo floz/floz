@@ -16,6 +16,7 @@ package elive.navigation
 		
 		public static const HOME:String = "home";
 		
+		public static const NONE:String = "none";
 	}
 	
 }

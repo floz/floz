@@ -79,7 +79,8 @@ package ui.panel
 		private function rubLoadedHandler(e:Event):void 
 		{
 			_rub = _assetsLoader.getItemLoaded();
-			cntHead.addChild( _rub );
+			_rub.navigateTo( 0 );
+			cntContent.addChild( _rub );
 			
 			_assetsLoader.removeEventListener( Event.COMPLETE, rubLoadedHandler );
 			_assetsLoader.dispose();
@@ -93,6 +94,8 @@ package ui.panel
 			_navManager = NavManager.getInstance();
 			createHeader();
 			createTooltip();
+			
+			cntContent.y = 75;
 		}
 		
 		private function createHeader():void

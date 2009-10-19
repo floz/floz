@@ -226,7 +226,7 @@ package fr.minuit4.tools.scrollbars
 		{
 			if ( !_scrollTarget ) return;
 			
-			if( refreshSlider ) _cntSlider.y = _posMax * _percentScroll + _btUp.height;
+			if( refreshSlider ) _cntSlider.y = _posMax * _percentScroll + _cntBtUp.height;
 			_finalScrollY = _posScrollMax * _percentScroll;
 		}
 		

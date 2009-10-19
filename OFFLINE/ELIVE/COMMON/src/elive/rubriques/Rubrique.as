@@ -10,7 +10,7 @@ package elive.rubriques
 	import flash.display.Sprite;
 	import fr.minuit4.core.configuration.Configuration;
 	
-	public class Rubrique extends Sprite
+	public class Rubrique extends Sprite implements IRubrique
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -18,6 +18,7 @@ package elive.rubriques
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		protected var _sectionsController:SectionsController;
+		protected var _standalone:Boolean = false;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -28,9 +29,11 @@ package elive.rubriques
 			_sectionsController = new SectionsController();
 			addChild( _sectionsController );
 			
-			if ( !stage )
+			if ( stage )
 			{
+				_standalone = true;
 				Configuration.baseURL = "../../";
+				Configuration.pathXML = Configuration.baseURL + "/xmls";
 			}
 		}
 		
@@ -39,6 +42,11 @@ package elive.rubriques
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function navigateTo( sectionId:int, id:int = -1 ):void
+		{
+			_sectionsController.navigateTo( sectionId, id );
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

@@ -4,8 +4,14 @@
 	<baseURL>.</baseURL>
 	
 	<pathSWF><![CDATA[${baseURL}/swfs]]></pathSWF>
+	<pathXML><![CDATA[${baseURL}/xmls]]></pathXML>
+	<pathCSS><![CDATA[${baseURL}/css]]></pathCSS>
 	
 	<pathIcon><![CDATA[${pathSWF}/icons]]></pathIcon>
 	<pathRub><![CDATA[${pathSWF}/rubs]]></pathRub>
+	
+	<datasToLoad>
+		<file id="css"><![CDATA[${pathCSS}/style.css]]></file>
+	</datasToLoad>
 	
 </data>
