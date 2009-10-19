@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
 	<action id="10">
+		<title>Frappe toi, tr�s fort</title>
+		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+		<start>TIMESTAMP</start>
+		<end>TIMESTAMP</end>
+		<created_at>TIMESTAMP</created_at>
+		<status>pending</status>
+		<medias>
+			<picture width="" height="" url="" />
+		</medias>
+	</action>
+	
+	<action id="13">
 		<title>Chocolat sur la tête</title>
 		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
 		<start>TIMESTAMP</start>
@@ -10,55 +22,17 @@
 		<medias>
 			<picture width="" height="" url="" />
 		</medias>
-		<sender>
-			<user>
-				<id>12</id>
-				<login>floz</login>
-				<location>Paris</location>
-				<points>2554</points>
-				<url>http://minuit4.fr</url>
-				<stats>
-					<pending>2</pending>
-					<current>4</current>
-					<refused>10</refused>
-					<lost>15</lost>
-					<bad>25</bad>
-					<won>200</won>
-				</stats>
-			</user>
-			<actions protected="true">
-				<action id="10">
-					<title>Chocolat sur la tête</title>
-					<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
-					<start>TIMESTAMP</start>
-					<end>TIMESTAMP</end>
-					<created_at>TIMESTAMP</created_at>
-					<status>pending</status>
-					<medias>
-						<picture>
-							<width></width>
-							<height></height>
-							<title></title>
-							<url></url>
-							<user>
-								<id>12</id>
-								<login>floz</login>
-								<location>Paris</location>
-								<points>2554</points>
-								<url>http://minuit4.fr</url>
-								<stats>
-									<pending>2</pending>
-									<current>4</current>
-									<refused>10</refused>
-									<lost>15</lost>
-									<bad>25</bad>
-									<won>200</won>
-								</stats>
-							</user>
-						</picture>
-					</medias>
-				</action>
-			</actions>
-		</sender>
+	</action>
+	
+	<action id="25">
+		<title>Appelle Mikl "le Milk"</title>
+		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+		<start>TIMESTAMP</start>
+		<end>TIMESTAMP</end>
+		<created_at>TIMESTAMP</created_at>
+		<status>pending</status>
+		<medias>
+			<picture width="" height="" url="" />
+		</medias>
 	</action>
 </actions>

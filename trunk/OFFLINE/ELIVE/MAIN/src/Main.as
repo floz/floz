@@ -6,6 +6,10 @@
  */
 package  
 {
+	import assets.fonts.FAkkurat;
+	import assets.fonts.FAkkuratBold;
+	import flash.text.Font;
+	import flash.text.StyleSheet;
 	import ui.panel.ElivePanel;
 	import navigation.NavContainer;
 	import elive.events.NavEvent;
@@ -54,6 +58,13 @@ package
 		
 		private function configCompleteHandler(e:Event):void 
 		{
+			var styleSheet:StyleSheet = new StyleSheet();
+			styleSheet.parseCSS( Config.getProperty( "css" ) );
+			Config.setProperty( "css", styleSheet );
+			
+			Font.registerFont( FAkkurat );
+			Font.registerFont( FAkkuratBold );
+			
 			createEthing();
 		}
 		

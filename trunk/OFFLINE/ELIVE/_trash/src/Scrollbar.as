@@ -51,7 +51,7 @@ package
 			gContent.y = 50;
 			addChild( gContent );
 			
-			var sb:VScrollbar = new VScrollbar( new GScrollbarBackground(), new GScrollbarSlider(), new GScrollbarBtUp(), new GScrollbarBtDown(), true );
+			var sb:VScrollbar = new VScrollbar( new GScrollbarBackground(), new GScrollbarSlider() );
 			sb.x = gContent.width + gContent.x;
 			sb.y = 50;
 			addChild( sb );

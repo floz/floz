@@ -6,6 +6,7 @@
  */
 package elives 
 {
+	import elive.events.NavEvent;
 	import elive.events.SectionEvent;
 	import elive.rubriques.IRubrique;
 	import elive.rubriques.Rubrique;
@@ -14,7 +15,7 @@ package elives
 	import flash.events.Event;
 	import fr.minuit4.core.configuration.Configuration;
 	
-	public class Main extends Rubrique implements IRubrique
+	public class Main extends Rubrique
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -34,7 +35,7 @@ package elives
 		private function removedFromStageHandler(e:Event):void 
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
-			_sectionsController.addEventListener( SectionEvent.SWITCH_SECTION, switchSectionHandler, false, 0, true );
+			_sectionsController.addEventListener( NavEvent.SWITCH_SECTION, switchSectionHandler, false, 0, true );
 		}
 		
 		private function addedToStageHandler(e:Event):void 
@@ -42,10 +43,15 @@ package elives
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
 			
-			_sectionsController.addEventListener( SectionEvent.SWITCH_SECTION, switchSectionHandler, false, 0, true );
+			_sectionsController.addEventListener( NavEvent.SWITCH_SECTION, switchSectionHandler, false, 0, true );
+			
+			if ( _standalone )
+			{
+				navigateTo( 0 );
+			}
 		}
 		
-		private function switchSectionHandler(e:SectionEvent):void 
+		private function switchSectionHandler( e:NavEvent ):void 
 		{
 			e.stopImmediatePropagation();
 			navigateTo( e.sectionId, e.id );
@@ -60,11 +66,6 @@ package elives
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
-		
-		public function navigateTo( sectionId:int, id:int ):void
-		{
-			_sectionsController.navigateTo( sectionId, id );
-		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

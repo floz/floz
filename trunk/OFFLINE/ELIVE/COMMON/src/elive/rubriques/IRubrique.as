@@ -9,7 +9,7 @@ package elive.rubriques
 	
 	public interface IRubrique 
 	{
-		function navigateTo( sectionId:int, id:int ):void;
+		function navigateTo( sectionId:int, id:int = -1 ):void;
 	}
 	
 }

@@ -6,6 +6,7 @@
  */
 package ui.panel.header 
 {
+	import elive.utils.EliveUtils;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.ColorTransform;
@@ -34,12 +35,7 @@ package ui.panel.header
 		
 		public function setDisplay( display:DisplayObject, color:uint ):void
 		{
-			var r:uint = color >> 16;
-			var g:uint = ( color >> 8 ) & 0xff;
-			var b:uint = color & 0xff;
-			var colorTransform:ColorTransform = new ColorTransform( 1, 1, 1, 1, r, g, b );
-			display.transform.colorTransform = colorTransform;
-			
+			display.transform.colorTransform = EliveUtils.getColorTransform( color );			
 			addChild( display );
 		}
 		

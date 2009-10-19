@@ -46,6 +46,7 @@ package fr.minuit4.tools.scrollbars
 		
 		private var _scrollTarget:DisplayObject;
 		private var _scrollRect:Rectangle;
+		private var _registerScrollTargetHeight:Number;
 		
 		private var _scrollSpeed:Number = 10;
 		private var _delta:Number;
@@ -105,8 +106,6 @@ package fr.minuit4.tools.scrollbars
 			_cntSlider.addEventListener( MouseEvent.MOUSE_DOWN, handleSliderDown, false, 0, true );
 			_cntBtUp.addEventListener( MouseEvent.MOUSE_DOWN, handleButtonDown, false, 0, true );
 			_cntBtDown.addEventListener( MouseEvent.MOUSE_DOWN, handleButtonDown, false, 0, true );
-			
-			addEventListener( Event.ENTER_FRAME, handleEnterFrame, false, 0, true );
 		}
 		
 		private function handleSliderDown(e:MouseEvent):void 
@@ -182,11 +181,12 @@ package fr.minuit4.tools.scrollbars
 		
 		private function handleEnterFrame(e:Event):void 
 		{
-			if ( _scrollRect.height != _scrollTarget.height )
+			trace( _scrollTarget.height );
+			if ( _scrollTarget.height != _registerScrollTargetHeight )
 			{
-				_scrollRect.height = _scrollTarget.height;
-				refresh();
+				_registerScrollTargetHeight = _scrollTarget.height;
 			}
+			refresh();
 			
 			if ( int( _scrollRect.y ) != int( _finalScrollY ) )
 			{
@@ -226,7 +226,9 @@ package fr.minuit4.tools.scrollbars
 		{
 			if ( !_scrollTarget ) return;
 			
-			if( refreshSlider ) _cntSlider.y = _posMax * _percentScroll + _btUp.height;
+			_posScrollMax = _registerScrollTargetHeight - _scrollRect.height;
+			
+			if( refreshSlider ) _cntSlider.y = _posMax * _percentScroll + _cntBtUp.height;
 			_finalScrollY = _posScrollMax * _percentScroll;
 		}
 		
@@ -259,9 +261,12 @@ package fr.minuit4.tools.scrollbars
 			_scrollTarget.addEventListener( MouseEvent.MOUSE_WHEEL, handleMouseWheel );
 			
 			_percentScroll = 0;
-			_posScrollMax = ( _scrollTarget.height - _scrollRect.height );
+			_registerScrollTargetHeight = _scrollTarget.height;
+			_posScrollMax = _registerScrollTargetHeight - _scrollRect.height;
 			setPosMax();
 			refresh();
+			
+			addEventListener( Event.ENTER_FRAME, handleEnterFrame, false, 0, true );
 		}
 		
 		public function setBackground( value:DisplayObject ):void
