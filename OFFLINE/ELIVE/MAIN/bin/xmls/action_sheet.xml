@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action>
+	<id>13</id>
+	<title>Chocolat sur la tête</title>
+	<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+	<start>TIMESTAMP</start>
+	<end>TIMESTAMP</end>
+	<created_at>TIMESTAMP</created_at>
+	<status>pending</status>
+	<medias>
+		<picture width="" height="" url="" />
+	</medias>
+	<sender>
+		<user>
+			<id>12</id>
+			<login>floz</login>
+			<location>Paris</location>
+			<points>2554</points>
+			<url>http://minuit4.fr</url>
+			<stats>
+				<pending>2</pending>
+				<current>4</current>
+				<refused>10</refused>
+				<lost>15</lost>
+				<bad>25</bad>
+				<won>200</won>
+			</stats>
+		</user>
+		<actions protected="true">
+			<action id="10">
+				<title>Chocolat sur la tête</title>
+				<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+				<start>TIMESTAMP</start>
+				<end>TIMESTAMP</end>
+				<created_at>TIMESTAMP</created_at>
+				<status>pending</status>
+			</action>
+			<action />
+			<action />
+			<action />
+			<action />
+		</actions>
+	</sender>
+	<targets>
+		<list id="25">
+			<user id="12">
+				<login>floz</login>
+				<points>2554</points>
+				<status>pending</status>
+			</user>
+			<user id="10">
+				<login>spyesx</login>
+				<points>1102</points>
+				<status>pending</status>
+			</user>
+		</list>
+		
+		<list id="21">
+			<user id="15">
+				<login>floz</login>
+				<points>2554</points>
+				<status>pending</status>
+			</user>
+		</list>
+
+		<user id="12">
+			<login>floz</login>
+			<points>2554</points>
+			<status>pending</status>
+		</user>
+	</targets>
+	<comments>
+		<comment id="2">
+			<text>Ouha c'était génial !!</text>
+			<date>89792873</date>
+			<user>
+				<id>12</id>
+				<login>floz</login>
+				<location>Paris</location>
+				<points>2554</points>
+				<url>http://minuit4.fr</url>
+				<stats>
+					<pending>2</pending>
+					<current>4</current>
+					<refused>10</refused>
+					<lost>15</lost>
+					<bad>25</bad>
+					<won>200</won>
+				</stats>
+			</user>
+		</comment>
+	</comments>
+</action>

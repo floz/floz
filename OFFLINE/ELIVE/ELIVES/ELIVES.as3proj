@@ -15,6 +15,7 @@
   <classpaths>
     <class path="src" />
     <class path="..\COMMON\src" />
+    <class path="..\COMMON\swc" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -44,7 +45,9 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <!-- example: <element path="..." /> -->
+    <element path="..\COMMON\swc\assets_scrollbar.swc" />
+    <element path="..\COMMON\swc\assets_fonts.swc" />
+    <element path="swc\assets.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
