@@ -1,37 +1,25 @@
-﻿
-/**
+﻿/**
  * Written by :
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elive.rubriques 
+package elive.rubriques.sections 
 {
-	import elive.rubriques.sections.SectionsController;
 	import flash.display.Sprite;
-	import fr.minuit4.core.configuration.Configuration;
+	import flash.events.Event;
 	
-	public class Rubrique extends Sprite
+	public class Section extends Sprite
 	{
 		
-		// - CONSTS ----------------------------------------------------------------------
-		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
-		
-		protected var _sectionsController:SectionsController;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Rubrique() 
+		public function Section() 
 		{
-			_sectionsController = new SectionsController();
-			addChild( _sectionsController );
 			
-			if ( !stage )
-			{
-				Configuration.baseURL = "../../";
-			}
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -39,6 +27,21 @@ package elive.rubriques
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function activate():void
+		{
+			// ABSTRACT
+		}
+		
+		public function deactivate():void
+		{
+			// ABSTRACT
+		}
+		
+		public function linkTo( id:int ):void
+		{
+			// ABSTRACT
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
