@@ -5,13 +5,17 @@
   <target-player>10.0.0</target-player>
   <compiler>
     <source-path append="true">
-      <path-element>D:\Projets\Projets\OFFLINE\ELIVE\AMIS\src</path-element>
-      <path-element>D:\Projets\Projets\OFFLINE\ELIVE\COMMON\src</path-element>
+      <path-element>D:\Projets\Flash\Projets\OFFLINE\ELIVE\AMIS\src</path-element>
+      <path-element>D:\Projets\Flash\Projets\OFFLINE\ELIVE\COMMON\src</path-element>
+      <path-element>D:\Projets\Flash\Projets\OFFLINE\ELIVE\COMMON\swc</path-element>
       <path-element>D:\Appz\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
+    <library-path append="true">
+      <path-element>D:\Projets\Flash\Projets\OFFLINE\ELIVE\COMMON\swc\assets_content.swc</path-element>
+    </library-path>
   </compiler>
   <file-specs>
-    <path-element>D:\Projets\Projets\OFFLINE\ELIVE\AMIS\src\amis\Main.as</path-element>
+    <path-element>D:\Projets\Flash\Projets\OFFLINE\ELIVE\AMIS\src\amis\Main.as</path-element>
   </file-specs>
   <default-background-color>#FF00FF</default-background-color>
   <default-frame-rate>30</default-frame-rate>

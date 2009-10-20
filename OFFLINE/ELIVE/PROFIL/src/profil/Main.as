@@ -11,7 +11,7 @@ package profil
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	public class Main extends Rubrique implements IRubrique
+	public class Main extends Rubrique
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -21,7 +21,7 @@ package profil
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function Main() 
-		{
+		
 			trace( "0:Rubrique 'Profil' loaded" );
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
@@ -44,7 +44,7 @@ package profil
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function navigateTo( sectionId:int, id:int ):void
+		public override function navigateTo( sectionId:int, id:int = -1 ):void
 		{
 			
 		}
