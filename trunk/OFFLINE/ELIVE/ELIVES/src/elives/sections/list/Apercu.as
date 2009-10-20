@@ -56,17 +56,19 @@ package elives.sections.list
 		
 		private function init():void
 		{
-			EliveUtils.configureText( apercuTop.tf, "elives_list_apercu_title" );
-			EliveUtils.configureText( apercuBg.tf, "elives_list_apercu_content" );
+			EliveUtils.configureText( apercuTop.tf, "elives_list_apercu_title", _challenge.title );
+			EliveUtils.configureText( apercuBg.tf, "elives_list_apercu_content", "(e)maker : " + _challenge.getSender().name );
 			
 			var color:uint;
 			switch( _challenge.getStatus() )
 			{
-				case ChallengeStatus.CURRENT: color = 0xc2d24f; break;
+				case ChallengeStatus.CURRENT: 
+				case ChallengeStatus.ENDED_WON:
+					color = 0xc2d24f; 
+					break;
 				case ChallengeStatus.PENDING: color = 0xf8b63d; break;
 				case ChallengeStatus.ENDED_LOST:
-				case ChallengeStatus.ENDED_REFUSED:
-				case ChallengeStatus.ENDED_WON:
+				case ChallengeStatus.ENDED_REFUSED:				
 					color = 0x965698;
 					break;
 			}

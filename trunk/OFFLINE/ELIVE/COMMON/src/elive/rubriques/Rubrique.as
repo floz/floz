@@ -32,7 +32,7 @@ package elive.rubriques
 			if ( stage )
 			{
 				_standalone = true;
-				Configuration.baseURL = "../../";
+				Configuration.baseURL = "../..";
 				Configuration.pathXML = Configuration.baseURL + "/xmls";
 			}
 		}

@@ -48,7 +48,6 @@
     <element path="swc\assets_icons.swc" />
     <element path="swc\assets_main.swc" />
     <element path="..\COMMON\swc\assets_fonts.swc" />
-    <element path="..\COMMON\swc\assets_scrollbar.swc" />
     <element path="..\COMMON\swc\assets_avatars.swc" />
     <element path="..\COMMON\swc\assets_elives.swc" />
   </libraryPaths>

@@ -11,7 +11,7 @@ package fr.minuit4.tools.scrollbars
 	
 	public interface IScrollbar 
 	{
-		function link( scrollTarget:DisplayObject, scrollRect:Rectangle ):void;
+		function link( scrollTarget:DisplayObject, mask:DisplayObject ):void;
 	}
 	
 }

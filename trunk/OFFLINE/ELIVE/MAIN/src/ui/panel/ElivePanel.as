@@ -11,7 +11,9 @@ package ui.panel
 	import assets.GTooltip;
 	import elive.navigation.NavIds;
 	import elive.navigation.NavManager;
-	import elive.rubriques.Rubrique;
+	import elive.rubriques.IRubrique;
+	import elive.utils.EliveUtils;
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -37,7 +39,7 @@ package ui.panel
 		
 		private var _tooltip:GTooltip;
 		
-		private var _rub:Rubrique;
+		private var _rub:IRubrique;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -80,7 +82,7 @@ package ui.panel
 		{
 			_rub = _assetsLoader.getItemLoaded();
 			_rub.navigateTo( 0 );
-			cntContent.addChild( _rub );
+			cntContent.addChild( _rub as DisplayObject );
 			
 			_assetsLoader.removeEventListener( Event.COMPLETE, rubLoadedHandler );
 			_assetsLoader.dispose();
@@ -111,7 +113,9 @@ package ui.panel
 			_tooltip.y = 100;
 			addChild( _tooltip );
 			
-			var format:TextFormat = new TextFormat( new FAkkuratBold().fontName );
+			//EliveUtils.configureText( _tooltip.tf, "elive_panel_tooltip" );
+			var format:TextFormat = new TextFormat( new FAkkuratBold().fontName ); // TODO: configurer _tooltip.tf avec la css
+			trace( format.font );
 			_tooltip.tf.embedFonts = true;
 			_tooltip.tf.defaultTextFormat = format;
 		}

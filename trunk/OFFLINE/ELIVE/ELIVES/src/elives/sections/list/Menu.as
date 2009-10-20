@@ -8,6 +8,8 @@ package elives.sections.list
 {
 	import assets.GOngletDroit;
 	import assets.GOngletGauche;
+	import elive.events.NavEvent;
+	import elive.rubriques.SousRubsIds;
 	import elive.utils.EliveUtils;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
@@ -23,6 +25,7 @@ package elives.sections.list
 		
 		private var _ongletGauche:GOngletGauche;
 		private var _ongletDroit:GOngletDroit;
+		private var _sousMenu:SousMenu;
 		
 		private var _selectedOnglet:Sprite;
 		
@@ -68,9 +71,13 @@ package elives.sections.list
 		private function init():void
 		{			
 			_ongletDroit = new GOngletDroit();
+			_ongletDroit.buttonMode = true;
+			_ongletDroit.mouseChildren = false;
 			addChild( _ongletDroit );
 			
 			_selectedOnglet = _ongletGauche = new GOngletGauche();
+			_ongletGauche.buttonMode = true;
+			_ongletGauche.mouseChildren = false;
 			addChild( _ongletGauche );
 			
 			switchState();
@@ -78,18 +85,24 @@ package elives.sections.list
 		
 		private function switchState():void
 		{
+			var navEvent:NavEvent = new NavEvent( NavEvent.SWITCH_SOUS_RUBRIQUE );
 			if ( _selectedOnglet == _ongletDroit )
 			{
 				_ongletDroit.bg.transform.colorTransform = EliveUtils.getColorTransform( 0xffffff );
 				_ongletGauche.bg.transform.colorTransform = EliveUtils.getColorTransform( 0xC7C8C9 );
 				addChild( _ongletDroit );
+				
+				navEvent.navId = SousRubsIds.ELIVES_LIST_ENVOYES;
 			}
 			else 
 			{
 				_ongletDroit.bg.transform.colorTransform = EliveUtils.getColorTransform( 0xC7C8C9 );
 				_ongletGauche.bg.transform.colorTransform = EliveUtils.getColorTransform( 0xffffff );
 				addChild( _ongletGauche );
+				
+				navEvent.navId = SousRubsIds.ELIVES_LIST_RECUS;				
 			}
+			dispatchEvent( navEvent );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

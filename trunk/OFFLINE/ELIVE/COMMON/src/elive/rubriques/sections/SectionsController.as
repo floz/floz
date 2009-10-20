@@ -61,11 +61,13 @@ package elive.rubriques.sections
 			_sections = new Vector.<Section>( 0, false );
 			
 			_mask = new GPanelMask();
+			_mask.x = -5;
 			addChild( _mask );
 			
 			_cnt = new Sprite();
 			addChild( _cnt );
 			
+			_cnt.cacheAsBitmap = 
 			_mask.cacheAsBitmap = true;
 			_cnt.mask = _mask;
 		}
