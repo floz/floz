@@ -3,23 +3,34 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elive.rubriques.sections 
+package elives.sections.list 
 {
-	import flash.display.Sprite;
-	import flash.events.Event;
+	import assets.GBtSousMenu;
+	import elive.utils.EliveUtils;
+	import fr.minuit4.motion.M4Tween;
 	
-	public class Section extends Sprite
+	public class SousMenuItem extends GBtSousMenu
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
+		public var title:String;
+		public var sousRubId:String;
+		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Section() 
+		public function SousMenuItem( title:String, sousRubId:String ) 
 		{
+			this.name = name;
+			this.sousRubId = sousRubId;
 			
+			EliveUtils.configureText( tf, "elives_sousmenu_bt", title );
+			
+			bg.alpha = 0;
+			
+			this.mouseChildren = false;
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -28,21 +39,16 @@ package elive.rubriques.sections
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function activate():Boolean
+		public function over():void
 		{
-			// ABSTRACT
-			return false;
+			bg.alpha = .6;
+			M4Tween.to( bg, .25, { alpha: 1 } );
 		}
 		
-		public function deactivate():Boolean
+		public function out():void
 		{
-			// ABSTRACT
-			return false;
-		}
-		
-		public function linkTo( id:int ):void
-		{
-			// ABSTRACT
+			bg.alpha = .4;
+			M4Tween.to( bg, .25, { alpha: 0 } );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

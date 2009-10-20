@@ -7,7 +7,6 @@
 package elives 
 {
 	import elive.events.NavEvent;
-	import elive.events.SectionEvent;
 	import elive.rubriques.IRubrique;
 	import elive.rubriques.Rubrique;
 	import elives.sections.list.ElivesList;

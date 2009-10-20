@@ -48,6 +48,8 @@
     <element path="..\COMMON\swc\assets_scrollbar.swc" />
     <element path="..\COMMON\swc\assets_fonts.swc" />
     <element path="..\COMMON\swc\assets_elives.swc" />
+    <element path="swc\assets_elives.swc" />
+    <element path="..\COMMON\swc\assets_content.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -80,6 +82,6 @@
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />
-    <option testMovie="NewWindow" />
+    <option testMovie="ExternalPlayer" />
   </options>
 </project>

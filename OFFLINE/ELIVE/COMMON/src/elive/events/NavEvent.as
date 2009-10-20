@@ -7,6 +7,7 @@
 	{
 		public static const SWITCH_RUBRIQUE:String = "navevent_switch_rubrique";
 		public static const SWITCH_SECTION:String = "navevent_switch_section";
+		public static const SWITCH_SOUS_RUBRIQUE:String = "navevent_switch_sous_rubrique";
 		
 		public var navId:String = NavIds.NONE;
 		public var sectionId:int = -1;

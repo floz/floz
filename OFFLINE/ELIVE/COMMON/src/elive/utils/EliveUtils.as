@@ -17,11 +17,15 @@ package elive.utils
 		public static function configureText( tf:TextField, cssClass:String, text:String = null ):void
 		{
 			if ( !Config.getProperty( "css" ) ) 
+			{
+				if ( text ) tf.text = text;
 				return;
+			}
 			
 			tf.embedFonts = true;
 			tf.styleSheet = Config.getProperty( "css" );
-			tf.text = "<span class='" + cssClass + "'>" + ( !text ? tf.text : text ) + "</span>";
+			tf.htmlText = "<span class='" + cssClass + "'>" + ( !text ? tf.text : text ) + "</span>";
+			trace( text );
 		}
 		
 		public static function getColorTransform( color:uint ):ColorTransform

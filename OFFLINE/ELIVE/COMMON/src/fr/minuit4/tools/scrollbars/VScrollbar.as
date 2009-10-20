@@ -25,6 +25,9 @@ package fr.minuit4.tools.scrollbars
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
+		public static const DRAG_START:String = "vscrollbar_drag_start";
+		public static const DRAG_STOP:String = "vscrollbar_drag_stop";
+		
 		private const BLUR:BlurFilter = new BlurFilter( 0, 0, 3 );
 		private const DRAG_RECTANGLE:Rectangle = new Rectangle();
 		
@@ -37,6 +40,8 @@ package fr.minuit4.tools.scrollbars
 		private var _cntBtUp:Sprite;
 		private var _cntBtDown:Sprite;
 		
+		private var _baseY:Number;
+		
 		private var _beginY:Number;
 		private var _posMax:Number;
 		private var _percentScroll:Number;
@@ -45,7 +50,7 @@ package fr.minuit4.tools.scrollbars
 		private var _finalSliderY:Number;
 		
 		private var _scrollTarget:DisplayObject;
-		private var _scrollRect:Rectangle;
+		private var _mask:DisplayObject;
 		private var _registerScrollTargetHeight:Number;
 		
 		private var _scrollSpeed:Number = 10;
@@ -77,6 +82,8 @@ package fr.minuit4.tools.scrollbars
 			if ( !_cntBtUp ) _cntBtUp = new Sprite();
 			if ( !_cntBtDown ) _cntBtDown = new Sprite();
 			
+			_cntSlider.buttonMode = true;
+			
 			addEventListener( Event.ADDED_TO_STAGE, handleAddedToStage );
 		}
 		
@@ -91,6 +98,9 @@ package fr.minuit4.tools.scrollbars
 			_cntBtUp.removeEventListener( MouseEvent.MOUSE_DOWN, handleButtonDown );
 			_cntBtDown.removeEventListener( MouseEvent.MOUSE_DOWN, handleButtonDown );
 			
+			_scrollTarget.filters = null;
+			_scrollTimer = null;
+			
 			removeEventListener( Event.ENTER_FRAME, handleEnterFrame );
 		}
 		
@@ -99,8 +109,7 @@ package fr.minuit4.tools.scrollbars
 			removeEventListener( Event.ADDED_TO_STAGE, handleAddedToStage );
 			addEventListener( Event.REMOVED_FROM_STAGE, handleRemovedFromStage );
 			
-			reorganize( true );
-			
+			reorganize( true );			
 			_scrollTimer = new Timer( 200 );
 			
 			_cntSlider.addEventListener( MouseEvent.MOUSE_DOWN, handleSliderDown, false, 0, true );
@@ -121,6 +130,7 @@ package fr.minuit4.tools.scrollbars
 			_cntSlider.startDrag( false, DRAG_RECTANGLE );
 			
 			handleMouseMove( e );
+			dispatchEvent( new Event( VScrollbar.DRAG_START ) );
 		}
 		
 		private function handleMouseUp(e:MouseEvent):void 
@@ -130,6 +140,8 @@ package fr.minuit4.tools.scrollbars
 			_cntSlider.stopDrag();
 			
 			_finalSliderY = _cntSlider.y;
+			
+			dispatchEvent( new Event( VScrollbar.DRAG_STOP ) );
 		}
 		
 		private function handleMouseMove(e:MouseEvent):void 
@@ -181,26 +193,24 @@ package fr.minuit4.tools.scrollbars
 		
 		private function handleEnterFrame(e:Event):void 
 		{
-			trace( _scrollTarget.height );
-			if ( _scrollTarget.height != _registerScrollTargetHeight )
+			if ( ( _scrollTarget.height + _scrollTarget.x + 10 ) != _registerScrollTargetHeight )
 			{
-				_registerScrollTargetHeight = _scrollTarget.height;
+				setPosScrollMax();
+				refresh();
 			}
-			refresh();
 			
-			if ( int( _scrollRect.y ) != int( _finalScrollY ) )
+			if ( int( _scrollTarget.y ) != int( _finalScrollY ) )
 			{
-				_scrollRect.y -= ( _scrollRect.y - _finalScrollY ) * .3;
-				_scrollTarget.scrollRect = _scrollRect;
+				_scrollTarget.y -= ( _scrollTarget.y - _finalScrollY ) * .3;
 				
 				if ( _enableBlur )
 				{
-					var diff:Number = _finalScrollY - _scrollRect.y;
+					var diff:Number = _finalScrollY - _scrollTarget.y;
 					diff *= .2;
 					BLUR.blurY = diff > 0 ? diff : -diff;
 					_scrollTarget.filters = [ BLUR ];
 					
-					if ( int( _scrollRect.y ) == int( _finalScrollY ) ) _scrollTarget.filters = [];
+					if ( int( _scrollTarget.y ) == int( _finalScrollY ) ) _scrollTarget.filters = [];
 				}
 			}
 		}
@@ -226,10 +236,8 @@ package fr.minuit4.tools.scrollbars
 		{
 			if ( !_scrollTarget ) return;
 			
-			_posScrollMax = _registerScrollTargetHeight - _scrollRect.height;
-			
-			if( refreshSlider ) _cntSlider.y = _posMax * _percentScroll + _cntBtUp.height;
-			_finalScrollY = _posScrollMax * _percentScroll;
+			if ( refreshSlider ) _cntSlider.y = _posMax * _percentScroll + _cntBtUp.height;
+			_finalScrollY = _posScrollMax * _percentScroll + _baseY;
 		}
 		
 		private function onScroll():void
@@ -248,21 +256,32 @@ package fr.minuit4.tools.scrollbars
 			_posMax = _cntBackground.height - _cntSlider.height;
 		}
 		
+		private function setPosScrollMax():void
+		{
+			_registerScrollTargetHeight = _scrollTarget.height + 10;
+			
+			_posScrollMax = _mask.height - _registerScrollTargetHeight; 
+			if ( _posScrollMax > 0 ) _posScrollMax = -_posScrollMax; // bug peut etre
+		}
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function link( scrollTarget:DisplayObject, scrollRect:Rectangle ):void
+		public function link( scrollTarget:DisplayObject, mask:DisplayObject ):void
 		{
 			if ( !scrollTarget ) return;
 			
 			this._scrollTarget = scrollTarget;
-			this._scrollRect = scrollRect;
+			this._mask = mask;
 			
-			_scrollTarget.scrollRect = _scrollRect;
+			_baseY = _scrollTarget.y;
+			_scrollTarget.cacheAsBitmap = true;
+			_mask.cacheAsBitmap = true;
+			_scrollTarget.mask = _mask;
+			
 			_scrollTarget.addEventListener( MouseEvent.MOUSE_WHEEL, handleMouseWheel );
 			
 			_percentScroll = 0;
-			_registerScrollTargetHeight = _scrollTarget.height;
-			_posScrollMax = _registerScrollTargetHeight - _scrollRect.height;
+			setPosScrollMax();
 			setPosMax();
 			refresh();
 			
