@@ -59,7 +59,7 @@ package elives
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function init():void
-		{			
+		{
 			_sectionsController.addSection( new ElivesList(), ElivesList.SECTION_ID );
 			_sectionsController.addSection( new ElivesSheet(), ElivesSheet.SECTION_ID );
 		}

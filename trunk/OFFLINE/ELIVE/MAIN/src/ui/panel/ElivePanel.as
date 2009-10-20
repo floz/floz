@@ -80,6 +80,8 @@ package ui.panel
 		
 		private function rubLoadedHandler(e:Event):void 
 		{
+			while ( cntContent.numChildren ) cntContent.removeChildAt( 0 );
+			
 			_rub = _assetsLoader.getItemLoaded();
 			_rub.navigateTo( 0 );
 			cntContent.addChild( _rub as DisplayObject );

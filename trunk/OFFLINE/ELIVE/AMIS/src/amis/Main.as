@@ -6,14 +6,13 @@
  */
 package amis 
 {
-	import elive.events.EliveEvent;
 	import elive.navigation.NavIds;
 	import elive.navigation.NavManager;
 	import elive.rubriques.IRubrique;
 	import elive.rubriques.Rubrique;
 	import flash.events.Event;
 	
-	public class Main extends Rubrique implements IRubrique
+	public class Main extends Rubrique
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -46,7 +45,7 @@ package amis
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function navigateTo( sectionId:int, id:int ):void
+		public override function navigateTo( sectionId:int, id:int = -1 ):void
 		{
 			
 		}

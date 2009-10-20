@@ -191,7 +191,6 @@ package elives.sections.list
 		private function build():void
 		{
 			var apercu:Apercu;
-			trace( _challenges );
 			var i:int, n:int = _challenges.length, py:int;
 			for ( ; i < n; ++i )
 			{

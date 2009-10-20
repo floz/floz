@@ -45,6 +45,7 @@ package elive.rubriques
 		
 		public function navigateTo( sectionId:int, id:int = -1 ):void
 		{
+			trace( "Rubrique.navigateTo > sectionId : " + sectionId + ", id : " + id );
 			_sectionsController.navigateTo( sectionId, id );
 		}
 		
