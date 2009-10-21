@@ -4,11 +4,11 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elives.sections.list 
+package elives.sections.list.lists
 {
-	import elive.rubriques.sousrub.SousRub;
+	import elives.sections.list.SousRubsIds;
 	
-	public class ListEnvoyes extends SousRub
+	public class ListRecus extends List
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -19,7 +19,7 @@ package elives.sections.list
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function ListEnvoyes() 
+		public function ListRecus() 
 		{
 			
 		}
@@ -30,8 +30,23 @@ package elives.sections.list
 		
 		override protected function buildSousMenu():void 
 		{
-			_sousMenu.addItem( "En cours", SousRubsIds.EN_COURS, 0x444444 );
-			_sousMenu.addItem( "Terminés", SousRubsIds.TERMINES, 0x444444 );
+			_sousMenu.addItem( "En cours", SousRubsIds.EN_COURS, "elives_sousmenu_bt_over_encours" );
+			_sousMenu.addItem( "En attente", SousRubsIds.EN_ATTENTE, "elives_sousmenu_bt_over_enattente" );
+			_sousMenu.addItem( "Terminés", SousRubsIds.TERMINES, "elives_sousmenu_bt_over_termines" );
+			
+			_currentSousRub = SousRubsIds.EN_COURS;
+			
+			super.buildSousMenu();
+		}
+		
+		override protected function onSwitchSousRub():void 
+		{
+			switch( _currentSousRub )
+			{
+				case SousRubsIds.EN_COURS: loadXML( "actions_list_encours.xml" ); break;
+				case SousRubsIds.EN_ATTENTE: loadXML( "actions_list_attente.xml" ); break;
+				case SousRubsIds.TERMINES: loadXML( "actions_list_termines.xml" ); break;
+			}
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

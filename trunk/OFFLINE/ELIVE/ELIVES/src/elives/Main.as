@@ -25,7 +25,7 @@ package elives
 		
 		public function Main() 
 		{
-			super();
+			//super();
 			
 			init();		
 		}
@@ -35,7 +35,7 @@ package elives
 		private function removedFromStageHandler(e:Event):void 
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
-			_sectionsController.addEventListener( NavEvent.SWITCH_SECTION, switchSectionHandler, false, 0, true );
+			_sectionsController.removeEventListener( NavEvent.SWITCH_SECTION, switchSectionHandler );
 		}
 		
 		private function addedToStageHandler(e:Event):void 

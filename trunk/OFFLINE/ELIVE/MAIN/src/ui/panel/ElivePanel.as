@@ -6,9 +6,10 @@
  */
 package ui.panel
 {
-	import assets.fonts.FAkkuratBold;
+	//import assets.fonts.FAkkuratBold;
 	import assets.GBackground;
 	import assets.GTooltip;
+	import aze.motion.Eaze;
 	import elive.navigation.NavIds;
 	import elive.navigation.NavManager;
 	import elive.rubriques.IRubrique;
@@ -18,10 +19,10 @@ package ui.panel
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import fr.minuit4.core.configuration.Config;
-	import fr.minuit4.motion.easing.Quad;
-	import fr.minuit4.motion.M4Tween;
 	import fr.minuit4.net.loaders.types.AssetsLoader;
 	import ui.panel.header.PanelHeader;
 	
@@ -36,6 +37,8 @@ package ui.panel
 		private var _sectionId:int;
 		private var _id:int;
 		private var _assetsLoader:AssetsLoader;
+		
+		private var _tooltipField:TextField;
 		
 		private var _tooltip:GTooltip;
 		
@@ -68,9 +71,7 @@ package ui.panel
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
 			
-			_tooltip.alpha = .8;
-			_tooltip.y = 100;
-			M4Tween.to( _tooltip, .2, { y: 45, alpha: 1, ease: Quad.easeOut } );
+			Eaze.from( _tooltip, .2, { y: 100, alpha: .8 } );
 			
 			btClose.addEventListener( MouseEvent.MOUSE_DOWN, btCloseDownHandler, false, 0, true );
 		}
@@ -86,8 +87,7 @@ package ui.panel
 			_rub.navigateTo( 0 );
 			cntContent.addChild( _rub as DisplayObject );
 			
-			cntContent.alpha = .6;
-			M4Tween.to( cntContent, .25, { alpha: 1 } );
+			Eaze.from( cntContent, .25, { alpha: .6 } );
 			
 			cntTooltip.addChild( _tooltip );
 			
@@ -117,12 +117,9 @@ package ui.panel
 		{
 			_tooltip = new GTooltip();
 			_tooltip.x = this.width * .5 - _tooltip.width * .5;
-			_tooltip.y = 100;
+			_tooltip.y = 45;
 			
-			//EliveUtils.configureText( _tooltip.tf, "elive_panel_tooltip" );
-			var format:TextFormat = new TextFormat( new FAkkuratBold().fontName ); // TODO: configurer _tooltip.tf avec la css
-			_tooltip.tf.embedFonts = true;
-			_tooltip.tf.defaultTextFormat = format;
+			EliveUtils.configureText( _tooltip.tf, "elive_panel_tooltip", "Mes (e)buddies" );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
@@ -153,7 +150,7 @@ package ui.panel
 				case NavIds.PROFIL: text = "Mon profil"; break;
 				default: text = "Minuit4"; break;
 			}
-			_tooltip.tf.text = text;
+			EliveUtils.configureText( _tooltip.tf, "elive_panel_tooltip", text );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

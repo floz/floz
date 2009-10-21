@@ -42,6 +42,11 @@ package elives.sections.sheet
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
+		override public function linkTo( id:int ):void 
+		{
+			
+		}
+		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
 	}

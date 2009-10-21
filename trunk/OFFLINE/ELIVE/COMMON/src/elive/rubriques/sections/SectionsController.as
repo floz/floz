@@ -6,10 +6,10 @@
 package elive.rubriques.sections 
 {
 	import assets.GPanelMask;
+	import aze.motion.Eaze;
 	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import fr.minuit4.motion.M4Tween;
 	
 	public class SectionsController extends Sprite
 	{
@@ -45,7 +45,15 @@ package elive.rubriques.sections
 			
 			_currentSection = null;
 			_newSection = null;
-			_sections = null;
+			
+			removeChild( _cnt );
+			_cnt = null;
+			
+			var i:int, n:int = _sections.length;
+			for ( ; i < n; ++i )
+				_sections[ i ].dispose();
+			
+			_sections = null;		
 		}
 		
 		private function addedToStageHandler(e:Event):void 
@@ -61,7 +69,7 @@ package elive.rubriques.sections
 			_sections = new Vector.<Section>( 0, false );
 			
 			_mask = new GPanelMask();
-			_mask.x = -5;
+			_mask.x = -8;
 			addChild( _mask );
 			
 			_cnt = new Sprite();
@@ -82,25 +90,25 @@ package elive.rubriques.sections
 			if ( _currentSectionId < sectionId )
 			{
 				_newSection.x = _posX;
-				_cnt.addChild( _newSection );
+				_cnt.addChild( _newSection );				
 				
-				M4Tween.to( _newSection, .25, { x: _newSection.x -_posX } );
-				M4Tween.to( _currentSection, .25, { x: _currentSection.x -_posX } ).onComplete( configNewSection );
+				Eaze.to( _newSection, .25, { x: _newSection.x -_posX } );
+				Eaze.to( _currentSection, .25, { x: _currentSection.x -_posX } ).onComplete( configNewSection );
 			}
 			else
 			{
 				_newSection.x = -_posX;
 				_cnt.addChild( _newSection );
 				
-				M4Tween.to( _newSection, .25, { x: _newSection.x + _posX } );
-				M4Tween.to( _currentSection, .25, { x: _currentSection.x + _posX } ).onComplete( configNewSection );
+				Eaze.to( _newSection, .25, { x: _newSection.x + _posX } );
+				Eaze.to( _currentSection, .25, { x: _currentSection.x + _posX } ).onComplete( configNewSection );
 			}
 		}
 		
 		private function configNewSection():void
 		{
-			M4Tween.killTweensOf( _newSection );
-			M4Tween.killTweensOf( _currentSection );
+			Eaze.killTweensOf( _newSection );
+			Eaze.killTweensOf( _currentSection );
 			
 			_cnt.removeChild( _currentSection );
 			_currentSection = _newSection;
@@ -130,6 +138,7 @@ package elive.rubriques.sections
 				_currentSection = _sections[ sectionId ];
 				if ( id >= 0 ) _currentSection.linkTo( id );
 				_cnt.addChild( _currentSection );
+				_currentSection.activate();
 			}
 			_currentSectionId = sectionId;
 		}

@@ -8,6 +8,9 @@ package elives.sections.list
 {
 	import elive.events.NavEvent;
 	import elive.rubriques.sections.Section;
+	import elives.sections.list.lists.List;
+	import elives.sections.list.lists.ListEnvoyes;
+	import elives.sections.list.lists.ListRecus;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -26,6 +29,8 @@ package elives.sections.list
 		private var _activated:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
+		
+		public static const SECTION_ID:int = 0;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -46,13 +51,16 @@ package elives.sections.list
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
+			
+			_currentSousRub = SousRubsIds.LIST_RECUS;
+			onSwitchSousRub();
 		}
 		
 		private function switchSousRubHandler( e:NavEvent ):void
 		{
 			e.stopImmediatePropagation();
 			
-			if ( _currentSousRub ==e.navId ) 
+			if ( _currentSousRub == e.navId ) 
 				return;
 			
 			_currentSousRub = e.navId;
@@ -91,15 +99,26 @@ package elives.sections.list
 		override public function activate():void
 		{
 			if ( _activated ) return;
-			_menu.addEventListener( NavEvent.SWITCH_RUBRIQUE, switchSousRubHandler, false, 0, true );
+			_menu.addEventListener( NavEvent.SWITCH_SOUS_RUBRIQUE, switchSousRubHandler, false, 0, true );
 			_activated = true;
 		}
 		
 		override public function deactivate():void
 		{
 			if ( !_activated ) return;
-			_menu.removeEventListener( NavEvent.SWITCH_RUBRIQUE, switchSousRubHandler );
+			_menu.removeEventListener( NavEvent.SWITCH_SOUS_RUBRIQUE, switchSousRubHandler );
 			_activated = false;
+		}
+		
+		override public function dispose():void
+		{
+			_menu.dispose();
+			_menu = null;
+			
+			List( _cntSousRub.getChildAt( 0 ) ).dispose();
+			_cntSousRub = null;
+			
+			if( hasEventListener( Event.ADDED_TO_STAGE ) ) removeEventListener( Event.ADDED_TO_STAGE, addedToStageHandler );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

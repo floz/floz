@@ -7,8 +7,9 @@ package elive.rubriques.sections
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import fr.minuit4.core.interfaces.IDisposable;
 	
-	public class Section extends Sprite
+	public class Section extends Sprite implements IDisposable
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -28,19 +29,22 @@ package elive.rubriques.sections
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function activate():Boolean
+		public function activate():void
 		{
 			// ABSTRACT
-			return false;
 		}
 		
-		public function deactivate():Boolean
+		public function deactivate():void
 		{
 			// ABSTRACT
-			return false;
 		}
 		
 		public function linkTo( id:int ):void
+		{
+			// ABSTRACT
+		}
+		
+		public function dispose():void
 		{
 			// ABSTRACT
 		}
