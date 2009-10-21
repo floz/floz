@@ -1,11 +1,13 @@
 ﻿
 
 
-.elive_panel_tooltip { font-family: Akkurat; font-weight: bold; }
+.elive_panel_tooltip { font-family: Akkurat-Bold; font-size: 15; font-weight: bold; color: #ffffff; text-align: center; }
 
 
 .elives_menu_bt { font-family: Akkurat; color: #000000; }
-.elives_sousmenu_bt { font-family: Akkurat; color: #000000; }
+.elives_sousmenu_bt_over_encours { font-family: Akkurat; color: #c2d24f; }
+.elives_sousmenu_bt_over_enattente { font-family: Akkurat; color: #f8b63d; }
+.elives_sousmenu_bt_over_termines { font-family: Akkurat; color: #965698; }
 
 .elives_list_apercu_title { font-family: Akkurat; }
 .elives_list_apercu_content { font-family: Akkurat; }

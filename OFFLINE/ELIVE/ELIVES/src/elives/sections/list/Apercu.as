@@ -6,6 +6,7 @@
 package elives.sections.list 
 {
 	import assets.GApercu;
+	import aze.motion.Eaze;
 	import elive.core.challenges.Challenge;
 	import elive.core.challenges.ChallengeStatus;
 	import elive.utils.EliveUtils;
@@ -13,7 +14,6 @@ package elives.sections.list
 	import flash.text.TextField;
 	import fr.minuit4.core.configuration.Config;
 	import fr.minuit4.core.configuration.Configuration;
-	import fr.minuit4.motion.M4Tween;
 	
 	public class Apercu extends GApercu
 	{
@@ -40,10 +40,13 @@ package elives.sections.list
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler );
 			
-			_challenge = null;			
-			M4Tween.killTweensOf( apercuOver );
+			Eaze.killTweensOf( apercuOver );
 			
-			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
+			apercuBg = null;
+			apercuOver = null;
+			apercuTop = null;
+			
+			_challenge = null;	
 		}
 		
 		private function addedToStageHandler(e:Event):void 
@@ -83,13 +86,13 @@ package elives.sections.list
 		public function over():void
 		{
 			apercuOver.alpha = .6;
-			M4Tween.to( apercuOver, .25, { alpha: 1 } );
+			Eaze.to( apercuOver, .25, { alpha: 1 } );
 		}
 		
 		public function out():void
 		{
 			apercuOver.alpha = .4;
-			M4Tween.to( apercuOver, .25, { alpha: 0 } );
+			Eaze.to( apercuOver, .25, { alpha: 0 } );
 		}
 		
 		public function getId():int { return _challenge.id; }

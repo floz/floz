@@ -14,8 +14,9 @@ package elives.sections.list
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import fr.minuit4.core.interfaces.IDisposable;
 	
-	public class Menu extends Sprite
+	public class Menu extends Sprite implements IDisposable
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -24,7 +25,6 @@ package elives.sections.list
 		
 		private var _ongletGauche:GOngletGauche;
 		private var _ongletDroit:GOngletDroit;
-		private var _sousMenu:SousMenu;
 		
 		private var _selectedOnglet:Sprite;
 		
@@ -32,6 +32,9 @@ package elives.sections.list
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
+		/**
+		 * Le menu du haut (les deux onglets nuageux).
+		 */
 		public function Menu() 
 		{
 			init();
@@ -43,6 +46,9 @@ package elives.sections.list
 		private function removedFromStageHandler(e:Event):void 
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
+			
+			_ongletGauche.removeEventListener( MouseEvent.MOUSE_DOWN, mouseDownHandler );
+			_ongletDroit.removeEventListener( MouseEvent.MOUSE_DOWN, mouseDownHandler );
 			
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
@@ -75,10 +81,14 @@ package elives.sections.list
 			_ongletDroit.y = -1;
 			addChild( _ongletDroit );
 			
+			EliveUtils.configureText( _ongletDroit.tf, "elives_menu_bt" );
+			
 			_selectedOnglet = _ongletGauche = new GOngletGauche();
 			_ongletGauche.buttonMode = true;
 			_ongletGauche.mouseChildren = false;
 			addChild( _ongletGauche );
+			
+			EliveUtils.configureText( _ongletGauche.tf, "elives_menu_bt" );
 			
 			switchState();
 		}
@@ -112,6 +122,13 @@ package elives.sections.list
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function dispose():void
+		{
+			_ongletDroit = null;
+			_ongletGauche = null;
+			_selectedOnglet = null;
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

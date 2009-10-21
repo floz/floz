@@ -5,20 +5,20 @@
  */
 package  elive.ui.sousmenu 
 {
-	import assets.fonts.FAkkurat;
 	import assets.GBtSousMenu;
+	import aze.motion.Eaze;
 	import elive.utils.EliveUtils;
-	import flash.text.TextFormat;
+	import flash.events.Event;
 	import fr.minuit4.core.interfaces.IDisposable;
 	import fr.minuit4.motion.M4Tween;
+	import gs.TweenLite;
 	
-	public class SousMenuItem extends GBtSousMenu implements IDisposable
+	public class SousMenuItem extends GBtSousMenu
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _overColor:uint;
-		private var _format:TextFormat;
+		private var _overClass:String;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -27,51 +27,57 @@ package  elive.ui.sousmenu
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function SousMenuItem( title:String, sousRubId:String, overColor:uint ) 
+		public function SousMenuItem( title:String, sousRubId:String, overClass:String ) 
 		{
 			this.title = title;
 			this.sousRubId = sousRubId;
-			this._overColor = overColor;
+			this._overClass = overClass;
 			
 			init();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
+		private function removedFromStageHandler(e:Event):void 
+		{
+			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
+			Eaze.killTweensOf( bg );
+		}
+		
+		private function addedToStageHandler(e:Event):void 
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler );
+		}
+		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function init():void
 		{
-			_format = new TextFormat( new FAkkurat().fontName );
-			_format.color = 0x000000;
-			tf.defaultTextFormat = _format;
+			EliveUtils.configureText( tf, "elives_menu_bt", this.title );
 			
 			bg.alpha = 0;			
 			this.mouseChildren = false;
+			
+			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function over():void
 		{
-			_format.color = _overColor;			
+			EliveUtils.configureText( tf, _overClass, this.title );
 			
 			bg.alpha = .6;
-			M4Tween.to( bg, .25, { alpha: 1 } );
+			Eaze.to( bg, .25, { alpha: 1 } );
 		}
 		
 		public function out():void
 		{
-			_format.color = 0x000000;
+			EliveUtils.configureText( tf, "elives_menu_bt", this.title );
 			
 			bg.alpha = .4;
-			M4Tween.to( bg, .25, { alpha: 0 } );
-		}
-		
-		public function dispose():void
-		{
-			_format = null;
-			M4Tween.killTweensOf( bg );
+			Eaze.to( bg, .25, { alpha: 0 } );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

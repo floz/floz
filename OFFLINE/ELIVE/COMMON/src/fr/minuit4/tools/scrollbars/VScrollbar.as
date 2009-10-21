@@ -16,11 +16,12 @@ package fr.minuit4.tools.scrollbars
 	import flash.filters.BlurFilter;
 	import flash.geom.Rectangle;
 	import flash.utils.Timer;
+	import fr.minuit4.core.interfaces.IDisposable;
 	import fr.minuit4.motion.easing.Linear;
 	import fr.minuit4.motion.easing.Quad;
 	import fr.minuit4.motion.M4Tween;
 	
-	public class VScrollbar extends Sprite implements IScrollbar
+	public class VScrollbar extends Sprite implements IScrollbar, IDisposable
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -84,7 +85,7 @@ package fr.minuit4.tools.scrollbars
 			
 			_cntSlider.buttonMode = true;
 			
-			addEventListener( Event.ADDED_TO_STAGE, handleAddedToStage );
+			addEventListener( Event.ADDED_TO_STAGE, handleAddedToStage, false, 0, true );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -92,22 +93,25 @@ package fr.minuit4.tools.scrollbars
 		private function handleRemovedFromStage(e:Event):void 
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage);
-			addEventListener( Event.ADDED_TO_STAGE, handleAddedToStage );
 			
 			_cntSlider.removeEventListener( MouseEvent.MOUSE_DOWN, handleSliderDown );
 			_cntBtUp.removeEventListener( MouseEvent.MOUSE_DOWN, handleButtonDown );
 			_cntBtDown.removeEventListener( MouseEvent.MOUSE_DOWN, handleButtonDown );
 			
+			if ( stage.hasEventListener( MouseEvent.MOUSE_UP ) ) stage.removeEventListener( MouseEvent.MOUSE_UP, handleMouseUp );
+			if ( stage.hasEventListener( MouseEvent.MOUSE_MOVE ) ) stage.removeEventListener( MouseEvent.MOUSE_MOVE, handleMouseMove );
+			
 			_scrollTarget.filters = null;
 			_scrollTimer = null;
 			
 			removeEventListener( Event.ENTER_FRAME, handleEnterFrame );
+			addEventListener( Event.ADDED_TO_STAGE, handleAddedToStage, false, 0, true );
 		}
 		
 		private function handleAddedToStage(e:Event):void 
 		{
 			removeEventListener( Event.ADDED_TO_STAGE, handleAddedToStage );
-			addEventListener( Event.REMOVED_FROM_STAGE, handleRemovedFromStage );
+			addEventListener( Event.REMOVED_FROM_STAGE, handleRemovedFromStage, false, 0, true );
 			
 			reorganize( true );			
 			_scrollTimer = new Timer( 200 );
@@ -286,6 +290,17 @@ package fr.minuit4.tools.scrollbars
 			refresh();
 			
 			addEventListener( Event.ENTER_FRAME, handleEnterFrame, false, 0, true );
+		}
+		
+		public function setPercent( value:Number ):void
+		{
+			_percentScroll = 0;
+			refresh();
+		}
+		
+		public function dispose():void
+		{			
+			if ( hasEventListener( Event.ADDED_TO_STAGE ) ) removeEventListener( Event.ADDED_TO_STAGE, handleAddedToStage );
 		}
 		
 		public function setBackground( value:DisplayObject ):void
