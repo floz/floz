@@ -33,7 +33,6 @@ package elive.rubriques.sections
 		
 		public function SectionsController() 
 		{
-			trace( "SectionsController.SectionsController" );
 			init();
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
@@ -114,10 +113,6 @@ package elive.rubriques.sections
 		
 		public function addSection( section:Section, sectionId:int ):void
 		{
-			trace( "section : " + section );
-			trace( "_sections : " + _sections );
-			trace( "_sections.length : " + _sections.length );
-			trace( "section is Section :" + section as Section );
 			_sections[ sectionId ] = section;
 		}
 		

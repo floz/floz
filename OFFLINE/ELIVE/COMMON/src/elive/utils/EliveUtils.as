@@ -25,7 +25,6 @@ package elive.utils
 			tf.embedFonts = true;
 			tf.styleSheet = Config.getProperty( "css" );
 			tf.htmlText = "<span class='" + cssClass + "'>" + ( !text ? tf.text : text ) + "</span>";
-			trace( text );
 		}
 		
 		public static function getColorTransform( color:uint ):ColorTransform
