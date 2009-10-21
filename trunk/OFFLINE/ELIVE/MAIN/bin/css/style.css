@@ -1,10 +1,11 @@
 ﻿
 
 
-.elive_panel_tooltip { font-family: Akkurat-Bold; }
+.elive_panel_tooltip { font-family: Akkurat; font-weight: bold; }
 
 
-.elives_sousmenu_bt { font-family: Akkurat; }
+.elives_menu_bt { font-family: Akkurat; color: #000000; }
+.elives_sousmenu_bt { font-family: Akkurat; color: #000000; }
 
 .elives_list_apercu_title { font-family: Akkurat; }
 .elives_list_apercu_content { font-family: Akkurat; }

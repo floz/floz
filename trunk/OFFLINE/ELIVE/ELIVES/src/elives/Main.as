@@ -25,8 +25,9 @@ package elives
 		
 		public function Main() 
 		{
-			init();
-			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
+			super();
+			
+			init();		
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -43,11 +44,6 @@ package elives
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
 			
 			_sectionsController.addEventListener( NavEvent.SWITCH_SECTION, switchSectionHandler, false, 0, true );
-			
-			if ( _standalone )
-			{
-				navigateTo( 0 );
-			}
 		}
 		
 		private function switchSectionHandler( e:NavEvent ):void 
@@ -59,9 +55,16 @@ package elives
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function init():void
-		{
+		{			
 			_sectionsController.addSection( new ElivesList(), ElivesList.SECTION_ID );
 			_sectionsController.addSection( new ElivesSheet(), ElivesSheet.SECTION_ID );
+			
+			if ( _standalone )
+			{
+				navigateTo( 0 );
+			}
+			
+			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

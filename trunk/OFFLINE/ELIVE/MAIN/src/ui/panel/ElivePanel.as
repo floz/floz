@@ -58,6 +58,8 @@ package ui.panel
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 			
+			cntTooltip.removeChild( _tooltip );
+			
 			btClose.removeEventListener( MouseEvent.MOUSE_DOWN, btCloseDownHandler );
 		}
 		
@@ -80,11 +82,14 @@ package ui.panel
 		
 		private function rubLoadedHandler(e:Event):void 
 		{
-			while ( cntContent.numChildren ) cntContent.removeChildAt( 0 );
-			
 			_rub = _assetsLoader.getItemLoaded();
 			_rub.navigateTo( 0 );
 			cntContent.addChild( _rub as DisplayObject );
+			
+			cntContent.alpha = .6;
+			M4Tween.to( cntContent, .25, { alpha: 1 } );
+			
+			cntTooltip.addChild( _tooltip );
 			
 			_assetsLoader.removeEventListener( Event.COMPLETE, rubLoadedHandler );
 			_assetsLoader.dispose();
@@ -113,11 +118,9 @@ package ui.panel
 			_tooltip = new GTooltip();
 			_tooltip.x = this.width * .5 - _tooltip.width * .5;
 			_tooltip.y = 100;
-			addChild( _tooltip );
 			
 			//EliveUtils.configureText( _tooltip.tf, "elive_panel_tooltip" );
 			var format:TextFormat = new TextFormat( new FAkkuratBold().fontName ); // TODO: configurer _tooltip.tf avec la css
-			trace( format.font );
 			_tooltip.tf.embedFonts = true;
 			_tooltip.tf.defaultTextFormat = format;
 		}
@@ -132,9 +135,12 @@ package ui.panel
 			
 			setTooltipText( navId );
 			
+			while ( cntContent.numChildren ) cntContent.removeChildAt( 0 );
+			_rub = null;
+			
 			_assetsLoader = new AssetsLoader( Config.getProperty( "pathRub" ) + "/" + _navId + ".swf" );
 			_assetsLoader.addEventListener( Event.COMPLETE, rubLoadedHandler, false, 0, true );
-			_assetsLoader.load();			
+			_assetsLoader.load();
 		}
 		
 		public function setTooltipText( navId:String ):void
