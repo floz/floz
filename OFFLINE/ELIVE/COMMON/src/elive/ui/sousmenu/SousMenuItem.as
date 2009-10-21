@@ -11,7 +11,6 @@ package  elive.ui.sousmenu
 	import flash.events.Event;
 	import fr.minuit4.core.interfaces.IDisposable;
 	import fr.minuit4.motion.M4Tween;
-	import gs.TweenLite;
 	
 	public class SousMenuItem extends GBtSousMenu
 	{

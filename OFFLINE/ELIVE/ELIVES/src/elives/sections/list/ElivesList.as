@@ -26,8 +26,6 @@ package elives.sections.list
 		
 		private var _currentSousRub:String;
 		
-		private var _activated:Boolean;
-		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		public static const SECTION_ID:int = 0;

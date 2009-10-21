@@ -4,28 +4,38 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elives 
+package elives.sections.sheet 
 {
-	import elive.events.NavEvent;
-	import elive.rubriques.IRubrique;
-	import elive.rubriques.Rubrique;
-	import elives.sections.list.ElivesList;
-	import elives.sections.sheet.ElivesSheet;
+	import elive.core.challenges.Challenge;
+	import elive.core.interfaces.ILinkable;
+	import elive.core.users.User;
+	import elive.ui.compteur.Compteur;
+	import elive.ui.sousmenu.SousMenu;
+	import flash.display.Sprite;
 	import flash.events.Event;
-	import fr.minuit4.core.configuration.Configuration;
+	import fr.minuit4.tools.scrollbars.VScrollbar;
 	
-	public class Main extends Rubrique
+	public class Sheet extends Sprite
 	{
 		
+		// - CONSTS ----------------------------------------------------------------------
+		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
+		
+		private var _sousMenu:SousMenu;
+		private var _challenge:Challenge;
+		
+		private var _compteur:Compteur;
+		private var _cnt:Sprite;
+		private var _scrollBar:VScrollbar;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main() 
+		public function Sheet() 
 		{
-			init();		
+			init();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -33,39 +43,38 @@ package elives
 		private function removedFromStageHandler(e:Event):void 
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
-			_sectionsController.removeEventListener( NavEvent.SWITCH_SECTION, switchSectionHandler );
+			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
 		private function addedToStageHandler(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
-			
-			_sectionsController.addEventListener( NavEvent.SWITCH_SECTION, switchSectionHandler, false, 0, true );
-		}
-		
-		private function switchSectionHandler( e:NavEvent ):void 
-		{
-			e.stopImmediatePropagation();
-			navigateTo( e.sectionId, e.id );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function init():void
-		{			
-			_sectionsController.addSection( new ElivesList(), ElivesList.SECTION_ID );
-			_sectionsController.addSection( new ElivesSheet(), ElivesSheet.SECTION_ID );
-			
-			if ( _standalone )
-			{
-				navigateTo( 0 );
-			}
-			
+		{
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
+		private function build():void
+		{
+			_compteur = new Compteur();
+			_compteur.x = 144 - _compteur.width * .5;
+			_compteur.y = 88;
+			_compteur.setEndTime( _challenge.endTime );
+			addChild( _compteur );
+		}
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function linkTo( challenge:Challenge ):void
+		{
+			this._challenge = challenge;
+			build();
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

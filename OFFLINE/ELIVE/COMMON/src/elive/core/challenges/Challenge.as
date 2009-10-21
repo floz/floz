@@ -23,7 +23,7 @@ package elive.core.challenges
 		public var id:int;
 		public var title:String;
 		public var description:String;
-		public var endTime:int;
+		public var endTime:Number;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -38,7 +38,7 @@ package elive.core.challenges
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function config( id:int, title:String, description:String, endTime:int ):void
+		public function config( id:int, title:String, description:String, endTime:Number ):void
 		{
 			this.id = id;
 			this.title = title;
