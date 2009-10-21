@@ -7,6 +7,8 @@ package elives.sections.list.lists
 {
 	import elive.core.challenges.Challenge;
 	import elive.events.NavEvent;
+	import elive.navigation.HistoricManager;
+	import elive.navigation.NavIds;
 	import elive.rubriques.sousrub.SousRub;
 	import elive.xmls.EliveXML;
 	import elives.sections.list.Apercu;
@@ -19,6 +21,8 @@ package elives.sections.list.lists
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
+		
+		private var _historicManager:HistoricManager;
 		
 		private var _challenges:Vector.<Challenge>
 		private var _datasLoader:DatasLoader;
@@ -85,6 +89,8 @@ package elives.sections.list.lists
 		{
 			var apercu:Apercu = e.target as Apercu;
 			
+			_historicManager.registerLastNav( NavIds.ELIVES, 0 );
+			
 			var navEvent:NavEvent = new NavEvent( NavEvent.SWITCH_SECTION, true );
 			navEvent.sectionId = 1;
 			navEvent.id = apercu.getId();
@@ -106,6 +112,7 @@ package elives.sections.list.lists
 		
 		private function init():void
 		{
+			_historicManager = HistoricManager.getInstance();
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );			
 		}
 		

@@ -104,6 +104,8 @@ package ui.panel
 			createHeader();
 			createTooltip();
 			
+			btClose.buttonMode = true;
+			
 			cntContent.y = 75;
 		}
 		

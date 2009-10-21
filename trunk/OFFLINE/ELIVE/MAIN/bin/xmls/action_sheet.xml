@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <action>
 	<id>13</id>
-	<title>Chocolat sur la tÃªte</title>
-	<details>Tu dois mettre ta mousse au choco' sur la tÃªte en plein cour de bio!</details>
+	<title>Chocolat sur la tête</title>
+	<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
 	<start>TIMESTAMP</start>
-	<end>TIMESTAMP</end>
+	<end><![CDATA[1261522800000]]></end>
 	<created_at>TIMESTAMP</created_at>
-	<status>pending</status>
+	<status>current</status>
 	<medias>
 		<picture width="" height="" url="" />
 	</medias>
@@ -28,17 +28,13 @@
 		</user>
 		<actions protected="true">
 			<action id="10">
-				<title>Chocolat sur la tÃªte</title>
-				<details>Tu dois mettre ta mousse au choco' sur la tÃªte en plein cour de bio!</details>
+				<title>Chocolat sur la tête</title>
+				<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
 				<start>TIMESTAMP</start>
 				<end>TIMESTAMP</end>
 				<created_at>TIMESTAMP</created_at>
 				<status>pending</status>
 			</action>
-			<action />
-			<action />
-			<action />
-			<action />
 		</actions>
 	</sender>
 	<targets>

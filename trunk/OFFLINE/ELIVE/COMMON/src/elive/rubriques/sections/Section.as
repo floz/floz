@@ -14,6 +14,8 @@ package elive.rubriques.sections
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		protected var _activated:Boolean;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------

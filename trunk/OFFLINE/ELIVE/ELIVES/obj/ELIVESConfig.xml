@@ -5,20 +5,20 @@
   <target-player>10.0.0</target-player>
   <compiler>
     <source-path append="true">
-      <path-element>D:\Work\workspace\ELIVE\ELIVES\src</path-element>
-      <path-element>D:\Work\workspace\ELIVE\COMMON\src</path-element>
-      <path-element>D:\Work\workspace\ELIVE\COMMON\swc</path-element>
-      <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
+      <path-element>D:\Projets\Projets\OFFLINE\ELIVE\ELIVES\src</path-element>
+      <path-element>D:\Projets\Projets\OFFLINE\ELIVE\COMMON\src</path-element>
+      <path-element>D:\Projets\Projets\OFFLINE\ELIVE\COMMON\swc</path-element>
+      <path-element>D:\Appz\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>D:\Work\workspace\ELIVE\COMMON\swc\assets_scrollbar.swc</path-element>
-      <path-element>D:\Work\workspace\ELIVE\COMMON\swc\assets_fonts.swc</path-element>
-      <path-element>D:\Work\workspace\ELIVE\ELIVES\swc\assets_elives.swc</path-element>
-      <path-element>D:\Work\workspace\ELIVE\COMMON\swc\assets_content.swc</path-element>
+      <path-element>D:\Projets\Projets\OFFLINE\ELIVE\COMMON\swc\assets_scrollbar.swc</path-element>
+      <path-element>D:\Projets\Projets\OFFLINE\ELIVE\COMMON\swc\assets_fonts.swc</path-element>
+      <path-element>D:\Projets\Projets\OFFLINE\ELIVE\ELIVES\swc\assets_elives.swc</path-element>
+      <path-element>D:\Projets\Projets\OFFLINE\ELIVE\COMMON\swc\assets_content.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>D:\Work\workspace\ELIVE\ELIVES\src\elives\Main.as</path-element>
+    <path-element>D:\Projets\Projets\OFFLINE\ELIVE\ELIVES\src\elives\Main.as</path-element>
   </file-specs>
   <default-background-color>#FF00FF</default-background-color>
   <default-frame-rate>30</default-frame-rate>
