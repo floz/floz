@@ -6,6 +6,7 @@
 package elives.sections.sheet 
 {
 	import assets.GBtRetour;
+	import elive.core.challenges.Challenge;
 	import elive.core.interfaces.ILinkable;
 	import elive.events.NavEvent;
 	import elive.navigation.HistoricManager;
@@ -78,13 +79,14 @@ package elives.sections.sheet
 		private function xmlLoadHandler(e:Event):void 
 		{
 			_xml = XML( _datasLoader.getItemLoaded() );
-			trace( "_xml : " + _xml );
 			
 			_datasLoader.removeEventListener( Event.COMPLETE, xmlLoadHandler );
 			_datasLoader.dispose();
 			_datasLoader = null;
 			
-			_sheet.linkTo( EliveXML.parseChallenge( _xml ) );
+			var challenge:Challenge = EliveXML.parseChallenge( _xml );
+			EliveUtils.configureText( _ongletTitle.tf, "elives_menu_bt", challenge.title.toUpperCase() );
+			_sheet.linkTo( challenge );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -96,7 +98,6 @@ package elives.sections.sheet
 			
 			_ongletTitle = new GOngletSolo();
 			_ongletTitle.x = 3;
-			EliveUtils.configureText( _ongletTitle.tf, "elives_menu_bt" );
 			addChild( _ongletTitle );
 			
 			_backButton = new GBtRetour();
