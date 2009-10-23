@@ -18,10 +18,12 @@ package elives.sections.sheet
 	import elive.events.EliveEvent;
 	import elive.events.NavEvent;
 	import elive.ui.compteur.Compteur;
+	import elive.ui.EliveButton;
 	import elive.ui.sousmenu.SousMenu;
 	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import fr.minuit4.core.interfaces.IDisposable;
 	import fr.minuit4.tools.scrollbars.VScrollbar;
 	
@@ -72,6 +74,11 @@ package elives.sections.sheet
 			
 			onEliveStatusChange(); 
 			buildSousMenu();
+		}
+		
+		private function btCommentDownHandler(e:MouseEvent):void 
+		{
+			// TODO: La fenêtre de commentaires;
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -218,6 +225,12 @@ package elives.sections.sheet
 			apercuComments.setTitleText( "Commentaires de l'(e)live" );
 			apercuComments.setContentText( text );
 			_cntContent.addChild( apercuComments );
+			
+			var bt:EliveButton = new EliveButton();
+			bt.addEventListener( MouseEvent.MOUSE_DOWN, btCommentDownHandler, false, 0, true );
+			bt.setText( "Commenter" );
+			bt.y = apercuComments.y + apercuComments.height + 5;
+			_cntContent.addChild( bt );
 		}
 		
 		private function onEliveStatusChange():void

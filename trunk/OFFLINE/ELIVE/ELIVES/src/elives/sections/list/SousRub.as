@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elive.rubriques.sousrub
+package elives.sections.list
 {
 	import assets.GScrollbarBackground;
 	import assets.GScrollbarSlider;
@@ -107,7 +107,7 @@ package elive.rubriques.sousrub
 			// ABSTRACT, MUST BE OVERRIDED
 			
 			_sousMenu.buildSeparatorBars();
-			_sousMenu.x = 288 * .5 - _sousMenu.width * .5;
+			_sousMenu.x = int( 288 * .5 - _sousMenu.width * .5 );
 		}
 		
 		private function buildContent():void

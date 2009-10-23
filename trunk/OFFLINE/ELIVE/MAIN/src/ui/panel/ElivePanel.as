@@ -70,7 +70,7 @@ package ui.panel
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
 			
-			Eaze.from( _tooltip, .2, { y: 100, alpha: .8 } );
+			Eaze.from( _tooltip, .2, { y: 100, alpha: .6 } );
 			
 			btClose.addEventListener( MouseEvent.MOUSE_DOWN, btCloseDownHandler, false, 0, true );
 		}
@@ -86,7 +86,7 @@ package ui.panel
 			_rub.navigateTo( 0 );
 			cntContent.addChild( _rub as DisplayObject );
 			
-			Eaze.from( cntContent, .25, { alpha: .6 } );
+			Eaze.to( cntContent, .25, { alpha: 1 } );
 			
 			cntTooltip.addChild( _tooltip );
 			
@@ -134,11 +134,10 @@ package ui.panel
 			setTooltipText( navId );
 			
 			while ( cntContent.numChildren ) cntContent.removeChildAt( 0 );
-			_rub = null;
 			
 			_assetsLoader = new AssetsLoader( Config.getProperty( "pathRub" ) + "/" + _navId + ".swf" );
 			_assetsLoader.addEventListener( Event.COMPLETE, rubLoadedHandler, false, 0, true );
-			_assetsLoader.load();
+			_assetsLoader.load();			
 		}
 		
 		public function setTooltipText( navId:String ):void

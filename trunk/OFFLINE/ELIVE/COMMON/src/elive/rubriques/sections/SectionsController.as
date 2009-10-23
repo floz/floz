@@ -94,16 +94,16 @@ package elive.rubriques.sections
 				_newSection.x = _posX;
 				_cnt.addChild( _newSection );				
 				
-				Eaze.to( _newSection, .25, { x: _newSection.x -_posX } );
-				Eaze.to( _currentSection, .25, { x: _currentSection.x -_posX } ).onComplete( configNewSection );
+				Eaze.to( _newSection, .25, { x: int( _newSection.x -_posX ) } );
+				Eaze.to( _currentSection, .25, { x: int( _currentSection.x -_posX ) } ).onComplete( configNewSection );
 			}
 			else
 			{
 				_newSection.x = -_posX;
 				_cnt.addChild( _newSection );
 				
-				Eaze.to( _newSection, .25, { x: _newSection.x + _posX } );
-				Eaze.to( _currentSection, .25, { x: _currentSection.x + _posX } ).onComplete( configNewSection );
+				Eaze.to( _newSection, .25, { x: int( _newSection.x + _posX ) } );
+				Eaze.to( _currentSection, .25, { x: int( _currentSection.x + _posX ) } ).onComplete( configNewSection );
 			}
 		}
 		

@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elives.sections.list 
+package amis.sections.list 
 {
 	import assets.GOngletDroit;
 	import assets.GOngletGauche;
@@ -80,15 +80,14 @@ package elives.sections.list
 			_ongletDroit.y = -1;
 			addChild( _ongletDroit );
 			
-			EliveUtils.configureText( _ongletDroit.tf, "elives_menu_bt" );
+			EliveUtils.configureText( _ongletDroit.tf, "elives_menu_bt", "GROUPES" );
 			
 			_selectedOnglet = _ongletGauche = new GOngletGauche();
 			_ongletGauche.buttonMode = true;
 			_ongletGauche.mouseChildren = false;
-			_ongletGauche.y = 0;
 			addChild( _ongletGauche );
 			
-			EliveUtils.configureText( _ongletGauche.tf, "elives_menu_bt" );
+			EliveUtils.configureText( _ongletGauche.tf, "elives_menu_bt", "AMIS" );
 			
 			switchState();
 			
@@ -107,7 +106,7 @@ package elives.sections.list
 				
 				_ongletGauche.y = -1;
 				
-				navEvent.navId = SousRubsIds.LIST_ENVOYES;
+				navEvent.navId = SousRubIds.GROUPES;
 			}
 			else 
 			{
@@ -118,7 +117,7 @@ package elives.sections.list
 				
 				_ongletDroit.y = -1;
 				
-				navEvent.navId = SousRubsIds.LIST_RECUS;				
+				navEvent.navId = SousRubIds.AMIS;				
 			}
 			dispatchEvent( navEvent );
 		}

@@ -4,29 +4,25 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package amis 
+package amis.sections.list.apercus
 {
-	import amis.sections.list.EbuddiesList;
-	import amis.sections.list.Menu;
-	import amis.sections.sheet.EbuddySheet;
-	import elive.navigation.NavIds;
-	import elive.navigation.NavManager;
-	import elive.rubriques.IRubrique;
-	import elive.rubriques.Rubrique;
+	import assets.GApercu;
+	import aze.motion.Eaze;
+	import elive.core.users.User;
 	import flash.events.Event;
 	
-	public class Main extends Rubrique
+	public class Apercu extends GApercu
 	{
 		
-		// - PRIVATE VARIABLES -----------------------------------------------------------
+		// - CONSTS ----------------------------------------------------------------------
 		
-		private var _menu:Menu;
+		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main() 
+		public function Apercu() 
 		{
 			init();
 		}
@@ -37,6 +33,10 @@ package amis
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
 			
+			Eaze.killTweensOf( apercuOver );
+			
+			apercuOver = null;
+			tf = null;			
 		}
 		
 		private function addedToStageHandler(e:Event):void 
@@ -47,20 +47,29 @@ package amis
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		private function init():void
+		protected function init():void
 		{
-			_sectionsController.addSection( new EbuddiesList(), EbuddiesList.SECTION_ID );
-			_sectionsController.addSection( new EbuddySheet(), EbuddySheet.SECTION_ID );
+			this.mouseChildren = false;
 			
-			if ( _standalone )
-			{
-				navigateTo( 0 );
-			}
-			
+			apercuOver.alpha = 0;			
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function over():void
+		{
+			apercuOver.alpha = .4;
+			Eaze.to( apercuOver, .25, { alpha: 1 } );
+		}
+		
+		public function out():void
+		{
+			apercuOver.alpha = .6;
+			Eaze.to( apercuOver, .25, { alpha: 0 } );
+		}
+		
+		public function getId():int { return 0; }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
