@@ -38,7 +38,6 @@ package elives.sections.list
 		public function Menu() 
 		{
 			init();
-			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -91,6 +90,8 @@ package elives.sections.list
 			EliveUtils.configureText( _ongletGauche.tf, "elives_menu_bt" );
 			
 			switchState();
+			
+			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
 		private function switchState():void

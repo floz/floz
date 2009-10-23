@@ -91,7 +91,7 @@ package elive.rubriques.sousrub
 			_sousMenu = new SousMenu();
 			buildSousMenu();
 			addChild( _sousMenu );
-			
+			 
 			_cntGlobal = new Sprite();
 			_cntGlobal.x = 5;
 			_cntGlobal.y = 37;

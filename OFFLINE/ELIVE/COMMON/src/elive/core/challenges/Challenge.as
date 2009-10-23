@@ -6,6 +6,7 @@
  */
 package elive.core.challenges 
 {
+	import elive.core.comments.Comment;
 	import elive.core.users.User;
 	
 	public class Challenge 
@@ -17,6 +18,7 @@ package elive.core.challenges
 		private var _mediasUrl:Vector.<String>;
 		private var _sender:User;
 		private var _targets:Vector.<User>;
+		private var _comments:Vector.<Comment>
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -69,6 +71,12 @@ package elive.core.challenges
 			this._mediasUrl = urls;
 		}
 		public function getMediasUrls():Vector.<String> { return this._mediasUrl; }
+		
+		public function setComments( value:Vector.<Comment> ):void
+		{
+			this._comments = value;
+		}
+		public function getComments():Vector.<Comment> { return this._comments; }
 		
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
