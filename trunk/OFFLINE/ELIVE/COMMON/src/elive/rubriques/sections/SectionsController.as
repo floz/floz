@@ -53,6 +53,8 @@ package elive.rubriques.sections
 			for ( ; i < n; ++i )
 				_sections[ i ].dispose();
 			
+			_mask = null;
+			_cnt = null;
 			_sections = null;		
 		}
 		
@@ -69,7 +71,7 @@ package elive.rubriques.sections
 			_sections = new Vector.<Section>( 0, false );
 			
 			_mask = new GPanelMask();
-			_mask.x = -8;
+			_mask.x = -6;
 			addChild( _mask );
 			
 			_cnt = new Sprite();

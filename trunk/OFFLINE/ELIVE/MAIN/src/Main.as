@@ -12,6 +12,7 @@ package
 	import flash.text.Font;
 	import flash.text.StyleSheet;
 	import flash.text.TextField;
+	import fr.minuit4.utils.debug.FPS;
 	import ui.panel.ElivePanel;
 	import navigation.NavContainer;
 	import elive.events.NavEvent;
@@ -100,6 +101,11 @@ package
 			assetsLoader.dispose();
 			
 			initWidget();
+			
+			if ( Configuration.DEBUG )
+			{
+				addChild( new FPS() );
+			}
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------

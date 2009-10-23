@@ -50,6 +50,8 @@
     <element path="..\COMMON\swc\assets_elives.swc" />
     <element path="swc\assets_elives.swc" />
     <element path="..\COMMON\swc\assets_content.swc" />
+    <element path="..\COMMON\swc\assets_compteur.swc" />
+    <element path="..\COMMON\swc\assets_avatars.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

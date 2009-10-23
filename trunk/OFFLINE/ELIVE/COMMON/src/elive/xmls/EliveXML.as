@@ -86,6 +86,8 @@ package elive.xmls
 			challenge.setStatus( datas.status );
 			challenge.setSender( parseUser( datas.sender.user[ 0 ] ) );
 			challenge.setMediasUrls( parseMedias( datas.medias[ 0 ] ) );
+			challenge.setTargets( parseUsers( datas.targets[ 0 ], true ) );
+			challenge.setComments( parseComments( datas.comments[ 0 ] ) );
 			
 			return challenge;
 		}

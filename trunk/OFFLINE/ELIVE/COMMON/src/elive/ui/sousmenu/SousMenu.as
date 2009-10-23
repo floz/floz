@@ -26,6 +26,8 @@ package  elive.ui.sousmenu
 		private var _selectedItem:SousMenuItem;
 		
 		private var _activated:Boolean;
+		private var _deactivate:Boolean;
+		private var _disableActivatedState:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -56,10 +58,13 @@ package  elive.ui.sousmenu
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
 			
-			_selectedItem = _cntItems.getChildAt( 0 ) as SousMenuItem;
-			_selectedItem.over();
+			if ( !_disableActivatedState )
+			{
+				_selectedItem = _cntItems.getChildAt( 0 ) as SousMenuItem;
+				_selectedItem.over();
+			}
 			
-			_activated = true;
+			if( !_deactivate ) _activated = true;
 			
 			_cntItems.addEventListener( MouseEvent.MOUSE_OVER, mouseOverHandler, false, 0, true );
 			_cntItems.addEventListener( MouseEvent.MOUSE_OUT, mouseOutHandler, false, 0, true );
@@ -127,7 +132,7 @@ package  elive.ui.sousmenu
 			while ( _cntBars.numChildren ) _cntBars.removeChildAt( 0 );
 			
 			var n:int = _cntItems.numChildren - 1;
-			if ( !n ) return;
+			if ( n <= 0 ) return;
 			
 			var separatorBar:GSeparationBar;
 			var item:SousMenuItem;
@@ -144,11 +149,24 @@ package  elive.ui.sousmenu
 		public function activate():void
 		{
 			_activated = true;
+			_deactivate = false;
 		}
 		
 		public function deactivate():void
 		{
 			_activated = false;
+			_deactivate = true;
+		}
+		
+		public function disableActivatedState():void
+		{
+			if ( _disableActivatedState ) return;
+			_disableActivatedState = true;
+			
+			if ( !_cntItems.numChildren ) return;
+			
+			var item:SousMenuItem = _cntItems.getChildAt( 0 ) as SousMenuItem;
+			item.out();
 		}
 		
 		public function dispose():void

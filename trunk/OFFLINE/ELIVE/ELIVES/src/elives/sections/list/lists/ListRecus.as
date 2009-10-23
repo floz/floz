@@ -8,7 +8,7 @@ package elives.sections.list.lists
 {
 	import elives.sections.list.SousRubsIds;
 	
-	public class ListRecus extends List
+	final public class ListRecus extends List
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------

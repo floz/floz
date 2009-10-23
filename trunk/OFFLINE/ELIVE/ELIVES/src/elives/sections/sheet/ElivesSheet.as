@@ -6,6 +6,7 @@
 package elives.sections.sheet 
 {
 	import assets.GBtRetour;
+	import aze.motion.Eaze;
 	import elive.core.challenges.Challenge;
 	import elive.core.interfaces.ILinkable;
 	import elive.events.NavEvent;
@@ -15,14 +16,16 @@ package elives.sections.sheet
 	import elive.rubriques.sections.Section;
 	import elive.utils.EliveUtils;
 	import elive.xmls.EliveXML;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import fr.minuit4.core.configuration.Config;
 	import fr.minuit4.core.configuration.Configuration;
+	import fr.minuit4.core.interfaces.IDisposable;
 	import fr.minuit4.net.loaders.types.AssetsLoader;
 	import fr.minuit4.net.loaders.types.DatasLoader;
 	
-	public class ElivesSheet extends Section implements ILinkable
+	public class ElivesSheet extends Section implements ILinkable, IDisposable
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -31,6 +34,7 @@ package elives.sections.sheet
 		private var _navManager:NavManager;
 		private var _ongletTitle:GOngletSolo;
 		private var _backButton:GBtRetour;
+		private var _cntSheet:Sprite;
 		private var _sheet:Sheet;
 		
 		private var _datasLoader:DatasLoader;
@@ -48,18 +52,6 @@ package elives.sections.sheet
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
-		
-		private function removedFromStageHandler(e:Event):void 
-		{
-			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
-			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
-		}
-		
-		private function addedToStageHandler(e:Event):void 
-		{
-			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
-			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
-		}
 		
 		private function backButtonDownHandler(e:MouseEvent):void 
 		{
@@ -84,9 +76,16 @@ package elives.sections.sheet
 			_datasLoader.dispose();
 			_datasLoader = null;
 			
+			while ( _cntSheet.numChildren ) _cntSheet.removeChildAt( 0 );
+			
+			_sheet = new Sheet();
+			
 			var challenge:Challenge = EliveXML.parseChallenge( _xml );
 			EliveUtils.configureText( _ongletTitle.tf, "elives_menu_bt", challenge.title.toUpperCase() );
 			_sheet.linkTo( challenge );
+			
+			Eaze.from( _sheet, .25, { alpha: .4 } );
+			_cntSheet.addChild( _sheet );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -105,10 +104,8 @@ package elives.sections.sheet
 			_backButton.buttonMode = true;
 			addChild( _backButton );
 			
-			_sheet = new Sheet();
-			addChild( _sheet );
-			
-			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
+			_cntSheet = new Sprite();
+			addChild( _cntSheet );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
@@ -136,6 +133,19 @@ package elives.sections.sheet
 		
 		override public function dispose():void
 		{
+			Eaze.killTweensOf( _sheet );
+			
+			_historicManager = null;
+			_navManager = null;
+			
+			_ongletTitle = null;
+			
+			_sheet.dispose();
+			_sheet = null;
+			
+			_cntSheet = null;
+			
+			deactivate();
 			_backButton = null;
 		}
 		

@@ -7,6 +7,8 @@
 package elive.ui.compteur 
 {
 	import assets.GCompteur;
+	import elive.core.challenges.ChallengeStatus;
+	import elive.events.EliveEvent;
 	import elive.utils.EliveUtils;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
@@ -24,6 +26,7 @@ package elive.ui.compteur
 		private var _currentDate:Date;
 		private var _compteurDate:Date;
 		
+		private var _delta:Number;
 		private var _days:int;
 		private var _hours:int;
 		private var _mins:int;
@@ -67,11 +70,15 @@ package elive.ui.compteur
 		{
 			_currentDate = new Date();
 			
-			var diff:int = _timestamp - _currentDate.getTime();
-			_days = int( diff * .001 / 3600 / 24 );
-			_hours = int( diff * .001 / 3600 - 24 * _days );
-			_mins = int( diff * .001 / 60 - 1440 * _days - 60 * _hours );
-			_secs = int( diff * .001 - 86400 * _days - 3600 * _hours - 60 * _mins );
+			_delta = _timestamp - _currentDate.getTime();
+			var d:Number = int( _delta * .001 );
+			_secs = d % 60;
+			d = int( d / 60 );
+			_mins = d % 60;
+			d = int( d / 60 );
+			_hours = d % 24;
+			d = int( d / 24 );
+			_days = d;
 			
 			refreshText();
 		}
@@ -117,7 +124,14 @@ package elive.ui.compteur
 			if ( _days <= -1 ) 
 			{
 				stopTimer();
-				// TODO: Changement de status du défi
+				EliveUtils.configureText( tfD, "compteur", "00" );
+				EliveUtils.configureText( tfH, "compteur", "00" );
+				EliveUtils.configureText( tfM, "compteur", "00" );
+				EliveUtils.configureText( tfS, "compteur", "00" );
+				
+				var eliveEvent:EliveEvent = new EliveEvent( EliveEvent.ELIVE_STATUS_CHANGE );
+				eliveEvent.newStatus = ChallengeStatus.ENDED_LOST;
+				dispatchEvent( eliveEvent );
 			}
 		}
 		

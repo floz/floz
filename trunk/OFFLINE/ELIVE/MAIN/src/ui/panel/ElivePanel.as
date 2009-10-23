@@ -6,7 +6,6 @@
  */
 package ui.panel
 {
-	//import assets.fonts.FAkkuratBold;
 	import assets.GBackground;
 	import assets.GTooltip;
 	import aze.motion.Eaze;

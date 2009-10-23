@@ -4,7 +4,7 @@
 		<title>Frappe toi, tr�s fort</title>
 		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
 		<start>TIMESTAMP</start>
-		<end>TIMESTAMP</end>
+		<end>1256684400000</end>
 		<created_at>TIMESTAMP</created_at>
 		<status>won</status>
 		<medias>
@@ -43,7 +43,7 @@
 		<title>Chocolat sur la tête</title>
 		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
 		<start>TIMESTAMP</start>
-		<end>TIMESTAMP</end>
+		<end>1257894000000</end>
 		<created_at>TIMESTAMP</created_at>
 		<status>won</status>
 		<medias>
@@ -82,7 +82,7 @@
 		<title>Appelle Mikl "le Milk"</title>
 		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
 		<start>TIMESTAMP</start>
-		<end>TIMESTAMP</end>
+		<end>1256511600000</end>
 		<created_at>TIMESTAMP</created_at>
 		<status>lost</status>
 		<medias>
@@ -121,7 +121,7 @@
 		<title><![CDATA[Hurle "BOUBOUP" dans la rue !]]></title>
 		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
 		<start>TIMESTAMP</start>
-		<end>TIMESTAMP</end>
+		<end>1256684400000</end>
 		<created_at>TIMESTAMP</created_at>
 		<status>lost</status>
 		<medias>
@@ -160,7 +160,7 @@
 		<title><![CDATA[hohoho]]></title>
 		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
 		<start>TIMESTAMP</start>
-		<end>TIMESTAMP</end>
+		<end>1257894000000</end>
 		<created_at>TIMESTAMP</created_at>
 		<status>lost</status>
 		<medias>
@@ -199,7 +199,7 @@
 		<title><![CDATA[hihihih]]></title>
 		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
 		<start>TIMESTAMP</start>
-		<end>TIMESTAMP</end>
+		<end>1261522800000</end>
 		<created_at>TIMESTAMP</created_at>
 		<status>won</status>
 		<medias>

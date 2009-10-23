@@ -4,9 +4,9 @@
 	<title>Chocolat sur la tête</title>
 	<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
 	<start>TIMESTAMP</start>
-	<end><![CDATA[1258239600000]]></end>
+	<end><![CDATA[1256511600000]]></end>
 	<created_at>TIMESTAMP</created_at>
-	<status>current</status>
+	<status>won</status>
 	<medias>
 		<picture width="" height="" url="" />
 	</medias>
@@ -40,7 +40,7 @@
 	<targets>
 		<list id="25">
 			<user id="12">
-				<login>floz</login>
+				<login>Floz</login>
 				<points>2554</points>
 				<status>pending</status>
 			</user>
@@ -53,25 +53,64 @@
 		
 		<list id="21">
 			<user id="15">
-				<login>floz</login>
+				<login>Cléa</login>
 				<points>2554</points>
 				<status>pending</status>
 			</user>
 		</list>
 
 		<user id="12">
-			<login>floz</login>
+			<login>Lionel</login>
 			<points>2554</points>
 			<status>pending</status>
 		</user>
 	</targets>
 	<comments>
 		<comment id="2">
-			<text>Ouha c'Ã©tait gÃ©nial !!</text>
-			<date>89792873</date>
+			<text>Oulah ! Bon courage mec ! !!</text>
+			<date>1255298400000</date>
 			<user>
 				<id>12</id>
-				<login>floz</login>
+				<login>Floz</login>
+				<location>Paris</location>
+				<points>2554</points>
+				<url>http://minuit4.fr</url>
+				<stats>
+					<pending>2</pending>
+					<current>4</current>
+					<refused>10</refused>
+					<lost>15</lost>
+					<bad>25</bad>
+					<won>200</won>
+				</stats>
+			</user>
+		</comment>
+		
+		<comment id="2">
+			<text>Je pense que c'est le pire défi de l'univers. Il a été vache ton pote, lol !</text>
+			<date>1253656800000</date>
+			<user>
+				<id>12</id>
+				<login>Barbie</login>
+				<location>Paris</location>
+				<points>2554</points>
+				<url>http://minuit4.fr</url>
+				<stats>
+					<pending>2</pending>
+					<current>4</current>
+					<refused>10</refused>
+					<lost>15</lost>
+					<bad>25</bad>
+					<won>200</won>
+				</stats>
+			</user>
+		</comment>
+		<comment id="2">
+			<text>Aoutch ?</text>
+			<date>1255212000000</date>
+			<user>
+				<id>12</id>
+				<login>Bouboup</login>
 				<location>Paris</location>
 				<points>2554</points>
 				<url>http://minuit4.fr</url>
