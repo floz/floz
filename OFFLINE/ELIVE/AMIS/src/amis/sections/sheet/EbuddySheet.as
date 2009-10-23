@@ -4,30 +4,26 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package amis 
+package amis.sections.sheet 
 {
-	import amis.sections.list.EbuddiesList;
-	import amis.sections.list.Menu;
-	import amis.sections.sheet.EbuddySheet;
-	import elive.navigation.NavIds;
-	import elive.navigation.NavManager;
-	import elive.rubriques.IRubrique;
-	import elive.rubriques.Rubrique;
+	import elive.rubriques.sections.Section;
 	import flash.events.Event;
 	
-	public class Main extends Rubrique
+	public class EbuddySheet extends Section
 	{
+		
+		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _menu:Menu;
-		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
+		
+		public static const SECTION_ID:int = 1;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main() 
-		{
+		public function EbuddySheet() 
+{
 			init();
 		}
 		
@@ -36,7 +32,7 @@ package amis
 		private function removedFromStageHandler(e:Event):void 
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
-			
+			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
 		private function addedToStageHandler(e:Event):void 
@@ -49,18 +45,27 @@ package amis
 		
 		private function init():void
 		{
-			_sectionsController.addSection( new EbuddiesList(), EbuddiesList.SECTION_ID );
-			_sectionsController.addSection( new EbuddySheet(), EbuddySheet.SECTION_ID );
-			
-			if ( _standalone )
-			{
-				navigateTo( 0 );
-			}
-			
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		override public function activate():void 
+		{
+			if ( _activated ) return;
+			_activated = true;
+		}
+		
+		override public function deactivate():void 
+		{
+			if ( !_activated ) return;
+			_activated = false;
+		}
+		
+		override public function dispose():void
+		{
+			
+		}		
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

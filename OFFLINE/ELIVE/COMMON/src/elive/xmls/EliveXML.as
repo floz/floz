@@ -8,6 +8,7 @@ package elive.xmls
 {
 	import elive.core.challenges.Challenge;
 	import elive.core.comments.Comment;
+	import elive.core.groups.Group;
 	import elive.core.users.User;
 	import elive.core.users.UserStats;
 	
@@ -21,6 +22,7 @@ package elive.xmls
 		public static const USER:String = "user";
 		public static const CHALLENGE:String = "action";
 		public static const COMMENT:String = "comment";
+		public static const GROUP:String = "list";
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -175,6 +177,34 @@ package elive.xmls
 				comments[ i ] = parseComment( list[ i ] );
 			
 			return comments;
+		}
+		
+		public static function parseGroup( datas:XML ):Group
+		{
+			if ( !datas ) return null;
+			
+			var group:Group = new Group( datas.id, datas.name );
+			group.setMembers( parseUsers( datas.users[ 0 ] ) );
+			
+			return group;
+		}
+		
+		public static function parseGroups( datas:XML, scanDeeper:Boolean = false ):Vector.<Group>
+		{
+			if ( !datas ) return null;
+			
+			var list:XMLList = !scanDeeper ? datas.children() : datas.descendants();
+			list = list.( localName() == GROUP );
+			
+			var n:int = list.length();
+			
+			if ( n == 0 ) return null;
+			
+			var groups:Vector.<Group> = new Vector.<Group>( n, true );
+			for ( var i:int; i < n; ++i )
+				groups[ i ] = parseGroup( list[ i ] );
+			
+			return groups;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

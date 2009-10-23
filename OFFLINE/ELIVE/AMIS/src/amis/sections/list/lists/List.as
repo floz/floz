@@ -3,15 +3,15 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elives.sections.list.lists
+package amis.sections.list.lists
 {
-	import elive.core.challenges.Challenge;
+	import amis.sections.list.apercus.Apercu;
+	import amis.sections.list.SousRub;
+	import elive.core.users.User;
 	import elive.events.NavEvent;
 	import elive.navigation.HistoricManager;
 	import elive.navigation.NavIds;
 	import elive.xmls.EliveXML;
-	import elives.sections.list.Apercu;
-	import elives.sections.list.SousRub;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import fr.minuit4.core.configuration.Configuration;
@@ -22,14 +22,14 @@ package elives.sections.list.lists
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _historicManager:HistoricManager;
+		private var _historicManager:HistoricManager;	
 		
-		private var _challenges:Vector.<Challenge>
-		private var _datasLoader:DatasLoader;
-		
+		private var _datasLoader:DatasLoader;		
 		private var _apercuOnScroll:Apercu;
 		
-		private var _xml:XML;
+		protected var _xml:XML;
+		
+		protected var _disabled:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -46,21 +46,27 @@ package elives.sections.list.lists
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
 			
-			_cntContent.removeEventListener( MouseEvent.MOUSE_OVER, mouseOverHandler );
-			_cntContent.removeEventListener( MouseEvent.MOUSE_OUT, mouseOutHandler );
-			_cntContent.removeEventListener( MouseEvent.MOUSE_DOWN, mouseOutHandler );
+			if ( !_disabled )
+			{
+				_cntContent.removeEventListener( MouseEvent.MOUSE_OVER, mouseOverHandler );
+				_cntContent.removeEventListener( MouseEvent.MOUSE_OUT, mouseOutHandler );
+				_cntContent.removeEventListener( MouseEvent.MOUSE_DOWN, mouseOutHandler );
+			}
 			
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
-		private function addedToStageHandler(e:Event):void 
+		protected function addedToStageHandler(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler );
 			
-			_cntContent.addEventListener( MouseEvent.MOUSE_OVER, mouseOverHandler, false, 0, true );
-			_cntContent.addEventListener( MouseEvent.MOUSE_OUT, mouseOutHandler, false, 0, true );
-			_cntContent.addEventListener( MouseEvent.MOUSE_DOWN, mouseDownHandler, false, 0, true );
+			if ( !_disabled )
+			{
+				_cntContent.addEventListener( MouseEvent.MOUSE_OVER, mouseOverHandler, false, 0, true );
+				_cntContent.addEventListener( MouseEvent.MOUSE_OUT, mouseOutHandler, false, 0, true );
+				_cntContent.addEventListener( MouseEvent.MOUSE_DOWN, mouseDownHandler, false, 0, true );
+			}
 		}
 		
 		private function mouseOverHandler(e:MouseEvent):void 
@@ -89,7 +95,7 @@ package elives.sections.list.lists
 		{
 			var apercu:Apercu = e.target as Apercu;
 			
-			_historicManager.registerLastNav( NavIds.ELIVES, 0 );
+			_historicManager.registerLastNav( NavIds.AMIS, 0 );
 			
 			var navEvent:NavEvent = new NavEvent( NavEvent.SWITCH_SECTION, true );
 			navEvent.sectionId = 1;
@@ -123,39 +129,21 @@ package elives.sections.list.lists
 			_datasLoader.load();
 		}
 		
-		private function build():void
+		protected function build():void
 		{
-			resetChallenges();
-			_challenges = EliveXML.parseChallenges( _xml );
-			
-			var apercu:Apercu;
-			var i:int, n:int = _challenges.length, py:int;
-			for ( ; i < n; ++i )
-			{
-				apercu = new Apercu( _challenges[ i ] );
-				apercu.y = int( py );
-				_cntContent.addChild( apercu );
-				
-				py += apercu.height;
-			}
-		}
-		
-		private function resetChallenges():void
-		{
-			_challenges = null;			
-			while ( _cntContent.numChildren ) _cntContent.removeChildAt( 0 );
-		}
+			// ABSTRACT
+		}		
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		override public function dispose():void
 		{
-			resetChallenges();
-			
 			_apercuOnScroll = null;
 			_xml = null;
 			
 			super.dispose();
+			
+			if ( hasEventListener( Event.ADDED_TO_STAGE ) ) removeEventListener( Event.ADDED_TO_STAGE, addedToStageHandler );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

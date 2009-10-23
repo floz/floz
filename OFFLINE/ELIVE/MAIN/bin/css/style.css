@@ -3,8 +3,6 @@
 
 .elive_panel_tooltip { font-family: Akkurat-Bold; font-size: 15; font-weight: bold; color: #ffffff; text-align: center; }
 
-.compteur { font-family: Akkurat; }
-
 .elives_menu_bt { font-family: Akkurat; color: #000000; }
 .elives_sousmenu_bt_over_encours { font-family: Akkurat; color: #c2d24f; }
 .elives_sousmenu_bt_over_enattente { font-family: Akkurat; color: #f8b63d; }
@@ -13,4 +11,13 @@
 .elives_list_apercu_title { font-family: Akkurat; }
 .elives_list_apercu_content { font-family: Akkurat; }
 
+.compteur { font-family: Akkurat; }
+
+
+.amis_list_apercu_content { font-family: Akkurat; }
+
+
+
 .comment_user { font-family: Akkurat-Bold; color: #222222; }
+
+.button { font-family: Akkurat-Bold; }

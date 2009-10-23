@@ -4,18 +4,18 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elives.sections.list 
+package amis.sections.list 
 {
+	import amis.sections.list.lists.ListAmis;
+	import amis.sections.list.lists.ListGroupes;
+	import elive.core.interfaces.ILinkable;
 	import elive.events.NavEvent;
 	import elive.rubriques.sections.Section;
-	import elives.sections.list.lists.List;
-	import elives.sections.list.lists.ListEnvoyes;
-	import elives.sections.list.lists.ListRecus;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import fr.minuit4.core.interfaces.IDisposable;
 	
-	public class ElivesList extends Section
+	public class EbuddiesList extends Section implements ILinkable, IDisposable
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -33,7 +33,7 @@ package elives.sections.list
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function ElivesList() 
+		public function EbuddiesList() 
 		{
 			init();
 		}
@@ -43,16 +43,13 @@ package elives.sections.list
 		private function removedFromStageHandler(e:Event):void 
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
-			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0,  true );
+			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
 		private function addedToStageHandler(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
-			
-			if( !_currentSousRub ) _currentSousRub = SousRubsIds.LIST_RECUS;
-			onSwitchSousRub();
 		}
 		
 		private function switchSousRubHandler( e:NavEvent ):void
@@ -69,41 +66,41 @@ package elives.sections.list
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function init():void
-		{
+		{			
 			_menu = new Menu();
 			_menu.x = 3;
 			addChild( _menu );
 			
 			_cntSousRub = new Sprite();
-			_cntSousRub.y = 53;
+			_cntSousRub.y = 40;
 			addChild( _cntSousRub );
 			
-			_currentSousRub = SousRubsIds.LIST_RECUS;
+			_currentSousRub = SousRubIds.AMIS;
 			onSwitchSousRub();
 			
-			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0,  true );
+			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
 		private function onSwitchSousRub():void
 		{
 			while ( _cntSousRub.numChildren ) _cntSousRub.removeChildAt( 0 );
 			
-			if ( _currentSousRub == SousRubsIds.LIST_RECUS )
-				_cntSousRub.addChild( new ListRecus() );
-			else if ( _currentSousRub == SousRubsIds.LIST_ENVOYES )
-				_cntSousRub.addChild( new ListEnvoyes() );
+			if ( _currentSousRub == SousRubIds.AMIS )
+				_cntSousRub.addChild( new ListAmis() );
+			else if ( _currentSousRub == SousRubIds.GROUPES )
+				_cntSousRub.addChild( new ListGroupes() );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		override public function activate():void
+		override public function activate():void 
 		{
 			if ( _activated ) return;
 			_menu.addEventListener( NavEvent.SWITCH_SOUS_RUBRIQUE, switchSousRubHandler, false, 0, true );
 			_activated = true;
 		}
 		
-		override public function deactivate():void
+		override public function deactivate():void 
 		{
 			if ( !_activated ) return;
 			_menu.removeEventListener( NavEvent.SWITCH_SOUS_RUBRIQUE, switchSousRubHandler );
@@ -117,7 +114,7 @@ package elives.sections.list
 			
 			IDisposable( _cntSousRub.getChildAt( 0 ) ).dispose();
 			_cntSousRub = null;
-		}
+		}		
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

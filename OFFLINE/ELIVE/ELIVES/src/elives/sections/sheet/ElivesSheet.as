@@ -140,7 +140,7 @@ package elives.sections.sheet
 			
 			_ongletTitle = null;
 			
-			_sheet.dispose();
+			if( _sheet ) _sheet.dispose();
 			_sheet = null;
 			
 			_cntSheet = null;
