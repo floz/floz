@@ -206,7 +206,7 @@ package fr.minuit4.tools.scrollbars
 		
 		private function handleEnterFrame(e:Event):void 
 		{
-			if ( ( _scrollTarget.height + _scrollTarget.x + 10 ) != _registerScrollTargetHeight )
+			if ( ( _scrollTarget.height + _baseY + 10 ) != _registerScrollTargetHeight )
 			{
 				setPosScrollMax();
 				refresh();
@@ -271,11 +271,10 @@ package fr.minuit4.tools.scrollbars
 		
 		private function setPosScrollMax():void
 		{
-			_registerScrollTargetHeight = _scrollTarget.height + 10;
+			_registerScrollTargetHeight = _scrollTarget.height + _baseY + 10;
 			
 			_posScrollMax = _mask.height - _registerScrollTargetHeight; 
-			if ( _scrollTarget.height - _mask.height < 0 ) _posScrollMax = 0;
-			if ( _posScrollMax > 0 ) _posScrollMax = -_posScrollMax; // bug peut etre
+			if ( _posScrollMax > 0 ) _posScrollMax = 0;
 			
 			if( _posScrollMax != 0 )
 				activate();
@@ -329,6 +328,7 @@ package fr.minuit4.tools.scrollbars
 		
 		public function dispose():void
 		{
+			if ( hasEventListener( Event.REMOVED_FROM_STAGE ) ) handleRemovedFromStage( null );
 			if ( hasEventListener( Event.ADDED_TO_STAGE ) ) removeEventListener( Event.ADDED_TO_STAGE, handleAddedToStage );
 			
 			_background = null;

@@ -48,6 +48,16 @@ package elive.rubriques
 			_sectionsController.navigateTo( sectionId, id );
 		}
 		
+		public function activate():void
+		{
+			// TODO: Activer les évènements souris après l'animation d'intro.
+		}
+		
+		public function deactivate():void
+		{
+			// TODO: Désactiver les évènements souris pour jouer l'animation d'arrivée
+		}
+		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
 	}

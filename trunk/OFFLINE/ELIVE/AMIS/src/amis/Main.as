@@ -9,6 +9,7 @@ package amis
 	import amis.sections.list.EbuddiesList;
 	import amis.sections.list.Menu;
 	import amis.sections.sheet.EbuddySheet;
+	import elive.events.NavEvent;
 	import elive.navigation.NavIds;
 	import elive.navigation.NavManager;
 	import elive.rubriques.IRubrique;
@@ -37,12 +38,22 @@ package amis
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
 			
+			_sectionsController.removeEventListener( NavEvent.SWITCH_SECTION, switchSectionHandler );
+			_sectionsController = null;
 		}
 		
 		private function addedToStageHandler(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
+			
+			_sectionsController.addEventListener( NavEvent.SWITCH_SECTION, switchSectionHandler, false, 0, true );
+		}
+		
+		private function switchSectionHandler( e:NavEvent ):void 
+		{
+			e.stopImmediatePropagation();
+			navigateTo( e.sectionId, e.id );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------

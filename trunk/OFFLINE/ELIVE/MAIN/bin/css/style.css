@@ -7,6 +7,7 @@
 .elives_sousmenu_bt_over_encours { font-family: Akkurat; color: #c2d24f; }
 .elives_sousmenu_bt_over_enattente { font-family: Akkurat; color: #f8b63d; }
 .elives_sousmenu_bt_over_termines { font-family: Akkurat; color: #965698; }
+.elives_sousmenu_bt_over_default { font-family: Akkurat; color: #A10D59; }
 
 .elives_list_apercu_title { font-family: Akkurat; }
 .elives_list_apercu_content { font-family: Akkurat; }
@@ -17,7 +18,8 @@
 .amis_list_apercu_content { font-family: Akkurat; }
 
 
-
+.score { font-family: Akkurat-Bold; color: #222222; font-size: 31; }
+.generalText { font-family: Akkurat-Bold; color: #222222; }
 .comment_user { font-family: Akkurat-Bold; color: #222222; }
 
 .button { font-family: Akkurat-Bold; }

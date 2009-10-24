@@ -9,6 +9,8 @@ package
 	import assets.fonts.FAkkurat;
 	import assets.fonts.FAkkuratBold;
 	import elive.utils.EliveUtils;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.text.Font;
 	import flash.text.StyleSheet;
 	import flash.text.TextField;
@@ -45,6 +47,9 @@ package
 		
 		public function Main() 
 		{
+			stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			
 			Configuration.DEBUG = true;
 			
 			_navManager = NavManager.getInstance();

@@ -77,7 +77,6 @@ package elives.sections.sheet
 			_datasLoader = null;
 			
 			while ( _cntSheet.numChildren ) _cntSheet.removeChildAt( 0 );
-			
 			_sheet = new Sheet();
 			
 			var challenge:Challenge = EliveXML.parseChallenge( _xml );

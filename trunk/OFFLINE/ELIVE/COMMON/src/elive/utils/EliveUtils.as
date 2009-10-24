@@ -8,6 +8,7 @@ package elive.utils
 {
 	import flash.geom.ColorTransform;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	import fr.minuit4.core.configuration.Config;
 	import fr.minuit4.core.configuration.Configuration;
 	
@@ -25,6 +26,13 @@ package elive.utils
 			tf.embedFonts = true;
 			tf.styleSheet = Config.getProperty( "css" );
 			tf.htmlText = "<span class='" + cssClass + "'>" + ( !text ? tf.text : text ) + "</span>";
+		}
+		
+		public static function getPreconfigureTextField():TextField
+		{
+			var tf:TextField = new TextField();
+			tf.autoSize = TextFieldAutoSize.LEFT;
+			return tf;
 		}
 		
 		public static function getColorTransform( color:uint ):ColorTransform

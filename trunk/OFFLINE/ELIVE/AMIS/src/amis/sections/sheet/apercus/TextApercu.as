@@ -4,16 +4,15 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package amis.sections.list.apercus
+package amis.sections.sheet.apercus
 {
-	import assets.GApercuSmall;
-	import assets.GGeneralBackground;
-	import aze.motion.Eaze;
-	import elive.core.users.User;
+	import assets.GApercu;
+	import elive.core.challenges.ChallengeStatus;
+	import elive.utils.EliveUtils;
 	import flash.events.Event;
-	import fr.minuit4.core.interfaces.IDisposable;
+	import flash.text.TextFieldAutoSize;
 	
-	public class Apercu extends GApercuSmall
+	public class TextApercu extends GApercu
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -24,21 +23,20 @@ package amis.sections.list.apercus
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Apercu() 
+		public function TextApercu() 
 		{
 			init();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
-		protected function removedFromStageHandler(e:Event):void 
+		private function removedFromStageHandler(e:Event):void 
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
 			
-			Eaze.killTweensOf( apercuOver );
-			
+			apercuBg = null;
 			apercuOver = null;
-			tf = null;			
+			apercuTop = null;
 		}
 		
 		private function addedToStageHandler(e:Event):void 
@@ -49,34 +47,27 @@ package amis.sections.list.apercus
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		protected function init():void
+		private function init():void
 		{
-			this.mouseChildren = false;
+			removeChild( apercuOver );
+			apercuBg.tf.autoSize = TextFieldAutoSize.LEFT;			
+			apercuTop.bg.transform.colorTransform = EliveUtils.getColorTransform( 0xA10D59 );
 			
-			var bg:GGeneralBackground = new GGeneralBackground();
-			bg.width = 263.9;
-			bg.height = 53.4;
-			cnt.addChild( bg );
-			
-			apercuOver.alpha = 0;			
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function over():void
+		public function setTitleText( text:String ):void
 		{
-			apercuOver.alpha = .4;
-			Eaze.to( apercuOver, .25, { alpha: 1 } );
+			EliveUtils.configureText( apercuTop.tf, "elives_list_apercu_title", text );
 		}
 		
-		public function out():void
+		public function setContentText( text:String ):void
 		{
-			apercuOver.alpha = .6;
-			Eaze.to( apercuOver, .25, { alpha: 0 } );
+			EliveUtils.configureText( apercuBg.tf, "elives_list_apercu_content", text );
+			apercuBg.bg.height = apercuBg.tf.textHeight + 10;
 		}
-		
-		public function getId():int { return 0; }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

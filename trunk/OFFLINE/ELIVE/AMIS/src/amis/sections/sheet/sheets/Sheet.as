@@ -4,28 +4,26 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elive.core.users 
+package amis.sections.sheet.sheets
 {
-	import elive.core.challenges.Challenge;
+	import elive.core.users.User;
+	import flash.display.Sprite;
+	import fr.minuit4.core.interfaces.IDisposable;
 	
-	public class User 
+	public class Sheet extends Sprite implements IDisposable
 	{
+		
+		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _stats:UserStats;
+		protected var _user:User;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
-		public var id:int;
-		public var name:String;
-		public var location:String;
-		public var points:int;
-		public var url:String;
-		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function User() 
+		public function Sheet() 
 		{
 			
 		}
@@ -36,20 +34,15 @@ package elive.core.users
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function config( id:int, name:String, location:String, points:int, url:String ):void
+		public function linkTo( user:User ):void
 		{
-			this.id = id;
-			this.name = name;
-			this.location = location;
-			this.points = points;
-			this.url = url;
+			this._user = user;
 		}
 		
-		public function setStats( stats:UserStats ):void
+		public function dispose():void
 		{
-			_stats = stats;
+			
 		}
-		public function getStats():UserStats { return _stats; }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
