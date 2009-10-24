@@ -14,6 +14,9 @@ package elives.sections.list
 	import elive.events.EliveEvent;
 	import elive.ui.compteur.Compteur;
 	import elive.utils.EliveUtils;
+	import flash.display.Bitmap;
+	import flash.display.MovieClip;
+	import flash.display.PixelSnapping;
 	import flash.events.Event;
 	import flash.text.TextField;
 	import fr.minuit4.core.configuration.Config;
@@ -57,6 +60,7 @@ package elives.sections.list
 			apercuOver = null;
 			apercuTop = null;
 			
+			Bitmap( _avatarHolder.cnt.getChildAt( 0 ) ).bitmapData.dispose();
 			_avatarHolder = null;
 			
 			_challenge = null;	
@@ -100,7 +104,7 @@ package elives.sections.list
 			_avatarHolder = new GApercuAvatar();
 			_avatarHolder.x = 3;
 			_avatarHolder.y = 53;
-			_avatarHolder.cnt.addChild( new GAvatar1() );
+			_avatarHolder.cnt.addChild( new Bitmap( new GAvatar1( 0, 0 ), PixelSnapping.AUTO, true ) );
 			addChild( _avatarHolder );
 			
 			this.mouseChildren = false;

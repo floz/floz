@@ -60,7 +60,14 @@ package  elive.ui.sousmenu
 			
 			if ( !_disableActivatedState )
 			{
-				_selectedItem = _cntItems.getChildAt( 0 ) as SousMenuItem;
+				var item:SousMenuItem;
+				var i:int, n:int = _cntItems.numChildren;
+				for ( ; i < n; ++i )
+				{
+					item = SousMenuItem( _cntItems.getChildAt( i ) );
+					item.out();
+				}
+				_selectedItem = SousMenuItem( _cntItems.getChildAt( 0 ) );
 				_selectedItem.over();
 			}
 			

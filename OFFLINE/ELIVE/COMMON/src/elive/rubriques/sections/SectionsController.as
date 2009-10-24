@@ -123,7 +123,7 @@ package elive.rubriques.sections
 		
 		public function addSection( section:Section, sectionId:int ):void
 		{
-			_sections[ sectionId ] = section;
+			_sections[ sectionId ] = Section( section );
 		}
 		
 		public function navigateTo( sectionId:int, id:int = -1 ):void

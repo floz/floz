@@ -4,10 +4,11 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package amis.sections.sheet 
+package amis.sections.sheet.sheets 
 {
+	import fr.minuit4.ui.Dummy;
 	
-	public class Sheet 
+	public class SheetElives extends Sheet
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -18,7 +19,7 @@ package amis.sections.sheet
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Sheet() 
+		public function SheetElives() 
 		{
 			
 		}

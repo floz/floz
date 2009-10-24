@@ -4,47 +4,40 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elives.sections.list.lists
+package fr.minuit4.ui 
 {
-	import elives.sections.list.SousRubsIds;
+	import flash.display.Graphics;
+	import flash.display.Shape;
 	
-	final public class ListEnvoyes extends List
+	public class Dummy extends Shape
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private var _color:uint;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function ListEnvoyes() 
+		public function Dummy( color:uint ) 
 		{
-			
+			this._color = color;
+			init();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		override protected function buildSousMenu():void 
+		private function init():void
 		{
-			_sousMenu.addItem( "En cours", SousRubsIds.EN_COURS, "elives_sousmenu_bt_over_encours" );
-			_sousMenu.addItem( "Terminés", SousRubsIds.TERMINES, "elives_sousmenu_bt_over_termines" );
-			
-			_currentSousRub = SousRubsIds.EN_COURS;
-			
-			super.buildSousMenu();
-		}
-		
-		override protected function onSwitchSousRub():void 
-		{
-			switch( _currentSousRub )
-			{
-				case SousRubsIds.EN_COURS: loadXML( "actions_list_encours.xml" ); break;
-				case SousRubsIds.TERMINES: loadXML( "actions_list_termines.xml" ); break;
-			}
+			var g:Graphics = this.graphics;
+			g.beginFill( _color );
+			g.drawRect( 0, 0, 40, 40 );
+			g.endFill();
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

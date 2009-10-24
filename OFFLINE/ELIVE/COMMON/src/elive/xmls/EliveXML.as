@@ -65,7 +65,7 @@ package elive.xmls
 			
 			var n:int = list.length();
 			
-			if ( n == 0 ) return null;
+			if ( n == 0 ) return new Vector.<User>( n, true );
 			
 			var users:Vector.<User> = new Vector.<User>( n, true );
 			for ( var i:int; i < n; ++i )
@@ -109,7 +109,7 @@ package elive.xmls
 			
 			var n:int = list.length();
 			
-			if ( n == 0 ) return null;
+			if ( n == 0 ) return new Vector.<Challenge>( n, true );
 			
 			var challenges:Vector.<Challenge> = new Vector.<Challenge>( n, true );
 			for ( var i:int; i < n; ++i )
@@ -132,7 +132,7 @@ package elive.xmls
 			var list:XMLList = datas.children().( localName() == type );
 			var n:int = list.length();
 			
-			if ( n == 0 ) return null;
+			if ( n == 0 ) return new Vector.<String>( n, true );
 			
 			var medias:Vector.<String> = new Vector.<String>( n, true );
 			for ( var i:int; i < n; ++i )
@@ -170,7 +170,7 @@ package elive.xmls
 			
 			var n:int = list.length();
 			
-			if ( n == 0 ) return null;
+			if ( n == 0 ) return new Vector.<Comment>( n, true );
 			
 			var comments:Vector.<Comment> = new Vector.<Comment>( n, true );
 			for ( var i:int; i < n; ++i )
@@ -198,7 +198,7 @@ package elive.xmls
 			
 			var n:int = list.length();
 			
-			if ( n == 0 ) return null;
+			if ( n == 0 ) return new Vector.<Group>( n, true );
 			
 			var groups:Vector.<Group> = new Vector.<Group>( n, true );
 			for ( var i:int; i < n; ++i )

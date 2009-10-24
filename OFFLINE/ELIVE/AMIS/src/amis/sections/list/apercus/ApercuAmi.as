@@ -10,6 +10,9 @@ package amis.sections.list.apercus
 	import assets.GAvatar1;
 	import elive.core.users.User;
 	import elive.utils.EliveUtils;
+	import flash.display.Bitmap;
+	import flash.display.PixelSnapping;
+	import flash.events.Event;
 	
 	public class ApercuAmi extends Apercu
 	{
@@ -33,6 +36,16 @@ package amis.sections.list.apercus
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
+		override protected function removedFromStageHandler(e:Event):void 
+		{
+			super.removedFromStageHandler(e);
+			
+			Bitmap( _avatarHolder.cnt.getChildAt( 0 ) ).bitmapData.dispose();
+			_avatarHolder = null;
+			
+			_user = null;
+		}
+		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		override protected function init():void 
@@ -42,7 +55,7 @@ package amis.sections.list.apercus
 			_avatarHolder = new GApercuAvatar();
 			_avatarHolder.x = 5;
 			_avatarHolder.y = 2;
-			_avatarHolder.cnt.addChild( new GAvatar1() );
+			_avatarHolder.cnt.addChild( new Bitmap( new GAvatar1( 0, 0 ), PixelSnapping.AUTO, true ) );
 			addChild( _avatarHolder );
 			
 			var text:String = _user.name + "\n" + _user.points;

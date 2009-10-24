@@ -50,6 +50,8 @@ package amis.sections.list
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
+			
+			onSwitchSousRub();
 		}
 		
 		private function switchSousRubHandler( e:NavEvent ):void
@@ -72,11 +74,10 @@ package amis.sections.list
 			addChild( _menu );
 			
 			_cntSousRub = new Sprite();
-			_cntSousRub.y = 40;
+			_cntSousRub.y = 30;
 			addChild( _cntSousRub );
 			
 			_currentSousRub = SousRubIds.AMIS;
-			onSwitchSousRub();
 			
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}

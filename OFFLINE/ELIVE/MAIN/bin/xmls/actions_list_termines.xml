@@ -8,7 +8,7 @@
 		<created_at>TIMESTAMP</created_at>
 		<status>won</status>
 		<medias>
-			<picture width="" height="" url="" />
+			<picture width="" height="" url="http://bizounours35.unblog.fr/files/2007/06/chat.jpg" />
 		</medias>
 		<sender>
 			<user>
@@ -47,7 +47,7 @@
 		<created_at>TIMESTAMP</created_at>
 		<status>won</status>
 		<medias>
-			<picture width="" height="" url="" />
+			<picture width="" height="" url="http://yapasphoto.files.wordpress.com/2008/06/chat-inutile.jpg" />
 		</medias>
 		<sender>
 			<user>
@@ -86,7 +86,7 @@
 		<created_at>TIMESTAMP</created_at>
 		<status>lost</status>
 		<medias>
-			<picture width="" height="" url="" />
+			<picture width="" height="" url="http://prettyinpink.unblog.fr/files/2008/12/chat.jpg" />
 		</medias>
 		<sender>
 			<user>
@@ -125,7 +125,7 @@
 		<created_at>TIMESTAMP</created_at>
 		<status>lost</status>
 		<medias>
-			<picture width="" height="" url="" />
+			<picture width="" height="" url="http://www.villiard.com/blog/wp-content/uploads/2006/12/chat-noel.jpg" />
 		</medias>		
 		<sender>
 			<user>
@@ -164,7 +164,7 @@
 		<created_at>TIMESTAMP</created_at>
 		<status>lost</status>
 		<medias>
-			<picture width="" height="" url="" />
+			<picture width="" height="" url="http://bizounours35.unblog.fr/files/2007/06/chat.jpg" />
 		</medias>
 		<sender>
 			<user>
@@ -203,7 +203,7 @@
 		<created_at>TIMESTAMP</created_at>
 		<status>won</status>
 		<medias>
-			<picture width="" height="" url="" />
+			<picture width="" height="" url="http://www.motoservices.com/voyage/chat%20casque.jpg" />
 		</medias>
 		<sender>
 			<user>
