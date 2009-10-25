@@ -32,6 +32,7 @@ package amis.sections.sheet.sheets.elives
 			_sousMenu.addItem( "En cours", SousRubIds.EN_COURS, "elives_sousmenu_bt_over_encours" );
 			_sousMenu.addItem( "En attente", SousRubIds.EN_ATTENTE, "elives_sousmenu_bt_over_enattente" );
 			_sousMenu.addItem( "Terminés", SousRubIds.TERMINES, "elives_sousmenu_bt_over_termines" );
+			_sousMenu.setBackgroundAlpha( .3 );
 			
 			_currentSousRub = SousRubIds.EN_COURS;
 			

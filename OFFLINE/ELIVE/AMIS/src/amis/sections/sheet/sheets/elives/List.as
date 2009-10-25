@@ -1,4 +1,5 @@
-﻿/**
+﻿
+/**
  * Written by :
  * @author Floz
  * www.floz.fr || www.minuit4.fr
@@ -23,7 +24,7 @@ package amis.sections.sheet.sheets.elives
 		
 		private var _historicManager:HistoricManager;
 		
-		private var _challenges:Vector.<Challenge>
+		private var _challenges:Array;
 		private var _datasLoader:DatasLoader;
 		
 		private var _apercuOnScroll:Apercu;

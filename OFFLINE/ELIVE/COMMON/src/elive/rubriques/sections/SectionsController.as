@@ -18,7 +18,7 @@ package elive.rubriques.sections
 		
 		private const _posX:int = 300;
 		
-		private var _sections:Vector.<Section>;
+		private var _sections:Array;
 		private var _mask:Sprite;
 		private var _cnt:Sprite;
 		
@@ -51,7 +51,7 @@ package elive.rubriques.sections
 			
 			var i:int, n:int = _sections.length;
 			for ( ; i < n; ++i )
-				_sections[ i ].dispose();
+				Section( _sections[ i ] ).dispose();
 			
 			_mask = null;
 			_cnt = null;
@@ -68,7 +68,7 @@ package elive.rubriques.sections
 		
 		private function init():void
 		{
-			_sections = new Vector.<Section>( 0, false );
+			_sections = [];
 			
 			_mask = new GPanelMask();
 			_mask.x = -6;
@@ -123,7 +123,7 @@ package elive.rubriques.sections
 		
 		public function addSection( section:Section, sectionId:int ):void
 		{
-			_sections[ sectionId ] = Section( section );
+			_sections[ sectionId ] = section;
 		}
 		
 		public function navigateTo( sectionId:int, id:int = -1 ):void

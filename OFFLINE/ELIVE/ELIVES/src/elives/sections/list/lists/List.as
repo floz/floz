@@ -24,7 +24,7 @@ package elives.sections.list.lists
 		
 		private var _historicManager:HistoricManager;
 		
-		private var _challenges:Vector.<Challenge>
+		private var _challenges:Array;
 		private var _datasLoader:DatasLoader;
 		
 		private var _apercuOnScroll:Apercu;

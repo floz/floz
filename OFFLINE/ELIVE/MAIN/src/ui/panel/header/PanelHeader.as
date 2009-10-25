@@ -121,12 +121,11 @@ package ui.panel.header
 		{
 			_cntLogo.alpha = 1;
 			MovieClip( _cntLogo.getChildAt( 0 ) ).gotoAndPlay( 0 );
-			initialized = true;
 		}
 		
 		public function makeAppear():void
 		{
-			if( initialized ) Eaze.to( _cntLogo, .5, { alpha: 1 } );
+			play();
 			
 			Eaze.from( _cloud1, .5, { y: -50 } );
 			Eaze.from( _cloud2, .5, { y: -50 } );
