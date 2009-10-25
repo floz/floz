@@ -49,9 +49,12 @@ package amis.sections.sheet.apercus
 				_assetsLoader = null;
 			}
 			
-			_imageHolder.bitmapData.dispose();
-			_imageHolder.bitmapData = null;
-			_imageHolder = null;
+			if ( _imageHolder )
+			{
+				_imageHolder.bitmapData.dispose();
+				_imageHolder.bitmapData = null;
+				_imageHolder = null;
+			}
 		}
 		
 		private function addedToStageHandler(e:Event):void 

@@ -11,9 +11,12 @@ package
 	import elive.utils.EliveUtils;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import flash.events.MouseEvent;
 	import flash.text.Font;
 	import flash.text.StyleSheet;
 	import flash.text.TextField;
+	import flash.ui.Mouse;
+	import flash.ui.MouseCursor;
 	import fr.minuit4.utils.debug.FPS;
 	import ui.panel.ElivePanel;
 	import navigation.NavContainer;
@@ -50,7 +53,7 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
-			Configuration.DEBUG = true;
+			Configuration.DEBUG = false;
 			
 			_navManager = NavManager.getInstance();
 			_navManager.addEventListener( NavEvent.SWITCH_RUBRIQUE, switchRubriqueHandler, false, 0, true );
@@ -99,8 +102,10 @@ package
 			assetsLoader.removeEventListener( Event.COMPLETE, ethingLoadedHandler );
 			
 			_ething = assetsLoader.getItemLoaded();
-			_ething.x = 300 - 50;
-			_ething.y = 525 - 50;
+			_ething.x = 200 - 30;
+			_ething.y = 525;
+			_ething.addEventListener( MouseEvent.MOUSE_DOWN, ethingDownHandler );
+			_ething.buttonMode = true;
 			_globalContainer.addChild( _ething );
 			
 			assetsLoader.dispose();
@@ -111,6 +116,19 @@ package
 			{
 				addChild( new FPS() );
 			}
+		}
+		
+		private function ethingDownHandler(e:MouseEvent):void 
+		{
+			_ething.addEventListener( MouseEvent.MOUSE_UP, ethingUpHandler );
+			
+			stage.nativeWindow.startMove();
+			Mouse.cursor = MouseCursor.HAND;
+		}
+		
+		private function ethingUpHandler(e:MouseEvent):void 
+		{
+			Mouse.cursor = MouseCursor.AUTO;
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -137,8 +155,8 @@ package
 		{
 			var navContainer:NavContainer = new NavContainer();
 			navContainer.createNav();
-			navContainer.x = _ething.x + _ething.width * .5 - navContainer.width * .5;
-			navContainer.y = _ething.y + _ething.height + 10;
+			navContainer.x = _ething.x + _ething.width + 30; //- navContainer.width * .5;
+			navContainer.y = _ething.y - 40;
 			_globalContainer.addChild( navContainer );
 		}
 		

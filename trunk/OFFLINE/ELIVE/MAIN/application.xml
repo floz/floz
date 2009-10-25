@@ -12,8 +12,8 @@
 	<initialWindow> 
 		<title>(e)lives</title> 
 		<content>main.swf</content> 
-		<systemChrome>standard</systemChrome> 
-		<transparent>false</transparent> 
+		<systemChrome>none</systemChrome> 
+		<transparent>true</transparent> 
 		<visible>true</visible> 
 		<minimizable>true</minimizable> 
 		<maximizable>true</maximizable> 
