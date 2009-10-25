@@ -86,7 +86,6 @@ package ui.panel
 			Eaze.delay( .4 ).chainTo( _tooltip, .1, { alpha: .4 } ).chainTo( _tooltip, .35, { y: 45, alpha: 1 } );
 			
 			_panelHeader.makeAppear();
-			if( !_panelHeader.initialized ) Eaze.delay( .1 ).onComplete( _panelHeader.play );
 			
 			this.alpha = .4;
 			Eaze.to( this, .5, { alpha: 1 } );
@@ -100,7 +99,8 @@ package ui.panel
 		}
 		
 		private function btCloseDownHandler(e:MouseEvent):void 
-		{			
+		{		
+			_navManager.setEnable( false );
 			_panelHeader.makeDisappear();
 			
 			Eaze.to( _tooltip, .6, { y: 100, alpha: 0 } );
@@ -188,6 +188,7 @@ package ui.panel
 		
 		private function onBtCloseDown():void
 		{
+			_navManager.setEnable( true );
 			_navManager.switchRub( NavIds.HOME );
 		}
 		
@@ -215,6 +216,7 @@ package ui.panel
 				case NavIds.ELIVES: text = "Mes (e)lives"; break;
 				case NavIds.AMIS: text = "Mes (e)buddies"; break;
 				case NavIds.PROFIL: text = "Mon profil"; break;
+				case NavIds.EMAKE: text = "(e)Make"; break;
 				default: text = "Minuit4"; break;
 			}
 			EliveUtils.configureText( _tooltip.tf, "elive_panel_tooltip", text );

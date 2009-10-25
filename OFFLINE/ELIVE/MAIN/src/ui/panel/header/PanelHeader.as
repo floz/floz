@@ -17,6 +17,9 @@ package ui.panel.header
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.ui.Mouse;
+	import flash.ui.MouseCursor;
 	
 	public class PanelHeader extends Sprite
 	{
@@ -52,14 +55,32 @@ package ui.panel.header
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
+			
+			//removeEventListener( MouseEvent.MOUSE_DOWN, ethingDownHandler );
 		}
 		
 		private function addedToStageHandler(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
+			
+			//addEventListener( MouseEvent.MOUSE_DOWN, ethingDownHandler, false, 0, true );
 		}
 		
+		//private function ethingDownHandler(e:MouseEvent):void 
+		//{
+			//addEventListener( MouseEvent.MOUSE_UP, ethingUpHandler, false, 0, true );
+			//
+			//stage.nativeWindow.startMove();
+			//Mouse.cursor = MouseCursor.HAND;
+		//}
+		//
+		//private function ethingUpHandler(e:MouseEvent):void 
+		//{
+			//removeEventListener( MouseEvent.MOUSE_UP, ethingUpHandler );
+			//Mouse.cursor = MouseCursor.AUTO;
+		//}
+		//
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function init():void
@@ -69,6 +90,8 @@ package ui.panel.header
 			createFront();		
 			
 			_cntLogo.alpha = 0;
+			
+			//this.buttonMode = true;
 		}
 		
 		private function createBack():void
@@ -119,13 +142,13 @@ package ui.panel.header
 		
 		public function play():void
 		{
-			_cntLogo.alpha = 1;
-			MovieClip( _cntLogo.getChildAt( 0 ) ).gotoAndPlay( 0 );
+			Eaze.to( _cntLogo, .25, { alpha: 1 } );
+			MovieClip( _cntLogo.getChildAt( 0 ) ).gotoAndPlay( "apparition" );
 		}
 		
 		public function makeAppear():void
 		{
-			play();
+			Eaze.delay( .2 ).onComplete( play );
 			
 			Eaze.from( _cloud1, .5, { y: -50 } );
 			Eaze.from( _cloud2, .5, { y: -50 } );

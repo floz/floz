@@ -13,6 +13,7 @@ package elive.navigation
 		public static const ELIVES:String = "elives";
 		public static const AMIS:String = "amis";
 		public static const PROFIL:String = "profil";
+		public static const EMAKE:String = "emake";
 		
 		public static const HOME:String = "home";
 		

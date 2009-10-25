@@ -8,7 +8,11 @@ package
 {
 	import assets.fonts.FAkkurat;
 	import assets.fonts.FAkkuratBold;
+	import assets.GLogo;
+	import aze.motion.Eaze;
+	import elive.managers.EthingManager;
 	import elive.utils.EliveUtils;
+	import flash.display.BlendMode;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.MouseEvent;
@@ -38,9 +42,12 @@ package
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _navManager:NavManager;
+		private var _ethingManager:EthingManager;
 		private var _globalContainer:Sprite;
+		private var _cntPanel:Sprite;
 		
 		private var _ething:Sprite;
+		private var _navContainer:NavContainer;
 		
 		private var _elivePanel:ElivePanel;
 		
@@ -58,7 +65,10 @@ package
 			_navManager = NavManager.getInstance();
 			_navManager.addEventListener( NavEvent.SWITCH_RUBRIQUE, switchRubriqueHandler, false, 0, true );
 			
+			_ethingManager = EthingManager.getInstance();
+			
 			_globalContainer = new Sprite();
+			_globalContainer.y = 15;
 			addChild( _globalContainer );
 			
 			Config.addEventListener( Event.COMPLETE, configCompleteHandler );
@@ -76,7 +86,16 @@ package
 			Font.registerFont( FAkkurat );
 			Font.registerFont( FAkkuratBold );
 			
-			createEthing();
+			if ( !Configuration.DEBUG )
+			{
+				var logo:GLogo = new GLogo();
+				logo.x = 200 - 30;
+				logo.y = 525;
+				_globalContainer.addChild( logo );
+				logo.gotoAndPlay( 1 );
+				Eaze.delay( 1.5 ).chainTo( logo, .5, { alpha: 0 } ).onComplete( createEthing );
+			}
+			else createEthing();
 		}
 		
 		private function switchRubriqueHandler(e:NavEvent):void 
@@ -86,12 +105,13 @@ package
 				case NavIds.ELIVES:
 				case NavIds.AMIS:
 				case NavIds.PROFIL:
+				case NavIds.EMAKE:
 					_elivePanel.loadRub( e.navId, e.sectionId, e.id );
-					if( !_elivePanel.parent ) _globalContainer.addChild( _elivePanel );
+					if( !_elivePanel.parent ) _cntPanel.addChild( _elivePanel );
 					break;
 				
 				default:
-					_globalContainer.removeChild( _elivePanel );
+					_cntPanel.removeChild( _elivePanel );
 					break;
 			}
 		}
@@ -103,19 +123,25 @@ package
 			
 			_ething = assetsLoader.getItemLoaded();
 			_ething.x = 200 - 30;
-			_ething.y = 525;
+			_ething.y = 510;
 			_ething.addEventListener( MouseEvent.MOUSE_DOWN, ethingDownHandler );
 			_ething.buttonMode = true;
 			_globalContainer.addChild( _ething );
 			
 			assetsLoader.dispose();
 			
-			initWidget();
+			//initWidget();
 			
 			if ( Configuration.DEBUG )
 			{
 				addChild( new FPS() );
+				
+				_globalContainer.x = int( stage.stageWidth * .5 - 219.75 );
+				_globalContainer.y = int( 400 - 368.45 );
 			}
+			
+			_ethingManager.ethingJump();
+			Eaze.from( _ething, 1, { y: 600, alpha: 0 } ).onComplete( initWidget );
 		}
 		
 		private function ethingDownHandler(e:MouseEvent):void 
@@ -128,6 +154,7 @@ package
 		
 		private function ethingUpHandler(e:MouseEvent):void 
 		{
+			_ething.removeEventListener( MouseEvent.MOUSE_UP, ethingUpHandler );
 			Mouse.cursor = MouseCursor.AUTO;
 		}
 		
@@ -135,6 +162,8 @@ package
 		
 		private function createEthing():void
 		{
+			while ( _globalContainer.numChildren ) _globalContainer.removeChildAt( 0 );
+			
 			var assetsLoader:AssetsLoader = new AssetsLoader( Config.getProperty( "pathSWF" ) + "/ething.swf" );
 			assetsLoader.addEventListener( Event.COMPLETE, ethingLoadedHandler, false, 0, true );
 			assetsLoader.load();
@@ -142,27 +171,24 @@ package
 		
 		private function initWidget():void
 		{
-			createNav();
 			createElivePanel();
-			if ( Configuration.DEBUG )
-			{
-				_globalContainer.x = int( stage.stageWidth * .5 - 219.75 );
-				_globalContainer.y = int( stage.stageHeight * .5 - 368.45 );
-			}
+			createNav();
 		}
 		
 		private function createNav():void
 		{
-			var navContainer:NavContainer = new NavContainer();
-			navContainer.createNav();
-			navContainer.x = _ething.x + _ething.width + 30; //- navContainer.width * .5;
-			navContainer.y = _ething.y - 40;
-			_globalContainer.addChild( navContainer );
+			_navContainer = new NavContainer();
+			_navContainer.createNav();
+			_navContainer.x = int( _ething.x + _ething.width + 60 );
+			_navContainer.y = int( 480 );
+			_globalContainer.addChild( _navContainer );
 		}
 		
 		private function createElivePanel():void
 		{
+			_cntPanel = new Sprite();
 			_elivePanel = new ElivePanel();
+			_globalContainer.addChild( _cntPanel );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

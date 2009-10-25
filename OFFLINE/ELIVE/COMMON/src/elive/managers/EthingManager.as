@@ -6,8 +6,10 @@
  */
 package elive.managers 
 {
+	import elive.events.EthingEvent;
+	import flash.events.EventDispatcher;
 	
-	public class EthingManager 
+	public class EthingManager extends EventDispatcher
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -41,6 +43,34 @@ package elive.managers
 				} _allowInstanciation = false;
 			}
 			return _instance;
+		}
+		
+		public function ethingIsOk():void
+		{
+			var ethingEvent:EthingEvent = new EthingEvent( EthingEvent.ANIM_REQUEST );
+			ethingEvent.label = "ok";
+			dispatchEvent( ethingEvent );
+		}
+		
+		public function ethingAcclame():void
+		{
+			var ethingEvent:EthingEvent = new EthingEvent( EthingEvent.ANIM_REQUEST );
+			ethingEvent.label = "cparti";
+			dispatchEvent( ethingEvent );
+		}
+		
+		public function ethingJump():void
+		{
+			var ethingEvent:EthingEvent = new EthingEvent( EthingEvent.ANIM_REQUEST );
+			ethingEvent.label = "saute";
+			dispatchEvent( ethingEvent );
+		}
+		
+		public function ethingSendElive():void
+		{
+			var ethingEvent:EthingEvent = new EthingEvent( EthingEvent.ANIM_REQUEST );
+			ethingEvent.label = "envoielive";
+			dispatchEvent( ethingEvent );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

@@ -7,7 +7,7 @@
     <movie path="bin\main.swf" />
     <movie fps="30" />
     <movie width="1000" />
-    <movie height="800" />
+    <movie height="1000" />
     <movie version="10" />
     <movie background="#FFFFFF" />
   </output>
@@ -50,6 +50,10 @@
     <element path="..\COMMON\swc\assets_avatars.swc" />
     <element path="..\COMMON\swc\assets_elives.swc" />
     <element path="swc\assets_menu.swc" />
+    <element path="swc\assets_icon_elive.swc" />
+    <element path="swc\assets_icon_amis.swc" />
+    <element path="swc\assets_icon_emake.swc" />
+    <element path="swc\assets_icon_profil.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
