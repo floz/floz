@@ -6,11 +6,16 @@
  */
 package amis.sections.sheet.sheets 
 {
+	import amis.sections.sheet.sheets.elives.ListEnvoyes;
+	import amis.sections.sheet.sheets.elives.ListRecus;
 	import amis.sections.sheet.sheets.elives.Menu;
+	import amis.sections.sheet.sheets.elives.SousRubIds;
 	import elive.core.users.User;
 	import elive.events.NavEvent;
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import fr.minuit4.core.interfaces.IDisposable;
 	import fr.minuit4.tools.scrollbars.VScrollbar;
 	
 	public class SheetElives extends Sheet
@@ -41,6 +46,11 @@ package amis.sections.sheet.sheets
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);		
 			
 			_menu.removeEventListener( NavEvent.SWITCH_SOUS_RUBRIQUE, switchSousRubHandler );
+			_menu = null;
+			
+			_cntSousRub = null;
+			
+			dispose();
 		}
 		
 		private function addedToStageHandler(e:Event):void 
@@ -49,6 +59,9 @@ package amis.sections.sheet.sheets
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
 			
 			_menu.addEventListener( NavEvent.SWITCH_SOUS_RUBRIQUE, switchSousRubHandler, false, 0, true );
+			
+			if( !_currentSousRub ) _currentSousRub = SousRubIds.RECUS;
+			onSwitchSousRub();
 		}
 		
 		private function switchSousRubHandler( e:NavEvent ):void
@@ -70,7 +83,7 @@ package amis.sections.sheet.sheets
 			addChild( _menu );
 			
 			_cntSousRub = new Sprite();
-			_cntSousRub = _menu.height - 20;
+			_cntSousRub.y = _menu.height - 25;
 			addChild( _cntSousRub );
 			
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
@@ -78,8 +91,13 @@ package amis.sections.sheet.sheets
 		
 		private function onSwitchSousRub():void
 		{
-			trace( "SheetElives.onSwitchSousRub" );
+			while ( _cntSousRub.numChildren ) 
+				IDisposable( _cntSousRub.removeChildAt( 0 ) ).dispose();
 			
+			if ( _currentSousRub == SousRubIds.RECUS )
+				_cntSousRub.addChild( new ListRecus() );
+			else if ( _currentSousRub == SousRubIds.ENVOYES )
+				_cntSousRub.addChild( new ListEnvoyes() );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

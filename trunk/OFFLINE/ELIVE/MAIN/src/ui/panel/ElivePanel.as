@@ -8,7 +8,9 @@ package ui.panel
 {
 	import assets.GBackground;
 	import assets.GTooltip;
+	import aze.motion.easing.Quadratic;
 	import aze.motion.Eaze;
+	import elive.navigation.HistoricManager;
 	import elive.navigation.NavIds;
 	import elive.navigation.NavManager;
 	import elive.rubriques.IRubrique;
@@ -31,17 +33,21 @@ package ui.panel
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _navManager:NavManager;
+		private var _historicManager:HistoricManager;
 		
 		private var _navId:String;
 		private var _sectionId:int;
 		private var _id:int;
 		private var _assetsLoader:AssetsLoader;
 		
-		private var _tooltipField:TextField;
+		private var _panelHeader:PanelHeader
 		
-		private var _tooltip:GTooltip;
+		private var _tooltipField:TextField;		
+		private var _tooltip:GTooltip;	
 		
 		private var _rub:IRubrique;
+		
+		private var _tweening:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -62,6 +68,11 @@ package ui.panel
 			
 			cntTooltip.removeChild( _tooltip );
 			
+			Eaze.killTweensOf( _tooltip );
+			Eaze.killTweensOf( this );
+			Eaze.killTweensOf( btClose );
+			Eaze.killTweensOf( btClose.croix );
+			
 			btClose.removeEventListener( MouseEvent.MOUSE_DOWN, btCloseDownHandler );
 		}
 		
@@ -70,23 +81,48 @@ package ui.panel
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
 			
-			Eaze.from( _tooltip, .2, { y: 100, alpha: .6 } );
+			_tooltip.y = 100;
+			_tooltip.alpha = 0;
+			Eaze.delay( .4 ).chainTo( _tooltip, .1, { alpha: .4 } ).chainTo( _tooltip, .35, { y: 45, alpha: 1 } );
+			
+			_panelHeader.makeAppear();
+			if( !_panelHeader.initialized ) Eaze.delay( .1 ).onComplete( _panelHeader.play );
+			
+			this.alpha = .4;
+			Eaze.to( this, .5, { alpha: 1 } );
+			Eaze.from( btClose, .25, { scaleX: 0, scaleY: 0 } ).chainFrom( btClose, .35, { rotation: 360 } );
+			
+			setTweening( true );
 			
 			btClose.addEventListener( MouseEvent.MOUSE_DOWN, btCloseDownHandler, false, 0, true );
+			btClose.addEventListener( MouseEvent.ROLL_OVER, btCloseRollOverHandler, false, 0, true );
+			btClose.addEventListener( MouseEvent.ROLL_OUT, btCloseRollOutHandler, false, 0, true );
 		}
 		
 		private function btCloseDownHandler(e:MouseEvent):void 
 		{
-			_navManager.switchRub( NavIds.HOME );
+			setTweening( true );
+			
+			_panelHeader.makeDisappear();
+			
+			Eaze.to( _tooltip, .6, { y: 100, alpha: 0 } );
+			Eaze.to( this, .5, { alpha: 0 } ).onComplete( onBtCloseDown );			
 		}
 		
 		private function rubLoadedHandler(e:Event):void 
 		{
 			_rub = _assetsLoader.getItemLoaded();
-			_rub.navigateTo( 0 );
-			cntContent.addChild( _rub as DisplayObject );
+			_rub.navigateTo( _sectionId, _id );
 			
-			Eaze.to( cntContent, .25, { alpha: 1 } );
+			if ( cntContent.numChildren )
+			{
+				var display:DisplayObject = cntContent.getChildAt( 0 );
+				Eaze.to( display, .5, { alpha: 0 } ).onComplete( cleanCnt, display );
+			}
+			
+			DisplayObject( _rub ).alpha = 0;
+			Eaze.delay( .25 ).chainTo( _rub, .25, { alpha: 1 } ).onComplete( setTweening, false );
+			cntContent.addChild( _rub as DisplayObject );
 			
 			cntTooltip.addChild( _tooltip );
 			
@@ -95,23 +131,42 @@ package ui.panel
 			_assetsLoader = null;
 		}
 		
+		private function mouseDownHandler(e:MouseEvent):void 
+		{
+			if ( _tweening ) e.stopImmediatePropagation();
+		}
+		
+		private function btCloseRollOverHandler(e:MouseEvent):void 
+		{
+			Eaze.to( btClose, .25, { scaleX: 1.35, scaleY: 1.35 } ).chainTo( btClose, .15, { scaleX: 1.25, scaleY: 1.25 } );
+			Eaze.to( btClose.croix, .25, { rotation: 180 } );
+		}
+		
+		private function btCloseRollOutHandler(e:MouseEvent):void 
+		{
+			Eaze.to( btClose, .25, { scaleX: 1, scaleY: 1 } );
+			Eaze.to( btClose.croix, .25, { rotation: 0 } );
+		}
+		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function init():void
 		{
 			_navManager = NavManager.getInstance();
+			_historicManager = HistoricManager.getInstance();
 			createHeader();
 			createTooltip();
 			
 			btClose.buttonMode = true;
 			
-			cntContent.y = 75;
+			cntContent.y = 75;			
+			cntContent.addEventListener( MouseEvent.MOUSE_DOWN, mouseDownHandler, true );
 		}
 		
 		private function createHeader():void
 		{
-			var panelHeader:PanelHeader = new PanelHeader();
-			cntHead.addChild( panelHeader );
+			_panelHeader = new PanelHeader();
+			cntHead.addChild( _panelHeader );
 		}
 		
 		private function createTooltip():void
@@ -123,6 +178,21 @@ package ui.panel
 			EliveUtils.configureText( _tooltip.tf, "elive_panel_tooltip", "Mes (e)buddies" );
 		}
 		
+		private function cleanCnt( display:DisplayObject ):void
+		{
+			cntContent.removeChild( display );
+		}
+		
+		private function setTweening( value:Boolean ):void
+		{
+			_tweening = value;
+		}
+		
+		private function onBtCloseDown():void
+		{
+			_navManager.switchRub( NavIds.HOME );
+		}
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function loadRub( navId:String, sectionId:int, id:int ):void
@@ -132,8 +202,6 @@ package ui.panel
 			this._id = id;
 			
 			setTooltipText( navId );
-			
-			while ( cntContent.numChildren ) cntContent.removeChildAt( 0 );
 			
 			_assetsLoader = new AssetsLoader( Config.getProperty( "pathRub" ) + "/" + _navId + ".swf" );
 			_assetsLoader.addEventListener( Event.COMPLETE, rubLoadedHandler, false, 0, true );

@@ -95,20 +95,18 @@ package fr.minuit4.tools.scrollbars
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage);
 			
+			removeEventListener( Event.ENTER_FRAME, handleEnterFrame );
+			
 			_cntSlider.removeEventListener( MouseEvent.MOUSE_DOWN, handleSliderDown );
 			_cntBtUp.removeEventListener( MouseEvent.MOUSE_DOWN, handleButtonDown );
 			_cntBtDown.removeEventListener( MouseEvent.MOUSE_DOWN, handleButtonDown );
-			
-			if ( stage.hasEventListener( MouseEvent.MOUSE_UP ) ) stage.removeEventListener( MouseEvent.MOUSE_UP, handleMouseUp );
-			if ( stage.hasEventListener( MouseEvent.MOUSE_MOVE ) ) stage.removeEventListener( MouseEvent.MOUSE_MOVE, handleMouseMove );
 			
 			_scrollTarget.removeEventListener( MouseEvent.MOUSE_WHEEL, handleMouseWheel );
 			
 			_scrollTarget.filters = null;
 			_scrollTimer = null;
 			
-			removeEventListener( Event.ENTER_FRAME, handleEnterFrame );
-			addEventListener( Event.ADDED_TO_STAGE, handleAddedToStage, false, 0, true );
+			//addEventListener( Event.ADDED_TO_STAGE, handleAddedToStage, false, 0, true );
 		}
 		
 		private function handleAddedToStage(e:Event):void 
@@ -328,8 +326,11 @@ package fr.minuit4.tools.scrollbars
 		
 		public function dispose():void
 		{
-			if ( hasEventListener( Event.REMOVED_FROM_STAGE ) ) handleRemovedFromStage( null );
-			if ( hasEventListener( Event.ADDED_TO_STAGE ) ) removeEventListener( Event.ADDED_TO_STAGE, handleAddedToStage );
+			if ( stage ) return;
+			//trace( "VScrollbar.dispose" );
+			//handleRemovedFromStage( null );
+			//if ( hasEventListener( Event.ENTER_FRAME ) ) removeEventListener( Event.ENTER_FRAME, handleEnterFrame );
+			//if ( hasEventListener( Event.ADDED_TO_STAGE ) ) removeEventListener( Event.ADDED_TO_STAGE, handleAddedToStage );
 			
 			_background = null;
 			_slider = null;

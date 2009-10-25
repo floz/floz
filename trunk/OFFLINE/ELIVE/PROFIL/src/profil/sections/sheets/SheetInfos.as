@@ -4,42 +4,45 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package amis.sections.sheet.sheets 
+package profil.sections.sheets 
 {
-	import amis.sections.sheet.apercus.GallerieApercu;
+	import assets.GAvatar2;
+	import assets.GGeneralBackground;
 	import assets.GScrollbarBackground;
 	import assets.GScrollbarSlider;
-	import elive.core.challenges.Challenge;
-	import elive.core.challenges.ChallengeStatus;
 	import elive.core.users.User;
-	import elive.xmls.EliveXML;
+	import elive.core.users.UserStats;
+	import elive.ui.apercus.TextApercu;
+	import elive.utils.EliveUtils;
+	import flash.display.Bitmap;
 	import flash.display.Graphics;
+	import flash.display.PixelSnapping;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import fr.minuit4.core.configuration.Configuration;
-	import fr.minuit4.net.loaders.types.DatasLoader;
+	import flash.text.TextField;
 	import fr.minuit4.tools.scrollbars.VScrollbar;
-	import fr.minuit4.ui.Dummy;
 	
-	public class SheetGalerie extends Sheet
+	public class SheetInfos extends Sheet
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _datasLoader:DatasLoader;
-		
+		private var _cntGlobal:Sprite;
 		private var _cntContent:Sprite;
 		private var _scrollbar:VScrollbar;
 		
-		private var _challengesWon:Vector.<Challenge>;
+		private var _cntTop:Sprite;
+		private var _avatarHolder:Bitmap;
+		
+		private var _cntBottom:Sprite;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function SheetGalerie() 
+		public function SheetInfos() 
 		{
 			init();
 		}
@@ -50,19 +53,17 @@ package amis.sections.sheet.sheets
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
 			
-			if ( _datasLoader && _datasLoader.hasEventListener( Event.COMPLETE ) )
-			{
-				_datasLoader.removeEventListener( Event.COMPLETE, loadChallengesHandler );
-				_datasLoader.dispose();
-				_datasLoader = null;
-			}
+			_avatarHolder.bitmapData.dispose();
+			_avatarHolder.bitmapData = null;
+			_avatarHolder = null;
 			
 			_scrollbar.dispose();
 			_scrollbar = null;
 			
+			_cntBottom = null;
+			_cntTop = null;
 			_cntContent = null;
-			
-			_challengesWon = null;
+			_cntGlobal = null;
 		}
 		
 		private function addedToStageHandler(e:Event):void 
@@ -71,41 +72,22 @@ package amis.sections.sheet.sheets
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
 		}
 		
-		private function loadChallengesHandler(e:Event):void 
-		{
-			var xml:XML = XML( _datasLoader.getItemLoaded() );
-			_datasLoader.removeEventListener( Event.COMPLETE, loadChallengesHandler );
-			_datasLoader.dispose();
-			_datasLoader = null;
-			
-			var challenge:Challenge;
-			_challengesWon = new Vector.<Challenge>( 0, false );
-			var challenges:Vector.<Challenge> = EliveXML.parseChallenges( xml );
-			var i:int, n:int = challenges.length;
-			for ( ; i < n; ++i )
-			{
-				challenge = challenges[ i ];
-				if ( challenge.getStatus() != ChallengeStatus.ENDED_WON ) continue;
-				
-				_challengesWon.push( challenge );
-			}
-			
-			buildGallerie();
-		}
-		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function init():void
 		{
+			_cntGlobal = new Sprite();
+			addChild( _cntGlobal );
+			
 			_cntContent = new Sprite();
-			addChild( _cntContent );
+			_cntGlobal.addChild( _cntContent );
 			
 			var mask:Sprite = new Sprite();
 			var g:Graphics = mask.graphics;
 			g.beginFill( 0x00ff00 );
 			g.drawRect( 0, 0, 266, 288 );
 			g.endFill();
-			addChild( mask );
+			_cntGlobal.addChild( mask );
 			
 			_scrollbar = new VScrollbar( new GScrollbarBackground(), new GScrollbarSlider() );
 			_scrollbar.link( _cntContent, mask );
@@ -113,31 +95,50 @@ package amis.sections.sheet.sheets
 			addChild( _scrollbar );
 			_scrollbar.enableBlur = true;
 			
+			_cntTop = new Sprite();
+			_cntTop.y = 5;
+			_cntContent.addChild( _cntTop );
+			
+			_cntBottom = new Sprite();
+			_cntContent.addChild( _cntBottom );
+			
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
-		private function loadChallenges():void
+		private function buildCntTop():void
 		{
-			_datasLoader = new DatasLoader( Configuration.pathXML + "/" + "actions_list_termines.xml" );
-			_datasLoader.addEventListener( Event.COMPLETE, loadChallengesHandler, false, 0, true );
-			_datasLoader.load();
+			_cntTop.addChild( new GGeneralBackground() );
+			
+			_avatarHolder = new Bitmap( new GAvatar2( 0, 0 ), PixelSnapping.AUTO, true );
+			_avatarHolder.x =
+			_avatarHolder.y = 7;
+			_cntTop.addChild( _avatarHolder );
+			
+			var tf:TextField = EliveUtils.getPreconfigureTextField();
+			EliveUtils.configureText( tf, "score", _user.points.toString() + " pts" );
+			tf.x = _avatarHolder.width + 10;
+			tf.y = _avatarHolder.height * .5 + _avatarHolder.y - tf.textHeight * .5;
+			_cntTop.addChild( tf );
 		}
 		
-		private function buildGallerie():void
+		private function buildCntBottom():void
 		{
-			var challenge:Challenge;
-			var gallerieApercu:GallerieApercu;
-			var py:int, i:int, n:int = _challengesWon.length;
-			for ( ; i < n; ++i )
-			{
-				challenge = _challengesWon[ i ];
-				gallerieApercu = new GallerieApercu();
-				gallerieApercu.setTitleText( challenge.title );
-				gallerieApercu.loadImage( challenge.getMediasUrls()[ 0 ] );
-				gallerieApercu.y = py;
-				_cntContent.addChild( gallerieApercu );
-				py += gallerieApercu.height;				
-			}
+			_cntBottom.y = _cntTop.y + _cntTop.height;
+			
+			var apercu:TextApercu = new TextApercu();
+			apercu.setTitleText( "STATISTIQUES des (e)lives" );
+			
+			var stats:UserStats = _user.getStats();
+			var total:int = stats.won - stats.lost - stats.refused;
+			if ( total < 0 ) total = 0;
+			var text:String = "Totaux : " + total;
+			text += "\nRéussis : " + stats.won;
+			text += "\nEn cours : " + stats.current;
+			text += "\nPerdus : " + stats.lost;
+			text += "\nRefusés : " + stats.refused;
+			apercu.setContentText( text );
+			
+			_cntBottom.addChild( apercu );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
@@ -145,7 +146,8 @@ package amis.sections.sheet.sheets
 		override public function linkTo(user:User):void 
 		{
 			super.linkTo(user);
-			loadChallenges();
+			buildCntTop();
+			buildCntBottom();
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

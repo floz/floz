@@ -15,6 +15,7 @@
       <path-element>D:\Projets\Projets\OFFLINE\ELIVE\COMMON\swc\assets_avatars.swc</path-element>
       <path-element>D:\Projets\Projets\OFFLINE\ELIVE\COMMON\swc\assets_scrollbar.swc</path-element>
       <path-element>D:\Projets\Projets\OFFLINE\ELIVE\AMIS\swc\assets_amis.swc</path-element>
+      <path-element>D:\Projets\Projets\OFFLINE\ELIVE\COMMON\swc\assets_compteur.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>

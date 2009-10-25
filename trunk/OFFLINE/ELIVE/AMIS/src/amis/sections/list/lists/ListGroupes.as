@@ -57,7 +57,9 @@ package amis.sections.list.lists
 				apercu.y = py;
 				_cntContent.addChild( apercu );
 				
-				py += apercu.height;
+				py += apercu.height + 5;
+				
+				if ( i == int( n - 1 ) ) apercu.removeChild( apercu.bar );
 			}
 		}
 		

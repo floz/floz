@@ -49,6 +49,7 @@
     <element path="..\COMMON\swc\assets_avatars.swc" />
     <element path="..\COMMON\swc\assets_scrollbar.swc" />
     <element path="swc\assets_amis.swc" />
+    <element path="..\COMMON\swc\assets_compteur.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

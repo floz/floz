@@ -53,7 +53,9 @@ package amis.sections.list.lists
 				apercu.buttonMode = true;
 				_cntContent.addChild( apercu );
 				
-				py += apercu.height;
+				py += apercu.height + 4;
+				
+				if ( i == int( n - 1 ) ) apercu.removeChild( apercu.bar );
 			}
 		}
 		

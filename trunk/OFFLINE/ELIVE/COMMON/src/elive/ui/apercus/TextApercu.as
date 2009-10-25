@@ -4,16 +4,18 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package profil 
+package elive.ui.apercus
 {
-	import elive.rubriques.IRubrique;
-	import elive.rubriques.Rubrique;
-	import flash.display.Sprite;
+	import assets.GApercu;
+	import elive.core.challenges.ChallengeStatus;
+	import elive.utils.EliveUtils;
 	import flash.events.Event;
-	import profil.sections.Profil;
+	import flash.text.TextFieldAutoSize;
 	
-	public class Main extends Rubrique
+	public class TextApercu extends GApercu
 	{
+		
+		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
@@ -21,8 +23,8 @@ package profil
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main() 
-		{		
+		public function TextApercu() 
+		{
 			init();
 		}
 		
@@ -31,7 +33,10 @@ package profil
 		private function removedFromStageHandler(e:Event):void 
 		{
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
-			_sectionsController = null;
+			
+			apercuBg = null;
+			apercuOver = null;
+			apercuTop = null;
 		}
 		
 		private function addedToStageHandler(e:Event):void 
@@ -44,17 +49,28 @@ package profil
 		
 		private function init():void
 		{
-			_sectionsController.addSection( new Profil(), Profil.SECTION_ID );
-			
-			if ( _standalone )
-			{
-				navigateTo( 0 );
-			}
+			removeChild( apercuOver );
+			apercuBg.tf.autoSize = TextFieldAutoSize.LEFT;			
+			apercuTop.bg.transform.colorTransform = EliveUtils.getColorTransform( 0xA10D59 );
 			
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function setTitleText( text:String ):void
+		{
+			EliveUtils.configureText( apercuTop.tf, "elives_list_apercu_title", text );
+		}
+		
+		public function setContentText( text:String ):void
+		{
+			EliveUtils.configureText( apercuBg.tf, "elives_list_apercu_content", text );
+			apercuBg.bg.height = apercuBg.tf.textHeight + 10;
+		}
+		
+		// - GETTERS & SETTERS -----------------------------------------------------------
+		
 	}
 	
 }

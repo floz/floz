@@ -11,7 +11,10 @@ package ui.panel.header
 	import assets.GNuage2;
 	import assets.GNuage3;
 	import assets.GNuages4;
+	import aze.motion.Eaze;
 	import flash.display.BlendMode;
+	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -26,7 +29,14 @@ package ui.panel.header
 		private var _cntLogo:Sprite;
 		private var _cntFront:Sprite;
 		
+		private var _cloud1:Cloud;
+		private var _cloud2:Cloud;
+		private var _cloud3:Cloud;
+		private var _cloud4:Cloud;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
+		
+		public var initialized:Boolean;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -56,7 +66,9 @@ package ui.panel.header
 		{
 			createBack();
 			createLogo();
-			createFront();
+			createFront();		
+			
+			_cntLogo.alpha = 0;
 		}
 		
 		private function createBack():void
@@ -64,21 +76,21 @@ package ui.panel.header
 			_cntBack = new Sprite();
 			addChild( _cntBack );
 			
-			var cloud1:Cloud = new Cloud( new GNuage3(), 0xF7F3DB );
-			cloud1.alpha = .65;
-			_cntBack.addChild( cloud1 );
+			_cloud1 = new Cloud( new GNuage3(), 0xF7F3DB );
+			_cloud1.alpha = .65;
+			_cntBack.addChild( _cloud1 );
 			
-			var cloud2:Cloud = new Cloud( new GNuages4(), 0xffffff );
-			cloud2.alpha = .4;
-			cloud2.x = 175;
-			cloud2.y = 40;
-			_cntBack.addChild( cloud2 );
+			_cloud2 = new Cloud( new GNuages4(), 0xffffff );
+			_cloud2.alpha = .4;
+			_cloud2.x = 175;
+			_cloud2.y = 40;
+			_cntBack.addChild( _cloud2 );
 			
-			var cloud3:Cloud = new Cloud( new GNuage1() );
-			cloud3.x = 100;
-			cloud3.y = -10;
-			cloud3.alpha = .15;
-			_cntBack.addChild( cloud3 );
+			_cloud3 = new Cloud( new GNuage1() );
+			_cloud3.x = 100;
+			_cloud3.y = -10;
+			_cloud3.alpha = .15;
+			_cntBack.addChild( _cloud3 );
 		}
 		
 		private function createLogo():void
@@ -87,7 +99,7 @@ package ui.panel.header
 			_cntLogo.addChild( new GLogo() );
 			addChild( _cntLogo );
 			
-			_cntLogo.x = 262 - _cntLogo.width;
+			_cntLogo.x = 262 - 226;
 			_cntLogo.blendMode = BlendMode.MULTIPLY;
 		}
 		
@@ -96,14 +108,41 @@ package ui.panel.header
 			_cntFront = new Sprite();
 			addChild( _cntFront );
 			
-			var cloud1:Cloud = new Cloud( new GNuage2() );
-			cloud1.x = 55;
-			cloud1.y = 30;
-			cloud1.alpha = .25;
-			_cntFront.addChild( cloud1 );
+			_cloud4 = new Cloud( new GNuage2() );
+			_cloud4.x = 55;
+			_cloud4.y = 30;
+			_cloud4.alpha = .25;
+			_cntFront.addChild( _cloud4 );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function play():void
+		{
+			_cntLogo.alpha = 1;
+			MovieClip( _cntLogo.getChildAt( 0 ) ).gotoAndPlay( 0 );
+			initialized = true;
+		}
+		
+		public function makeAppear():void
+		{
+			if( initialized ) Eaze.to( _cntLogo, .5, { alpha: 1 } );
+			
+			Eaze.from( _cloud1, .5, { y: -50 } );
+			Eaze.from( _cloud2, .5, { y: -50 } );
+			Eaze.from( _cloud3, .5, { y: -50 } );
+			Eaze.from( _cloud4, .5, { y: -50 } );
+		}
+		
+		public function makeDisappear():void
+		{
+			Eaze.to( _cntLogo, .5, { alpha: 0 } );
+			
+			Eaze.to( _cloud1, .5, { y: -50 } ).chainApply( _cloud1, { y: 0 } );
+			Eaze.to( _cloud2, .5, { y: -50 } ).chainApply( _cloud2, { y: 40 } );
+			Eaze.to( _cloud3, .5, { y: -50 } ).chainApply( _cloud3, { y: -10 } );
+			Eaze.to( _cloud4, .5, { y: -50 } ).chainApply( _cloud4, { y: 30 } );
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

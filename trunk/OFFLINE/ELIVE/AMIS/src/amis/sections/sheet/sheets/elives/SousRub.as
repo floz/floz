@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package elives.sections.list
+package amis.sections.sheet.sheets.elives
 {
 	import assets.GScrollbarBackground;
 	import assets.GScrollbarSlider;
@@ -48,8 +48,6 @@ package elives.sections.list
 			removeEventListener(Event.REMOVED_FROM_STAGE, removedFromStageHandler);
 			
 			_sousMenu.removeEventListener( NavEvent.SWITCH_SOUS_RUBRIQUE, switchSousRubriqueHandler );
-			
-			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
 		private function addedToStageHandler(e:Event):void 
@@ -64,7 +62,7 @@ package elives.sections.list
 		
 		private function switchSousRubriqueHandler(e:NavEvent):void 
 		{
-			if ( _currentSousRub == e.navId )
+			if ( _currentSousRub == e.navId ) 
 				return;
 			
 			resetScrollbarSliderPosition();
@@ -93,8 +91,7 @@ package elives.sections.list
 			addChild( _sousMenu );
 			
 			_cntGlobal = new Sprite();
-			_cntGlobal.x = 5;
-			_cntGlobal.y = 37;
+			_cntGlobal.y = 35
 			addChild( _cntGlobal );
 			
 			buildContent();			
@@ -118,8 +115,8 @@ package elives.sections.list
 			
 			var mask:Sprite = new Sprite();
 			var g:Graphics = mask.graphics;
-			g.beginFill( 0xff00ff );
-			g.drawRect( 0, 0, 266, 290 );
+			g.beginFill( 0x00ff00 );
+			g.drawRect( 0, 0, 266, 220 );
 			g.endFill();
 			_cntGlobal.addChild( mask );
 			
@@ -127,8 +124,9 @@ package elives.sections.list
 			_scrollBar.addEventListener( VScrollbar.DRAG_START, dragStartHandler, false, 0, true );
 			_scrollBar.addEventListener( VScrollbar.DRAG_STOP, dragStopHandler, false, 0, true );
 			_scrollBar.link( _cntContent, mask );
-			_scrollBar.x = 275;
-			_scrollBar.y = 37;
+			_scrollBar.height = 226;
+			_scrollBar.x = 270;
+			_scrollBar.y = 30;
 			addChild( _scrollBar );
 			_scrollBar.enableBlur = true;
 		}
@@ -147,6 +145,7 @@ package elives.sections.list
 		
 		public function dispose():void
 		{
+			trace( "SousRub.dispose" );
 			_sousMenu.dispose();
 			_sousMenu = null;
 			
