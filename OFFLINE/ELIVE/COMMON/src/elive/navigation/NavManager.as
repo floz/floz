@@ -21,6 +21,8 @@ package elive.navigation
 		
 		private var _currentRubId:String = NavIds.HOME;
 		
+		private var _enabled:Boolean = true;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
@@ -49,7 +51,7 @@ package elive.navigation
 		
 		public function switchRub( navId:String, sectionId:int = 0, id:int = -1 ):void
 		{
-			if ( navId == _currentRubId ) return;
+			if ( !_enabled || navId == _currentRubId ) return;
 			
 			var navEvent:NavEvent = new NavEvent( NavEvent.SWITCH_RUBRIQUE );
 			_currentRubId = navEvent.navId = navId;
@@ -58,6 +60,13 @@ package elive.navigation
 			
 			dispatchEvent( navEvent );
 		}
+		
+		public function setEnable( value:Boolean ):void
+		{
+			this._enabled = value;
+		}
+		
+		public function isEnabled():Boolean { return this._enabled; }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

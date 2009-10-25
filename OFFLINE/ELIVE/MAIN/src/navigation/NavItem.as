@@ -6,16 +6,21 @@
  */
 package navigation 
 {
+	import aze.motion.Eaze;
 	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
 	
-	public class NavItem extends Sprite
+	public class NavItem extends MovieClip
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
+		
+		private var _filter:GlowFilter;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -31,6 +36,8 @@ package navigation
 			this.title = title;
 			this.url = url;
 			
+			_filter = new GlowFilter( 0xffffff, .5, 0, 0 );
+			
 			this.mouseChildren = false;
 		}
 		
@@ -38,26 +45,36 @@ package navigation
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
+		private function setFilter():void
+		{
+			this.filters = [ _filter ];
+			if ( _filter.blurX <= 6 ) this.filters = [];
+		}
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function over():void
 		{
-			this.alpha = .75;
+			_filter.blurX = 8;
+			_filter.blurY = 8;
+			Eaze.to( _filter, .25, { blurX: 20, blurY: 20 } ).onUpdate( setFilter );
 		}
 		
 		public function out():void
 		{
-			this.alpha = 1;
+			Eaze.to( _filter, .25, { blurX: 6, blurY: 6 } ).onUpdate( setFilter );
 		}
 		
 		public function select():void
 		{
-			this.alpha = .5;
+			_filter.blurX = 
+			_filter.blurY = 20;
+			setFilter();
 		}
 		
 		public function deselect():void
 		{
-			this.alpha = 1;
+			out();
 		}
 		
 		public function setSkin( skin:DisplayObject ):void

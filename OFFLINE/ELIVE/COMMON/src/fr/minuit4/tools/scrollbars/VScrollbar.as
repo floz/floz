@@ -328,9 +328,9 @@ package fr.minuit4.tools.scrollbars
 		{
 			if ( stage ) return;
 			//trace( "VScrollbar.dispose" );
-			//handleRemovedFromStage( null );
-			//if ( hasEventListener( Event.ENTER_FRAME ) ) removeEventListener( Event.ENTER_FRAME, handleEnterFrame );
-			//if ( hasEventListener( Event.ADDED_TO_STAGE ) ) removeEventListener( Event.ADDED_TO_STAGE, handleAddedToStage );
+			handleRemovedFromStage( null );
+			if ( hasEventListener( Event.ENTER_FRAME ) ) removeEventListener( Event.ENTER_FRAME, handleEnterFrame );
+			if ( hasEventListener( Event.ADDED_TO_STAGE ) ) removeEventListener( Event.ADDED_TO_STAGE, handleAddedToStage );
 			
 			_background = null;
 			_slider = null;

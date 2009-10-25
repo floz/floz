@@ -92,7 +92,7 @@ package ui.panel
 			Eaze.to( this, .5, { alpha: 1 } );
 			Eaze.from( btClose, .25, { scaleX: 0, scaleY: 0 } ).chainFrom( btClose, .35, { rotation: 360 } );
 			
-			setTweening( true );
+			_navManager.setEnable( true );
 			
 			btClose.addEventListener( MouseEvent.MOUSE_DOWN, btCloseDownHandler, false, 0, true );
 			btClose.addEventListener( MouseEvent.ROLL_OVER, btCloseRollOverHandler, false, 0, true );
@@ -100,9 +100,7 @@ package ui.panel
 		}
 		
 		private function btCloseDownHandler(e:MouseEvent):void 
-		{
-			setTweening( true );
-			
+		{			
 			_panelHeader.makeDisappear();
 			
 			Eaze.to( _tooltip, .6, { y: 100, alpha: 0 } );
@@ -121,7 +119,7 @@ package ui.panel
 			}
 			
 			DisplayObject( _rub ).alpha = 0;
-			Eaze.delay( .25 ).chainTo( _rub, .25, { alpha: 1 } ).onComplete( setTweening, false );
+			Eaze.delay( .25 ).chainTo( _rub, .25, { alpha: 1 } ).onComplete( _navManager.setEnable, true );
 			cntContent.addChild( _rub as DisplayObject );
 			
 			cntTooltip.addChild( _tooltip );
@@ -133,7 +131,7 @@ package ui.panel
 		
 		private function mouseDownHandler(e:MouseEvent):void 
 		{
-			if ( _tweening ) e.stopImmediatePropagation();
+			if ( !_navManager.isEnabled() ) e.stopImmediatePropagation();
 		}
 		
 		private function btCloseRollOverHandler(e:MouseEvent):void 
@@ -202,6 +200,7 @@ package ui.panel
 			this._id = id;
 			
 			setTooltipText( navId );
+			_navManager.setEnable( false );
 			
 			_assetsLoader = new AssetsLoader( Config.getProperty( "pathRub" ) + "/" + _navId + ".swf" );
 			_assetsLoader.addEventListener( Event.COMPLETE, rubLoadedHandler, false, 0, true );

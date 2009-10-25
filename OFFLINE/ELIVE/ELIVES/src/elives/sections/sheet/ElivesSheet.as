@@ -55,7 +55,6 @@ package elives.sections.sheet
 		
 		private function backButtonDownHandler(e:MouseEvent):void 
 		{
-			trace( _historicManager.getLastNavId() );
 			if ( _historicManager.getLastNavId() == NavIds.ELIVES )
 			{
 				var navEvent:NavEvent;
