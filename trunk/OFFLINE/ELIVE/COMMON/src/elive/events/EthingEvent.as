@@ -10,6 +10,9 @@ package elive.events
 	
 	public class EthingEvent extends Event 
 	{
+		public static const ANIM_REQUEST:String = "anim_request";
+		
+		public var label:String;
 		
 		public function EthingEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) 
 		{ 

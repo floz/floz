@@ -6,15 +6,19 @@
  */
 package ething 
 {
-	import assets.ething.GEthing;
+	import assets.ething.GEthing1;
+	import elive.events.EthingEvent;
+	import elive.managers.EthingManager;
 	import flash.events.Event;
 	
-	public class Ething extends GEthing
+	public class Ething extends GEthing1
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
+		
+		private var _ethingManager:EthingManager;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -22,17 +26,23 @@ package ething
 		
 		public function Ething() 
 		{
-			addEventListener( Event.ADDED_TO_STAGE, handleAddedToStage, false, 0, true );
+			init();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
-		private function handleAddedToStage(e:Event):void 
+		private function animRequestHandler(e:EthingEvent):void 
 		{
-			removeEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
+			gotoAndPlay( e.label );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
+		
+		private function init():void
+		{
+			_ethingManager = EthingManager.getInstance();
+			_ethingManager.addEventListener( EthingEvent.ANIM_REQUEST, animRequestHandler );
+		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		

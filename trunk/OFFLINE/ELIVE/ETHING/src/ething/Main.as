@@ -6,13 +6,15 @@
  */
 package ething 
 {
-	import assets.ething.GEthing;
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	
 	public class Main extends Sprite
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
+		
+		private var _thing:Ething;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -20,12 +22,22 @@ package ething
 		
 		public function Main() 
 		{
-			addChild( new Ething() );
+			init();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
+		
+		private function init():void
+		{
+			_thing = new Ething();
+			_thing.scaleX =
+			_thing.scaleY = .7;
+			_thing.x = 230;
+			_thing.y = 130;
+			addChild( _thing );
+		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		

@@ -11,6 +11,7 @@ package elive.ui
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
+	import flash.text.TextFieldAutoSize;
 	
 	public class EliveButton extends GButton
 	{
@@ -64,6 +65,8 @@ package elive.ui
 		
 		private function init():void
 		{
+			tf.autoSize = TextFieldAutoSize.LEFT;
+			
 			this.buttonMode = true;
 			this.mouseChildren = false;
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
