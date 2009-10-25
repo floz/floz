@@ -91,7 +91,7 @@ package amis.sections.sheet.sheets
 			
 			_scrollbar = new VScrollbar( new GScrollbarBackground(), new GScrollbarSlider() );
 			_scrollbar.link( _cntContent, mask );
-			_scrollbar.x = 265;
+			_scrollbar.x = 270;
 			addChild( _scrollbar );
 			_scrollbar.enableBlur = true;
 			

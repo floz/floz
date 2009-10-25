@@ -9,7 +9,7 @@
     <movie width="800" />
     <movie height="600" />
     <movie version="10" />
-    <movie background="#FFFFFF" />
+    <movie background="#FF00FF" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -46,6 +46,8 @@
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="..\COMMON\swc\assets_content.swc" />
+    <element path="..\COMMON\swc\assets_avatars.swc" />
+    <element path="..\COMMON\swc\assets_scrollbar.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

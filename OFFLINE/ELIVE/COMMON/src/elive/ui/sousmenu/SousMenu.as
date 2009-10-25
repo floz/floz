@@ -65,7 +65,7 @@ package  elive.ui.sousmenu
 				for ( ; i < n; ++i )
 				{
 					item = SousMenuItem( _cntItems.getChildAt( i ) );
-					item.out();
+					item.bg.alpha = 0;
 				}
 				_selectedItem = SousMenuItem( _cntItems.getChildAt( 0 ) );
 				_selectedItem.over();

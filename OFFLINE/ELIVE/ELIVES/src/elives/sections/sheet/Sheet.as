@@ -258,11 +258,11 @@ package elives.sections.sheet
 			
 			_sousMenu = null;
 			
-			_cntGlobal = null;
-			_cntContent = null;
-			
 			_scrollBar.dispose();
 			_scrollBar = null;
+			
+			_cntGlobal = null;
+			_cntContent = null;
 			
 			_challenge = null;
 		}

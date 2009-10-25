@@ -4,14 +4,14 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package amis.sections.sheet.sheets 
+package profil.sections.sheets 
 {
-	import amis.sections.sheet.apercus.GallerieApercu;
 	import assets.GScrollbarBackground;
 	import assets.GScrollbarSlider;
 	import elive.core.challenges.Challenge;
 	import elive.core.challenges.ChallengeStatus;
 	import elive.core.users.User;
+	import elive.ui.apercus.GallerieApercu;
 	import elive.xmls.EliveXML;
 	import flash.display.Graphics;
 	import flash.display.Sprite;
@@ -19,7 +19,6 @@ package amis.sections.sheet.sheets
 	import fr.minuit4.core.configuration.Configuration;
 	import fr.minuit4.net.loaders.types.DatasLoader;
 	import fr.minuit4.tools.scrollbars.VScrollbar;
-	import fr.minuit4.ui.Dummy;
 	
 	public class SheetGalerie extends Sheet
 	{
