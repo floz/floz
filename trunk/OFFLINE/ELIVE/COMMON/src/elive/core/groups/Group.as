@@ -15,7 +15,7 @@ package elive.core.groups
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _users:Vector.<User>;
+		private var _users:Array;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -36,11 +36,11 @@ package elive.core.groups
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function setMembers( users:Vector.<User> ):void
+		public function setMembers( users:Array ):void
 		{
 			this._users = users;
 		}
-		public function getMembers():Vector.<User> { return this._users; }
+		public function getMembers():Array { return this._users; }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

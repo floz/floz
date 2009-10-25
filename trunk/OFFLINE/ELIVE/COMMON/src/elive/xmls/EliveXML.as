@@ -56,7 +56,7 @@ package elive.xmls
 		 * @param	scanDeeper	Boolean	Si vrai, la recherche sera aussi faite sur tous les enfants.
 		 * @return	Vector.<User>
 		 */
-		public static function parseUsers( datas:XML, scanDeeper:Boolean = false ):Vector.<User>
+		public static function parseUsers( datas:XML, scanDeeper:Boolean = false ):Array
 		{
 			if ( !datas ) return null;
 			
@@ -65,9 +65,9 @@ package elive.xmls
 			
 			var n:int = list.length();
 			
-			if ( n == 0 ) return new Vector.<User>( n, true );
+			var users:Array = [];
+			if ( n == 0 ) return users;
 			
-			var users:Vector.<User> = new Vector.<User>( n, true );
 			for ( var i:int; i < n; ++i )
 				users[ i ] = parseUser( list[ i ] );
 			
@@ -100,7 +100,7 @@ package elive.xmls
 		 * @param	scanDeeper	Boolean	Si vrai, la recherche sera aussi faite sur tous les enfants.
 		 * @return	Vector.<Challenge>
 		 */
-		public static function parseChallenges( datas:XML, scanDeeper:Boolean = false ):Vector.<Challenge>
+		public static function parseChallenges( datas:XML, scanDeeper:Boolean = false ):Array
 		{
 			if ( !datas ) return null;
 			
@@ -109,9 +109,9 @@ package elive.xmls
 			
 			var n:int = list.length();
 			
-			if ( n == 0 ) return new Vector.<Challenge>( n, true );
+			var challenges:Array = [];
+			if ( n == 0 ) return challenges;
 			
-			var challenges:Vector.<Challenge> = new Vector.<Challenge>( n, true );
 			for ( var i:int; i < n; ++i )
 				challenges[ i ] = parseChallenge( list[ i ] );
 			
@@ -125,7 +125,7 @@ package elive.xmls
 		 * @param	type	String	Le type de médias à récupérer. (Constantes dans MediasEnum)
 		 * @return	Vector.<String>	La chaine des urls.
 		 */
-		public static function parseMedias( datas:XML, type:String = "picture" ):Vector.<String>
+		public static function parseMedias( datas:XML, type:String = "picture" ):Array
 		{
 			if ( !datas ) return null;
 			
@@ -134,7 +134,7 @@ package elive.xmls
 			
 			if ( n == 0 ) return new Vector.<String>( n, true );
 			
-			var medias:Vector.<String> = new Vector.<String>( n, true );
+			var medias:Array = [];
 			for ( var i:int; i < n; ++i )
 				medias[ i ] = list[ i ].@url;
 			
@@ -161,7 +161,7 @@ package elive.xmls
 		 * @param	scanDeeper	Boolean	Si vrai, la recherche sera aussi faite sur tous les enfants.
 		 * @return	Vector.<Comment>
 		 */
-		public static function parseComments( datas:XML, scanDeeper:Boolean = false ):Vector.<Comment>
+		public static function parseComments( datas:XML, scanDeeper:Boolean = false ):Array
 		{
 			if ( !datas ) return null;
 			
@@ -170,9 +170,9 @@ package elive.xmls
 			
 			var n:int = list.length();
 			
-			if ( n == 0 ) return new Vector.<Comment>( n, true );
+			var comments:Array = [];
+			if ( n == 0 ) return comments;
 			
-			var comments:Vector.<Comment> = new Vector.<Comment>( n, true );
 			for ( var i:int; i < n; ++i )
 				comments[ i ] = parseComment( list[ i ] );
 			
@@ -189,7 +189,7 @@ package elive.xmls
 			return group;
 		}
 		
-		public static function parseGroups( datas:XML, scanDeeper:Boolean = false ):Vector.<Group>
+		public static function parseGroups( datas:XML, scanDeeper:Boolean = false ):Array
 		{
 			if ( !datas ) return null;
 			
@@ -198,9 +198,9 @@ package elive.xmls
 			
 			var n:int = list.length();
 			
-			if ( n == 0 ) return new Vector.<Group>( n, true );
+			var groups:Array = [];
+			if ( n == 0 ) return groups;
 			
-			var groups:Vector.<Group> = new Vector.<Group>( n, true );
 			for ( var i:int; i < n; ++i )
 				groups[ i ] = parseGroup( list[ i ] );
 			

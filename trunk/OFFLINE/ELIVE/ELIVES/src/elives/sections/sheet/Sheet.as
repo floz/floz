@@ -181,7 +181,7 @@ package elives.sections.sheet
 			
 			// Elivers
 			var user:User;
-			var users:Vector.<User> = _challenge.getTargets();
+			var users:Array = _challenge.getTargets();
 			var text:String = "";
 			var i:int, n:int = users.length;
 			for ( ; i < n; ++i )
@@ -210,7 +210,7 @@ package elives.sections.sheet
 			text = "";
 			var date:Date;
 			var comment:Comment;
-			var comments:Vector.<Comment> = _challenge.getComments();
+			var comments:Array = _challenge.getComments();
 			i = 0, n = comments.length;
 			for ( ; i < n; ++i )
 			{

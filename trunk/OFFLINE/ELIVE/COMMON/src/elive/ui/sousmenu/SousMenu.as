@@ -165,6 +165,17 @@ package  elive.ui.sousmenu
 			_deactivate = true;
 		}
 		
+		public function setBackgroundAlpha( value:Number ):void
+		{
+			var item:SousMenuItem;
+			var i:int, n:int = _cntItems.numChildren;
+			for ( ; i < n; ++i )
+			{
+				item = SousMenuItem( _cntItems.getChildAt( i ) );
+				item.setAlphaMax( value );
+			}
+		}
+		
 		public function disableActivatedState():void
 		{
 			if ( _disableActivatedState ) return;

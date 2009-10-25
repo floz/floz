@@ -18,7 +18,7 @@ package amis.sections.list.lists
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _amis:Vector.<User>;
+		private var _amis:Array;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		

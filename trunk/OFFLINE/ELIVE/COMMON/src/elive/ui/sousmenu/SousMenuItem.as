@@ -18,6 +18,7 @@ package  elive.ui.sousmenu
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _overClass:String;
+		private var _alphaMaxValue:Number = 1;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -68,7 +69,7 @@ package  elive.ui.sousmenu
 			EliveUtils.configureText( tf, _overClass, this.title );
 			
 			bg.alpha = .6;
-			Eaze.to( bg, .25, { alpha: 1 } );
+			Eaze.to( bg, .25, { alpha: _alphaMaxValue } );
 		}
 		
 		public function out():void
@@ -77,6 +78,11 @@ package  elive.ui.sousmenu
 			
 			bg.alpha = .4;
 			Eaze.to( bg, .25, { alpha: 0 } );
+		}
+		
+		public function setAlphaMax( value:Number ):void
+		{
+			this._alphaMaxValue = value;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

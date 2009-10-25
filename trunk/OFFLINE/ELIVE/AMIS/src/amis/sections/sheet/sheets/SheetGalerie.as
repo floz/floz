@@ -33,7 +33,7 @@ package amis.sections.sheet.sheets
 		private var _cntContent:Sprite;
 		private var _scrollbar:VScrollbar;
 		
-		private var _challengesWon:Vector.<Challenge>;
+		private var _challengesWon:Array;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -79,8 +79,8 @@ package amis.sections.sheet.sheets
 			_datasLoader = null;
 			
 			var challenge:Challenge;
-			_challengesWon = new Vector.<Challenge>( 0, false );
-			var challenges:Vector.<Challenge> = EliveXML.parseChallenges( xml );
+			_challengesWon = [];
+			var challenges:Array = EliveXML.parseChallenges( xml );
 			var i:int, n:int = challenges.length;
 			for ( ; i < n; ++i )
 			{

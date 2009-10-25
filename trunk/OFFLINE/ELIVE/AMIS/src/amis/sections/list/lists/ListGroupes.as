@@ -18,7 +18,7 @@ package amis.sections.list.lists
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _groups:Vector.<Group>;
+		private var _groups:Array;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
