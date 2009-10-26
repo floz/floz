@@ -42,8 +42,8 @@ package amis.sections.sheet.sheets.elives
 		{
 			switch( _currentSousRub )
 			{
-				case SousRubIds.EN_COURS: loadXML( "actions_list_encours.xml" ); break;
-				case SousRubIds.TERMINES: loadXML( "actions_list_termines.xml" ); break;
+				case SousRubIds.EN_COURS: loadXML( "actions_list_encours_3.xml" ); break;
+				case SousRubIds.TERMINES: loadXML( "actions_list_termines_3.xml" ); break;
 			}
 		}
 		
