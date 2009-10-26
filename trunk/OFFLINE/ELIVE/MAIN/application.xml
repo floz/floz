@@ -18,6 +18,8 @@
 		<minimizable>true</minimizable> 
 		<maximizable>true</maximizable> 
 		<resizable>false</resizable> 
+		<x>1100</x>
+		<y>250</y>
 	</initialWindow> 
 	
 	<icon>
