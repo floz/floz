@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
 	<action id="10">
-		<title>Frappe toi, tr�s fort</title>
+		<title>Cours nu dans les champs</title>
 		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
 		<start>TIMESTAMP</start>
 		<end>1256684400000</end>
 		<created_at>TIMESTAMP</created_at>
 		<status>won</status>
 		<medias>
-			<picture width="" height="" url="http://bizounours35.unblog.fr/files/2007/06/chat.jpg" />
+			<picture width="" height="" url="http://www.blognaturiste.com/marc/public/fete%20de%20la%20nature/.DSCN4236_m.jpg" />
 		</medias>
 		<sender>
 			<user>
@@ -40,19 +40,19 @@
 	</action>
 	
 	<action id="13">
-		<title>Chocolat sur la tête</title>
+		<title>Sois poli</title>
 		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
 		<start>TIMESTAMP</start>
 		<end>1257894000000</end>
 		<created_at>TIMESTAMP</created_at>
 		<status>won</status>
 		<medias>
-			<picture width="" height="" url="http://yapasphoto.files.wordpress.com/2008/06/chat-inutile.jpg" />
+			<picture width="" height="" url="http://associationjeunessedebiguglia.blog.club-corsica.com/images/upload/photo67728.jpg" />
 		</medias>
 		<sender>
 			<user>
 				<id>12</id>
-				<login>floz</login>
+				<login>Marc</login>
 				<location>Paris</location>
 				<points>2554</points>
 				<url>http://minuit4.fr</url>
@@ -157,7 +157,7 @@
 	</action>
 	
 	<action id="2332">
-		<title><![CDATA[hohoho]]></title>
+		<title><![CDATA[Chante petit papa no�l]]></title>
 		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
 		<start>TIMESTAMP</start>
 		<end>1257894000000</end>
@@ -196,7 +196,7 @@
 	</action>
 	
 	<action id="112">
-		<title><![CDATA[hihihih]]></title>
+		<title><![CDATA[Miaule]]></title>
 		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
 		<start>TIMESTAMP</start>
 		<end>1261522800000</end>

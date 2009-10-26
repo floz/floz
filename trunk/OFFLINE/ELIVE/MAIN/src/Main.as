@@ -11,11 +11,15 @@ package
 	import assets.GLogo;
 	import aze.motion.Eaze;
 	import elive.managers.EthingManager;
+	import elive.managers.SoutenanceManager;
 	import elive.utils.EliveUtils;
 	import flash.display.BlendMode;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.media.Sound;
+	import flash.net.URLRequest;
 	import flash.text.Font;
 	import flash.text.StyleSheet;
 	import flash.text.TextField;
@@ -86,6 +90,9 @@ package
 			Font.registerFont( FAkkurat );
 			Font.registerFont( FAkkuratBold );
 			
+			var sound:Sound = new Sound( new URLRequest( "mp3/startup.mp3" ) );
+			sound.play();
+			
 			if ( !Configuration.DEBUG )
 			{
 				var logo:GLogo = new GLogo();
@@ -93,9 +100,17 @@ package
 				logo.y = 525;
 				_globalContainer.addChild( logo );
 				logo.gotoAndPlay( 1 );
-				Eaze.delay( 1.5 ).chainTo( logo, .5, { alpha: 0 } ).onComplete( createEthing );
+				Eaze.delay( 2 ).chainTo( logo, .5, { alpha: 0 } ).onComplete( createEthing );
 			}
 			else createEthing();
+			
+			stage.addEventListener( KeyboardEvent.KEY_DOWN, keyDownHandler );
+		}
+		
+		private function keyDownHandler(e:KeyboardEvent):void 
+		{			
+			if ( e.charCode == 249 )
+				SoutenanceManager.incrementActionSheet();
 		}
 		
 		private function switchRubriqueHandler(e:NavEvent):void 
@@ -114,6 +129,13 @@ package
 					_cntPanel.removeChild( _elivePanel );
 					break;
 			}
+			
+			//if ( e.navId == NavIds.HOME ) return;			
+			//
+			//if ( e.navId == NavIds.ELIVES ) 
+				//_ethingManager.ethingAcclame();
+			//else
+				//_ethingManager.ethingIsOk();
 		}
 		
 		private function ethingLoadedHandler(e:Event):void 

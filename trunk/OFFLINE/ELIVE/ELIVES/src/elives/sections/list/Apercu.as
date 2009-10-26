@@ -19,6 +19,7 @@ package elives.sections.list
 	import flash.display.PixelSnapping;
 	import flash.events.Event;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	import fr.minuit4.core.configuration.Config;
 	import fr.minuit4.core.configuration.Configuration;
 	
@@ -49,7 +50,7 @@ package elives.sections.list
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler );
 			
-			if ( _compteur.hasEventListener( EliveEvent.ELIVE_STATUS_CHANGE ) )
+			if ( _compteur && _compteur.hasEventListener( EliveEvent.ELIVE_STATUS_CHANGE ) )
 				_compteur.removeEventListener( EliveEvent.ELIVE_STATUS_CHANGE, eliveStatusChangeHandler );
 			
 			_compteur = null;
@@ -66,7 +67,7 @@ package elives.sections.list
 			_challenge = null;	
 		}
 		
-		private function addedToStageHandler(e:Event):void 
+		private function addedToStageHandler(e:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			addEventListener( Event.REMOVED_FROM_STAGE, removedFromStageHandler, false, 0, true );
@@ -74,7 +75,7 @@ package elives.sections.list
 		
 		private function eliveStatusChangeHandler(e:EliveEvent):void 
 		{
-			_compteur.removeEventListener( EliveEvent.ELIVE_STATUS_CHANGE, eliveStatusChangeHandler );
+			if ( _compteur ) _compteur.removeEventListener( EliveEvent.ELIVE_STATUS_CHANGE, eliveStatusChangeHandler );
 			
 			if ( _challenge.getStatus() == ChallengeStatus.CURRENT )
 				_challenge.setStatus( ChallengeStatus.ENDED_LOST );
@@ -93,13 +94,27 @@ package elives.sections.list
 			
 			customizeTopBg();
 			
-			_compteur = new Compteur();
-			_compteur.addEventListener( EliveEvent.ELIVE_STATUS_CHANGE, eliveStatusChangeHandler, false, 0, true );
-			_compteur.scaleX = _compteur.scaleY = .8;
-			_compteur.setEndTime( _challenge.endTime );
-			_compteur.x = 65;
-			_compteur.y = 50;
-			addChild( _compteur );
+			if ( _challenge.getStatus() != ChallengeStatus.ENDED_WON && 
+				_challenge.getStatus() != ChallengeStatus.ENDED_REFUSED &&
+				_challenge.getStatus() != ChallengeStatus.ENDED_LOST )
+			{
+				_compteur = new Compteur();
+				_compteur.addEventListener( EliveEvent.ELIVE_STATUS_CHANGE, eliveStatusChangeHandler, false, 0, true );
+				_compteur.scaleX = _compteur.scaleY = .8;
+				_compteur.setEndTime( _challenge.endTime );
+				_compteur.x = 65;
+				_compteur.y = 50;
+				addChild( _compteur );
+			}
+			else
+			{
+				var tf:TextField = new TextField();
+				tf.autoSize = TextFieldAutoSize.LEFT;
+				EliveUtils.configureText( tf, "score", _challenge.getStatus() == ChallengeStatus.ENDED_WON ? String( "Bravo !" ).toUpperCase() : String( "Loose..." ).toUpperCase() );
+				tf.x = 110;
+				tf.y = 53;
+				addChild( tf );
+			}
 			
 			_avatarHolder = new GApercuAvatar();
 			_avatarHolder.x = 3;
