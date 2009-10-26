@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+	
+	<action id="25">
+		<title>Nage dans la seine</title>
+		<details>En pleine soutenance des gobelins, tu dois valider un défi. Y arriveras tu ? TINDINDIN</details>
+		<start>TIMESTAMP</start>
+		<end>1256576400000</end>
+		<created_at>TIMESTAMP</created_at>
+		<status>current</status>
+		<medias>
+			<picture width="" height="" url="" />
+		</medias>
+		<sender>
+			<user>
+				<id>12</id>
+				<login>Floz</login>
+				<location>Paris</location>
+				<points>2554</points>
+				<url>http://minuit4.fr</url>
+				<stats>
+					<pending>2</pending>
+					<current>4</current>
+					<refused>10</refused>
+					<lost>15</lost>
+					<bad>25</bad>
+					<won>200</won>
+				</stats>
+			</user>
+			<actions protected="true">
+				<action id="10">
+					<title>Chocolat sur la tÃªte</title>
+					<details>Tu dois mettre ta mousse au choco' sur la tÃªte en plein cour de bio!</details>
+					<start>TIMESTAMP</start>
+					<end>TIMESTAMP</end>
+					<created_at>TIMESTAMP</created_at>
+					<status>pending</status>
+				</action>
+			</actions>
+		</sender>
+	</action>
+	
+	<action id="10">
+		<title>Mange un insecte</title>
+		<details>Déclenche l'alarme à 15h Mercredi aprem. Ca promet une aprem tranquillou sans cours :D</details>
+		<start>TIMESTAMP</start>
+		<end><![CDATA[1256684400000]]></end>
+		<created_at>TIMESTAMP</created_at>
+		<status>current</status>
+		<medias>
+			<picture width="" height="" url="" />
+		</medias>
+		<sender>
+			<user>
+				<id>12</id>
+				<login>Floz</login>
+				<location>Paris</location>
+				<points>2554</points>
+				<url>http://minuit4.fr</url>
+				<stats>
+					<pending>2</pending>
+					<current>4</current>
+					<refused>10</refused>
+					<lost>15</lost>
+					<bad>25</bad>
+					<won>200</won>
+				</stats>
+			</user>
+			<actions protected="true">
+				<action id="10">
+					<title>Chocolat sur la tÃªte</title>
+					<details>Tu dois mettre ta mousse au choco' sur la tÃªte en plein cour de bio!</details>
+					<start>TIMESTAMP</start>
+					<end>TIMESTAMP</end>
+					<created_at>TIMESTAMP</created_at>
+					<status>pending</status>
+				</action>
+			</actions>
+		</sender>
+	</action>
+</actions>

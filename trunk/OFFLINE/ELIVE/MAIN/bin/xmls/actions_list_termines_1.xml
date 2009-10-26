@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+	<action id="10">
+		<title>Abracadabra !</title>
+		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+		<start>TIMESTAMP</start>
+		<end>1256684400000</end>
+		<created_at>TIMESTAMP</created_at>
+		<status>lost</status>
+		<medias>
+			<picture width="" height="" url="http://www.blognaturiste.com/marc/public/fete%20de%20la%20nature/.DSCN4236_m.jpg" />
+		</medias>
+		<sender>
+			<user>
+				<id>12</id>
+				<login>Floz</login>
+				<location>Paris</location>
+				<points>2554</points>
+				<url>http://minuit4.fr</url>
+				<stats>
+					<pending>2</pending>
+					<current>4</current>
+					<refused>10</refused>
+					<lost>15</lost>
+					<bad>25</bad>
+					<won>200</won>
+				</stats>
+			</user>
+			<actions protected="true">
+				<action id="10">
+					<title>Chocolat sur la tête</title>
+					<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+					<start>TIMESTAMP</start>
+					<end>TIMESTAMP</end>
+					<created_at>TIMESTAMP</created_at>
+					<status>pending</status>
+				</action>
+			</actions>
+		</sender>
+	</action>
+	
+	<action id="13">
+		<title>A la campagne...</title>
+		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+		<start>TIMESTAMP</start>
+		<end>1257894000000</end>
+		<created_at>TIMESTAMP</created_at>
+		<status>won</status>
+		<medias>
+			<picture width="" height="" url="http://associationjeunessedebiguglia.blog.club-corsica.com/images/upload/photo67728.jpg" />
+		</medias>
+		<sender>
+			<user>
+				<id>12</id>
+				<login>Floz</login>
+				<location>Paris</location>
+				<points>2554</points>
+				<url>http://minuit4.fr</url>
+				<stats>
+					<pending>2</pending>
+					<current>4</current>
+					<refused>10</refused>
+					<lost>15</lost>
+					<bad>25</bad>
+					<won>200</won>
+				</stats>
+			</user>
+			<actions protected="true">
+				<action id="10">
+					<title>Chocolat sur la tête</title>
+					<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+					<start>TIMESTAMP</start>
+					<end>TIMESTAMP</end>
+					<created_at>TIMESTAMP</created_at>
+					<status>pending</status>
+				</action>
+			</actions>
+		</sender>
+	</action>
+	
+	<action id="25">
+		<title>Gagne 5 combats d'affil�s � Soul...</title>
+		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+		<start>TIMESTAMP</start>
+		<end>1256511600000</end>
+		<created_at>TIMESTAMP</created_at>
+		<status>won</status>
+		<medias>
+			<picture width="" height="" url="http://prettyinpink.unblog.fr/files/2008/12/chat.jpg" />
+		</medias>
+		<sender>
+			<user>
+				<id>12</id>
+				<login>floz</login>
+				<location>Paris</location>
+				<points>2554</points>
+				<url>http://minuit4.fr</url>
+				<stats>
+					<pending>2</pending>
+					<current>4</current>
+					<refused>10</refused>
+					<lost>15</lost>
+					<bad>25</bad>
+					<won>200</won>
+				</stats>
+			</user>
+			<actions protected="true">
+				<action id="10">
+					<title>Chocolat sur la tête</title>
+					<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+					<start>TIMESTAMP</start>
+					<end>TIMESTAMP</end>
+					<created_at>TIMESTAMP</created_at>
+					<status>pending</status>
+				</action>
+			</actions>
+		</sender>
+	</action>
+	
+	<action id="1234">
+		<title><![CDATA[Demain, s�che]]></title>
+		<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+		<start>TIMESTAMP</start>
+		<end>1256684400000</end>
+		<created_at>TIMESTAMP</created_at>
+		<status>lost</status>
+		<medias>
+			<picture width="" height="" url="http://www.villiard.com/blog/wp-content/uploads/2006/12/chat-noel.jpg" />
+		</medias>		
+		<sender>
+			<user>
+				<id>12</id>
+				<login>floz</login>
+				<location>Paris</location>
+				<points>2554</points>
+				<url>http://minuit4.fr</url>
+				<stats>
+					<pending>2</pending>
+					<current>4</current>
+					<refused>10</refused>
+					<lost>15</lost>
+					<bad>25</bad>
+					<won>200</won>
+				</stats>
+			</user>
+			<actions protected="true">
+				<action id="10">
+					<title>Chocolat sur la tête</title>
+					<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+					<start>TIMESTAMP</start>
+					<end>TIMESTAMP</end>
+					<created_at>TIMESTAMP</created_at>
+					<status>pending</status>
+				</action>
+			</actions>
+		</sender>
+	</action>
+	
+</actions>

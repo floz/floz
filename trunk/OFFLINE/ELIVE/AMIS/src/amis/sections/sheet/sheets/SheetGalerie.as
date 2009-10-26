@@ -118,7 +118,7 @@ package amis.sections.sheet.sheets
 		
 		private function loadChallenges():void
 		{
-			_datasLoader = new DatasLoader( Configuration.pathXML + "/" + "actions_list_termines.xml" );
+			_datasLoader = new DatasLoader( Configuration.pathXML + "/" + "actions_list_termines_2.xml" );
 			_datasLoader.addEventListener( Event.COMPLETE, loadChallengesHandler, false, 0, true );
 			_datasLoader.load();
 		}

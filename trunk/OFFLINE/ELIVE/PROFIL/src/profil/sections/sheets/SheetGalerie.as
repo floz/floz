@@ -117,7 +117,7 @@ package profil.sections.sheets
 		
 		private function loadChallenges():void
 		{
-			_datasLoader = new DatasLoader( Configuration.pathXML + "/" + "actions_list_termines.xml" );
+			_datasLoader = new DatasLoader( Configuration.pathXML + "/" + "actions_list_termines_0.xml" );
 			_datasLoader.addEventListener( Event.COMPLETE, loadChallengesHandler, false, 0, true );
 			_datasLoader.load();
 		}

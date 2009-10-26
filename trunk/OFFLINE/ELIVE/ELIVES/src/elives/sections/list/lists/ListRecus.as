@@ -43,9 +43,9 @@ package elives.sections.list.lists
 		{
 			switch( _currentSousRub )
 			{
-				case SousRubsIds.EN_COURS: loadXML( "actions_list_encours.xml" ); break;
-				case SousRubsIds.EN_ATTENTE: loadXML( "actions_list_attente.xml" ); break;
-				case SousRubsIds.TERMINES: loadXML( "actions_list_termines.xml" ); break;
+				case SousRubsIds.EN_COURS: loadXML( "actions_list_encours_0.xml" ); break;
+				case SousRubsIds.EN_ATTENTE: loadXML( "actions_list_attente_0.xml" ); break;
+				case SousRubsIds.TERMINES: loadXML( "actions_list_termines_0.xml" ); break;
 			}
 		}
 		
