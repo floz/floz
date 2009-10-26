@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <action>
 	<id>13</id>
-	<title>Chocolat sur la tête</title>
-	<details>Tu dois mettre ta mousse au choco' sur la tête en plein cour de bio!</details>
+	<title>Alerte incendie !</title>
+	<details>Déclenche l'alarme à 15h Mercredi aprem. Ca promet une aprem tranquillou sans cours :D</details>
 	<start>TIMESTAMP</start>
-	<end><![CDATA[1256511600000]]></end>
+	<end><![CDATA[1256927357030]]></end>
 	<created_at>TIMESTAMP</created_at>
-	<status>won</status>
+	<status>current</status>
 	<medias>
 		<picture width="" height="" url="" />
 	</medias>
 	<sender>
 		<user>
 			<id>12</id>
-			<login>floz</login>
+			<login>Cléa</login>
 			<location>Paris</location>
 			<points>2554</points>
 			<url>http://minuit4.fr</url>
@@ -38,40 +38,19 @@
 		</actions>
 	</sender>
 	<targets>
-		<list id="25">
-			<user id="12">
-				<login>Floz</login>
-				<points>2554</points>
-				<status>pending</status>
-			</user>
-			<user id="10">
-				<login>spyesx</login>
-				<points>1102</points>
-				<status>pending</status>
-			</user>
-		</list>
-		
-		<list id="21">
-			<user id="15">
-				<login>Cléa</login>
-				<points>2554</points>
-				<status>pending</status>
-			</user>
-		</list>
-
 		<user id="12">
-			<login>Lionel</login>
+			<login>Floz</login>
 			<points>2554</points>
 			<status>pending</status>
 		</user>
 	</targets>
 	<comments>
 		<comment id="2">
-			<text>Oulah ! Bon courage mec ! !!</text>
+			<text>Tro bi1, mci d'avance mdr</text>
 			<date>1255298400000</date>
 			<user>
 				<id>12</id>
-				<login>Floz</login>
+				<login>Lionel</login>
 				<location>Paris</location>
 				<points>2554</points>
 				<url>http://minuit4.fr</url>
@@ -87,11 +66,11 @@
 		</comment>
 		
 		<comment id="2">
-			<text>Je pense que c'est le pire défi de l'univers. Il a été vache ton pote, lol !</text>
+			<text>J'espère pour toi que tu ne te feras pas chopper.. lol Mais je serai la pour voir ca :P</text>
 			<date>1253656800000</date>
 			<user>
 				<id>12</id>
-				<login>Barbie</login>
+				<login>Marie</login>
 				<location>Paris</location>
 				<points>2554</points>
 				<url>http://minuit4.fr</url>
@@ -106,11 +85,11 @@
 			</user>
 		</comment>
 		<comment id="2">
-			<text>Aoutch ?</text>
+			<text>en plein pdt mon tp test de physik.. hihi</text>
 			<date>1255212000000</date>
 			<user>
 				<id>12</id>
-				<login>Bouboup</login>
+				<login>Cléa</login>
 				<location>Paris</location>
 				<points>2554</points>
 				<url>http://minuit4.fr</url>

@@ -55,8 +55,10 @@ package elives.sections.sheet
 			apercuBg.tf.autoSize = TextFieldAutoSize.LEFT;
 			
 			var color:uint;
-			if ( STATUS == ChallengeStatus.ENDED_WON )
+			if ( STATUS == ChallengeStatus.PENDING )
 				color = 0xF9B73D;
+			else if ( STATUS == ChallengeStatus.CURRENT || STATUS == ChallengeStatus.ENDED_WON )
+				color = 0xC3D34F;
 			else if ( STATUS == ChallengeStatus.ENDED_LOST || STATUS == ChallengeStatus.ENDED_REFUSED )
 				color = 0x97579A;
 			

@@ -17,6 +17,7 @@ package elives.sections.sheet
 	import elive.core.users.User;
 	import elive.events.EliveEvent;
 	import elive.events.NavEvent;
+	import elive.managers.SoutenanceManager;
 	import elive.ui.compteur.Compteur;
 	import elive.ui.EliveButton;
 	import elive.ui.sousmenu.SousMenu;
@@ -207,15 +208,13 @@ package elives.sections.sheet
 			
 			
 			// Commentaires
-			text = "";
-			var date:Date;
+			text = " ";
 			var comment:Comment;
 			var comments:Array = _challenge.getComments();
 			i = 0, n = comments.length;
 			for ( ; i < n; ++i )
 			{
 				comment = comments[ i ];
-				date = new Date( comment.date );
 				text += comment.text + "\n" + "<span class='comment_user'>de : " + comment.getUser().name + "</span>\n---------------------------------------";
 				if ( i != int( n - 1 ) ) text += "\n";
 			}
@@ -229,6 +228,18 @@ package elives.sections.sheet
 			var bt:EliveButton = new EliveButton();
 			bt.addEventListener( MouseEvent.MOUSE_DOWN, btCommentDownHandler, false, 0, true );
 			bt.setText( "Commenter" );
+			bt.y = apercuComments.y + apercuComments.height + 5;
+			_cntContent.addChild( bt );
+			
+			bt = new EliveButton();
+			bt.setText( "Facebook" );
+			bt.x = int( bt.width + 60 );
+			bt.y = apercuComments.y + apercuComments.height + 5;
+			_cntContent.addChild( bt );
+			
+			bt = new EliveButton();
+			bt.setText( "Twitter" );
+			bt.x = int( ( bt.width * 2 ) + 110 );
 			bt.y = apercuComments.y + apercuComments.height + 5;
 			_cntContent.addChild( bt );
 		}

@@ -17,8 +17,14 @@
 		<visible>true</visible> 
 		<minimizable>true</minimizable> 
 		<maximizable>true</maximizable> 
-		<resizable>true</resizable> 
+		<resizable>false</resizable> 
 	</initialWindow> 
+	
+	<icon>
+		<image48x48>/imgs/icone48.png</image48x48>
+		<image32x32>/imgs/icone32.png</image32x32>
+		<image16x16>/imgs/icone16.png</image16x16>
+	</icon>
 	
 	<!-- 
 	More options:

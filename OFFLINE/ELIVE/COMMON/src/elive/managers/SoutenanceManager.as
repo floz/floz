@@ -10,19 +10,21 @@ package elive.managers
 	import elive.core.users.User;
 	import flash.events.EventDispatcher;
 	
-	public class EliveManager extends EventDispatcher
+	public class SoutenanceManager extends EventDispatcher
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private static var _instance:EliveManager;
+		private static var _instance:SoutenanceManager;
 		private static var _allowInstanciation:Boolean;
+		
+		public static var valueActionSheet:uint;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function EliveManager() 
+		public function SoutenanceManager() 
 		{
 			if ( !_allowInstanciation ) throw new Error( "This is a Singleton class, please use the getInstance method." );
 		}
@@ -33,15 +35,21 @@ package elive.managers
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public static function getInstance():EliveManager
+		public static function getInstance():SoutenanceManager
 		{
 			if ( !_instance )
 			{
 				_allowInstanciation = true; {
-					_instance = new EliveManager();
+					_instance = new SoutenanceManager();
 				} _allowInstanciation = false;
 			}
 			return _instance;
+		}
+		
+		public static function incrementActionSheet():void
+		{
+			++valueActionSheet;
+			EthingManager.getInstance().ethingJump();
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

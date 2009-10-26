@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <list>
 	<user id="3">
-		<login>floz</login>
+		<login>Cléa</login>
 		<location>Paris</location>
-		<points>2554</points>
+		<points>36</points>
 		<url>http://minuit4.fr</url>
 		<stats>
 			<pending>2</pending>
@@ -15,9 +15,68 @@
 		</stats>
 	</user>
 	<user id="12">
-		<login>Blob</login>
+		<login>David</login>
 		<location>Paris</location>
-		<points>2554</points>
+		<points>143</points>
+		<url>http://minuit4.fr</url>
+		<stats>
+			<pending>2</pending>
+			<current>4</current>
+			<refused>10</refused>
+			<lost>15</lost>
+			<bad>25</bad>
+			<won>200</won>
+		</stats>
+	</user>
+	<user id="12">
+		<login>Kinchouka</login>
+		<location>Paris</location>
+		<points>0</points>
+		<url>http://minuit4.fr</url>
+		<stats>
+			<pending>2</pending>
+			<current>4</current>
+			<refused>10</refused>
+			<lost>15</lost>
+			<bad>25</bad>
+			<won>200</won>
+		</stats>
+	</user>
+	
+	<user id="12">
+		<login>Lionel</login>
+		<location>Paris</location>
+		<points>2</points>
+		<url>http://minuit4.fr</url>
+		<stats>
+			<pending>2</pending>
+			<current>4</current>
+			<refused>10</refused>
+			<lost>15</lost>
+			<bad>25</bad>
+			<won>200</won>
+		</stats>
+	</user>
+	
+	<user id="12">
+		<login>Marc</login>
+		<location>Paris</location>
+		<points>75</points>
+		<url>http://minuit4.fr</url>
+		<stats>
+			<pending>2</pending>
+			<current>4</current>
+			<refused>10</refused>
+			<lost>15</lost>
+			<bad>25</bad>
+			<won>200</won>
+		</stats>
+	</user>
+	
+	<user id="12">
+		<login>Nicolas</login>
+		<location>Paris</location>
+		<points>6</points>
 		<url>http://minuit4.fr</url>
 		<stats>
 			<pending>2</pending>

@@ -10,6 +10,7 @@ package elives.sections.sheet
 	import elive.core.challenges.Challenge;
 	import elive.core.interfaces.ILinkable;
 	import elive.events.NavEvent;
+	import elive.managers.SoutenanceManager;
 	import elive.navigation.HistoricManager;
 	import elive.navigation.NavIds;
 	import elive.navigation.NavManager;
@@ -19,6 +20,7 @@ package elives.sections.sheet
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.text.TextField;
 	import fr.minuit4.core.configuration.Config;
 	import fr.minuit4.core.configuration.Configuration;
 	import fr.minuit4.core.interfaces.IDisposable;
@@ -98,6 +100,13 @@ package elives.sections.sheet
 			_ongletTitle.x = 3;
 			addChild( _ongletTitle );
 			
+			var tf:TextField = new TextField();
+			tf.selectable = false;
+			EliveUtils.configureText( tf, "divers", "Suivre l'(e)live" );
+			tf.x = 200;
+			tf.y = int( _ongletTitle.y + _ongletTitle.height - 3 );
+			addChild( tf );
+			
 			_backButton = new GBtRetour();
 			_backButton.y = 30;
 			_backButton.buttonMode = true;
@@ -125,7 +134,7 @@ package elives.sections.sheet
 		
 		override public function linkTo( id:int ):void // TODO: PHP
 		{
-			_datasLoader = new DatasLoader( Configuration.pathXML + "/action_sheet.xml" );
+			_datasLoader = new DatasLoader( Configuration.pathXML + "/action_sheet_" + SoutenanceManager.valueActionSheet + ".xml" );
 			_datasLoader.addEventListener( Event.COMPLETE, xmlLoadHandler, false, 0, true );
 			_datasLoader.load();
 		}
