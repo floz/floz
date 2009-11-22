@@ -85,7 +85,7 @@ package navigation
 			var navItem:NavItem = e.target as NavItem;
 			if ( navItem == _selectedItem ) return;
 			
-			navItem.over();
+			//navItem.over();
 		}
 		
 		private function mouseOutHandler(e:MouseEvent):void 
@@ -93,7 +93,7 @@ package navigation
 			var navItem:NavItem = e.target as NavItem;
 			if ( navItem == _selectedItem ) return;
 			
-			navItem.out();
+			//navItem.out();
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -125,7 +125,7 @@ package navigation
 		
 		private function float():void
 		{
-			Eaze.to( this, 5, { y: _yMin }, "keep" ).chainTo( this, 5, { y: _yMax }, "keep" ).onComplete( float );
+			//Eaze.to( this, 5, { y: _yMin }, "keep" ).chainTo( this, 5, { y: _yMax }, "keep" ).onComplete( float );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
