@@ -9,12 +9,14 @@
 	public class Main extends Sprite 
 	{
 		private var phase:int;
-		
-		private var _list:Dictionary = new Dictionary();
+		private var event:Event = new Event( Event.COMPLETE );
+		private var array:/*Class2*/Array = [];
 		
 		public function Main():void 
 		{
-			_list[ "test" ] = "toto";
+			createClassListeners();
+			createClassManually();
+			
 			stage.addEventListener( MouseEvent.CLICK, onClick );
 		}
 		
@@ -24,17 +26,17 @@
 			if ( phase == 0 ) 
 			{
 				f = ppi;
-				trace( "externe class" );
+				trace( "addEventListener" );
 			}
 			else if ( phase == 1 )
 			{
 				f = ipp;
-				trace( "inside class" );
-			}		
+				trace( "Update manually" );
+			}					
 			
 			var debut:Number = 0;
 			var compteur:int;
-			for ( var i:int; i < 1000; i++ )
+			for ( var i:int; i < 10000; i++ )
 			{
 				debut = getTimer();
 				f();
@@ -45,38 +47,30 @@
 			phase = phase == 1 ? phase = 0 : phase + 1;
 		}
 		
+		private function createClassListeners():void
+		{
+			for ( var i:int; i < 1000; ++i )
+				addChild( new Class1() );
+		}
+		
+		private function createClassManually():void
+		{
+			for ( var i:int; i < 1000; ++i )
+				array.push( addChild( new Class2() ) as Class2 );
+		}
+		
 		private function ppi():void
 		{
-			var b:Boolean;
-			
-			var j:int;
-			var n:int = 1000;
-			for ( j = 0; j < n; ++j )
-			{
-				new NewClass();
-			}
+			dispatchEvent( event );
 		}
 		
 		private function ipp():void
 		{
-			var b:Boolean;
-			
-			var j:int;
-			var n:int = 1000;
-			for ( j = 0; j < n; ++j )
-			{
-				new InsideClass();
-			}
+			var l:int = array.length;
+			while ( --l > -1 )
+				array[ l ].update();
 		}
 		
 	}
 	
-}
-
-final class InsideClass
-{
-	public function InsideClass()
-	{
-		
-	}
 }
