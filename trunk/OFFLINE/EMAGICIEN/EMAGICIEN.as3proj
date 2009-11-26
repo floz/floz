@@ -5,7 +5,7 @@
     <movie disabled="False" />
     <movie input="" />
     <movie path="bin\Team12.swf" />
-    <movie fps="30" />
+    <movie fps="50" />
     <movie width="1280" />
     <movie height="1024" />
     <movie version="10" />
@@ -45,6 +45,7 @@
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="swc\Team12.swc" />
+    <element path="swc\onomatopoeias.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

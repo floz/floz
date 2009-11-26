@@ -13,6 +13,7 @@ package emagicien.fluidSnake
 	import emagicien.teams.TeamsEvent;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.BlendMode;
 	import flash.display.Graphics;
 	import flash.display.PixelSnapping;
 	import flash.display.Shape;
@@ -21,6 +22,7 @@ package emagicien.fluidSnake
 	import flash.filters.ColorMatrixFilter;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import team12.Config;
 	
 	public class FluidSnake extends Sprite
 	{
@@ -30,11 +32,13 @@ package emagicien.fluidSnake
 		private const CMF:ColorMatrixFilter = new ColorMatrixFilter(  [ 1, 0, 0, 0, 0,
 																		0, 1, 0, 0, 0,
 																		0, 0, 1, 0, 0,
-																		0, 0, 0, .995, 0 ] );
+																		0, 0, 0, .9995, 0 ] );
 		
 		private const ENDED_EVENT:Event = new Event( FluidSnake.PATH_ENDED );
 		private const ANGLE:Number = 60;
 		private const COLOR_SPEED:int = 2;
+		private const POINT:Point = new Point();		
+		private const CONFIG:Config = Config.getInstance();
 		
 		private var _shape:Shape;
 		private var _degrades:Degrades_FC;
@@ -80,6 +84,13 @@ package emagicien.fluidSnake
 			_canvas = new BitmapData( stage.stageWidth, stage.stageHeight, true, 0x00 );
 			var b:Bitmap = new Bitmap( _canvas, PixelSnapping.AUTO, true );
 			addChild( b );
+			
+			CONFIG.addEventListener( Config.FOCUS_OUT, focusOutHandler, false, 0, true );
+		}
+		
+		private function focusOutHandler(e:Event):void 
+		{
+			TweenMax.killTweensOf( _dest );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -98,8 +109,6 @@ package emagicien.fluidSnake
 		
 		private function precalculateColors():void
 		{
-			trace( _degrades.width );
-			trace( _degrades.height );
 			_colorsCount = _degrades.width / COLOR_SPEED;
 			_colors = new Vector.<uint>( _colorsCount, true );
 			for ( var i:int; i < _colorsCount; ++i )
@@ -107,18 +116,27 @@ package emagicien.fluidSnake
 		}
 		
 		private function onUpdate():void
-		{			
+		{
 			drawPart();
 			
-			_rect = Teams.getTeamRectangle( _dest );
-			if ( _rect )
-			{
+			var rect:Rectangle = Teams.getTeamRectangle( _dest );
+			var bool:int = int( Math.random() * 2 );
+			if ( rect )
+			{		
+				if ( rect == _rect || !bool ) 
+				{
+					render();
+					return;
+				}
+				
 				var teamEvent:TeamsEvent = new TeamsEvent( TeamsEvent.TEAM_ENCOUNTER );
-				teamEvent.teamRect = _rect;
+				teamEvent.teamRect = rect;
 				dispatchEvent( teamEvent ); 
 			}
 			//else render();
 			render();
+			
+			_rect = rect;
 		}
 		
 		private function drawPart():void
@@ -132,6 +150,7 @@ package emagicien.fluidSnake
 			
 			var baseAngle:Number = Math.atan2( dy, dx );
 			
+			//rayon += Math.random() * 20;
 			var posX:Number = Math.cos( ANGLE * Math.PI / 180 ) * rayon;
 			var posY:Number = Math.sin( ANGLE * Math.PI / 180 ) * rayon;
 			
@@ -156,7 +175,7 @@ package emagicien.fluidSnake
 			if ( _colorIdx >= _colorsCount ) _colorIdx = 0;
 			
 			_graphics.clear();
-			_graphics.lineStyle( 1, _colors[ _colorIdx ] );
+			//_graphics.lineStyle( 1, _colors[ _colorIdx ] );
 			_graphics.beginFill( _colors[ _colorIdx ] );				
 			_graphics.moveTo( _link2.x, _link2.y );
 			_graphics.lineTo( _link1.x, _link1.y );
@@ -177,10 +196,9 @@ package emagicien.fluidSnake
 		
 		private function render():void
 		{
-			_canvas.lock();
-			_canvas.draw( _shape );
-			_canvas.applyFilter( _canvas, _canvas.rect, new Point(), CMF );
-			_canvas.unlock();
+			//_canvas.draw( _shape );
+			_canvas.draw( _shape, null, null, BlendMode.OVERLAY ); // TODO: Check it
+			//_canvas.applyFilter( _canvas, _canvas.rect, POINT, CMF );
 		}
 		
 		private function onComplete():void

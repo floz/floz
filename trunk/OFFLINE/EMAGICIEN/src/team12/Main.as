@@ -9,14 +9,21 @@ package team12
 	import assets.Balcony_FC;
 	import assets.Guide_FC;
 	import assets.MaskBarriers_FC;
+	import assets.MaskSnake_FC;
 	import com.greensock.TweenMax;
+	import emagicien.elements.Window;
 	import emagicien.fluidSnake.FluidSnake;
+	import emagicien.onomatopeias.Onomatopeias;
 	import emagicien.teams.Teams;
 	import emagicien.teams.TeamsEvent;
+	import flash.display.BlendMode;
+	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import fr.minuit4.utils.debug.FPS;
 	
 	public class Main extends Sprite
@@ -24,12 +31,26 @@ package team12
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private const CONFIG:Config = Config.getInstance();
+		
 		private var _isActive:Boolean;
 		private var _balcony:Balcony_FC;
+		
 		private var _cntColorfull:Sprite;
 		private var _colorfullBackground:ColorfullBackground;
 		private var _mask:MaskBarriers_FC;
+		
+		private var _window:Window;
+		
 		private var _fluidSnake:FluidSnake;
+		
+		private var _onomatop:Onomatopeias;
+		private var _lastRect:Rectangle;
+		
+		// LOL
+		
+		private var _isDeInitClick:Boolean;
+		private var _main:DisplayObjectContainer;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -45,38 +66,69 @@ package team12
 		private function addedToStageHandler(e:Event):void 
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
-			addEventListener( Event.ENTER_FRAME, enterFrameHandler, false, 0, true );
+			
+			CONFIG.addEventListener( Config.FOCUS_IN, focusInHandler, false, 0, true );
+			CONFIG.addEventListener( Config.FOCUS_OUT, focusOutHandler, false, 0, true );
 		}
 		
-		private function enterFrameHandler(e:Event):void 
+		private function clickInitHandler(e:MouseEvent):void 
 		{
-			if ( !_isActive && parent.getChildIndex( this ) == int( parent.numChildren - 1 ) )
+			if ( !_isDeInitClick )
 			{
-				_isActive = true;
-				onActivate();
+				_main = DisplayObjectContainer( root.parent.root );				
+				_main.addEventListener( "DeInit", deInitHandler, false, 0, true );
+				
+				CONFIG.activate();
 			}
+			else _isDeInitClick = false;
+		}
+		
+		private function deInitHandler(e:Event):void 
+		{
+			_isDeInitClick = true;
+			_main.removeEventListener( "DeInit", deInitHandler );
+			CONFIG.deactivate();
 			
-			if ( _isActive && parent.getChildIndex( this ) != int( parent.numChildren - 1 ) )
+			TweenMax.delayedCall( .2, setFalse );
+		}
+		
+		private function focusInHandler(e:Event):void 
+		{
+			TweenMax.killTweensOf( _mask );
+			
+			if ( !_cntColorfull.numChildren )
 			{
-				_isActive = false;
-				onDeactivate();
+				_cntColorfull.addChild( _colorfullBackground );
+				_cntColorfull.addChild( _mask );
 			}
+			show();
+			_window.explode();
+			//moveSnake();
+		}
+		
+		private function focusOutHandler(e:Event):void 
+		{
+			hide();
+			
+			_isDeInitClick = false;
 		}
 		
 		private function clickHandler(e:MouseEvent):void 
 		{
-			_fluidSnake.goTo( stage.mouseX, stage.mouseY );
+			CONFIG.activate();
 		}
 		
 		private function teamEncounterHandler(e:TeamsEvent):void 
 		{
+			var rect:Rectangle = e.teamRect;
+			if ( _lastRect == rect || rect == Teams.TEAM12 ) return;
+			_onomatop.addOnomatopAt( new Point( rect.x, rect.y ) );
+			_lastRect = rect;
 		}
 		
 		private function pathEndedHandler(e:Event):void 
 		{
-			_fluidSnake.goTo( Math.random() * Teams.TEAMS_ZONE.width + Teams.TEAMS_ZONE.x,
-							Math.random() * Teams.TEAMS_ZONE.height + Teams.TEAMS_ZONE.y );
-			
+			moveSnake();
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -88,19 +140,23 @@ package team12
 				Config.STANDALONE = true;
 				onStandAlone();
 			}
-			else addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
+			else addEventListener( MouseEvent.CLICK, clickInitHandler, false, 0, true );
 			
+			createBalcony();
+			createColorfullBackground();
+			createWindow();
+			createFluidSnake();
+			createOnomatop();
+			
+			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
+		}
+		
+		private function createBalcony():void
+		{
 			_balcony = new Balcony_FC();
 			_balcony.x = 627;
 			_balcony.y = 734;
 			addChild( _balcony );
-			
-			createColorfullBackground();
-			createFluidSnake();
-			
-			show();
-			
-			addEventListener( MouseEvent.CLICK, clickHandler, false, 0, true );
 		}
 		
 		private function createColorfullBackground():void
@@ -127,6 +183,14 @@ package team12
 			_colorfullBackground.mask = _mask;
 		}
 		
+		private function createWindow():void
+		{
+			_window = new Window();
+			_window.x = 633;
+			_window.y = 509;	
+			addChild( _window );
+		}
+		
 		private function createFluidSnake():void
 		{
 			_fluidSnake = new FluidSnake();
@@ -137,6 +201,25 @@ package team12
 			
 			_fluidSnake.mouseChildren = 
 			_fluidSnake.mouseEnabled = false;
+			
+			//_fluidSnake.blendMode = BlendMode.OVERLAY; // TODO: Check si je le mets ou non
+			
+			//_mask.cacheAsBitmap = true;
+			//_fluidSnake.cacheAsBitmap = true;			
+			
+			var mask:MaskSnake_FC = new MaskSnake_FC();
+			addChild( mask );
+			
+			_fluidSnake.mask = mask;
+		}
+		
+		private function createOnomatop():void
+		{
+			_onomatop = new Onomatopeias();
+			addChild( _onomatop );
+			
+			_onomatop.mouseChildren =
+			_onomatop.mouseEnabled = false;
 		}
 		
 		private function onStandAlone():void
@@ -144,24 +227,9 @@ package team12
 			var guide:Guide_FC = new Guide_FC();
 			addChild( guide );
 			
-			addChild( new FPS() );
-		}
-		
-		private function onActivate():void
-		{
-			TweenMax.killTweensOf( _mask );
+			addEventListener( MouseEvent.CLICK, clickHandler, false, 0, true );
 			
-			if ( !_cntColorfull.numChildren )
-			{
-				_cntColorfull.addChild( _colorfullBackground );
-				_cntColorfull.addChild( _mask );
-			}
-			show();
-		}
-		
-		private function onDeactivate():void
-		{
-			hide();
+			addChild( new FPS() );
 		}
 		
 		private function show():void
@@ -178,6 +246,14 @@ package team12
 		{
 			while ( _cntColorfull.numChildren ) _cntColorfull.removeChildAt( 0 );
 		}
+		
+		private function moveSnake():void
+		{
+			_fluidSnake.goTo( Math.random() * Teams.TEAMS_ZONE.width + Teams.TEAMS_ZONE.x,
+							Math.random() * Teams.TEAMS_ZONE.height + Teams.TEAMS_ZONE.y );	
+		}
+		
+		private function setFalse():void { _isDeInitClick = false; }
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
