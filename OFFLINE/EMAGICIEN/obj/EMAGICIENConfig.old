@@ -11,13 +11,14 @@
     </source-path>
     <library-path append="true">
       <path-element>D:\Projets\Flash\Projets\OFFLINE\EMAGICIEN\swc\Team12.swc</path-element>
+      <path-element>D:\Projets\Flash\Projets\OFFLINE\EMAGICIEN\swc\onomatopoeias.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
     <path-element>D:\Projets\Flash\Projets\OFFLINE\EMAGICIEN\src\team12\Main.as</path-element>
   </file-specs>
   <default-background-color>#FF00FF</default-background-color>
-  <default-frame-rate>30</default-frame-rate>
+  <default-frame-rate>50</default-frame-rate>
   <default-size>
     <width>1280</width>
     <height>1024</height>

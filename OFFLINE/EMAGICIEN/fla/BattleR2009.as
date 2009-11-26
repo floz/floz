@@ -41,6 +41,7 @@
 				voisin.load(adresse);
 				addChild(voisin);
 				voisin.name = "Team" + i + ".swf";
+				voisin.contentLoaderInfo.addEventListener( IOErrorEvent.IO_ERROR, ioErrorHandler, false, 0, true );
 				voisin.addEventListener(MouseEvent.MOUSE_DOWN, premierPlan);
 			}
 			
@@ -66,6 +67,12 @@
 
 			setChildIndex(neon, numChildren - 1);
 			//setChildIndex(balcon, numChildren - 1);
+		}
+		
+		private function ioErrorHandler(e:IOErrorEvent):void 
+		{
+			trace("BattleR2009.ioErrorHandler > e : " + e);
+			
 		}
 		private function premierPlan(e:MouseEvent) {
 			trace("open : " + open);
