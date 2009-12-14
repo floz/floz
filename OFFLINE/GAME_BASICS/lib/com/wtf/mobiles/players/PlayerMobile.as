@@ -40,14 +40,20 @@ package com.wtf.mobiles.players
 			stage.addEventListener( KeyboardEvent.KEY_UP, keyUpHandler, false, 0, true );
 		}
 		
+		/**
+		 * Méthode de traitement des touches pressées par l'utilisateur.
+		 * @param	e
+		 */
 		private function keyDownHandler(e:KeyboardEvent):void 
 		{
 			var idx:int = _keys.indexOf( e.keyCode, 0 );
 			if ( idx > -1 )
 			{
+				// On vérifie que la touche n'est pas celle qui est actuellement utilisée.
 				if ( idx == int( _keys.length - 1 ) )
 					return;
 				
+				// Si la touche est déjà enregistrée, on la passe devant les autres.
 				_keys.push( _keys.splice( idx, 1 )[ 0 ] );
 			}
 			
@@ -57,6 +63,10 @@ package com.wtf.mobiles.players
 			play();
 		}
 		
+		/**
+		 * Actions effectuées lorsque l'utilisateur lache une touche.
+		 * @param	e
+		 */
 		private function keyUpHandler(e:KeyboardEvent):void 
 		{
 			switch( e.keyCode )
@@ -70,10 +80,20 @@ package com.wtf.mobiles.players
 			var idx:int = _keys.indexOf( e.keyCode, 0 );
 			if ( idx > - 1 )
 			{
+				// On supprime la touche qui vient d'être relachée.
 				_keys.splice( idx, 1 );
+				
 				var l:int = _keys.length;
-				if ( l > 0 ) onKey( _keys[ int( l - 1 ) ] );
-				else stop();
+				if ( l > 0 ) 
+				{
+					// Si une touche est encore appuyée, on la passe en priorité.
+					onKey( _keys[ int( l - 1 ) ] );
+				}
+				else 
+				{
+					// Si plus aucune touche n'est appuyée, on stoppe le personnage.
+					stop();
+				}
 			}
 		}
 		
@@ -85,6 +105,10 @@ package com.wtf.mobiles.players
 			addEventListener( Event.ADDED_TO_STAGE, addedToStageHandler, false, 0, true );
 		}
 		
+		/**
+		 * Déclenche les actions liées à une touche de clavier.
+		 * @param	key	uint	Le code de la touche de clavier.
+		 */
 		private function onKey( key:uint ):void
 		{
 			switch( key )

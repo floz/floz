@@ -52,11 +52,12 @@ package characters
 			renderer.start();
 			
 			var mobileManager:MobileManager = MobileManager.getInstance();
-			renderer.register( mobileManager );
 			
 			var link:Link = new Link();
 			mobileManager.register( link );
 			addChild( link );
+			
+			renderer.register( mobileManager );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

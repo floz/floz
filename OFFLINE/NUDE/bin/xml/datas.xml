@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+
+	<test>
+		<![CDATA[$(attribut: "minuit4")]]>
+	</test>
+	
+	<minuit4 id="minuit4">
+		Hello World by Minuit4
+	</minuit4>
+	
+	<images>
+		<image><![CDATA[image1]]></image>
+		<image id="test"><![CDATA[image2]]></image>
+		<image><![CDATA[image3]]></image>
+	</images>
+	
+	<essai>
+		<essaibis>
+			<toto id="blabla">
+				<tata id="tata">content tata</tata>
+				<titi id="titi">content titi</titi>
+				<tutu id="tutu">content tutu</tutu>
+			</toto>
+		</essaibis>
+	</essai>
+	
+</data>
