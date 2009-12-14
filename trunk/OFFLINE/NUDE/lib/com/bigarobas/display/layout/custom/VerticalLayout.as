@@ -1,0 +1,26 @@
+﻿package com.bigarobas.display.layout.custom {
+	import com.bigarobas.display.layer.LayerAutoSize;
+	import com.bigarobas.display.layout.Layout;
+	import com.bigarobas.display.layout.LayoutMode;
+	
+	/**
+	 * ...
+	 * @author Rashid Ghassempouri [www.bigarobas.com]
+	 */
+	public class VerticalLayout extends Layout {
+		
+		public function VerticalLayout (vWidth:Number = 0, vHeight:Number = 0) {
+			
+			width = vWidth;
+			height = vHeight;
+			
+			layoutOptions.mode = LayoutMode.VERTICAL;
+			
+			if (vWidth != 0 || vHeight!=0) 
+				autoSize = LayerAutoSize.CROP;
+			
+		}
+		
+	}
+	
+}

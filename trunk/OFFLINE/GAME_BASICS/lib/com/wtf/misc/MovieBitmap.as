@@ -45,12 +45,22 @@ package com.wtf.misc
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
+		/**
+		 * Ajoute une animation.
+		 * @param	animatedBitmap	AnimatedBitmap	L'objet AnimatedBitmap qui contient l'animation.
+		 * @param	frameId	String	Le nom de l'animation. Permettra de la jouer par l'appel de la méthode play.
+		 * @param	defaultFrame	La frame par défaut. Lorsque le personnage ne bougera plus, on tombera sur cette frame.
+		 */
 		public function addAnimatedBitmap( animatedBitmap:AnimatedBitmap, frameId:String, defaultFrame:int = 0 ):void
 		{
 			animatedBitmap.defaultFrame = defaultFrame;
 			_animations[ frameId ] = animatedBitmap;
 		}
 		
+		/**
+		 * Joue l'animation.
+		 * @param	frameId	String	Joue la séquence d'animation liée à l'id "frameId".
+		 */
 		public function play( frameId:String = "" ):void
 		{
 			if ( _isPlaying && frameId == _currentFrameId )
@@ -70,12 +80,18 @@ package com.wtf.misc
 			}
 		}
 		
+		/**
+		 * Stoppe l'animation
+		 */
 		public function stop():void
 		{
 			_isPlaying = false;
 			_currentAnimation.gotoFrame( _currentAnimation.defaultFrame );
 		}
 		
+		/**
+		 * Actualise l'animation en cours, si la méthode play a été précédemment appellée.
+		 */
 		public function update():void
 		{
 			if ( _isPlaying )
@@ -89,6 +105,10 @@ package com.wtf.misc
 			}
 		}
 		
+		/**
+		 * Défini l'animation par défaut lorsque le personnage sera inactif.
+		 * @param	frameId	String	Correspond à la séquence d'animation à jouer.
+		 */
 		public function setDefaultAnimation( frameId:String ):void
 		{
 			var defaultAnimation:AnimatedBitmap = _animations[ frameId ];
@@ -102,6 +122,10 @@ package com.wtf.misc
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
+		/**
+		 * La valeur expositionTime détermine combien de fois chaque image de l'animation doit se répéter.
+		 * Autrement dit, combien de fois cette image doit être exposée.
+		 */
 		public function set expositionTime( value:int ):void
 		{
 			_expositionTime = value;
