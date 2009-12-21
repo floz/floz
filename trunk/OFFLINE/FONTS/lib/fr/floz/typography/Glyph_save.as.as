@@ -39,37 +39,57 @@ package fr.floz.typography
 		{
 			graphics.clear();
 			
-			var command:String;
-			var datas:Array;
+			var l:int, n:int = _datas.length;
+			var commands:Vector.<int> = new Vector.<int>();//( n, true );
+			var datas:Vector.<Number> = new Vector.<Number>();
 			
 			graphics.lineStyle( 1, 0xff0000 );
-			graphics.beginFill( 0x444444 );
-			
-			var n:int = _datas.length;
+			graphics.beginFill( 0x000000 );
 			for ( var i:int; i < n; ++i )
 			{
-				command = _datas[ i ][ 0 ];
-				datas = _datas[ i ][ 1 ];
-				
-				if ( command == GlyphDatas.MOVE_TO )
+				switch( _datas[ i ][ 0 ] )
 				{
-					graphics.moveTo( datas[ 0 ], datas[ 1 ] );
-				}
-				else if ( command == GlyphDatas.LINE_TO )
-				{
-					graphics.lineTo( datas[ 0 ], datas[ 1 ] );
-					addMark( datas[ 0 ], datas[ 1 ] );
-				}
-				else if ( command == GlyphDatas.CURVE_TO )
-				{
-					//graphics.lineTo( datas[ 0 ], datas[ 1 ] );
-					//graphics.lineTo( datas[ 2 ], datas[ 3 ] );
-					graphics.curveTo( datas[ 0 ], datas[ 1 ], datas[ 2 ], datas[ 3 ] );
-					addMark( datas[ 2 ], datas[ 3 ], false );
-					addMark( datas[ 0 ], datas[ 1 ], true );
+					case GlyphDatas.MOVE_TO:
+						commands[ i ] = GraphicsPathCommand.MOVE_TO;
+						datas[ l ] = _datas[ i ][ 1 ][ 0 ];
+						++l;
+						datas[ l ] = _datas[ i ][ 1 ][ 1 ];
+						++l;
+						
+						addMark( _datas[ i ][ 1 ][ 0 ], _datas[ i ][ 1 ][ 1 ] );
+						
+						break;
+					case GlyphDatas.LINE_TO:
+						commands[ i ] = GraphicsPathCommand.LINE_TO;
+						datas[ l ] = _datas[ i ][ 1 ][ 0 ];
+						++l;
+						datas[ l ] = _datas[ i ][ 1 ][ 1 ];
+						++l;
+						
+						addMark( _datas[ i ][ 1 ][ 0 ], _datas[ i ][ 1 ][ 1 ] );
+						
+						break;
+					case GlyphDatas.CURVE_TO:
+						//commands[ i ] = GraphicsPathCommand.CURVE_TO;
+						commands[ i ] = GraphicsPathCommand.LINE_TO;
+						datas[ l ] = _datas[ i ][ 1 ][ 0 ];
+						++l;
+						datas[ l ] = _datas[ i ][ 1 ][ 1 ];
+						++l;
+						
+						addMark( _datas[ i ][ 1 ][ 0 ], _datas[ i ][ 1 ][ 1 ], true );
+						
+						commands[ i + 1 ] = GraphicsPathCommand.LINE_TO;
+						datas[ l ] = _datas[ i ][ 1 ][ 2 ];
+						++l;
+						datas[ l ] = _datas[ i ][ 1 ][ 3 ];
+						++l;
+						
+						addMark( _datas[ i ][ 1 ][ 2 ], _datas[ i ][ 1 ][ 3 ] );
+						break;
 				}
 			}
-			
+			graphics.drawPath( commands, datas );
 			graphics.endFill();
 		}
 		
@@ -78,7 +98,7 @@ package fr.floz.typography
 			var s:Shape = new Shape();
 			var g:Graphics = s.graphics;
 			g.beginFill( curvePoint ? 0x00ff00 : 0xff00ff );
-			g.drawCircle( 0, 0, 1 );
+			g.drawCircle( 0, 0, 2 );
 			g.endFill();
 			
 			s.x = x;

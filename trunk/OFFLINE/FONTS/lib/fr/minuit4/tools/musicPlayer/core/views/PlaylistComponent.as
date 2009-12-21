@@ -4,13 +4,14 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package fr.minuit4.tools.musicPlayer.core.views 
 {
+	import fr.minuit4.tools.musicPlayer.core.views.playlist.PlaylistContainer;
+	import fr.minuit4.tools.musicPlayer.core.views.playlist.PlaylistItem;
+
 	import flash.display.Sprite;
-	import fr.floz.typography.DynamicText;
-	import net.badimon.five3D.typography.HelveticaBold;
-	
-	public class MainDynamicTextFloz extends Sprite
+
+	public class PlaylistComponent extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -21,14 +22,9 @@ package
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function MainDynamicTextFloz() 
+		public function PlaylistComponent() 
 		{
-			var dynamicText:DynamicText = new DynamicText( "He d", new HelveticaBold() );
-			dynamicText.size = 150;
-			addChild( dynamicText );
 			
-			dynamicText.x = ( stage.stageWidth - dynamicText.width ) * .5;
-			dynamicText.y = ( stage.stageHeight - dynamicText.height ) * .5;
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -38,6 +34,16 @@ package
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
+		
+		public function set container( value:PlaylistContainer ):void
+		{
+			
+		}
+		
+		public function set item( value:PlaylistItem ):void
+		{
+			
+		}
 		
 	}
 	

@@ -4,13 +4,11 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package fr.minuit4.tools.musicPlayer.core.views 
 {
 	import flash.display.Sprite;
-	import fr.floz.typography.DynamicText;
-	import net.badimon.five3D.typography.HelveticaBold;
 	
-	public class MainDynamicTextFloz extends Sprite
+	public class DeviceComponent extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -21,14 +19,9 @@ package
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function MainDynamicTextFloz() 
+		public function DeviceComponent() 
 		{
-			var dynamicText:DynamicText = new DynamicText( "He d", new HelveticaBold() );
-			dynamicText.size = 150;
-			addChild( dynamicText );
 			
-			dynamicText.x = ( stage.stageWidth - dynamicText.width ) * .5;
-			dynamicText.y = ( stage.stageHeight - dynamicText.height ) * .5;
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------

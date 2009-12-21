@@ -4,13 +4,19 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package fr.minuit4.tools.musicPlayer.core.views.device
 {
-	import flash.display.Sprite;
-	import fr.floz.typography.DynamicText;
-	import net.badimon.five3D.typography.HelveticaBold;
-	
-	public class MainDynamicTextFloz extends Sprite
+	import fr.minuit4.tools.musicPlayer.core.views.ButtonComponent;
+
+	import flash.events.MouseEvent;
+
+	/**
+	 * The AbstractNextButton class has to be extended.
+	 * It's relied with the use of the AbstractMusicPlayer.
+	 * 
+	 * This button will jumpt to the next track.
+	 */
+	public class NextButton extends ButtonComponent
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -21,17 +27,20 @@ package
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function MainDynamicTextFloz() 
+		public function NextButton() 
 		{
-			var dynamicText:DynamicText = new DynamicText( "He d", new HelveticaBold() );
-			dynamicText.size = 150;
-			addChild( dynamicText );
-			
-			dynamicText.x = ( stage.stageWidth - dynamicText.width ) * .5;
-			dynamicText.y = ( stage.stageHeight - dynamicText.height ) * .5;
+			super();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
+		
+		/**
+		 * Switch to next track.
+		 */
+		override protected function onClick(e:MouseEvent):void 
+		{
+			_musicManager.nextTrack();
+		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		

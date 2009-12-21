@@ -4,16 +4,19 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package fr.minuit4.tools.musicPlayer 
 {
-	import flash.display.Sprite;
-	import fr.floz.typography.DynamicText;
-	import net.badimon.five3D.typography.HelveticaBold;
-	
-	public class MainDynamicTextFloz extends Sprite
+	import fr.minuit4.tools.musicPlayer.core.AMusicPlayer;
+	import fr.minuit4.tools.musicPlayer.core.views.DeviceComponent;
+	import fr.minuit4.tools.musicPlayer.core.views.PlaylistComponent;
+
+	/**
+	 * The minuit4 music player.
+	 * You have to configure a device to interact with.
+	 * The playlist is optionnal.
+	 */
+	public class MusicPlayer extends AMusicPlayer
 	{
-		
-		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
@@ -21,14 +24,9 @@ package
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function MainDynamicTextFloz() 
+		public function MusicPlayer( device:DeviceComponent = null, playlist:PlaylistComponent = null ) 
 		{
-			var dynamicText:DynamicText = new DynamicText( "He d", new HelveticaBold() );
-			dynamicText.size = 150;
-			addChild( dynamicText );
-			
-			dynamicText.x = ( stage.stageWidth - dynamicText.width ) * .5;
-			dynamicText.y = ( stage.stageHeight - dynamicText.height ) * .5;
+			super( device, playlist );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------

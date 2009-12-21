@@ -4,36 +4,54 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package fr.minuit4.tools.musicPlayer.views 
 {
-	import flash.display.Sprite;
-	import fr.floz.typography.DynamicText;
-	import net.badimon.five3D.typography.HelveticaBold;
-	
-	public class MainDynamicTextFloz extends Sprite
+	import fr.minuit4.tools.musicPlayer.core.views.device.VolumeBar;
+	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
+
+	import flash.display.Graphics;
+	import flash.display.Shape;
+
+	public class VolumeBarSkin extends VolumeBar
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private var _visualManager:VisualManager;
+		
+		private var _dragableBar:Shape;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function MainDynamicTextFloz() 
+		public function VolumeBarSkin() 
 		{
-			var dynamicText:DynamicText = new DynamicText( "He d", new HelveticaBold() );
-			dynamicText.size = 150;
-			addChild( dynamicText );
-			
-			dynamicText.x = ( stage.stageWidth - dynamicText.width ) * .5;
-			dynamicText.y = ( stage.stageHeight - dynamicText.height ) * .5;
+			_visualManager = VisualManager.getInstance();
+			init();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
+		
+		private function init():void
+		{
+			drawVolumeBar();
+		}
+		
+		private function drawVolumeBar():void
+		{			
+			_dragableBar = new Shape();
+			var g:Graphics = _dragableBar.graphics;
+			g.beginFill( _visualManager.getBackgroundElementColor(), 1 );
+			g.drawRect( 0, 0, 50 - 3, 10 - 3 );
+			g.endFill();
+			
+			dragableBar = _dragableBar;
+		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		

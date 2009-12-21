@@ -4,31 +4,30 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package fr.minuit4.tools.musicPlayer.views 
 {
-	import flash.display.Sprite;
-	import fr.floz.typography.DynamicText;
-	import net.badimon.five3D.typography.HelveticaBold;
-	
-	public class MainDynamicTextFloz extends Sprite
+	import fr.minuit4.tools.musicPlayer.core.views.device.PlayPauseButton;
+	import fr.minuit4.tools.musicPlayer.manager.VisualManager;
+
+	public class PlayPauseButtonSkin extends PlayPauseButton
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private var _visualManager:VisualManager;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function MainDynamicTextFloz() 
+		public function PlayPauseButtonSkin() 
 		{
-			var dynamicText:DynamicText = new DynamicText( "He d", new HelveticaBold() );
-			dynamicText.size = 150;
-			addChild( dynamicText );
+			_visualManager = VisualManager.getInstance();
 			
-			dynamicText.x = ( stage.stageWidth - dynamicText.width ) * .5;
-			dynamicText.y = ( stage.stageHeight - dynamicText.height ) * .5;
+			this.playButton = new PlayButtonSkin();
+			this.pauseButton = new PauseButtonSkin();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
