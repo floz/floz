@@ -4,36 +4,46 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package fr.minuit4.tools.musicPlayer.views 
 {
-	import flash.display.Sprite;
-	import fr.floz.typography.DynamicText;
-	import net.badimon.five3D.typography.HelveticaBold;
-	
-	public class MainDynamicTextFloz extends Sprite
+	import fr.minuit4.tools.musicPlayer.core.managers.MusicManager;
+
+	import flash.events.Event;
+	import flash.text.TextField;
+
+	public class MusicTitle extends TextField
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private var _musicManager:MusicManager;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function MainDynamicTextFloz() 
+		public function MusicTitle() 
 		{
-			var dynamicText:DynamicText = new DynamicText( "He d", new HelveticaBold() );
-			dynamicText.size = 150;
-			addChild( dynamicText );
-			
-			dynamicText.x = ( stage.stageWidth - dynamicText.width ) * .5;
-			dynamicText.y = ( stage.stageHeight - dynamicText.height ) * .5;
+			_musicManager = MusicManager.getInstance();			
+			init();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
+		private function onID3(e:Event):void 
+		{
+			this.text = _musicManager.getCurrentArtist() + " - " + _musicManager.getCurrentSong();
+		}
+		
 		// - PRIVATE METHODS -------------------------------------------------------------
+		
+		private function init():void
+		{
+			_musicManager.addEventListener( Event.ID3, onID3, false, 0, true );			
+			this.text = "... - ...";
+		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
