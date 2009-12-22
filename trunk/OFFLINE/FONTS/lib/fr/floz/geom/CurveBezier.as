@@ -8,11 +8,7 @@ package fr.floz.geom
 {
 	import flash.geom.Point;
 	
-	/**
-	 * Based on :
-	 * http://philippe.elsass.me/2009/06/as3-parametric-path-drawing/
-	 */
-	public class Segment 
+	public class CurveBezier 
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -23,11 +19,9 @@ package fr.floz.geom
 		public var end:Point;
 		public var control:Point;
 		
-		public var next:Segment;
-		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Segment( start:Point, end:Point, control:Point = null ) 
+		public function CurveBezier( start:Point, end:Point, control:Point = null) 
 		{
 			this.start = start;
 			this.end = end;
@@ -40,47 +34,61 @@ package fr.floz.geom
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function subdivide( ratio:Number ):Segment
+		public function subdivide():Vector.<CurveBezier>
 		{
-			ratio = .5; // must be !
-			if ( ratio < 0 ) ratio = 0;
-			if ( ratio > 1 || isNaN( ratio ) ) ratio = 1;
+			var points:Vector.<Point> = subdivideInPoints();
 			
-			var newEnd:Point;
+			var curves:Vector.<CurveBezier>;
 			if ( control )
 			{
-				var ratio1:Number = 1.0 - ratio;
-				
-				var newControl:Point = new Point( ( control.x + start.x ) * .5, ( control.y + start.y ) * .5 );
-				
-				var temp:Point = new Point( ( end.x + control.x ) * .5,
-											( end.y + control.y ) * .5 );
-				
-				newEnd = new Point( ( temp.x + newControl.x ) * .5, 
-									( temp.y + newControl.y ) * .5 );
-				
-				var newCurrent:Segment = new Segment( start, newEnd, newControl );
-				newCurrent.next = new Segment( newEnd, end );
-				
-				newControl = new Point( (control.x + end.x ) * .5,
-										(control.y + end.y ) * .5 );
-				
-				newCurrent.next.control = newControl;
-				
-				return newCurrent;
+				curves = new Vector.<CurveBezier>( 2, true );				
+				curves[ 0 ] = new CurveBezier( points[ 0 ], points[ 1 ], points[ 2 ] );
+				curves[ 1 ] = new CurveBezier( points[ 1 ], points[ 2 ], points[ 3 ] );
 			}
 			else
 			{
-				newEnd = new Point( start.x + ratio * ( end.x - start.x ), start.y + ratio * ( end.x - start.x ) );
-				return new Segment( start, newEnd );
+				curves = new Vector.<CurveBezier>( 1, true );
+				curves[ 0 ] = new CurveBezier( points[ 0 ], points[ 1 ] );
 			}
+			return curves;
 		}
 		
 		/**
-		 * http://segfaultlabs.com/graphics/qbezierlen/
+		 * Renvoie un object Vector qui contient des Point.
+		 * Si 
 		 * @return
 		 */
-		public function getLength():Number
+		public function subdivideInPoints():Vector.<Point>
+		{
+			var points:Vector.<Point>;
+			if ( control )
+			{
+				points = new Vector.<Point>( 4, true );
+				var p1:Point = new Point( ( control.x + start.x ) * .5, ( control.y + start.y ) * .5 );
+				var p2:Point = new Point( ( end.x + control.x ) * .5, ( end.y + control.y ) * .5 );
+				var p3:Point = new Point( ( p2.x + p1.x ) * .5, ( p2.y + p1.y ) * .5 );
+				
+				points[ 0 ] = start; // start   / ----
+				points[ 1 ] = p1;    // control / start
+				points[ 2 ] = p2;    // end     / control
+				points[ 3 ] = p3;    // ----    / end
+			}
+			else
+			{
+				points = new Vector.<Point>( 2, true );
+				points[ 0 ] = start;
+				points[ 1 ] = new Point( start.x + ( end.x - start.x ) * .5, start.y + ( end.y - start.y ) * .5 );
+			}
+			return points;
+		}
+		
+		// - GETTERS & SETTERS -----------------------------------------------------------
+		
+		/**
+		 * Retourne la longueur correcte de la courbe de bezier.
+		 * Ca vient d'ici : http://segfaultlabs.com/graphics/qbezierlen/
+		 */
+		public function get length():Number
 		{
 			if ( control )
 			{
@@ -106,8 +114,6 @@ package fr.floz.geom
 			}
 			else return end.subtract( start ).length;
 		}
-		
-		// - GETTERS & SETTERS -----------------------------------------------------------
 		
 	}
 	
