@@ -13,10 +13,7 @@
 		private var array:/*Class2*/Array = [];
 		
 		public function Main():void 
-		{
-			createClassListeners();
-			createClassManually();
-			
+		{			
 			stage.addEventListener( MouseEvent.CLICK, onClick );
 		}
 		
@@ -26,12 +23,12 @@
 			if ( phase == 0 ) 
 			{
 				f = ppi;
-				trace( "addEventListener" );
+				trace( "concat" );
 			}
 			else if ( phase == 1 )
 			{
 				f = ipp;
-				trace( "Update manually" );
+				trace( "push" );
 			}					
 			
 			var debut:Number = 0;
@@ -47,28 +44,42 @@
 			phase = phase == 1 ? phase = 0 : phase + 1;
 		}
 		
-		private function createClassListeners():void
-		{
-			for ( var i:int; i < 1000; ++i )
-				addChild( new Class1() );
-		}
-		
-		private function createClassManually():void
-		{
-			for ( var i:int; i < 1000; ++i )
-				array.push( addChild( new Class2() ) as Class2 );
-		}
-		
 		private function ppi():void
 		{
-			dispatchEvent( event );
+			var v1:Vector.<Sprite> = new Vector.<Sprite>();
+			v1[ 0 ] = new Sprite();
+			v1[ 1 ] = new Sprite();
+			v1[ 2 ] = new Sprite();
+			
+			var v2:Vector.<Sprite> = new Vector.<Sprite>();
+			v2[ 0 ] = new Sprite();
+			v2[ 1 ] = new Sprite();
+			
+			var j:int, n:int = v2.length;
+			for ( var i:int; i < 100; ++i )
+			{
+				for ( j = 0; j < n; ++j )
+					v1.push( v2[ j ] );
+			}
 		}
 		
 		private function ipp():void
 		{
-			var l:int = array.length;
-			while ( --l > -1 )
-				array[ l ].update();
+			var v1:Vector.<Sprite> = new Vector.<Sprite>();
+			v1[ 0 ] = new Sprite();
+			v1[ 1 ] = new Sprite();
+			v1[ 2 ] = new Sprite();
+			
+			var v2:Vector.<Sprite> = new Vector.<Sprite>();
+			v2[ 0 ] = new Sprite();
+			v2[ 1 ] = new Sprite();
+			
+			var j:int, n:int = v2.length;
+			for ( var i:uint; i < 100; ++i )
+			{
+				for ( j = 0; j < n; ++j )
+					v1.push( v2[ j ] );
+			}
 		}
 		
 	}
