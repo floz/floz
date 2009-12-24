@@ -10,6 +10,8 @@ package fr.floz.typography
 	import flash.display.GraphicsPathCommand;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.geom.Point;
+	import fr.floz.geom.CurveBezier;
 	
 	public class Glyph extends Sprite
 	{
@@ -18,6 +20,9 @@ package fr.floz.typography
 		
 		private var _glyphName:String;
 		private var _datas:Array;
+		
+		private const _stepLine:int = 4;
+		private const _stepCurves:int = 5;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -42,8 +47,12 @@ package fr.floz.typography
 			var command:String;
 			var datas:Array;
 			
-			graphics.lineStyle( 1, 0xff0000 );
-			graphics.beginFill( 0x444444 );
+			//graphics.lineStyle( 1, 0xff0000 );
+			graphics.beginFill( 0xffffff );
+			
+			var dx:Number, dy:Number, dist:Number, vx:Number, vy:Number, px:Number, py:Number;
+			var j:int, m:int, divisions:int;
+			var last:Point = new Point();
 			
 			var n:int = _datas.length;
 			for ( var i:int; i < n; ++i )
@@ -54,19 +63,48 @@ package fr.floz.typography
 				if ( command == GlyphDatas.MOVE_TO )
 				{
 					graphics.moveTo( datas[ 0 ], datas[ 1 ] );
+					last.x = datas[ 0 ];
+					last.y = datas[ 1 ];
 				}
 				else if ( command == GlyphDatas.LINE_TO )
 				{
+					dx = datas[ 0 ] - last.x;
+					dy = datas[ 1 ] - last.y;
+					dist = dy - dx;
+					if ( dist < 0 ) dist *= -1;
+					
+					divisions = dist / _stepLine;
+					
+					vx = dx / divisions;
+					vy = dy / divisions;
+					
+					for ( j = 0; j < divisions; ++j )
+					{
+						px = vx * j + last.x;
+						py = vy * j + last.y;
+						
+						graphics.lineTo( px, py );
+						//addMark( px, py );
+					}					
 					graphics.lineTo( datas[ 0 ], datas[ 1 ] );
-					addMark( datas[ 0 ], datas[ 1 ] );
+					//addMark( datas[ 0 ], datas[ 1 ] );
+					
+					last.x = datas[ 0 ];
+					last.y = datas[ 1 ];
 				}
 				else if ( command == GlyphDatas.CURVE_TO )
 				{
-					//graphics.lineTo( datas[ 0 ], datas[ 1 ] );
-					//graphics.lineTo( datas[ 2 ], datas[ 3 ] );
-					graphics.curveTo( datas[ 0 ], datas[ 1 ], datas[ 2 ], datas[ 3 ] );
-					addMark( datas[ 2 ], datas[ 3 ], false );
-					addMark( datas[ 0 ], datas[ 1 ], true );
+					var curve:CurveBezier = new CurveBezier( last, new Point( datas[ 0 ], datas[ 1 ] ), new Point( datas[ 2 ], datas[ 3 ] ) );
+					divisions = curve.length / _stepCurves;
+					if ( divisions == 0 ) divisions = 1;
+					
+					var points:Vector.<Point> = curve.divideInPoints( divisions );
+					m = points.length;
+					for ( j = 0; j < m; ++j )
+						graphics.lineTo( points[ j ].x, points[ j ].y );
+					
+					last.x = points[ int( j - 1 ) ].x;
+					last.y = points[ int( j - 1 ) ].y;
 				}
 			}
 			

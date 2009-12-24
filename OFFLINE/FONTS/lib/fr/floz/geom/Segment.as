@@ -34,6 +34,11 @@ package fr.floz.geom
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
+		public function subdivide( count:int ):Vector.<Point>
+		{
+			return null
+		}
+		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
 		public function get length():Number
