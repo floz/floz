@@ -40,6 +40,11 @@ package fr.floz.typography
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
+		/**
+		 * Permet de tracer les lettres.
+		 * Il faudrait tout stocker dans un tableau pour pouvoir récupérer les informations des tracés; et pouvoir le faire
+		 * bieng avec l'api de dessin du FlashPlayer10.
+		 */
 		private function draw():void
 		{
 			graphics.clear();
@@ -70,7 +75,7 @@ package fr.floz.typography
 				{
 					dx = datas[ 0 ] - last.x;
 					dy = datas[ 1 ] - last.y;
-					dist = dy - dx;
+					dist = dy - dx; // Même effet que Math.sqrt( dx * dx + dy * dy ) apparemment ?! 
 					if ( dist < 0 ) dist *= -1;
 					
 					divisions = dist / _stepLine;
@@ -84,10 +89,8 @@ package fr.floz.typography
 						py = vy * j + last.y;
 						
 						graphics.lineTo( px, py );
-						//addMark( px, py );
 					}					
 					graphics.lineTo( datas[ 0 ], datas[ 1 ] );
-					//addMark( datas[ 0 ], datas[ 1 ] );
 					
 					last.x = datas[ 0 ];
 					last.y = datas[ 1 ];
@@ -98,7 +101,7 @@ package fr.floz.typography
 					divisions = curve.length / _stepCurves;
 					if ( divisions == 0 ) divisions = 1;
 					
-					var points:Vector.<Point> = curve.divideInPoints( divisions );
+					var points:Vector.<Point> = curve.divideInPoints( 2 ); // TODO: changer si la qualité ne convient pas.
 					m = points.length;
 					for ( j = 0; j < m; ++j )
 						graphics.lineTo( points[ j ].x, points[ j ].y );
