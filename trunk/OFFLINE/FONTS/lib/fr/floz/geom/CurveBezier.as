@@ -91,7 +91,6 @@ package fr.floz.geom
 			for ( var i:int = 1; i < divisions; ++i )
 			{
 				tmp1 = new Vector.<CurveBezier>();
-				tmp2 = new Vector.<CurveBezier>();
 				
 				m = curves.length;
 				for ( j = 0; j < m; ++j )

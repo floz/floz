@@ -23,7 +23,7 @@ package
 		
 		public function MainDynamicTextFloz() 
 		{
-			var dynamicText:DynamicText = new DynamicText( "He d", new HelveticaBold() );
+			var dynamicText:DynamicText = new DynamicText( "He d o .", new HelveticaBold() );
 			dynamicText.size = 150;
 			addChild( dynamicText );
 			
