@@ -75,8 +75,8 @@ package com.festivaldumot.applications.fontmodifier
 				var letter:Letter = new Letter( word.charAt( i ), Config.TYPOGRAPHY );
 			
 				var layerObject:LayerObject = new LayerObject( letter.getPath() );
-				layerObject.x = 150;
-				layerObject.y = 150;
+				//layerObject.x = 150;
+				//layerObject.y = 150;
 				layerObject.scaleX = 5;
 				layerObject.scaleY = 5;
 				_container.addChild( layerObject );

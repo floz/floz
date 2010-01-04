@@ -56,8 +56,6 @@ package com.festivaldumot.applications.fontmodifier
 			
 			addChild( _marks );
 			
-			addCenter();
-			
 			initPath();
 			draw();
 			
@@ -72,15 +70,6 @@ package com.festivaldumot.applications.fontmodifier
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
-		
-		private function addCenter():void
-		{
-			var s:Shape = new Shape();
-			var g:Graphics = s.graphics;
-			g.beginFill( 0x44cc44 );
-			g.drawCircle( 0, 0, 1 );
-			addChild( s );
-		}
 		
 		private function initPath():void
 		{
@@ -117,21 +106,35 @@ package com.festivaldumot.applications.fontmodifier
 			_centerPoint.x += vx;
 			_centerPoint.y += vy;
 			
-			//var d:Vector.<Number> = new Vector.<Number>( _path.length, true );
-			//var n:int = d.length;
-			//for ( var i:int; i < n; i += 2 )
-			//{
-				//_path[ i ] += _centerPoint.x;// _centerPoint.x;
-				//_path[ i + 1 ] += _centerPoint.y;
-			//}
+			var n:int = _path.length;
+			var d:Vector.<Number> = new Vector.<Number>( n, true );
+			for ( var i:int; i < n; i += 2 )
+			{
+				//d[ i ] += vx;//_path[ i ] + _centerPoint.x;// _centerPoint.x;
+				//d[ i + 1 ] += vy;// _path[ i + 1 ] + _centerPoint.y;
+				
+				d[ i ] = _path[ i ] + _centerPoint.x / scaleX + Math.random() * 1 - .5;
+				d[ i + 1 ] = _path[ i + 1 ] + _centerPoint.y / scaleY + Math.random() * 1 - .5;
+				
+				//_marks.getChildAt( i ).x = d[ i ];
+				//_marks.getChildAt( i ).y = d[ i + 1 ];
+				
+				//_path[ i ] = _path[ i ] + stage.mouseX;
+				//_path[ i + 1 ] = _path[ i + 1 ] + stage.mouseY;
+			}
 			
-			this.x = _centerPoint.x;
-			this.y = _centerPoint.y;
+			//this.x = _centerPoint.x;
+			//this.y = _centerPoint.y;
+			_marks.x = _centerPoint.x / scaleX;
+			_marks.y = _centerPoint.y / scaleY;
 			
 			_g.clear();
 			_g.beginFill( 0x000000 );			
-			_g.drawPath( _commands, _path );
+			_g.drawPath( _commands, d );
 			_g.endFill();		
+			
+			_debugLigne.x = _centerPoint.x / scaleX;
+			_debugLigne.y = _centerPoint.y / scaleY;
 			
 			var g:Graphics = _debugLigne.graphics;
 			g.clear();
@@ -179,8 +182,8 @@ package com.festivaldumot.applications.fontmodifier
 		{			
 			_isMoving = true;
 			
-			_centerPoint.x = this.x;
-			_centerPoint.y = this.y;
+			//_centerPoint.x = this.x;
+			//_centerPoint.y = this.y;
 			
 			cacheAsBitmap = false;
 			addEventListener( Event.ENTER_FRAME, enterFrameHandler, false, 0, true );
