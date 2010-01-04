@@ -32,7 +32,7 @@ package
 			var canvas:Canvas = new Canvas();
 			addChild( canvas );
 			
-			canvas.addWord( "." );
+			canvas.addWord( "b" );
 			
 			addChild( new FPS() );
 		}
