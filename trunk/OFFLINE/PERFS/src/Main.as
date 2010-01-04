@@ -3,6 +3,7 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	import flash.utils.getTimer;
 	
@@ -11,6 +12,9 @@
 		private var phase:int;
 		private var event:Event = new Event( Event.COMPLETE );
 		private var array:/*Class2*/Array = [];
+		
+		private var p1:Point = new Point( 234.55, 21 );
+		private var p2:Point = new Point( 132.1, 98.3 );
 		
 		public function Main():void 
 		{			
@@ -23,17 +27,17 @@
 			if ( phase == 0 ) 
 			{
 				f = ppi;
-				trace( "concat" );
+				trace( "for" );
 			}
 			else if ( phase == 1 )
 			{
 				f = ipp;
-				trace( "push" );
+				trace( "while" );
 			}					
 			
 			var debut:Number = 0;
 			var compteur:int;
-			for ( var i:int; i < 10000; i++ )
+			for ( var i:int; i < 1000000; i++ )
 			{
 				debut = getTimer();
 				f();
@@ -46,39 +50,36 @@
 		
 		private function ppi():void
 		{
-			var v1:Vector.<Sprite> = new Vector.<Sprite>();
-			v1[ 0 ] = new Sprite();
-			v1[ 1 ] = new Sprite();
-			v1[ 2 ] = new Sprite();
+			var v:Vector.<String> = new Vector.<String>( 5, true );
+			v[ 0 ] = "tata";
+			v[ 1 ] = "azeaz";
+			v[ 2 ] = "azezae";
+			v[ 3 ] = "taerzerezta";
+			v[ 4 ] = "zerz";
 			
-			var v2:Vector.<Sprite> = new Vector.<Sprite>();
-			v2[ 0 ] = new Sprite();
-			v2[ 1 ] = new Sprite();
-			
-			var j:int, n:int = v2.length;
-			for ( var i:int; i < 100; ++i )
+			var s:String;
+			var i:int;
+			var n:int = v.length;
+			for ( i; i < n; ++i )
 			{
-				for ( j = 0; j < n; ++j )
-					v1.push( v2[ j ] );
+				s = v[ i ];
 			}
 		}
 		
 		private function ipp():void
 		{
-			var v1:Vector.<Sprite> = new Vector.<Sprite>();
-			v1[ 0 ] = new Sprite();
-			v1[ 1 ] = new Sprite();
-			v1[ 2 ] = new Sprite();
+			var v:Vector.<String> = new Vector.<String>( 5, true );
+			v[ 0 ] = "tata";
+			v[ 1 ] = "azeaz";
+			v[ 2 ] = "azezae";
+			v[ 3 ] = "taerzerezta";
+			v[ 4 ] = "zerz";
 			
-			var v2:Vector.<Sprite> = new Vector.<Sprite>();
-			v2[ 0 ] = new Sprite();
-			v2[ 1 ] = new Sprite();
-			
-			var j:int, n:int = v2.length;
-			for ( var i:uint; i < 100; ++i )
+			var s:String;
+			var i:int = v.length;
+			while ( --i > -1 )
 			{
-				for ( j = 0; j < n; ++j )
-					v1.push( v2[ j ] );
+				s = v[ i ];
 			}
 		}
 		

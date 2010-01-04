@@ -89,7 +89,8 @@ package fr.floz.typography
 						py = vy * j + last.y;
 						
 						graphics.lineTo( px, py );
-					}
+					}					
+					graphics.lineTo( datas[ 0 ], datas[ 1 ] );
 					
 					last.x = datas[ 0 ];
 					last.y = datas[ 1 ];
