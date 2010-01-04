@@ -21,16 +21,21 @@ package com.festivaldumot.applications.fontmodifier
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _path:Vector.<Point>;
+		private var _basePath:Vector.<Point>;
 		private var _shape:Shape;
+		private var _debugLigne:Sprite;
 		private var _g:Graphics;
 		
 		private var _commands:Vector.<int>;
+		private var _path:Vector.<Number>;
+		private var _centerPoint:Point = new Point();
 		
-		private var _lastX:Number;
-		private var _lastY:Number;
+		private var _baseX:Number;
+		private var _baseY:Number;
 		
 		private var _isMoving:Boolean;
+		
+		private var _marks:Sprite;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -38,15 +43,22 @@ package com.festivaldumot.applications.fontmodifier
 		
 		public function LayerObject( path:Vector.<Point> ) 
 		{
-			this._path = path;
+			_marks = new Sprite();
+			
+			this.path = path;
 			
 			_shape = new Shape();
 			_g = _shape.graphics;
 			addChild( _shape );
 			
-			addCenter();			
+			_debugLigne = new Sprite();
+			addChild( _debugLigne );
+			
+			addChild( _marks );
+			
+			addCenter();
+			
 			initPath();
-			convertPath();
 			draw();
 			
 			cacheAsBitmap = true;
@@ -65,8 +77,8 @@ package com.festivaldumot.applications.fontmodifier
 		{
 			var s:Shape = new Shape();
 			var g:Graphics = s.graphics;
-			g.beginFill( 0xff00ff );
-			g.drawCircle( 0, 0, 5 );
+			g.beginFill( 0x44cc44 );
+			g.drawCircle( 0, 0, 1 );
 			addChild( s );
 		}
 		
@@ -81,46 +93,84 @@ package com.festivaldumot.applications.fontmodifier
 				_commands[ i ] = GraphicsPathCommand.LINE_TO;
 		}
 		
-		private function convertPath():void
-		{
-			var minX:Number = 0;
-			var minY:Number = 0;
-			var maxX:Number = 0;
-			var maxY:Number = 0;
-			
-			// garder la position x & y en mémoire, pour le placement du shape graphique
-			// trouver la position du centre, et construire la lettre en fonction
-		}
-		
 		private function draw( color:uint = 0x000000 ):void
 		{
 			_g.clear();
-			_g.beginFill( color );
+			_g.beginFill( color );			
+			_g.drawPath( _commands, _path );
+			_g.endFill();		
 			
-			var j:int;
-			var n:int = _path.length << 1;
-			var datas:Vector.<Number> = new Vector.<Number>( n, true );
+			while ( _marks.numChildren ) _marks.removeChildAt( 0 );
+			
+			var n:int = _path.length;
 			for ( var i:int; i < n; i += 2 )
-			{
-				datas[ i ] = _path[ j ].x;
-				datas[ i + 1 ] = _path[ j ].y;
-				++j;
-			}
-			_g.drawPath( _commands, datas );
-			_g.endFill();
-			
-			var rect:Rectangle = _shape.getBounds( _shape ); // TODO : Fix it !
-			
-			_shape.x = -_shape.width * .5 -rect.x;
-			_shape.y = -_shape.height * .5 - rect.y;
+				addMark( _path[ i ], _path[ i + 1 ] );
 		}
 		
 		private function onMove():void
 		{
-			var vx:Number = ( stage.mouseX - this.x ) * .1;
-			var vy:Number = ( stage.mouseY - this.y ) * .1;
-			this.x += vx;
-			this.y += vy;
+			var dx:Number = ( stage.mouseX - _centerPoint.x ) / scaleX;
+			var dy:Number = ( stage.mouseY - _centerPoint.y ) / scaleY;
+			
+			var vx:Number = dx * .7;
+			var vy:Number = dy * .7;
+			_centerPoint.x += vx;
+			_centerPoint.y += vy;
+			
+			//var d:Vector.<Number> = new Vector.<Number>( _path.length, true );
+			//var n:int = d.length;
+			//for ( var i:int; i < n; i += 2 )
+			//{
+				//_path[ i ] += _centerPoint.x;// _centerPoint.x;
+				//_path[ i + 1 ] += _centerPoint.y;
+			//}
+			
+			this.x = _centerPoint.x;
+			this.y = _centerPoint.y;
+			
+			_g.clear();
+			_g.beginFill( 0x000000 );			
+			_g.drawPath( _commands, _path );
+			_g.endFill();		
+			
+			var g:Graphics = _debugLigne.graphics;
+			g.clear();
+			g.lineStyle( .5, 0xffcc00 );
+			g.moveTo( 0, 0 );
+			g.lineTo( dx, dy );
+			g.endFill();
+		}
+		
+		private function addMark( px:Number, py:Number ):void
+		{
+			var s:Shape = new Shape();
+			var g:Graphics = s.graphics;
+			g.beginFill( 0xff00ff );
+			g.drawCircle( 0, 0, .5 );
+			g.endFill();
+			_marks.addChild( s );
+			
+			_marks.cacheAsBitmap = true;
+			
+			s.x = px;
+			s.y = py;
+		}
+		
+		private function convertPath():void
+		{
+			var j:int;
+			var n:int = _basePath.length << 1;
+			_path = new Vector.<Number>( n, true );
+			
+			for ( var i:int; i < n; i += 2 )
+			{
+				_path[ i ] = _basePath[ j ].x;
+				_path[ i + 1 ] = _basePath[ j ].y;
+				
+				addMark( _path[ i ], _path[ i + 1 ] );
+				
+				++j;
+			}
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
@@ -128,6 +178,9 @@ package com.festivaldumot.applications.fontmodifier
 		public function startMove():void
 		{			
 			_isMoving = true;
+			
+			_centerPoint.x = this.x;
+			_centerPoint.y = this.y;
 			
 			cacheAsBitmap = false;
 			addEventListener( Event.ENTER_FRAME, enterFrameHandler, false, 0, true );
@@ -138,17 +191,14 @@ package com.festivaldumot.applications.fontmodifier
 			_isMoving = false;
 		}
 		
-		public function select():void
-		{
-			draw( 0xffcc00 );
-		}
-		
-		public function deselect():void
-		{
-			draw();
-		}
-		
 		// - GETTERS & SETTERS -----------------------------------------------------------
+		
+		public function set path( value:Vector.<Point> ):void
+		{
+			_basePath = value;
+			convertPath();
+		}
+		public function get path():Vector.<Point> { return _basePath; }
 		
 	}
 	

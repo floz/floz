@@ -55,14 +55,7 @@ package com.festivaldumot.applications.fontmodifier
 		private function rollOverHandler(e:MouseEvent):void 
 		{
 			var layerObj:LayerObject = LayerObject( e.currentTarget );
-			layerObj.select();
 			bringToFront( layerObj );
-		}
-		
-		private function rollOutHandler(e:MouseEvent):void 
-		{
-			var layerObj:LayerObject = LayerObject( e.currentTarget );
-			layerObj.deselect();
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
@@ -82,7 +75,6 @@ package com.festivaldumot.applications.fontmodifier
 				var letter:Letter = new Letter( word.charAt( i ), Config.TYPOGRAPHY );
 			
 				var layerObject:LayerObject = new LayerObject( letter.getPath() );
-				layerObject.cacheAsBitmap = true;
 				layerObject.x = 150;
 				layerObject.y = 150;
 				layerObject.scaleX = 5;
@@ -90,8 +82,6 @@ package com.festivaldumot.applications.fontmodifier
 				_container.addChild( layerObject );
 				
 				layerObject.addEventListener( MouseEvent.MOUSE_DOWN, mouseDownHandler, false, 0, true );
-				layerObject.addEventListener( MouseEvent.ROLL_OVER, rollOverHandler, false, 0, true );
-				layerObject.addEventListener( MouseEvent.ROLL_OUT, rollOutHandler, false, 0, true );
 			}			
 		}
 		

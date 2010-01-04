@@ -16,7 +16,7 @@ package com.festivaldumot.display.typo
 		// - CONSTS ----------------------------------------------------------------------
 		
 		private static const STEP_LINETO:int = 4;
-		private static const STEP_CURVETO:int = 5;
+		private static const STEP_CURVETO:int = 6;
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
@@ -27,6 +27,13 @@ package com.festivaldumot.display.typo
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
+		public var bearingLeft:Number;
+		public var bearingTop:Number;
+		public var center:Point;
+		
+		public var commands:Vector.<Number>;
+		public var datas:Vector.<Number>;
+		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function Letter( letter:String, typography:Typography3D ) 
@@ -35,6 +42,7 @@ package com.festivaldumot.display.typo
 			
 			_datas = typography.getMotif( _letter );			
 			parse();
+			translate();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -120,6 +128,34 @@ package com.festivaldumot.display.typo
 				{
 					trace( "Glyph.parse --> command '" + command + "' non prise en compte" );
 				}
+			}
+		}
+		
+		private function translate():void
+		{
+			var p:Point = _path[ 0 ];
+			
+			bearingLeft = p.x;
+			bearingTop = p.y;
+			var maxX:Number = p.x;
+			var maxY:Number = p.y;
+			
+			var n:int = _path.length;
+			for ( var i:int = 1; i < n; ++i )
+			{
+				p = _path[ i ];
+				if ( p.x < bearingLeft ) bearingLeft = p.x;
+				if ( p.y < bearingTop ) bearingTop = p.y;
+				if ( p.x > maxX ) maxX = p.x;
+				if ( p.y > maxY ) maxY = p.y;
+			}
+			
+			center = new Point( ( maxX - bearingLeft ) * .5, ( maxY - bearingTop ) * .5 );
+			
+			while ( --n > -1 )
+			{
+				_path[ n ].x -= bearingLeft + center.x;
+				_path[ n ].y -= bearingTop + center.y;
 			}
 		}
 		
