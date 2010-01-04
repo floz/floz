@@ -75,24 +75,43 @@ package fr.floz.typography
 				{
 					dx = datas[ 0 ] - last.x;
 					dy = datas[ 1 ] - last.y;
-					dist = dy - dx; // Même effet que Math.sqrt( dx * dx + dy * dy ) apparemment ?! 
-					if ( dist < 0 ) dist *= -1;
+					dist = Math.sqrt( dx * dx + dy * dy );
 					
 					divisions = dist / _stepLine;
 					
 					vx = dx / divisions;
 					vy = dy / divisions;
 					
-					for ( j = 0; j < divisions; ++j )
+					++divisions;
+					
+					var cumulX:Number = 0;
+					var cumulY:Number = 0;
+					while ( --divisions > -1 )
 					{
-						px = vx * j + last.x;
-						py = vy * j + last.y;
+						px = cumulX + last.x;
+						py = cumulY + last.y;
 						
 						graphics.lineTo( px, py );
+						
+						cumulX += vx;
+						cumulY += vy;
+						
+						//++idx;
 					}
+					trace( px == datas[ 0 ] );
+					trace( "datas[ 0 ] : " + datas[ 0 ] );
+					trace( "px : " + px );
+					//for ( j = 0; j < divisions; ++j )
+					//{
+						//px = vx * j + last.x;
+						//py = vy * j + last.y;
+						//
+						//graphics.lineTo( px, py );
+					//}			
+					//graphics.lineTo( datas[ 0 ], datas[ 1 ] );
 					
-					last.x = datas[ 0 ];
-					last.y = datas[ 1 ];
+					last.x = px//datas[ 0 ];
+					last.y = py//datas[ 1 ];
 				}
 				else if ( command == GlyphDatas.CURVE_TO )
 				{
