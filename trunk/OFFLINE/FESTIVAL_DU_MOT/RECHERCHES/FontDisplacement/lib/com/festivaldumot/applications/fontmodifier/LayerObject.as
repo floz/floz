@@ -99,6 +99,7 @@ package com.festivaldumot.applications.fontmodifier
 		private function onMove():void
 		{
 			var dx:Number = ( stage.mouseX - _centerPoint.x ) / scaleX;
+			trace("dx : " + dx);
 			var dy:Number = ( stage.mouseY - _centerPoint.y ) / scaleY;
 			
 			var vx:Number = dx * .7;
@@ -113,8 +114,8 @@ package com.festivaldumot.applications.fontmodifier
 				//d[ i ] += vx;//_path[ i ] + _centerPoint.x;// _centerPoint.x;
 				//d[ i + 1 ] += vy;// _path[ i + 1 ] + _centerPoint.y;
 				
-				d[ i ] = _path[ i ] + _centerPoint.x / scaleX + Math.random() * 1 - .5;
-				d[ i + 1 ] = _path[ i + 1 ] + _centerPoint.y / scaleY + Math.random() * 1 - .5;
+				d[ i ] = _path[ i ] + _centerPoint.x / scaleX;
+				d[ i + 1 ] = _path[ i + 1 ] + _centerPoint.y / scaleY;
 				
 				//_marks.getChildAt( i ).x = d[ i ];
 				//_marks.getChildAt( i ).y = d[ i + 1 ];
