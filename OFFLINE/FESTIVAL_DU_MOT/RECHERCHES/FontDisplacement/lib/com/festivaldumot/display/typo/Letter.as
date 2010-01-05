@@ -16,7 +16,7 @@ package com.festivaldumot.display.typo
 		// - CONSTS ----------------------------------------------------------------------
 		
 		private static const STEP_LINETO:int = 4;
-		private static const STEP_CURVETO:int = 6;
+		private static const STEP_CURVETO:int = 10;
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		

@@ -4,19 +4,14 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package step03
+
 {
-	import com.festivaldumot.applications.fontmodifier.Canvas;
-	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
-	import flash.geom.Point;
-	import fr.minuit4.utils.debug.FPS;
+	import flash.display.Graphics;
+	import flash.display.Shape;
 	
-	public class Main extends Sprite
+	public class Dot extends Shape
 	{
-		
-		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
@@ -24,17 +19,11 @@ package
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main() 
+		public function Dot() 
 		{
-			stage.align = StageAlign.TOP_LEFT;
-			stage.scaleMode = StageScaleMode.NO_SCALE;
-			
-			var canvas:Canvas = new Canvas();
-			addChild( canvas );
-			
-			canvas.addWord( "." );
-			
-			//addChild( new FPS() );
+			graphics.beginFill( 0xff00ff );
+			graphics.drawCircle( 0, 0, 3 );
+			graphics.endFill();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -42,6 +31,14 @@ package
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function clone():Dot
+		{
+			var d:Dot = new Dot();
+			d.x = this.x;
+			d.y = this.y;
+			return d;
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
