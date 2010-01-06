@@ -40,7 +40,7 @@ package step03
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function Main() 
-		{
+		{			
 			buildDots();
 			buildQuad();
 			
@@ -93,9 +93,9 @@ package step03
 		private function buildDots():void
 		{			
 			var cnt:Sprite = new Sprite();
-			addChild( cnt );
+			//addChild( cnt );
 			
-			var letter:Letter = new Letter( "i", Config.TYPOGRAPHY );
+			var letter:Letter = new Letter( "a", Config.TYPOGRAPHY );
 			var path:Vector.<Point> = letter.getPath();
 			
 			var d:Dot;
@@ -148,6 +148,10 @@ package step03
 			var baseDist:Number;
 			var dist:Number;
 			
+			var rad:Number = Math.atan2( ( _dy - _by ) - _center.y, ( _dx - _bx ) - _center.x );
+			var xval:Number = Math.cos( rad );
+			var yval:Number = Math.sin( rad );
+			
 			var n:int = _dots.length;
 			for ( var i:int; i < n; ++i )
 			{
@@ -158,8 +162,8 @@ package step03
 				dist = Math.sqrt( dx * dx + dy * dy ) - baseDist;
 				dist /= 100;
 				
-				_dots[ i ].x = _dotsRef[ i ].x + _center.x - 20 * dist;
-				_dots[ i ].y = _dotsRef[ i ].y + _center.y - 20 * dist;
+				_dots[ i ].x = _dotsRef[ i ].x + _center.x - 20 * dist * xval;
+				_dots[ i ].y = _dotsRef[ i ].y + _center.y - 20 * dist * yval;
 			}
 		}
 		
