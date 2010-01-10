@@ -62,16 +62,23 @@ package fr.minuit4.tools.musicPlayer.views
 			title.defaultTextFormat = new TextFormat( "_sans", 9, 0x000000 );
 			title.autoSize = TextFieldAutoSize.LEFT;
 			
-			var prevButton:PrevButtonSkin = new PrevButtonSkin();
-			_buttonsCnt.addChild( prevButton );
+			trace( "MainMusicPlayer.multiSong : " + MainMusicPlayer.multiSong );
+			if ( MainMusicPlayer.multiSong )
+			{
+				var prevButton:PrevButtonSkin = new PrevButtonSkin();
+				_buttonsCnt.addChild( prevButton );
+			}
 			
 			_playPauseButton = new PlayPauseButtonSkin();
-			_playPauseButton.x = prevButton.width + 10;
+			_playPauseButton.x = MainMusicPlayer.multiSong ? prevButton.width + 10 : 0;
 			_buttonsCnt.addChild( _playPauseButton );
 			
-			var nextButton:NextButtonSkin = new NextButtonSkin();
-			nextButton.x = _playPauseButton.x + _playPauseButton.width + 10;
-			_buttonsCnt.addChild( nextButton );
+			if ( MainMusicPlayer.multiSong )
+			{
+				var nextButton:NextButtonSkin = new NextButtonSkin();
+				nextButton.x = _playPauseButton.x + _playPauseButton.width + 10;
+				_buttonsCnt.addChild( nextButton );
+			}
 			
 			var backgroundTL:Shape = new Shape();
 			backgroundTL.x = 10;

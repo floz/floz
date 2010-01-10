@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datas>
+	<path_mp3><![CDATA[mp3/]]></path_mp3>
+	<song>
+		<name><![CDATA[08 - Boards Of Canada - Kaini Industries.mp3]]></name>
+		<artist><![CDATA[Boards Of Canada]]></artist>
+		<title><![CDATA[Kaini Industries]]></title>
+		<duration>59000</duration> <!-- In milliseconds -->
+	</song>
+	<song>
+		<name><![CDATA[01  Feist - So Sorry.mp3]]></name>
+		<artist><![CDATA[Feist]]></artist>
+		<title><![CDATA[So Sorry]]></title>
+		<duration>189000</duration> <!-- In milliseconds -->
+	</song>
+</datas>
