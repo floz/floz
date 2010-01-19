@@ -71,8 +71,9 @@ package
 		private function enterFrameHandler(e:Event):void 
 		{
 			//_model.rotationX += 5;
-			//_model.rotationY += 5;
+			_model.rotationY += 5;
 			//_model.rotationZ += 5;
+			//p.rotationY += 5;
 			
 			//p.z -= 5;
 			//p.y -= 5;
