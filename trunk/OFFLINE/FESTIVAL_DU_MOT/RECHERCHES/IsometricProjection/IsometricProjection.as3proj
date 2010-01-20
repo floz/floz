@@ -9,7 +9,7 @@
     <movie width="960" />
     <movie height="580" />
     <movie version="10" />
-    <movie background="#FFFFFF" />
+    <movie background="#8080C0" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -65,7 +65,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="src\GraphicTest.as" />
+    <compile path="src\Main.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
