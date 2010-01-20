@@ -16,6 +16,7 @@
     <class path="src" />
     <class path="lib" />
     <class path="..\..\_COMMON" />
+    <class path="src_tuto" />
   </classpaths>
   <!-- Build options -->
   <build>
