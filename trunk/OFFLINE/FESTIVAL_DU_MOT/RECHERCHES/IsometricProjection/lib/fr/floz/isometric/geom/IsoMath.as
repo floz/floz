@@ -13,7 +13,7 @@ package fr.floz.isometric.geom
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		public static const Y_RATIO:Number = Math.cos( -Math.PI / 6 ) * Math.SQRT2;
+		public static const Y_CORRECT:Number = Math.cos( -Math.PI / 6 ) * Math.SQRT2;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -33,7 +33,7 @@ package fr.floz.isometric.geom
 		public static function screenToIso( p:Point ):Point3D
 		{
 			var sx:Number = p.x - p.z;
-			var sy:Number = p.y * Y_RATIO + ( p.x + p.z ) * .5;
+			var sy:Number = p.y * Y_CORRECT + ( p.x + p.z ) * .5;
 			
 			return new Point( sx, sy );
 		}
