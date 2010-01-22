@@ -35,7 +35,7 @@ package fr.floz.isometric.geom
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public static function distance( a:Point3D, b:Point3D ):Number
+		public static function distance( a:Point3D, b:Point3D ):Number 
 		{
 			var tx:Number = b.x - a.x;
 			var ty:Number = b.y - a.y;

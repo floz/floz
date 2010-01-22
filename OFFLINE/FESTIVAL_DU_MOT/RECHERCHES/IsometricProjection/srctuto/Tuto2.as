@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package as3iso 
+package 
 {
 	import as3isolib.core.ClassFactory;
 	import as3isolib.core.IFactory;
@@ -87,7 +87,7 @@ package as3iso
 		
 		private function enterFrameHandler(e:Event):void 
 		{
-			++box1.z;
+			++box1.x;
 			scene.render();
 		}
 		

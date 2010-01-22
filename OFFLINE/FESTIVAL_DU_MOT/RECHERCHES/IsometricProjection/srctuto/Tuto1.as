@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package as3iso 
+package 
 {
 	import as3isolib.display.primitive.IsoBox;
 	import as3isolib.display.scene.IsoScene;
@@ -22,8 +22,8 @@ package as3iso
 		public function Tuto1() 
 		{
 			var box:IsoBox = new IsoBox();
-			box.setSize( 25, 25, 25 );
-			box.moveTo( 200, 0, 0 );
+			box.setSize( 25, 25, 0 );
+			box.moveTo( 200, 200, 50 );
 			
 			var scene:IsoScene = new IsoScene();
 			scene.hostContainer = this;
