@@ -64,7 +64,7 @@ package
 			var newBox:DrawIsoBox = new DrawIsoBox( TILE_SIZE, 0xcccccc, 20 );
 			newBox.x = 300;
 			newBox.z = 300;
-			newBox.walkable = true;
+			newBox.walkable = false;
 			_world.addChildToWorld( newBox );
 			
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, keyDownHandler );
