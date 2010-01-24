@@ -34,6 +34,7 @@ package
 			var box0:IsoBox = new IsoBox();
 			box0.setSize( 25, 25, 25 );
 			box0.moveTo( 0, 0, 0 );
+			trace( box0.width );
 			
 			box1 = new IsoBox();
 			box1.width = 10;
@@ -61,6 +62,7 @@ package
 			
 			var grid:IsoGrid = new IsoGrid();
 			grid.setGridSize( 50, 50 );
+			grid.cellSize = 25;
 			grid.moveTo( 0, 0, 0 );
 			grid.width = 500;
 			scene.addChild( grid );

@@ -71,7 +71,7 @@ package fr.floz.isometric
 			for ( var i:int; i < n; ++i )
 			{
 				var o:IsoObject = _objects[ i ] as IsoObject;
-				if ( obj != o && o.walkable && r.intersects( o.rect ) )
+				if ( obj != o && !o.walkable && r.intersects( o.rect ) )
 					return false;
 			}
 			return true;

@@ -4,43 +4,35 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.floz.isometric.geom 
+package  
 {
-	import flash.geom.Point;
-	import fr.floz.isometric.geom.transformations.DimetricTransformation;
-	import fr.floz.isometric.geom.transformations.IAxonometricTransformation;
+	import flash.display.Sprite;
+	import fr.floz.isometric.display.primitives.IsoBox;
 	
-	public class IsoMath 
+	public class Main5 extends Sprite
 	{
+		
+		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
-		public static var axoTransform:IAxonometricTransformation = new DimetricTransformation();
-		
 		// - CONSTRUCTOR -----------------------------------------------------------------
+		
+		public function Main5() 
+		{
+			var b:IsoBox = new IsoBox( 50, 50, 50 );
+			b.x = 850;
+			b.y = 100;
+			addChild( b );
+		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
-		
-		public static function screenToIso( p:Point3D ):Point3D
-		{
-			return axoTransform.screenToSpace( p );
-		}
-		
-		public static function isoToScreen( p:Point3D ):Point3D
-		{
-			return axoTransform.spaceToScreen( p );
-		}
-		
-		public static function getDepth( p:Point3D ):Number
-		{
-			return ( ( p.x + p.y ) * .866 - p.z * .707 );
-		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

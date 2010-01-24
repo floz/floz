@@ -6,14 +6,14 @@
  */
 package  
 {
+	import as3isolib.geom.IsoMath;
 	import as3isolib.geom.Pt;
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.geom.Point;
-	import fr.floz.isometric.geom.IsoMath;
 	
-	public class Main extends Sprite
+	public class Main2 extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------
@@ -24,12 +24,12 @@ package
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main() 
+		public function Main2() 
 		{
-			var p1:Point = new Point( 0, 0 );
-			var p2:Point = new Point( 100, 0 );
-			var p3:Point = new Point( 100, 100 );
-			var p4:Point = new Point( 0, 100 );
+			var p1:Pt = new Pt( 0, 0 );
+			var p2:Pt = new Pt( 100, 0 );
+			var p3:Pt = new Pt( 100, 100 );
+			var p4:Pt = new Pt( 0, 100 );
 			
 			var s2:Shape = new Shape();
 			s2.x = 50;

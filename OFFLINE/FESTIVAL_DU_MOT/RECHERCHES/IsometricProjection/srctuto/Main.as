@@ -31,9 +31,9 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			var p0:Point3D = new Point3D( 0, 0, 0 );
-			var p1:Point3D = new Point3D( 46, 0, 0 );
-			var p2:Point3D = new Point3D( 46, 0, 46 );
-			var p3:Point3D = new Point3D( 0, 0, 46 );
+			var p1:Point3D = new Point3D( 50, 0, 0 );
+			var p2:Point3D = new Point3D( 50, 0, 50 );
+			var p3:Point3D = new Point3D( 0, 0, 50 );
 			
 			var sp0:Point = UIso.isoToScreen( p0 );
 			var sp1:Point = UIso.isoToScreen( p1 );
@@ -52,6 +52,8 @@ package
 			g.lineTo( sp2.x, sp2.y );
 			g.lineTo( sp3.x, sp3.y );
 			g.lineTo( sp0.x, sp0.y );
+			
+			trace( tile.width );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
