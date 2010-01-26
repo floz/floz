@@ -6,6 +6,7 @@
  */
 package fr.floz.isometric.scenes 
 {
+	import fr.floz.isometric.objects.Layer;
 	
 	public class IsoScene 
 	{
@@ -13,6 +14,10 @@ package fr.floz.isometric.scenes
 		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
+		
+		private var _background:Layer;
+		private var _rendererLayer:Layer;
+		private var _foreground:Layer;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		

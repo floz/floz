@@ -32,8 +32,8 @@ package fr.floz.isometric.geom.transformations
 		
 		public function screenToSpace( p:Point3D ):Point3D
 		{
-			var x:Number = p.y + p.x * .5; // + p.z ?
-			var y:Number = p.y - p.x * .5; // + p.z ?
+			var x:Number = p.y + p.x * .5 + p.z;
+			var y:Number = p.y - p.x * .5 + p.z;
 			var z:Number = p.z;
 			
 			return new Point3D( x, y, z );

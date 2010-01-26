@@ -7,7 +7,7 @@
 package  
 {
 	import flash.display.Sprite;
-	import fr.floz.isometric.display.primitives.IsoBox;
+	import fr.floz.isometric.objects.primitives.IsoBox;
 	
 	public class Main5 extends Sprite
 	{
@@ -23,8 +23,9 @@ package
 		public function Main5() 
 		{
 			var b:IsoBox = new IsoBox( 50, 50, 50 );
-			b.x = 850;
-			b.y = 100;
+			b.x = 50;
+			//b.y = 50;
+			//b.z = 50;
 			addChild( b );
 		}
 		
