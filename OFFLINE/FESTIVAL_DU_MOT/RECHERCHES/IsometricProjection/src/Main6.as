@@ -4,14 +4,15 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.floz.isometric.scenes 
+package  
 {
-	import fr.floz.isometric.core.IsoDisplayObject;
+	import flash.display.Sprite;
+	import fr.floz.isometric.objects.primitives.IsoBox;
+	import fr.floz.isometric.objects.primitives.IsoRect;
+	import fr.floz.isometric.scenes.IsoGrid;
 	
-	public class IsoOrigin extends IsoDisplayObject
+	public class Main6 extends Sprite
 	{
-		
-		// - CONSTS ----------------------------------------------------------------------
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
@@ -19,9 +20,18 @@ package fr.floz.isometric.scenes
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function IsoOrigin() 
+		public function Main6() 
 		{
+			var grid:IsoGrid = new IsoGrid( 32, 10, 10 );
+			addChild( grid );
 			
+			var b:IsoBox = new IsoBox( 64, 64, 0 );
+			b.x = 64 << 2;
+			b.y = 64;
+			addChild( b );
+			
+			trace( "WIDTH : " + b.width );
+			trace( "HEIGHT : " + b.height );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------

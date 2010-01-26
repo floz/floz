@@ -32,8 +32,8 @@ package
 		public function Tuto2() 
 		{
 			var box0:IsoBox = new IsoBox();
-			box0.setSize( 25, 25, 25 );
-			box0.moveTo( 0, 0, 0 );
+			box0.setSize( 50, 50, 50 );
+			box0.moveTo( 50, 50, 50 );
 			trace( box0.width );
 			
 			box1 = new IsoBox();
