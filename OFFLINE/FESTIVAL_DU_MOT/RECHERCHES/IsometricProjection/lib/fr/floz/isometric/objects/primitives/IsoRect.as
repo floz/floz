@@ -62,6 +62,7 @@ package fr.floz.isometric.objects.primitives
 		{			
 			var g:Graphics = this.graphics;
 			g.lineStyle( 1, 0x000000 );
+			g.beginFill( 0xffff00 );
 			g.drawPath( _graphicsPath.commands, _graphicsPath.data );
 			g.endFill();
 		}

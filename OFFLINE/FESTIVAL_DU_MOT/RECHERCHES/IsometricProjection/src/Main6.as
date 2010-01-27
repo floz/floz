@@ -25,7 +25,7 @@ package
 			var grid:IsoGrid = new IsoGrid( 32, 10, 10 );
 			addChild( grid );
 			
-			var b:IsoBox = new IsoBox( 64, 64, 0 );
+			var b:IsoBox = new IsoBox( 64, 64, 32 );
 			b.x = 64 << 2;
 			b.y = 64;
 			addChild( b );

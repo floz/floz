@@ -61,10 +61,10 @@ package
 			//scene.layoutEnabled = false;
 			
 			var grid:IsoGrid = new IsoGrid();
-			grid.setGridSize( 50, 50 );
+			grid.setGridSize( stage.stageWidth / 25, stage.stageHeight / 25 );
 			grid.cellSize = 25;
-			grid.moveTo( 0, 0, 0 );
-			grid.width = 500;
+			grid.moveTo( 0, -50, 0 );
+			//grid.width = 500;
 			scene.addChild( grid );
 			
 			var factory:ClassFactory = new ClassFactory(DefaultShadowRenderer);
@@ -73,9 +73,9 @@ package
 
 			
 			var view:IsoView = new IsoView();
-			view.x = 200;
-			view.y = 100;
-			view.setSize( 400, 300 );
+			//view.x = 200;
+			//view.y = 100;
+			view.setSize( stage.stageWidth, stage.stageHeight );
 			view.addScene( scene );
 			
 			addChild( view );

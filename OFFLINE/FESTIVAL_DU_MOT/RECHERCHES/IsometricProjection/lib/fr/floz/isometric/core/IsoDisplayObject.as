@@ -69,7 +69,7 @@ package fr.floz.isometric.core
 		
 		public function get depth():Number
 		{
-			return 0;
+			return ( ( _position.x + _position.y ) * .866 - _position.z * .707 );
 		}
 		
 	}
