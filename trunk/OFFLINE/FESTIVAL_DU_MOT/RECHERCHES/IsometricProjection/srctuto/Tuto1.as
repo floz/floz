@@ -7,8 +7,11 @@
 package 
 {
 	import as3isolib.display.primitive.IsoBox;
+	import as3isolib.display.scene.IsoGrid;
 	import as3isolib.display.scene.IsoScene;
 	import flash.display.Sprite;
+	import fr.floz.isometric.geom.IsoMath;
+	import fr.floz.isometric.geom.Point3D;
 	
 	public class Tuto1 extends Sprite
 	{
@@ -28,6 +31,15 @@ package
 			var scene:IsoScene = new IsoScene();
 			scene.hostContainer = this;
 			scene.addChild( box );
+			
+			
+			var g:IsoGrid = new IsoGrid();
+			g.cellSize = 25;
+			g.setGridSize( stage.stageWidth / 50, stage.stageHeight / 25, 0 );
+			g.x = IsoMath.screenToIso( new Point3D( stage.stageWidth * .5, 0, 0 ) ).x;
+			g.y = IsoMath.screenToIso( new Point3D( stage.stageWidth * .5, 0, 0 ) ).y;
+			//g.y = -stage.stageHeight * .5;
+			scene.addChild( g );
 			scene.render();
 		}
 		

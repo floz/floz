@@ -41,8 +41,8 @@ package
 			var sp3:Point = UIso.isoToScreen( p3 );
 			
 			var tile:Sprite = new Sprite();
-			tile.x = 200;
-			tile.y = 200;
+			//tile.x = 200;
+			//tile.y = 200;
 			addChild( tile );
 			
 			var g:Graphics = tile.graphics;

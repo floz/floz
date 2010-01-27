@@ -6,11 +6,12 @@
  */
 package fr.floz.isometric.scenes 
 {
+	import flash.display.Sprite;
 	import fr.floz.isometric.core.IsoDisplayObject;
 	import fr.floz.isometric.geom.IsoDrawing;
 	import fr.floz.isometric.geom.Point3D;
 	
-	public class IsoGrid extends IsoDisplayObject
+	public class IsoGrid extends Sprite
 	{
 		
 		// - CONSTS ----------------------------------------------------------------------

@@ -22,7 +22,9 @@ package
 		
 		public function Main5() 
 		{
-			var b:IsoBox = new IsoBox( 50, 50, 50 );
+			var b:IsoBox = new IsoBox( 32, 32, 0 );
+			trace( b.width );
+			trace( b.height );
 			b.x = 50;
 			//b.y = 50;
 			//b.z = 50;
