@@ -36,6 +36,7 @@ package
 		
 		public function Main7() 
 		{
+			
 			scene = new IsoScene( 32, stage.stageWidth, stage.stageHeight );
 			scene.x = stage.stageWidth * .5;
 			addChild( scene );
@@ -80,7 +81,7 @@ package
 			if ( d.y > 448 ) d.y = 448;
 			else if ( d.y < 0 ) d.y = 0;
 			
-			eaze( sprite ).to( .5, { x: d.x, y: d.y, z: d.z } );
+			eaze( sprite ).to( 3, { x: d.x, y: d.y, z: d.z } );
 			scene.render();
 			sprite.update();
 		}
