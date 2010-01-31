@@ -17,10 +17,10 @@ package aze.motion
 }
 
 // you can comment out the following lines to disable some plugins
-import aze.motion.specials.PropertyTint; PropertyTint.register();
-import aze.motion.specials.PropertyFrame; PropertyFrame.register();
-import aze.motion.specials.PropertyFilter; PropertyFilter.register();
-import aze.motion.specials.PropertyVolume; PropertyVolume.register();
-import aze.motion.specials.PropertyColorMatrix; PropertyColorMatrix.register();
-import aze.motion.specials.PropertyBezier; PropertyBezier.register();
-import aze.motion.specials.PropertyShortRotation; PropertyShortRotation.register();
+//import aze.motion.specials.PropertyTint; PropertyTint.register();
+//import aze.motion.specials.PropertyFrame; PropertyFrame.register();
+//import aze.motion.specials.PropertyFilter; PropertyFilter.register();
+//import aze.motion.specials.PropertyVolume; PropertyVolume.register();
+//import aze.motion.specials.PropertyColorMatrix; PropertyColorMatrix.register();
+//import aze.motion.specials.PropertyBezier; PropertyBezier.register();
+//import aze.motion.specials.PropertyShortRotation; PropertyShortRotation.register();
