@@ -66,22 +66,18 @@ package as3isolib.geom.transformations
 			//var y:Number = screenPt.y - screenPt.x / ratio + screenPt.z;
 			//var x:Number = screenPt.x / ratio + screenPt.y + screenPt.z;
 			
-			var x:Number = screenPt.y + screenPt.x * .5;
-			var y:Number = screenPt.y - screenPt.x * .5;
-			var z:Number = screenPt.z;
+			var z:Number = 0;
+			var y:Number = 0;
+			var x:Number = 0;
 			
-			//var z:Number = 0;
-			//var y:Number = 0;
-			//var x:Number = 0;
-			
-			if (!bAxonometricAxesProjection && bMaintainZAxisRatio)
-				z = z * axialProjection;
-			
-			if (bAxonometricAxesProjection)
-			{
-				x = x / axialProjection;
-				y = y / axialProjection;
-			}
+			//if (!bAxonometricAxesProjection && bMaintainZAxisRatio)
+				//z = z * axialProjection;
+			//
+			//if (bAxonometricAxesProjection)
+			//{
+				//x = x / axialProjection;
+				//y = y / axialProjection;
+			//}
 			
 			return new Pt(x, y, z);
 		}
@@ -91,26 +87,18 @@ package as3isolib.geom.transformations
 		 */
 		public function spaceToScreen (spacePt:Pt):Pt
 		{
-			if (!bAxonometricAxesProjection && bMaintainZAxisRatio)
-			{
-				spacePt.z = spacePt.z / axialProjection;
-				trace( "------------" );
-			}
+			//if (!bAxonometricAxesProjection && bMaintainZAxisRatio)
+				//spacePt.z = spacePt.z / axialProjection;
+			//
+			//if (bAxonometricAxesProjection)
+			//{
+				//spacePt.x = spacePt.x * axialProjection;
+				//spacePt.y = spacePt.y * axialProjection;
+			//}
 			
-			if (bAxonometricAxesProjection)
-			{
-				spacePt.x = spacePt.x * axialProjection;
-				spacePt.y = spacePt.y * axialProjection;
-			}
-			
-			const z_correct:Number = Math.cos( -Math.PI / 6 ) * Math.SQRT2;
-			var x:Number = spacePt.x - spacePt.y;
-			var y:Number = ( spacePt.x + spacePt.y ) * .5 - spacePt.z;
 			var z:Number = spacePt.z;
-			
-			//var z:Number = spacePt.z;
-			//var y:Number = (spacePt.x + spacePt.y) / ratio - spacePt.z;
-			//var x:Number = spacePt.x - spacePt.y;
+			var y:Number = (spacePt.x + spacePt.y) / ratio - spacePt.z;
+			var x:Number = spacePt.x - spacePt.y;
 			
 			return new Pt(x, y, z);
 		}
