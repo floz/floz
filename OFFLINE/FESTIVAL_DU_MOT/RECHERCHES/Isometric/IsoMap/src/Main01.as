@@ -12,10 +12,12 @@ package
 	import flash.display.LineScaleMode;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import fr.floz.isometric.geom.IsoMath;
 	import fr.floz.isometric.geom.Point3D;
 	
-	public class Main extends Sprite
+	public class Main01 extends Sprite
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -24,6 +26,8 @@ package
 		
 		private var _normalMap:Sprite;
 		private var _isoMap:Sprite;
+		private var _normalPanel:InfoPanel;
+		private var _isoPanel:InfoPanel;
 		
 		private var _map:/*Array*/Array = [ [ 0, 0, 0, 1, 0 ],
 											[ 0, 1, 0, 0, 1 ],
@@ -35,7 +39,7 @@ package
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main() 
+		public function Main01() 
 		{
 			_normalMap = new Sprite();
 			addChild( _normalMap );
@@ -44,10 +48,27 @@ package
 			addChild( _isoMap );
 			
 			render();
+			initPanels();
 			place();
+			
+			addEventListener( Event.ENTER_FRAME, enterFrameHandler );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
+		
+		private function enterFrameHandler(e:Event):void 
+		{
+			_normalPanel.infos = "x : " + int( _normalMap.mouseX >> 5 ).toString();
+			_normalPanel.infos += "\ny : " + int( _normalMap.mouseY >> 5 ).toString();
+			_normalPanel.infos += "\n\nmouseX : " + _normalMap.mouseX;
+			_normalPanel.infos += "\nmouseY : " + _normalMap.mouseY;
+			
+			var p:Point3D = IsoMath.screenToIso( new Point3D( _isoMap.mouseX, _isoMap.mouseY ) );
+			_isoPanel.infos = "x : " + ( p.x >> 5 );
+			_isoPanel.infos += "\ny : " + ( p.y >> 5 );
+			_isoPanel.infos += "\n\nmouseX : " + _isoMap.mouseX;
+			_isoPanel.infos += "\nmouseY : " + _isoMap.mouseY;
+		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
@@ -128,16 +149,32 @@ package
 			}
 		}
 		
+		private function initPanels():void
+		{
+			_normalPanel = new InfoPanel();
+			_normalPanel.title = "2D infos :";
+			addChild( _normalPanel );
+			
+			_isoPanel = new InfoPanel();
+			_isoPanel.title = "Iso infos :";
+			addChild( _isoPanel );
+		}
+		
 		private function place():void
 		{
+			// 2D
 			_normalMap.x = _normalMap.width * .5;
 			_normalMap.y = ( stage.stageHeight - _normalMap.height ) * .5;
 			
+			_normalPanel.x = _normalMap.x;
+			_normalPanel.y = _normalMap.y + _normalMap.height + 20;
+			
+			// Iso
 			_isoMap.x = stage.stageWidth - _isoMap.width * .5 - _isoMap.width * .25;
 			_isoMap.y = ( stage.stageHeight - _isoMap.height ) * .5;
 			
-			trace( _normalMap.width );
-			trace( _isoMap.width );
+			_isoPanel.x = _isoMap.x - _isoMap.width * .5;
+			_isoPanel.y = _isoMap.y + _isoMap.height + 20;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
