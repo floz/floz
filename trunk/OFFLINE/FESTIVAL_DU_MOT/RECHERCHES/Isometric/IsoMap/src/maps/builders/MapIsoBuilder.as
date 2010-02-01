@@ -4,10 +4,10 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package maps.builders 
 {
 	
-	public class IsoMap 
+	public class MapIsoBuilder extends MapBuilder
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -16,7 +16,7 @@ package
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function IsoMap() 
+		public function MapIsoBuilder() 
 		{
 			
 		}

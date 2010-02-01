@@ -4,10 +4,11 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package  
+package maps 
 {
+	import flash.display.Shape;
 	
-	public class NormalMap 
+	public class Tile extends Shape
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -16,7 +17,7 @@ package
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function NormalMap() 
+		public function Tile() 
 		{
 			
 		}
