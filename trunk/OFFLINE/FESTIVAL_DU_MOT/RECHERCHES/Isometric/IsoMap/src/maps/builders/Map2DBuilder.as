@@ -40,6 +40,7 @@ package maps.builders
 			var tile:Tile;
 			var g:Graphics;
 			var mapDatas:/*Array*/Array = map.mapDatas;
+			var a:Array;
 			
 			var px:Number = 0;
 			var py:Number = 0;
@@ -48,12 +49,15 @@ package maps.builders
 			var j:int, m:int;
 			for ( var i:int; i < n; ++i )
 			{
+				a = [];
+				
 				px = 0;
 				m = mapDatas[ i ].length;
 				for ( j = 0; j < m; ++j )
 				{
 					tile = new Tile();
 					map.addChild( tile );
+					a.push( tile );
 					
 					g = tile.graphics;
 					g.lineStyle( 1, 0x000000, 1, true, LineScaleMode.NONE, CapsStyle.NONE, JointStyle.MITER );
@@ -66,6 +70,8 @@ package maps.builders
 					px += map.tileSize;					
 				}
 				py += map.tileSize;
+				
+				_tiles.push( a );
 			}
 		}
 		

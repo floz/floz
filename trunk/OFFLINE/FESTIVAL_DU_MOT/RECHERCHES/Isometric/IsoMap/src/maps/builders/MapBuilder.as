@@ -40,7 +40,10 @@ package maps.builders
 		
 		public function getTile( x:int, y:int ):Tile
 		{
-			return _tiles[ y, x ];
+			if ( y < 0 || y > _map.mapDatas.length - 1 ) return null;
+			if ( x < 0 || x > _map.mapDatas[ 0 ].length - 1 ) return null;
+			
+			return _tiles[ y ][ x ];
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
