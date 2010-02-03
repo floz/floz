@@ -9,10 +9,11 @@ package maps
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import maps.builders.IMapBuilder;
+	import maps.tiles.ITile;
 	
 	public interface IMap 
 	{
-		function getTile( x:int, y:int ):Tile;
+		function getTile( x:int, y:int ):ITile;
 		
 		function addChild( child:DisplayObject ):DisplayObject;
 		
@@ -22,8 +23,8 @@ package maps
 		function get tileSize():int;
 		function set tileSize( value:int ):void;
 		
-		function get mapBuilder():IMapBuilder;
-		function set mapBuilder( value:IMapBuilder ):void;
+		function get type():String;
+		function set type( value:String ):void;
 	}
 	
 }

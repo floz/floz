@@ -13,7 +13,9 @@ package maps.builders
 	import fr.floz.isometric.geom.IsoMath;
 	import fr.floz.isometric.geom.Point3D;
 	import maps.IMap;
-	import maps.Tile;
+	import maps.tiles.ITile;
+	import maps.tiles.Tile;
+	import maps.tiles.TileFactory;
 	
 	public class MapIsoBuilder extends MapBuilder
 	{
@@ -50,7 +52,6 @@ package maps.builders
 			var pos:Point3D = new Point3D();
 			
 			var n:int = mapDatas.length;
-			trace( "n : " + n );
 			var j:int, m:int;
 			for ( var i:int; i < n; ++i )
 			{
@@ -60,21 +61,10 @@ package maps.builders
 				m = mapDatas[ i ].length;
 				for ( j = 0; j < m; ++j )
 				{
-					tile = new Tile();
+					tile = Tile( TileFactory.createTile( _map.tileSize, _map.type ) );
+					tile.walkable = mapDatas[ i ][ j ] ? true : false;
 					map.addChild( tile );
 					a.push( tile );
-					
-					g = tile.graphics;
-					g.lineStyle( 1, 0x000000, 1, true, LineScaleMode.NONE, CapsStyle.NONE, JointStyle.MITER );
-					g.beginFill( mapDatas[ i ][ j ] ? 0x444444 : 0xeeeeee );
-					g.moveTo( 0, 0 );
-					p = IsoMath.isoToScreen( new Point3D( map.tileSize, 0 ) );
-					g.lineTo( p.x, p.y );
-					p = IsoMath.isoToScreen( new Point3D( map.tileSize, map.tileSize ) );
-					g.lineTo( p.x, p.y );
-					p = IsoMath.isoToScreen( new Point3D( 0, map.tileSize ) );
-					g.lineTo( p.x, p.y );
-					g.lineTo( 0, 0 );
 					
 					p = IsoMath.isoToScreen( pos );
 					tile.x = p.x;
@@ -85,7 +75,6 @@ package maps.builders
 				
 				_tiles.push( a );
 			}
-			trace( _tiles.length );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

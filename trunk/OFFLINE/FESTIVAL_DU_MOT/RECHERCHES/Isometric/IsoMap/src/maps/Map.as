@@ -10,6 +10,8 @@ package maps
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import maps.builders.IMapBuilder;
+	import maps.builders.MapBuilderFactory;
+	import maps.tiles.ITile;
 	
 	public class Map extends Sprite implements IMap
 	{
@@ -19,15 +21,16 @@ package maps
 		protected var _mapDatas:Array;
 		protected var _tileSize:int = 32;
 		
+		protected var _type:String;
 		protected var _mapBuilder:IMapBuilder;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Map( mapBuilder:IMapBuilder = null, mapDatas:Array = null ) 
+		public function Map( mapDatas:Array, type:String = "normal" ) 
 		{
-			this.mapBuilder = mapBuilder;
+			this.type = type;
 			this.mapDatas = mapDatas;
 		}
 		
@@ -48,7 +51,7 @@ package maps
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function getTile( x:int, y:int ):Tile
+		public function getTile( x:int, y:int ):ITile
 		{
 			return _mapBuilder.getTile( x, y );
 		}
@@ -71,13 +74,15 @@ package maps
 			buildMap();
 		}
 		
-		public function get mapBuilder():IMapBuilder { return _mapBuilder; }
+		public function get type():String { return _type; }
 		
-		public function set mapBuilder(value:IMapBuilder):void 
+		public function set type(value:String):void 
 		{
-			_mapBuilder = value;
-			if ( !_mapBuilder ) destroyMap();
-			else buildMap();
+			_type = value;
+			
+			if ( _mapBuilder ) destroyMap();
+			_mapBuilder = MapBuilderFactory.createBuilder( _type );
+			buildMap();
 		}
 		
 	}

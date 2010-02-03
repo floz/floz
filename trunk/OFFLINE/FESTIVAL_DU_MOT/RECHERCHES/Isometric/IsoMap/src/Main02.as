@@ -9,12 +9,16 @@ package
 	import flash.display.Sprite;
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import fr.floz.isometric.geom.IsoMath;
 	import fr.floz.isometric.geom.Point3D;
 	import maps.builders.Map2DBuilder;
 	import maps.builders.MapIsoBuilder;
 	import maps.IMap;
 	import maps.Map;
+	import maps.tiles.ITile;
+	import maps.tiles.Tile;
+	import maps.types.RepresentationType;
 	
 	public class Main02 extends Sprite
 	{
@@ -33,28 +37,60 @@ package
 		private var _normalPanel:InfoPanel;
 		private var _isoPanel:InfoPanel;
 		
+		private var _oldNormalTile:ITile;
+		private var _oldIsoTile:ITile;
+		
+		private var _normalOver:Boolean;
+		private var _isoOver:Boolean;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function Main02() 
 		{
-			_normalMap = new Map( new Map2DBuilder(), _map );
+			_normalMap = new Map( _map );
 			_normalMap.x = _normalMap.width * .5;
 			_normalMap.y = ( stage.stageHeight - _normalMap.height ) * .5;
 			addChild( _normalMap );
 			
-			_isoMap = new Map( new MapIsoBuilder(), _map );
+			_isoMap = new Map( _map, RepresentationType.ISOMETRIC );
 			_isoMap.x = stage.stageWidth - _isoMap.width * .5 - _isoMap.width * .25;
 			_isoMap.y = ( stage.stageHeight - _isoMap.height ) * .5;
 			addChild( _isoMap );
 			
 			initPanels();
 			
+			_normalMap.addEventListener( MouseEvent.ROLL_OVER, rollOverHandler );
+			_normalMap.addEventListener( MouseEvent.ROLL_OUT, rollOutHandler );
+			
+			_isoMap.addEventListener( MouseEvent.ROLL_OVER, rollOverHandler );
+			_isoMap.addEventListener( MouseEvent.ROLL_OUT, rollOutHandler );
+			
 			addEventListener( Event.ENTER_FRAME, enterFrameHandler );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
+		
+		private function rollOverHandler(e:MouseEvent):void 
+		{
+			switch( e.currentTarget )
+			{
+				case _normalMap: _normalOver = true; break;
+				case _isoMap: _isoOver = true; break;
+			}
+		}
+		
+		private function rollOutHandler(e:MouseEvent):void 
+		{
+			switch( e.currentTarget )
+			{
+				case _normalMap: _normalOver = false; break;
+				case _isoMap: _isoOver = false; break;
+			}
+			
+			deselectTiles();
+		}
 		
 		private function enterFrameHandler(e:Event):void 
 		{
@@ -90,7 +126,7 @@ package
 			_normalPanel.infos += "\n\nmouseX : " + mx;
 			_normalPanel.infos += "\nmouseY : " + my;
 			
-			//trace( _normalMap.getTile( mx >> 5, my >> 5 ) );
+			if( _normalOver ) selectTile( mx >> 5, my >> 5 );
 		}
 		
 		private function refreshIsoPanel():void
@@ -102,7 +138,32 @@ package
 			_isoPanel.infos += "\n\nmouseX : " + _isoMap.mouseX;
 			_isoPanel.infos += "\nmouseY : " + _isoMap.mouseY;
 			
-			//trace( _isoMap.getTile( p.x >> 5, p.y >> 5 ) );
+			if( _isoOver ) selectTile( p.x >> 5, p.y >> 5 );
+		}
+		
+		private function selectTile( x:int, y:int ):void
+		{
+			deselectTiles();
+			
+			var tile:ITile = _normalMap.getTile( x, y );
+			if ( tile )
+			{
+				_oldNormalTile = tile;
+				tile.selected = true;
+			}			
+			
+			tile = _isoMap.getTile( x, y );
+			if ( tile )
+			{
+				_oldIsoTile = tile;
+				tile.selected = true;
+			}
+		}
+		
+		private function deselectTiles():void
+		{
+			if ( _oldNormalTile ) _oldNormalTile.selected = false;
+			if ( _oldIsoTile ) _oldIsoTile.selected = false;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
