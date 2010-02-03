@@ -11,7 +11,9 @@ package maps.builders
 	import flash.display.JointStyle;
 	import flash.display.LineScaleMode;
 	import maps.IMap;
-	import maps.Tile;
+	import maps.tiles.ITile;
+	import maps.tiles.Tile;
+	import maps.tiles.TileFactory;
 	
 	public class Map2DBuilder extends MapBuilder
 	{
@@ -55,15 +57,10 @@ package maps.builders
 				m = mapDatas[ i ].length;
 				for ( j = 0; j < m; ++j )
 				{
-					tile = new Tile();
+					tile = Tile( TileFactory.createTile( _map.tileSize, _map.type ) );
+					tile.walkable = mapDatas[ i ][ j ] ? true : false;
 					map.addChild( tile );
 					a.push( tile );
-					
-					g = tile.graphics;
-					g.lineStyle( 1, 0x000000, 1, true, LineScaleMode.NONE, CapsStyle.NONE, JointStyle.MITER );
-					g.beginFill( mapDatas[ i ][ j ] ? 0x444444 : 0xeeeeee );
-					g.drawRect( 0, 0, map.tileSize, map.tileSize );
-					g.endFill();
 					
 					tile.x = px;
 					tile.y = py;

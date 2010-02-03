@@ -4,49 +4,54 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package maps.builders 
+package maps.tiles 
 {
-	import maps.IMap;
-	import maps.tiles.ITile;
+	import maps.core.Node;
 	
-	public class MapBuilder implements IMapBuilder
+	public class Tile extends Node implements ITile
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		protected var _map:IMap;
-		protected var _tiles:/*Array*/Array;
+		protected var _size:int;
+		protected var _selected:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function MapBuilder() 
+		public function Tile( size:int ) 
 		{
-			
+			this._size = size;
+			build();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
+		protected function build():void
+		{
+			// ASBTRACT
+		}
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function build( map:IMap ):void
-		{
-			this._map = map;
-			_tiles = [];
-		}
-		
-		public function getTile( x:int, y:int ):ITile
-		{
-			if ( y < 0 || y > _map.mapDatas.length - 1 ) return null;
-			if ( x < 0 || x > _map.mapDatas[ 0 ].length - 1 ) return null;
-			
-			return _tiles[ y ][ x ];
-		}
-		
 		// - GETTERS & SETTERS -----------------------------------------------------------
+		
+		public function get selected():Boolean { return _selected; }
+		
+		public function set selected(value:Boolean):void 
+		{
+			_selected = value;
+			build();
+		}
+		
+		override public function set walkable(value:Boolean):void 
+		{
+			super.walkable = value;
+			build();
+		}
 		
 	}
 	
