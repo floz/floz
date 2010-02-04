@@ -30,7 +30,7 @@ package pathing.heuristics
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function getCost( a:Node, b:Number ):Number
+		public function getCost( a:Node, b:Node ):Number
 		{
 			var dx:Number = a.x - b.x;
 			var vx:Number = dx < 0 ? -dx : dx;
