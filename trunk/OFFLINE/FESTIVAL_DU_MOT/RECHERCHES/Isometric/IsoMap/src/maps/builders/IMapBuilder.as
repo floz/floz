@@ -7,12 +7,12 @@
 package maps.builders 
 {
 	import maps.IMap;
-	import maps.tiles.ITile;
+	import maps.tiles.Tile;
 	
 	public interface IMapBuilder 
 	{
 		function build( map:IMap ):void;
-		function getTile( x:int, y:int ):ITile;
+		function getTile( x:int, y:int ):Tile;
 	}
 	
 }

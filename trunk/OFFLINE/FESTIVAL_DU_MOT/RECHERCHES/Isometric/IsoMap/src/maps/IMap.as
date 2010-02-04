@@ -9,11 +9,11 @@ package maps
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import maps.builders.IMapBuilder;
-	import maps.tiles.ITile;
+	import maps.tiles.Tile;
 	
 	public interface IMap 
 	{
-		function getTile( x:int, y:int ):ITile;
+		function getTile( x:int, y:int ):Tile;
 		
 		function addChild( child:DisplayObject ):DisplayObject;
 		

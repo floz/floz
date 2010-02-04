@@ -6,14 +6,17 @@
  */
 package maps.tiles 
 {
+	import flash.display.Sprite;
 	import maps.core.Node;
 	
-	public class Tile extends Node implements ITile
+	public class Tile extends Sprite
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		protected var _size:int;
+		//protected var _node:Node;
+		protected var _walkable:Boolean;		
 		protected var _selected:Boolean;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
@@ -23,6 +26,8 @@ package maps.tiles
 		public function Tile( size:int ) 
 		{
 			this._size = size;
+			//_node = new Node();
+			
 			build();
 		}
 		
@@ -47,11 +52,15 @@ package maps.tiles
 			build();
 		}
 		
-		override public function set walkable(value:Boolean):void 
+		public function get walkable():Boolean { return _walkable; }
+		
+		public function set walkable(value:Boolean):void 
 		{
-			super.walkable = value;
+			_walkable = value;
 			build();
 		}
+		
+		//public function get node():Node { return _snode; }
 		
 	}
 	

@@ -18,6 +18,8 @@ package maps.tiles
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		protected var _position:Point3D = new Point3D();
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
@@ -54,9 +56,32 @@ package maps.tiles
 			g.endFill();
 		}
 		
+		protected function updatePosition():void
+		{
+			var p:Point3D = IsoMath.isoToScreen( _position );
+			super.x = p.x;
+			super.y = p.y;
+		}
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
+		
+		override public function get x():Number { return _position.x; }
+		
+		override public function set x(value:Number):void 
+		{
+			_position.x = value;
+			updatePosition();
+		}
+		
+		override public function get y():Number { return _position.y; }
+		
+		override public function set y(value:Number):void 
+		{
+			_position.y = value;
+			updatePosition();
+		}
 		
 	}
 	
