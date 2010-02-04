@@ -23,6 +23,8 @@ package maps.core
 		public var walkable:Boolean;
 		public var parent:Node;
 		
+		public var closed:Boolean = false;
+		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function Node( x:int, y:int ) 
@@ -39,9 +41,7 @@ package maps.core
 		
 		public function clone():Node
 		{
-			var n:Node = new Node();
-			n.x = this.x;
-			n.y = this.y;
+			var n:Node = new Node( x, y );
 			n.g = this.g;
 			n.h = this.h;
 			n.f = this.f;
@@ -50,6 +50,22 @@ package maps.core
 			
 			return n;
 		}
+		
+		public function getRootNode():Node
+		{
+			var p:Node = parent;
+			while ( p.hasParent() )
+				p = p.parent;
+			
+			return p;
+		}
+		
+		public function hasParent():Boolean
+		{
+			return parent ? true : false;
+		}
+		
+		public function toString():String { return "Node( x: " + this.x + ", y : " + this.y + " )"; }
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

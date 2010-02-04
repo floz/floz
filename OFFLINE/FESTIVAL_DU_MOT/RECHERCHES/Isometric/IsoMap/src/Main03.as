@@ -10,6 +10,7 @@ package
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import fr.floz.isometric.geom.IsoMath;
 	import fr.floz.isometric.geom.Point3D;
 	import maps.IMap;
@@ -40,6 +41,7 @@ package
 		
 		private var _normalOver:Boolean;
 		private var _isoOver:Boolean;
+		private var _astar:AstarAlgorithm;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -52,7 +54,7 @@ package
 			_normalMap.y = ( stage.stageHeight - _normalMap.height ) * .5;
 			addChild( _normalMap );
 			
-			var astar:AstarAlgorithm = new AstarAlgorithm( _normalMap );
+			_astar = new AstarAlgorithm( _normalMap );
 			
 			_isoMap = new Map( _map, RepresentationType.ISOMETRIC );
 			_isoMap.x = stage.stageWidth - _isoMap.width * .5 - _isoMap.width * .25;
@@ -61,8 +63,9 @@ package
 			
 			initPanels();
 			
-			_normalMap.addEventListener( MouseEvent.ROLL_OVER, rollOverHandler );
-			_normalMap.addEventListener( MouseEvent.ROLL_OUT, rollOutHandler );
+			//_normalMap.addEventListener( MouseEvent.ROLL_OVER, rollOverHandler );
+			//_normalMap.addEventListener( MouseEvent.ROLL_OUT, rollOutHandler );
+			_normalMap.addEventListener( MouseEvent.CLICK, clickHandler );
 			
 			_isoMap.addEventListener( MouseEvent.ROLL_OVER, rollOverHandler );
 			_isoMap.addEventListener( MouseEvent.ROLL_OUT, rollOutHandler );
@@ -90,6 +93,14 @@ package
 			}
 			
 			deselectTiles();
+		}
+		
+		private function clickHandler(e:MouseEvent):void 
+		{
+			var mx:Number = _normalMap.mouseX;
+			var my:Number = _normalMap.mouseY;
+			
+			_astar.findPath( new Point( mx >> 5, my >> 5 ), new Point() );
 		}
 		
 		private function enterFrameHandler(e:Event):void 

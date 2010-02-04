@@ -9,8 +9,10 @@ package pathing
 	import flash.geom.Point;
 	import maps.core.Node;
 	import maps.IMap;
+	import pathing.heuristics.Diagonal;
 	import pathing.heuristics.Euclidian;
 	import pathing.heuristics.IHeuristic;
+	import pathing.heuristics.Manhattan;
 	
 	public class AstarAlgorithm 
 	{
@@ -18,7 +20,7 @@ package pathing
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private const STRAIGHT_COST:Number = 1;
-		private const DIAG_COST:Number = Math.SQRT2;
+		private const DIAG_COST:Number = Math.SQRT2 + .3;
 		
 		private var _map:IMap;
 		private var _openList:/*Node*/Array;
@@ -56,17 +58,19 @@ package pathing
 			var node:Node;
 			
 			_nodes = [];
-			var a:Array = [];
+			var a:Array;
 			
 			var mapDatas:Array = _map.mapDatas;
 			var n:int = mapDatas.length;
-			var j:int, m:int;
-			for ( var i:int; i < n; ++i )
+			var x:int, y:int, m:int;
+			for ( y; y < n; ++y )
 			{
-				for ( j = 0; j < m; ++j )
+				a = [];
+				m = mapDatas[ y ].length;
+				for ( x = 0; x < m; ++x )
 				{
-					node = new Node( j, i );
-					node.walkable = mapDatas[ j ][ i ] == 0 ? true : false;
+					node = new Node( x, y );
+					node.walkable = mapDatas[ y ][ x ] == 0 ? true : false;
 					a.push( node );
 				}
 				_nodes.push( a );
@@ -76,14 +80,67 @@ package pathing
 			_columns = n;
 		}
 		
-		private function search():Boolean // Boolean ou node ?
+		private function search( node:Node ):Node 
 		{
+			var startX:int = node.x - 1 < 0 ? 0 : node.x - 1;
+			var startY:int = node.y - 1 < 0 ? 0 : node.y - 1;
+			var endX:int = node.x + 1 >= _row ? _row - 1 : node.x + 1;
+			var endY:int = node.y + 1 >= _columns ? _columns - 1 : node.y + 1;
 			
+			var isDiag:Boolean;
+			var cost:Number;
+			var n:Node;
+			var bestNode:Node;
+			
+			var x:int, y:int;
+			for ( y = startY; y < endY + 1; ++y )
+			{
+				for ( x = startX; x < endX + 1; ++x )
+				{
+					n = _nodes[ y ][ x ];
+					if ( !n.walkable || n.closed || n == node || !_nodes[ y ][ node.x ].walkable || !_nodes[ node.y ][ x ].walkable ) continue;
+					
+					n.parent = node; 
+					if ( n == _endNode ) return n; // On a trouvé la _endNode !
+					
+					isDiag = false;
+					if ( x == node.x - 1 && y == node.y - 1 )
+					{
+						cost = DIAG_COST;
+					}
+					else if ( x == node.x + 1 && y == node.y - 1 )
+					{
+						cost = DIAG_COST;
+					}
+					else if ( x == node.x + 1 && y == node.y + 1 )
+					{
+						cost = DIAG_COST;
+					}
+					else if ( x == node.x - 1 && y == node.y + 1 )
+					{
+						cost = DIAG_COST;
+					}
+					else 
+					{
+						cost = STRAIGHT_COST;
+					}
+					
+					n.g = node.g + cost;
+					n.h = _heuristic.getCost( n, _endNode );
+					n.f = n.g + n.h;
+					
+					if ( !bestNode || n.f < bestNode.f ) bestNode = n;
+				}
+			}
+			
+			if( bestNode ) _map.getTile( bestNode.x, bestNode.y ).selected = true;
+			
+			return null;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function findPath( a:Point, b:Point ):Boolean
+		public function findPath( a:Point, b:Point ):Node
 		{
 			_startNode = _nodes[ a.y ][ a.x ];
 			_endNode = _nodes[ b.y ][ b.x ];
@@ -92,7 +149,7 @@ package pathing
 			_startNode.h = _heuristic.getCost( _startNode, _endNode );
 			_startNode.f = _startNode.g + _startNode.h;
 			
-			return search();
+			return search( _startNode );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

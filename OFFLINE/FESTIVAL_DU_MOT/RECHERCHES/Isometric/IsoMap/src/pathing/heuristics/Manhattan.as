@@ -34,9 +34,9 @@ package pathing.heuristics
 			var vx:Number = dx < 0 ? -dx : dx;
 			
 			var dy:Number = a.y + b.y;
-			var vx:Number = dy < 0 ? -dy : dy;
+			var vy:Number = dy < 0 ? -dy : dy;
 			
-			return dx + dy;
+			return vx + vy;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

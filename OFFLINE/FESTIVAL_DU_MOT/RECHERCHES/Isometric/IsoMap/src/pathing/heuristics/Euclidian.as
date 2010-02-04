@@ -31,7 +31,7 @@ package pathing.heuristics
 		public function getCost( a:Node, b:Node ):Number
 		{
 			var dx:Number = a.x - b.x;
-			var dy:Number = a.y - d.y;
+			var dy:Number = a.y - b.y;
 			return Math.sqrt( dx * dx + dy * dy );
 		}
 		
