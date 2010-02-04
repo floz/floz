@@ -10,8 +10,8 @@ package maps
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import maps.builders.IMapBuilder;
-	import maps.builders.MapBuilderFactory;
-	import maps.tiles.ITile;
+	import maps.builders.MapBuilder;
+	import maps.tiles.Tile;
 	
 	public class Map extends Sprite implements IMap
 	{
@@ -51,7 +51,7 @@ package maps
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function getTile( x:int, y:int ):ITile
+		public function getTile( x:int, y:int ):Tile
 		{
 			return _mapBuilder.getTile( x, y );
 		}
@@ -81,7 +81,7 @@ package maps
 			_type = value;
 			
 			if ( _mapBuilder ) destroyMap();
-			_mapBuilder = MapBuilderFactory.createBuilder( _type );
+			else _mapBuilder = new MapBuilder();			
 			buildMap();
 		}
 		

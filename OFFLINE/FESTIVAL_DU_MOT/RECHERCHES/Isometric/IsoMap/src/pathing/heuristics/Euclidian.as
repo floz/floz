@@ -4,31 +4,22 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package maps.core 
+package pathing.heuristics 
 {
+	import maps.core.Node;
 	
-	public class Node
+	public class Euclidian implements IHeuristic
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
-		public var x:int;
-		public var y:int;
-		public var g:Number = 0;
-		public var h:Number = 0;
-		public var f:Number = 0;
-		
-		public var walkable:Boolean;
-		public var parent:Node;
-		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Node( x:int, y:int ) 
+		public function Euclidian() 
 		{
-			this.x = x;
-			this.y = y;
+			
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -37,18 +28,11 @@ package maps.core
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function clone():Node
+		public function getCost( a:Node, b:Node ):Number
 		{
-			var n:Node = new Node();
-			n.x = this.x;
-			n.y = this.y;
-			n.g = this.g;
-			n.h = this.h;
-			n.f = this.f;
-			n.walkable = this.walkable;
-			n.parent = this.parent;
-			
-			return n;
+			var dx:Number = a.x - b.x;
+			var dy:Number = a.y - d.y;
+			return Math.sqrt( dx * dx + dy * dy );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

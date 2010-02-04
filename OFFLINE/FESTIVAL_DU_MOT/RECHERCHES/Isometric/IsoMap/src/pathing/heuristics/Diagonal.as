@@ -4,31 +4,24 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package maps.core 
+package pathing.heuristics 
 {
+	import maps.core.Node;
 	
-	public class Node
+	public class Diagonal implements IHeuristic
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private const DIAGCOST:Number = Math.SQRT2;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
-		
-		public var x:int;
-		public var y:int;
-		public var g:Number = 0;
-		public var h:Number = 0;
-		public var f:Number = 0;
-		
-		public var walkable:Boolean;
-		public var parent:Node;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Node( x:int, y:int ) 
+		public function Diagonal() 
 		{
-			this.x = x;
-			this.y = y;
+			
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -37,18 +30,18 @@ package maps.core
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function clone():Node
+		public function getCost( a:Node, b:Number ):Number
 		{
-			var n:Node = new Node();
-			n.x = this.x;
-			n.y = this.y;
-			n.g = this.g;
-			n.h = this.h;
-			n.f = this.f;
-			n.walkable = this.walkable;
-			n.parent = this.parent;
+			var dx:Number = a.x - b.x;
+			var vx:Number = dx < 0 ? -dx : dx;
 			
-			return n;
+			var dy:Number = a.y - b.y;
+			var vy:Number = dy < 0 ? -dy : dy;
+			
+			var diag:Number = dx < dy ? dx : dy;			
+			var straight:Number = dx + dy;
+			
+			return DIAGCOST * diag + ( straight - 2 * diag );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

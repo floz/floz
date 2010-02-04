@@ -16,8 +16,9 @@ package
 	import maps.Map;
 	import maps.tiles.Tile;
 	import maps.types.RepresentationType;
+	import pathing.AstarAlgorithm;
 	
-	public class Main02 extends Sprite
+	public class Main03 extends Sprite
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -44,12 +45,14 @@ package
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main02() 
+		public function Main03() 
 		{
 			_normalMap = new Map( _map );
 			_normalMap.x = _normalMap.width * .5;
 			_normalMap.y = ( stage.stageHeight - _normalMap.height ) * .5;
 			addChild( _normalMap );
+			
+			var astar:AstarAlgorithm = new AstarAlgorithm( _normalMap );
 			
 			_isoMap = new Map( _map, RepresentationType.ISOMETRIC );
 			_isoMap.x = stage.stageWidth - _isoMap.width * .5 - _isoMap.width * .25;

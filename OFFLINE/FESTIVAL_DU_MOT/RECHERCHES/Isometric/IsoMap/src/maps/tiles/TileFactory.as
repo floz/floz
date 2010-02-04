@@ -11,7 +11,7 @@ package maps.tiles
 	public class TileFactory 
 	{
 		
-		public static function createTile( size:int, type:String ):ITile
+		public static function createTile( size:int, type:String ):Tile
 		{
 			switch( type )
 			{
