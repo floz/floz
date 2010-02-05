@@ -20,7 +20,7 @@ package pathing
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private const STRAIGHT_COST:Number = 1;
-		private const DIAG_COST:Number = Math.SQRT2 + .3;
+		private const DIAG_COST:Number = Math.SQRT2;
 		
 		private var _map:IMap;
 		private var _openList:/*Node*/Array;
@@ -42,9 +42,6 @@ package pathing
 		public function AstarAlgorithm( map:IMap )
 		{
 			this._map = map;
-			
-			_openList = [];
-			_closedList = [];
 			
 			createNodes();
 		}
@@ -80,68 +77,111 @@ package pathing
 			_columns = n;
 		}
 		
-		private function search( node:Node ):Node 
+		private function search():Boolean 
 		{
-			var startX:int = node.x - 1 < 0 ? 0 : node.x - 1;
-			var startY:int = node.y - 1 < 0 ? 0 : node.y - 1;
-			var endX:int = node.x + 1 >= _row ? _row - 1 : node.x + 1;
-			var endY:int = node.y + 1 >= _columns ? _columns - 1 : node.y + 1;
-			
-			var isDiag:Boolean;
-			var cost:Number;
 			var n:Node;
-			var bestNode:Node;
 			
-			var x:int, y:int;
-			for ( y = startY; y < endY + 1; ++y )
+			var node:Node = _startNode;
+			while ( node != _endNode )
 			{
-				for ( x = startX; x < endX + 1; ++x )
+				var startX:int = node.x - 1 < 0 ? 0 : node.x - 1;
+				var startY:int = node.y - 1 < 0 ? 0 : node.y - 1;
+				var endX:int = node.x + 1 >= _row ? _row - 1 : node.x + 1;
+				var endY:int = node.y + 1 >= _columns ? _columns - 1 : node.y + 1;
+				
+				var cost:Number;
+				
+				var g:Number;
+				var h:Number;
+				var f:Number;
+				
+				var x:int, y:int;
+				for ( y = startY; y < endY + 1; ++y )
 				{
-					n = _nodes[ y ][ x ];
-					if ( !n.walkable || n.closed || n == node || !_nodes[ y ][ node.x ].walkable || !_nodes[ node.y ][ x ].walkable ) continue;
-					
-					n.parent = node; 
-					if ( n == _endNode ) return n; // On a trouvé la _endNode !
-					
-					isDiag = false;
-					if ( x == node.x - 1 && y == node.y - 1 )
+					for ( x = startX; x < endX + 1; ++x )
 					{
-						cost = DIAG_COST;
-					}
-					else if ( x == node.x + 1 && y == node.y - 1 )
-					{
-						cost = DIAG_COST;
-					}
-					else if ( x == node.x + 1 && y == node.y + 1 )
-					{
-						cost = DIAG_COST;
-					}
-					else if ( x == node.x - 1 && y == node.y + 1 )
-					{
-						cost = DIAG_COST;
-					}
-					else 
-					{
+						n = _nodes[ y ][ x ];
+						if ( !n.walkable || n == node || !_nodes[ y ][ node.x ].walkable || !_nodes[ node.y ][ x ].walkable ) continue;
+						
 						cost = STRAIGHT_COST;
+						if ( !((  node.x == n.x ) || ( node.y == n.y ) ) )
+							cost = DIAG_COST;							
+						
+						g = node.g + cost;
+						h = _heuristic.getCost( n, _endNode );
+						f = n.g + n.h;
+						
+						if ( isOpen( n ) || isClosed( n ) )
+						{
+							if ( n.f > f )
+							{
+								n.f = f;
+								n.g = g;
+								n.h = h;
+								n.parent = node;
+							}
+						}
+						else
+						{
+							n.g = g;
+							n.h = h;
+							n.f = f;
+							n.parent = node;
+							_openList.push( n );
+						}
 					}
-					
-					n.g = node.g + cost;
-					n.h = _heuristic.getCost( n, _endNode );
-					n.f = n.g + n.h;
-					
-					if ( !bestNode || n.f < bestNode.f ) bestNode = n;
 				}
+				_closedList.push( node );
+				
+				if ( !_openList.length ) return false;
+				
+				_openList.sortOn( "f", Array.NUMERIC );
+				node = _openList.shift();
+			}
+			return true;
+		}
+		
+		private function isOpen( node:Node ):Boolean
+		{
+			var i:int = _openList.length;
+			while ( --i > -1 )
+				if ( _openList[ i ] == node ) return true;
+			
+			return false;
+		}
+		
+		private function isClosed( node:Node ):Boolean
+		{
+			var i:int = _closedList.length;
+			while ( --i > -1 )
+				if ( _closedList[ i ] == node ) return true;
+			
+			return false;
+		}
+		
+		private function getPath():Array
+		{
+			var a:Array = [];
+			
+			var node:Node = _endNode;
+			a.push( node );
+			while ( node != _startNode )
+			{
+				//trace( "node.parent : " + node.parent );
+				node = node.parent;
+				a.unshift( node );
 			}
 			
-			if( bestNode ) _map.getTile( bestNode.x, bestNode.y ).selected = true;
-			
-			return null;
+			return a;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function findPath( a:Point, b:Point ):Node
+		public function findPath( a:Point, b:Point ):Array
 		{
+			_openList = [];
+			_closedList = [];
+			
 			_startNode = _nodes[ a.y ][ a.x ];
 			_endNode = _nodes[ b.y ][ b.x ];
 			
@@ -149,7 +189,11 @@ package pathing
 			_startNode.h = _heuristic.getCost( _startNode, _endNode );
 			_startNode.f = _startNode.g + _startNode.h;
 			
-			return search( _startNode );
+			
+			if ( search() ) 
+				return getPath();
+			
+			return null;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
