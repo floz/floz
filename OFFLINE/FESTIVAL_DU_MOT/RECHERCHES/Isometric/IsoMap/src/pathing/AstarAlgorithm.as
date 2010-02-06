@@ -33,7 +33,7 @@ package pathing
 		private var _startNode:Node;
 		private var _endNode:Node;	
 		
-		private var _heuristic:IHeuristic = new Euclidian();
+		private var _heuristic:IHeuristic = new Manhattan();
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -109,7 +109,7 @@ package pathing
 						
 						g = node.g + cost;
 						h = _heuristic.getCost( n, _endNode );
-						f = n.g + n.h;
+						f = g + h;
 						
 						if ( isOpen( n ) || isClosed( n ) )
 						{
@@ -167,7 +167,6 @@ package pathing
 			a.push( node );
 			while ( node != _startNode )
 			{
-				//trace( "node.parent : " + node.parent );
 				node = node.parent;
 				a.unshift( node );
 			}
