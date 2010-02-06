@@ -15,8 +15,8 @@
   <classpaths>
     <class path="src" />
     <class path="lib" />
-    <class path="..\..\_COMMON" />
     <class path="srctuto" />
+    <class path="..\..\..\_COMMON" />
   </classpaths>
   <!-- Build options -->
   <build>
