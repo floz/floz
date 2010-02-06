@@ -54,6 +54,19 @@ package
 				}
 			}
 			
+			var b:DrawIsoBox = new DrawIsoBox( TILE_SIZE, Math.random() * 0xffffff, 20 );
+			b.setPosition( new Point3D( 3.5 * TILE_SIZE, 0, 4 * TILE_SIZE ) );
+			_world.addChildToWorld( b );
+			
+			b = new DrawIsoBox( TILE_SIZE, Math.random() * 0xffffff, 20 );
+			b.setPosition( new Point3D( 5 * TILE_SIZE, 0, 4 * TILE_SIZE ) );
+			_world.addChildToWorld( b );
+			
+			b = new DrawIsoBox( TILE_SIZE, Math.random() * 0xffffff, 20 );
+			b.setPosition( new Point3D( 4.5 * TILE_SIZE, 0, 3.5 * TILE_SIZE ) );
+			//b.y = -20;
+			_world.addChildToWorld( b );
+			
 			_world.addEventListener( MouseEvent.CLICK, clicHandler );
 		}
 		
