@@ -12,6 +12,7 @@ package
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
+	import flash.utils.getTimer;
 	import flash.utils.Timer;
 	import fr.floz.isometric.geom.IsoMath;
 	import fr.floz.isometric.geom.Point3D;
@@ -54,74 +55,67 @@ package
 		private var _path:Array;
 		
 		private var _firstClick:Boolean = true;
-		private var _start:Point;
-		private var _end:Point;
+		private var _start:Point = new Point();
+		private var _end:Point = new Point();
+		
+		private var _timer:Timer;
+		private var _tile:Tile;
+		private var _mouseDown:Boolean;
+		private var _p:Point3D;
+		private var _g:Point;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function Main03() 
-		{
-			_normalMap = new Map( _map );
-			_normalMap.x = _normalMap.width * .5;
-			_normalMap.y = ( stage.stageHeight - _normalMap.height ) * .5;
-			addChild( _normalMap );
-			
-			_astar = new AstarAlgorithm( _normalMap );
-			
+		{			
 			_isoMap = new Map( _map, RepresentationType.ISOMETRIC );
-			//_isoMap.x = stage.stageWidth - _isoMap.width * .5 - _isoMap.width * .25;
-			//_isoMap.y = ( stage.stageHeight - _isoMap.height ) * .5;
-			//addChild( _isoMap );
+			_isoMap.x = stage.stageWidth - _isoMap.width * .5 - _isoMap.width * .25;
+			_isoMap.y = ( stage.stageHeight - _isoMap.height ) * .5;
+			addChild( _isoMap );
+			
+			_astar = new AstarAlgorithm( _isoMap );
 			
 			initPanels();
 			
-			//_normalMap.addEventListener( MouseEvent.ROLL_OVER, rollOverHandler );
-			//_normalMap.addEventListener( MouseEvent.ROLL_OUT, rollOutHandler );
-			_normalMap.addEventListener( MouseEvent.CLICK, clickHandler );
+			_tile = _isoMap.getTile( 0, 0 );
+			_tile.selected = true;
 			
-			_isoMap.addEventListener( MouseEvent.ROLL_OVER, rollOverHandler );
-			_isoMap.addEventListener( MouseEvent.ROLL_OUT, rollOutHandler );
+			_timer = new Timer( 50 );
+			_timer.addEventListener( TimerEvent.TIMER, timerHandler );
+			_timer.start();
 			
+			_isoMap.addEventListener( MouseEvent.MOUSE_DOWN, mouseDownHandler );	
+			_isoMap.addEventListener( MouseEvent.MOUSE_UP, mouseUpHandler );
 			addEventListener( Event.ENTER_FRAME, enterFrameHandler );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
-		private function rollOverHandler(e:MouseEvent):void 
+		private function mouseDownHandler(e:MouseEvent):void 
 		{
-			switch( e.currentTarget )
-			{
-				case _normalMap: _normalOver = true; break;
-				case _isoMap: _isoOver = true; break;
-			}
+			_mouseDown = true;
 		}
 		
-		private function rollOutHandler(e:MouseEvent):void 
+		private function mouseUpHandler(e:MouseEvent):void 
 		{
-			switch( e.currentTarget )
-			{
-				case _normalMap: _normalOver = false; break;
-				case _isoMap: _isoOver = false; break;
-			}
-			
-			deselectTiles();
+			_mouseDown = false;
 		}
 		
 		private function clickHandler(e:MouseEvent):void 
 		{
-			var mx:Number = _normalMap.mouseX;
-			var my:Number = _normalMap.mouseY;
+			var p:Point3D = IsoMath.screenToIso( new Point3D( _isoMap.mouseX, _isoMap.mouseY ) );
+			
 			if ( _firstClick )
 			{
-				_start = new Point( mx >> 5, my >> 5 );
+				_start = new Point( p.x >> 5, p.y >> 5 );
 				_firstClick = false;
 			}
 			else
 			{
 				resetMap();
-				_end = new Point( mx >> 5, my >> 5 );
+				_end = new Point( p.x >> 5, p.y >> 5 );
 				
 				_path = _astar.findPath( _start, _end );
 				
@@ -135,53 +129,46 @@ package
 		
 		private function timerHandler(e:TimerEvent):void 
 		{
-			if ( _path.length == 0 )
-			{
-				Timer( e.currentTarget ).stop();
-				Timer( e.currentTarget ).removeEventListener( TimerEvent.TIMER, timerHandler );
+			if ( !_path || _path.length == 0 )
 				return;
-			}
 			
+			_tile.selected = false;
 			var n:Node = _path.shift();
-			var t:Tile = _normalMap.getTile( n.x, n.y );
-			t.selected = true;
+			_tile = _isoMap.getTile( n.x, n.y );
+			_start.x = n.x;
+			_start.y = n.y;
+			_tile.selected = true;
 		}
 		
 		private function enterFrameHandler(e:Event):void 
 		{
-			refresh2DPanel();
-			refreshIsoPanel();			
+			refreshIsoPanel();
+			
+			if ( _mouseDown )
+			{
+				_p = IsoMath.screenToIso( new Point3D( _isoMap.mouseX, _isoMap.mouseY ) );
+				_p.x >>= 5;
+				_p.y >>= 5;
+				if ( _end.x == _p.x && _end.y == _p.y ) 
+					return;
+				
+				_end.x = _p.x;
+				_end.y = _p.y;
+				
+				_path = _astar.findPath( _start, _end );	
+			}
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function initPanels():void
 		{
-			_normalPanel = new InfoPanel();
-			_normalPanel.x = _normalMap.x;
-			_normalPanel.y = _normalMap.y + _normalMap.height + 20;
-			addChild( _normalPanel );
-			
 			_isoPanel = new InfoPanel();
 			_isoPanel.x = _isoMap.x - _isoMap.width * .5;
-			_isoPanel.y = _isoMap.y + _isoMap.height + 20;
+			_isoPanel.y = _isoMap.y + _isoMap.height;
 			addChild( _isoPanel );
 			
-			_normalPanel.title = "2D infos :";
 			_isoPanel.title = "Iso infos :";
-		}
-		
-		private function refresh2DPanel():void
-		{
-			var mx:Number = _normalMap.mouseX;
-			var my:Number = _normalMap.mouseY;
-			
-			_normalPanel.infos = "x : " + ( mx >> 5 );
-			_normalPanel.infos += "\ny : " + ( my >> 5 );
-			_normalPanel.infos += "\n\nmouseX : " + mx;
-			_normalPanel.infos += "\nmouseY : " + my;
-			
-			if( _normalOver ) selectTile( mx >> 5, my >> 5 );
 		}
 		
 		private function refreshIsoPanel():void
@@ -192,8 +179,6 @@ package
 			_isoPanel.infos += "\ny : " + ( p.y >> 5 );
 			_isoPanel.infos += "\n\nmouseX : " + _isoMap.mouseX;
 			_isoPanel.infos += "\nmouseY : " + _isoMap.mouseY;
-			
-			if( _isoOver ) selectTile( p.x >> 5, p.y >> 5 );
 		}
 		
 		private function selectTile( x:int, y:int ):void
@@ -225,7 +210,7 @@ package
 				m = _map[ i ].length;
 				for ( j = 0; j < m; ++j )
 				{
-					t = _normalMap.getTile( j, i );
+					t = _isoMap.getTile( j, i );
 					t.selected = false;
 				}
 			}
