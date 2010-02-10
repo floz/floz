@@ -6,11 +6,14 @@
  */
 package games.scenes.tiles 
 {
+	import flash.display.Sprite;
 	
-	public class Tile 
+	public class Tile extends Sprite
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
+		
+		private var _color:uint;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -28,6 +31,13 @@ package games.scenes.tiles
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
+		
+		public function get color():uint { return _color; }
+		
+		public function set color( value:uint ):void 
+		{
+			_color = value;
+		}
 		
 	}
 	
