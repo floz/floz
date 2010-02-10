@@ -7,20 +7,20 @@
 package games.paths.pathfinding 
 {
 	import flash.geom.Point;
-	import games.scenes.maps.IMap;
+	import games.scenes.maps.Map;
 	
 	public class Astar 
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _map:IMap;
+		private var _map:Map;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Astar( map:IMap ) 
+		public function Astar( map:Map ) 
 		{
 			this._map = map;
 		}
