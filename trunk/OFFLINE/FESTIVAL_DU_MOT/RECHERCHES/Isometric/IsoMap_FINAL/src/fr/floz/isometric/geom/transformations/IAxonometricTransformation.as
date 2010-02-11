@@ -10,8 +10,8 @@ package fr.floz.isometric.geom.transformations
 	
 	public interface IAxonometricTransformation 
 	{
-		function screenToSpace( p:Point3D ):Point3D;
-		function spaceToScreen( p:Point3D ):Point3D;
+		function screenToSpace( x:Number, y:Number, z:Number ):Point3D;
+		function spaceToScreen( x:Number, y:Number, z:Number ):Point3D;
 	}
 	
 }

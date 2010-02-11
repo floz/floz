@@ -30,22 +30,22 @@ package fr.floz.isometric.geom.transformations
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function screenToSpace( p:Point3D ):Point3D
+		public function screenToSpace( x:Number, y:Number, z:Number ):Point3D
 		{
-			var x:Number = p.y + p.x * .5 + p.z;
-			var y:Number = p.y - p.x * .5 + p.z;
-			var z:Number = p.z;
+			var px:Number = y + x * .5 + z;
+			var py:Number = y - x * .5 + z;
+			var pz:Number = z;
 			
-			return new Point3D( x, y, z );
+			return new Point3D( px, py, pz );
 		}
 		
-		public function spaceToScreen( p:Point3D ):Point3D
+		public function spaceToScreen( x:Number, y:Number, z:Number ):Point3D
 		{
-			var x:Number = p.x - p.y;
-			var y:Number = ( p.x + p.y ) * .5 - p.z;// + p.z * Z_CORRECT; dixit Keith Peters
-			var z:Number = p.z;
+			var px:Number = x - y;
+			var py:Number = ( x + y ) * .5 - z; // + z * Z_CORRECT; dixit Keith Peters
+			var pz:Number = z;
 			
-			return new Point3D( x, y, z );
+			return new Point3D( px, py, pz );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
