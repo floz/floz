@@ -18,6 +18,9 @@ package games.paths.pathfinding
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
+		public static const STRAIGHT_COST:int = 10;
+		public static const DIAG_COST:int = 14;
+		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function Astar( map:Map ) 
