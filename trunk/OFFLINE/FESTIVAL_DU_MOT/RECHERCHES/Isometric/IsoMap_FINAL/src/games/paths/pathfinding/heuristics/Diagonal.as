@@ -6,13 +6,12 @@
  */
 package games.paths.pathfinding.heuristics 
 {
+	import games.paths.pathfinding.Astar;
 	
 	public class Diagonal implements IHeuristic
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
-		
-		private const DIAGCOST:Number = Math.SQRT2;
 		
 		private var _dx:Number;
 		private var _dy:Number;		
@@ -47,7 +46,7 @@ package games.paths.pathfinding.heuristics
 			_diag = _dx < _dy ? _dx : _dy;			
 			_straight = dx + _dy;
 			
-			return DIAGCOST * _diag + ( _straight - 2 * _diag );
+			return Astar.DIAG_COST * _diag + Astar.STRAIGHT_COST * ( _straight - 2 * _diag );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
