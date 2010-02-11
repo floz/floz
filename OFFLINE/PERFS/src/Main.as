@@ -12,12 +12,36 @@
 		private var phase:int;
 		private var event:Event = new Event( Event.COMPLETE );
 		private var array:/*Class2*/Array = [];
+		private var _a:Array = [];
 		
 		private var p1:Point = new Point( 234.55, 21 );
 		private var p2:Point = new Point( 132.1, 98.3 );
 		
 		public function Main():void 
 		{			
+			_a.push( false );
+			_a.push( true );
+			_a.push( true );
+			_a.push( false );
+			_a.push( false );
+			_a.push( true );
+			_a.push( false );
+			_a.push( true );
+			_a.push( true );
+			_a.push( true );
+			_a.push( true );
+			_a.push( false );
+			_a.push( false );
+			_a.push( false );
+			_a.push( true );
+			_a.push( true );
+			_a.push( true );
+			_a.push( true );
+			_a.push( true );
+			_a.push( true );
+			_a.push( true );
+			_a.push( true );
+			
 			stage.addEventListener( MouseEvent.CLICK, onClick );
 		}
 		
@@ -27,17 +51,17 @@
 			if ( phase == 0 ) 
 			{
 				f = ppi;
-				trace( "for" );
+				trace( "continue" );
 			}
 			else if ( phase == 1 )
 			{
 				f = ipp;
-				trace( "while" );
-			}					
-			
+				trace( "tri" );
+			}
+
 			var debut:Number = 0;
 			var compteur:int;
-			for ( var i:int; i < 1000000; i++ )
+			for ( var i:int; i < 10000; i++ )
 			{
 				debut = getTimer();
 				f();
@@ -50,39 +74,34 @@
 		
 		private function ppi():void
 		{
-			var v:Vector.<String> = new Vector.<String>( 5, true );
-			v[ 0 ] = "tata";
-			v[ 1 ] = "azeaz";
-			v[ 2 ] = "azezae";
-			v[ 3 ] = "taerzerezta";
-			v[ 4 ] = "zerz";
-			
-			var s:String;
-			var i:int;
-			var n:int = v.length;
-			for ( i; i < n; ++i )
+			var cost:int;
+			var n:int = _a.length;
+			for ( var i:int; i < n; ++i )
 			{
-				s = v[ i ];
+				if ( _a[ i ] == false ) continue;
+				++cost;
 			}
 		}
 		
 		private function ipp():void
 		{
-			var v:Vector.<String> = new Vector.<String>( 5, true );
-			v[ 0 ] = "tata";
-			v[ 1 ] = "azeaz";
-			v[ 2 ] = "azezae";
-			v[ 3 ] = "taerzerezta";
-			v[ 4 ] = "zerz";
+			var a:Array = tri();
 			
-			var s:String;
-			var i:int = v.length;
-			while ( --i > -1 )
-			{
-				s = v[ i ];
-			}
+			var cost:int;
+			var n:int = a.length;
+			for ( var i:int; i < n; ++i )
+				++cost;
 		}
 		
+		private function tri():Array
+		{
+			var a:Array = [];
+			var n:int = _a.length;
+			for ( var i:int; i < n; ++i )
+				if ( _a[ i ] ) a[ i ] = _a[ i ];
+			
+			return a;
+		}
 	}
 	
 }
