@@ -27,14 +27,14 @@ package fr.floz.isometric.geom
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public static function screenToIso( p:Point3D ):Point3D
+		public static function screenToIso( x:Number = 0, y:Number = 0, z:Number = 0 ):Point3D
 		{
-			return axoTransform.screenToSpace( p );
+			return axoTransform.screenToSpace( x, y, z  );
 		}
 		
-		public static function isoToScreen( p:Point3D ):Point3D
+		public static function isoToScreen( x:Number = 0, y:Number = 0, z:Number = 0 ):Point3D
 		{
-			return axoTransform.spaceToScreen( p );
+			return axoTransform.spaceToScreen( x, y, z );
 		}
 		
 		public static function getDepth( p:Point3D ):Number

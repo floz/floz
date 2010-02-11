@@ -15,7 +15,6 @@ package games.scenes.maps
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _datas:Array;
-		private var _astar:Astar;
 		
 		private var _width:int;
 		private var _height:int;
@@ -26,8 +25,10 @@ package games.scenes.maps
 		
 		public function Map( datas:Array ) 
 		{
-			this.datas = datas;
-			this._astar = new Astar( this );
+			this._datas = datas;
+			
+			_width = _datas[ 0 ].length;
+			_height = _datas.length;
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -38,26 +39,18 @@ package games.scenes.maps
 		
 		public function isWalkable( x:int, y:int ):Boolean
 		{
-			if ( x < 0 || x >= _width || y < 0 || y >= _height ) return false;
-			return ( _datas[ y ][ x ] == 0 );
+			if ( !isInside( x, y ) || _datas[ y ][ x ] == 1 ) return false;
+			return true;
 		}
 		
-		public function findPath( start:Point, end:Point ):void
+		public function isInside( x:int, y:int ):Boolean
 		{
-			// TODO renvoyer le chemin, quel type ?
+			return !( x < 0 || x >= _width || y < 0 || y >= _height );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
 		public function get datas():Array { return _datas; }
-		
-		public function set datas( value:Array ):void 
-		{
-			_datas = value;
-			
-			_width = _datas[ 0 ].length;
-			_height = _datas.length;
-		}
 		
 	}
 	
