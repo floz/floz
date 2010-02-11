@@ -33,9 +33,6 @@ package
 		
 		private var _world:World;
 		
-		[Embed(source="../docs/arbre.png" )]
-		private var _arbre:Class;
-		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------

@@ -64,6 +64,11 @@ package games.scenes
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
+		public function getTile( x:int, y:int ):Tile
+		{
+			return null;
+		}
+		
 		public function getGridTile( x:int, y:int ):Tile
 		{
 			return _grid.getTile( x, y );
