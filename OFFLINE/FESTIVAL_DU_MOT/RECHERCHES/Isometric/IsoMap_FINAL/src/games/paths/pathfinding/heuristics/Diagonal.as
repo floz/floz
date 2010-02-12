@@ -44,7 +44,7 @@ package games.paths.pathfinding.heuristics
 			_vy = _dy < 0 ? -_dy : _dy;
 			
 			_diag = _dx < _dy ? _dx : _dy;			
-			_straight = dx + _dy;
+			_straight = _dx + _dy;
 			
 			return Astar.DIAG_COST * _diag + Astar.STRAIGHT_COST * ( _straight - 2 * _diag );
 		}

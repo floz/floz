@@ -22,8 +22,8 @@ package games.scenes.grids
 		
 		private var _tiles:Vector.<Vector.<Tile>>;
 		
-		private var _rows:int;
-		private var _columns:int;
+		private var _width:int;
+		private var _height:int;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -35,8 +35,8 @@ package games.scenes.grids
 			this._map = map;
 			this._type = type;
 			
-			_rows = _map.datas.length;
-			_columns = _map.datas[ 0 ].length;
+			_width = _map.width;
+			_height = _map.height;
 			
 			build();
 		}
@@ -57,13 +57,13 @@ package games.scenes.grids
 			var v:Vector.<Tile>;
 			
 			var i:int, j:int;
-			for ( i = 0; i < _rows; ++i ) // y
+			for ( i = 0; i < _height; ++i ) // y
 			{
-				v = new Vector.<Tile>( _columns, true );
+				v = new Vector.<Tile>( _width, true );
 				_tiles[ i ] = v;
 				
 				px = 0;
-				for ( j = 0; j < _columns; ++j ) // x
+				for ( j = 0; j < _width; ++j ) // x
 				{
 					tile = TileFactory.create( _tileSize, _type );
 					tile.x = px;

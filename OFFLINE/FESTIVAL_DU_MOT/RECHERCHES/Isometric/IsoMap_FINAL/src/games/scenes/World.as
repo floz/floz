@@ -7,7 +7,9 @@
 package games.scenes 
 {
 	import flash.display.Sprite;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import games.core.IntPoint;
 	import games.paths.pathfinding.Astar;
 	import games.scenes.grids.Grid;
 	import games.scenes.maps.Map;
@@ -72,6 +74,11 @@ package games.scenes
 		public function getGridTile( x:int, y:int ):Tile
 		{
 			return _grid.getTile( x, y );
+		}
+		
+		public function findPath( start:Point, end:Point ):Vector.<IntPoint>
+		{
+			return _astar.findPath( start, end );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
