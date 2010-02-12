@@ -39,18 +39,21 @@ package games.scenes.maps
 		
 		public function isWalkable( x:int, y:int ):Boolean
 		{
-			if ( !isInside( x, y ) || _datas[ y ][ x ] == 1 ) return false;
-			return true;
+			return ( isInside( x, y ) && ( _datas[ y ][ x ] == 0 ) );
 		}
 		
 		public function isInside( x:int, y:int ):Boolean
 		{
-			return !( x < 0 || x >= _width || y < 0 || y >= _height );
+			return ( ( x >= 0 && x < _width ) && ( y >= 0 && y < _height ) );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
 		public function get datas():Array { return _datas; }
+		
+		public function get width():int { return _width; }
+		
+		public function get height():int { return _height; }
 		
 	}
 	

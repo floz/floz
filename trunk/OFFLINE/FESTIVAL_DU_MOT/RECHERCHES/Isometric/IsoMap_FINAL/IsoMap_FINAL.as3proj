@@ -6,10 +6,10 @@
     <movie input="" />
     <movie path="bin\IsoMapFINAL.swf" />
     <movie fps="30" />
-    <movie width="800" />
-    <movie height="600" />
+    <movie width="960" />
+    <movie height="580" />
     <movie version="10" />
-    <movie background="#CCCCCC" />
+    <movie background="#DDDDDD" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -32,6 +32,8 @@
     <option useResourceBundleMetadata="True" />
     <option warnings="True" />
     <option verboseStackTraces="False" />
+    <option linkReport="" />
+    <option loadExterns="" />
     <option additional="" />
     <option customSDK="" />
   </build>

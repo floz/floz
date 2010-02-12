@@ -9,8 +9,12 @@ package
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
+	import flash.geom.Point;
+	import flash.utils.Timer;
 	import fr.floz.isometric.geom.IsoMath;
 	import fr.floz.isometric.geom.Point3D;
+	import games.core.IntPoint;
 	import games.scenes.tiles.Tile;
 	import games.scenes.types.RepresentationType;
 	import games.scenes.World;
@@ -20,18 +24,25 @@ package
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _datas:Array = [ [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 ],
-									 [ 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0 ],
-									 [ 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0 ],
-									 [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0 ],
-									 [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-									 [ 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0 ],
-									 [ 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0 ],
-									 [ 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0 ],
-									 [ 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0 ],
-									 [ 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0 ] ];
+		private var _datas:Array = [ [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ],
+									 [ 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0 ],
+									 [ 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0 ],
+									 [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0 ],
+									 [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ],
+									 [ 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1 ],
+									 [ 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0 ],
+									 [ 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0 ],
+									 [ 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0 ],
+									 [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], 
+									 [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], 
+									 [ 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], ];
 		
 		private var _world:World;
+		private var _currentPos:Point;
+		
+		private var _path:Vector.<IntPoint>;
+		
+		private var _timer:Timer;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -45,18 +56,42 @@ package
 			_world.showGrid = true;
 			addChild( _world );
 			
+			_currentPos = new Point();
+			_world.getGridTile( 0, 0 ).color = 0xff0000;
+			
+			_timer = new Timer( 200 );
+			_timer.addEventListener( TimerEvent.TIMER, timerHandler );
+			
 			addEventListener( MouseEvent.CLICK, clickHandler );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
+		private function timerHandler(e:TimerEvent):void 
+		{
+			if ( _path.length == 0 )
+			{
+				_timer.stop();
+				return;
+			}
+			
+			var p:IntPoint = _path.shift();
+			var t:Tile = _world.getGridTile( p.x, p.y );
+			t.color = 0xff0000;
+		}
+		
 		private function clickHandler(e:MouseEvent):void 
 		{
 			var p:Point3D = IsoMath.screenToIso( _world.mouseX, _world.mouseY );
-			var tile:Tile = _world.getGridTile( p.x >> 5, p.y >> 5 );
-			if ( !tile ) return;
+			_path = _world.findPath( _currentPos, new Point( p.x >> 5, p.y >> 5 ) );
+			trace("_path : " + _path);
+			//var tile:Tile = _world.getGridTile( p.x >> 5, p.y >> 5 );
+			//if ( !tile ) return;
 			
-			tile.color = 0xff0000;
+			if( _path )
+				_timer.start();
+			
+			//tile.color = 0xff0000;
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
