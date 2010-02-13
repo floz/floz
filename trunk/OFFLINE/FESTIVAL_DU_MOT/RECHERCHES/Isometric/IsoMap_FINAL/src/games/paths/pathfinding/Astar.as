@@ -10,7 +10,9 @@ package games.paths.pathfinding
 	import flash.utils.Dictionary;
 	import games.core.IntPoint;
 	import games.paths.pathfinding.heuristics.Diagonal;
+	import games.paths.pathfinding.heuristics.Euclidian;
 	import games.paths.pathfinding.heuristics.IHeuristic;
+	import games.paths.pathfinding.heuristics.Manhattan;
 	import games.scenes.maps.Map;
 	
 	public class Astar 
@@ -26,10 +28,8 @@ package games.paths.pathfinding
 		
 		private var _startNode:Node;
 		private var _endNode:Node;
-		private var _openList:Vector.<Node>;
-		private var _closedList:Vector.<Node>;
-		
-		private var _nodesPath:Dictionary = new Dictionary( true );
+		private var _openList:Array;
+		private var _closedList:Array;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -89,45 +89,44 @@ package games.paths.pathfinding
 			var f:Number;
 			var cost:Number;
 			
-			var x:int, y:int;	
-			while ( node != _endNode )
+			var nodeFound:Boolean;
+			
+			var x:int, y:int;
+			while ( !nodeFound )
 			{
 				startX = node.x - 1 < 0 ? 0 : node.x - 1;
 				startY = node.y - 1 < 0 ? 0 : node.y - 1;
-				endX = node.x + 1 > _width ? _width - 1 : node.x + 1;
-				endY = node.y + 1 > _height ? _height - 1 : node.y + 1;
+				endX = node.x + 1 >= _width ? _width - 1 : node.x + 1;
+				endY = node.y + 1 >= _height ? _height - 1 : node.y + 1;
 				
-				for ( y = startY; y < endY; ++y )
+				for ( y = startY; y <= endY; ++y )
 				{
-					for ( x = startX; x < endX; ++x )
+					for ( x = startX; x <= endX; ++x )
 					{
-						if ( !_map.isWalkable( x, y ) || !_map.isWalkable( node.x, y ) || !_map.isWalkable( x, node.y ) )
-							continue;
-						
 						testNode = _nodes[ y ][ x ];
 						
+						if ( testNode == node || !_map.isWalkable( x, y ) || !_map.isWalkable( node.x, y ) || !_map.isWalkable( x, node.y ) )
+							continue;
+						
 						cost = STRAIGHT_COST;
-						if ( node.x != testNode.x || node.y != testNode.y )
+						if ( !( node.x == testNode.x || node.y == testNode.y ) )
 							cost = DIAG_COST;
 						
-						g = testNode.g + cost;
-						h = heuristic.getCost( testNode.x, testNode.y, _endNode.x, _endNode.y );
-						f = g + h;
+						g = node.g + cost;
+						f = g + heuristic.getCost( testNode.x, testNode.y, _endNode.x, _endNode.y );
 						
-						if ( hasNode( _openList, testNode ) || hasNode( _closedList, testNode ) )
+						if ( _openList.indexOf( testNode ) != -1 || _closedList.indexOf( testNode ) != -1 )
 						{
 							if ( testNode.f > f )
 							{
-								testNode.g = g;
-								testNode.h = h;
 								testNode.f = f;
+								testNode.g = g;								
 								testNode.parent = node;
 							}
 						}
 						else
 						{
 							testNode.g = g;
-							testNode.h = h;
 							testNode.f = f;
 							testNode.parent = node;
 							
@@ -140,63 +139,34 @@ package games.paths.pathfinding
 				if ( _openList.length == 0 ) 
 					return null;
 				
-				_openList = sortNodes( _openList );
+				_openList.sortOn( "f", Array.NUMERIC );
 				node = _openList.shift();
+				
+				if ( node == _endNode ) 
+					nodeFound = true;
 			}
 			
 			return getPath();
 		}
 		
-		private function hasNode( list:Vector.<Node>, node:Node ):Boolean
-		{
-			var n:int = list.length;
-			for ( var i:int; i < n; ++i )
-				if ( list[ i ] == node ) return true;
-			
-			return false;
-		}
-		
-		private function sortNodes( list:Vector.<Node> ):Vector.<Node>
-		{
-			var tmp:Node;
-			
-			var i:int;
-			var n:int = list.length - 1;
-			
-			var sorted:Boolean = false;
-			while ( !sorted )
-			{
-				sorted = true;
-				for ( i = 0; i < n; ++i )
-				{
-					if ( list[ i ].f > list[ i + 1 ].f )
-					{
-						tmp = list[ i + 1 ];
-						list[ i + 1 ] = list[ i ];
-						list[ i ] = tmp;
-						
-						sorted = false;
-					}
-				}
-			}
-			
-			return list;
-		}
-		
 		private function getPath():Vector.<IntPoint>
 		{
-			trace("Astar.getPath");
 			var nodes:Vector.<IntPoint> = new Vector.<IntPoint>();
 			
 			var p:IntPoint = new IntPoint( _endNode.x, _endNode.y );
 			nodes[ 0 ] = p;
 			
+			var startNodeReached:Boolean;
+			
 			var node:Node = _endNode;
-			while ( node != _startNode )
+			while ( !startNodeReached )
 			{
 				node = node.parent;
 				p = new IntPoint( node.x, node.y );
 				nodes.unshift( p );
+				
+				if ( node == _startNode )
+					startNodeReached = true;
 			}
 			
 			return nodes;
@@ -209,15 +179,14 @@ package games.paths.pathfinding
 			if ( !_map.isWalkable( start.x, start.y ) || !_map.isWalkable( end.x, end.y ) || ( start.x == end.x && start.y == end.y ) ) 
 				return null;
 			
-			_openList = new Vector.<Node>();
-			_closedList = new Vector.<Node>();
+			_openList = [];
+			_closedList = [];
 			
 			_startNode = _nodes[ start.y ][ start.x ];
 			_endNode = _nodes[ end.y ][ end.x ];
 			
 			_startNode.g = 0;
-			_startNode.h = heuristic.getCost( start.x, start.y, end.x, end.y );
-			_startNode.f = _startNode.g + _startNode.h;
+			_startNode.f = heuristic.getCost( start.x, start.y, end.x, end.y );
 			
 			_openList[ 0 ] = _startNode;
 			
@@ -235,9 +204,8 @@ final internal class Node
 	public var x:int;
 	public var y:int;
 	
-	public var g:Number;
-	public var h:Number;
-	public var f:Number;
+	public var g:Number = 0;
+	public var f:Number = 0;
 	
 	public var walkable:Boolean;
 	public var parent:Node;
@@ -246,6 +214,11 @@ final internal class Node
 	{
 		this.x = x;
 		this.y = y;
+	}
+	
+	public function toString():String
+	{
+		return "Node[ x : " + x + ", y : " + y + "]";
 	}
 	
 }

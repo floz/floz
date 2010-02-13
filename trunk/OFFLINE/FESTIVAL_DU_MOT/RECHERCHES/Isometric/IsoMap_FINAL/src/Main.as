@@ -11,6 +11,7 @@ package
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
+	import flash.utils.getTimer;
 	import flash.utils.Timer;
 	import fr.floz.isometric.geom.IsoMath;
 	import fr.floz.isometric.geom.Point3D;
@@ -24,18 +25,18 @@ package
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _datas:Array = [ [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ],
-									 [ 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0 ],
-									 [ 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0 ],
-									 [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0 ],
-									 [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ],
-									 [ 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1 ],
-									 [ 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0 ],
-									 [ 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0 ],
-									 [ 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0 ],
-									 [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], 
-									 [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], 
-									 [ 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], ];
+		private var _datas:Array = [ [ 0, 0, 0, , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+									 [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+									 [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0 ],
+									 [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0 ],
+									 [ 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+									 [ 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 ],
+									 [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
+									 [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
+									 [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+									 [ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+									 [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+									 [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ];
 		
 		private var _world:World;
 		private var _currentPos:Point;
@@ -59,7 +60,7 @@ package
 			_currentPos = new Point();
 			_world.getGridTile( 0, 0 ).color = 0xff0000;
 			
-			_timer = new Timer( 200 );
+			_timer = new Timer( 50 );
 			_timer.addEventListener( TimerEvent.TIMER, timerHandler );
 			
 			addEventListener( MouseEvent.CLICK, clickHandler );
@@ -75,23 +76,25 @@ package
 				return;
 			}
 			
+			_world.getGridTile( _currentPos.x, _currentPos.y ).color = 0xffffff;
+			
 			var p:IntPoint = _path.shift();
 			var t:Tile = _world.getGridTile( p.x, p.y );
 			t.color = 0xff0000;
+			
+			_currentPos.x = p.x;
+			_currentPos.y = p.y;
 		}
 		
 		private function clickHandler(e:MouseEvent):void 
 		{
 			var p:Point3D = IsoMath.screenToIso( _world.mouseX, _world.mouseY );
-			_path = _world.findPath( _currentPos, new Point( p.x >> 5, p.y >> 5 ) );
-			trace("_path : " + _path);
-			//var tile:Tile = _world.getGridTile( p.x >> 5, p.y >> 5 );
-			//if ( !tile ) return;
 			
-			if( _path )
-				_timer.start();
+			var d:Number = getTimer();
+			_path = _world.findPath( _currentPos, new Point( p.x >> 5, p.y >> 5 ) );			
+			trace( getTimer() - d );
 			
-			//tile.color = 0xff0000;
+			if( _path )	_timer.start();
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
