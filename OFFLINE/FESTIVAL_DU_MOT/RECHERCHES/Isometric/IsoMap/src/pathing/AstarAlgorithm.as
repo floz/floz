@@ -34,7 +34,7 @@ package pathing
 		private var _startNode:Node;
 		private var _endNode:Node;	
 		
-		private var _heuristic:IHeuristic = new Diagonal();
+		private var _heuristic:IHeuristic = new Euclidian();
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -86,9 +86,13 @@ package pathing
 			while ( node != _endNode )
 			{
 				var startX:int = node.x - 1 < 0 ? 0 : node.x - 1;
+				trace( "startX : " + startX );
 				var startY:int = node.y - 1 < 0 ? 0 : node.y - 1;
+				trace( "startY : " + startY );
 				var endX:int = node.x + 1 >= _row ? _row - 1 : node.x + 1;
+				trace( "endX : " + endX );
 				var endY:int = node.y + 1 >= _columns ? _columns - 1 : node.y + 1;
+				trace( "endY : " + endY );
 				
 				var cost:Number;
 				

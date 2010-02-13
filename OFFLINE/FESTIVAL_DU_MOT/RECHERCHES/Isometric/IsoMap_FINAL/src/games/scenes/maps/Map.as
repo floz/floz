@@ -39,7 +39,7 @@ package games.scenes.maps
 		
 		public function isWalkable( x:int, y:int ):Boolean
 		{
-			return ( isInside( x, y ) && ( _datas[ y ][ x ] == 0 ) );
+			return ( isInside( x, y ) && _datas[ y ][ x ] == 0 );
 		}
 		
 		public function isInside( x:int, y:int ):Boolean
