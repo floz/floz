@@ -21,6 +21,10 @@ package games.scenes.tiles.primitives
 		
 		private const _position:Point3D = new Point3D();
 		
+		private var _p1:Point3D;
+		private var _p2:Point3D;
+		private var _p3:Point3D;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
@@ -34,21 +38,35 @@ package games.scenes.tiles.primitives
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
+		override protected function updateDatas():void 
+		{
+			_p1 = IsoMath.isoToScreen( _size, 0 );
+			_p2 = IsoMath.isoToScreen( _size, _size );
+			_p3 = IsoMath.isoToScreen( 0, _size );
+			
+			_datas[ 0 ] = 0;
+			_datas[ 1 ] = 0;
+			
+			_datas[ 2 ] = _p1.x;
+			_datas[ 3 ] = _p1.y;
+			
+			_datas[ 4 ] = _p2.x;
+			_datas[ 5 ] = _p2.y;
+			
+			_datas[ 6 ] = _p3.x;
+			_datas[ 7 ] = _p3.y;
+			
+			_datas[ 8 ] = 0;
+			_datas[ 9 ] = 0;
+		}
+		
 		override protected function build():void 
 		{
-			var p1:Point3D = IsoMath.isoToScreen( _size, 0 );
-			var p2:Point3D = IsoMath.isoToScreen( _size, _size );
-			var p3:Point3D = IsoMath.isoToScreen( 0, _size );
-			
 			var g:Graphics = this.graphics;
 			g.clear();
 			g.lineStyle( 1, 0x000000, 1, true, LineScaleMode.NONE, CapsStyle.NONE, JointStyle.MITER );
 			g.beginFill( _color, .2 );
-			g.moveTo( 0, 0 );
-			g.lineTo( p1.x, p1.y );
-			g.lineTo( p2.x, p2.y );
-			g.lineTo( p3.x, p3.y );
-			g.lineTo( 0, 0 );
+			g.drawPath( _COMMANDS, _datas );
 			g.endFill();
 		}
 		
