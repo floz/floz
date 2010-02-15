@@ -30,17 +30,32 @@ package games.scenes.tiles.primitives
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
+		override protected function updateDatas():void
+		{
+			_datas[ 0 ] = 0;
+			_datas[ 1 ] = 0;
+			
+			_datas[ 2 ] = _size;
+			_datas[ 3 ] = 0;
+			
+			_datas[ 4 ] = _size;
+			_datas[ 5 ] = _size;
+			
+			_datas[ 6 ] = 0;
+			_datas[ 7 ] = _size;
+			
+			_datas[ 8 ] = 0;
+			_datas[ 9 ] = 0;
+		}
+		
 		override protected function build():void 
 		{
 			var g:Graphics = this.graphics;
 			g.clear();
 			g.lineStyle( 1, 0x000000, 1, true, LineScaleMode.NONE, CapsStyle.NONE, JointStyle.MITER );
 			g.beginFill( _color, .2 );
-			g.moveTo( 0, 0 );
-			g.lineTo( _size, 0 );
-			g.lineTo( _size, _size );
-			g.lineTo( 0, _size );
-			g.lineTo( 0, 0 );
+			g.drawPath( _COMMANDS, _datas );
+			trace("_COMMANDS : " + _COMMANDS);
 			g.endFill();
 		}
 		

@@ -23,6 +23,10 @@ package games.scenes.maps
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
+		/**
+		 * Contient toutes les données de la map dans un tableau à deux dimensions.
+		 * @param	datas
+		 */
 		public function Map( datas:Array ) 
 		{
 			this._datas = datas;

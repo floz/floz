@@ -35,6 +35,12 @@ package games.scenes
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
+		/**
+		 * Crée un monde.
+		 * @param	tileSize
+		 * @param	datas
+		 * @param	type
+		 */
 		public function World( tileSize:int, datas:Array, type:String = RepresentationType.NORMAL ) 
 		{
 			this._tileSize = tileSize;
