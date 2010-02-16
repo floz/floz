@@ -27,7 +27,7 @@ package games.scenes.tiles
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Tile( size:int ) 
+		public function Tile( size:int )
 		{
 			this.size = size;
 			
