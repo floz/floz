@@ -33,6 +33,8 @@ package games.scenes.maps
 			
 			_width = _datas[ 0 ].length;
 			_height = _datas.length;
+			
+			initMap();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
