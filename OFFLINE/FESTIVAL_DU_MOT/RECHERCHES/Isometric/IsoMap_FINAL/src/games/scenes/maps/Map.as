@@ -15,7 +15,6 @@ package games.scenes.maps
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _datas:Array;
-		private var _tiles:Vector.<Tile>
 		
 		private var _width:int;
 		private var _height:int;
@@ -34,8 +33,6 @@ package games.scenes.maps
 			
 			_width = _datas[ 0 ].length;
 			_height = _datas.length;
-			
-			initMap();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------

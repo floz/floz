@@ -38,16 +38,6 @@ package fr.minuit4.games.tilebased.core.maps
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		private function convertVector( datas:Vector.<Vector.<int>> ):Vector.<Vector.<TileDatas>>
-		{
-			// TODO
-		}
-		
-		private function convertArray( datas:Vector.<Vector.<int>> ):Vector.<Vector.<TileDatas>>
-		{
-			// TODO
-		}
-		
 		private function initMap():void
 		{
 			_width = _datas[ 0 ].length;
@@ -57,16 +47,6 @@ package fr.minuit4.games.tilebased.core.maps
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
-		
-		public function setDatasFromVector( datas:Vector.Vector.<<int>> ):void 
-		{
-			datas = convertVector( datas );
-		}
-		
-		public function setDatasFromArray( datas:Array ):void
-		{
-			datas = convertArray( datas );
-		}
 		
 		public function isWalkable( x:int, y:int ):Boolean
 		{

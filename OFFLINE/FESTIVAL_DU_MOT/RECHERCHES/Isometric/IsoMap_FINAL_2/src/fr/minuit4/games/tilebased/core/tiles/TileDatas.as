@@ -27,9 +27,11 @@ package fr.minuit4.games.tilebased.core.tiles
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function TileDatas() 
+		public function TileDatas( x:int, y:int, flag:int = State.FREE ) 
 		{
-			
+			this.x = x;
+			this.y = y;
+			this.flag = flag;
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
