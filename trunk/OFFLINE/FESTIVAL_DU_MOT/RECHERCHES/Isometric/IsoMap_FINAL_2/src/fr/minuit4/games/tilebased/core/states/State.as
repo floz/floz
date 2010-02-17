@@ -15,7 +15,7 @@ package fr.minuit4.games.tilebased.core.states
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		public static const FREE:State = new State( 0x000000, "free" );
-		public static const UNWALKABLE:State = new State( 0x000001, "name" );
+		public static const UNWALKABLE:State = new State( 0x000002, "unwalkable" );
 		
 		public var value:int;
 		public var name:String;
@@ -33,6 +33,26 @@ package fr.minuit4.games.tilebased.core.states
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public static function getStateByValue( value:int ):State
+		{
+			switch( value )
+			{
+				case State.FREE.value: return State.FREE; break;
+				case State.UNWALKABLE.value: return State.UNWALKABLE; break;
+				default: return State.FREE; break;
+			}
+		}
+		
+		public static function getStateByName( name:String ):State
+		{
+			switch( name )
+			{
+				case State.FREE.name: return State.FREE; break;
+				case State.UNWALKABLE.name: return State.UNWALKABLE; break;
+				default: return State.FREE; break;
+			}
+		}
 		
 		public function valueOf():int
 		{
