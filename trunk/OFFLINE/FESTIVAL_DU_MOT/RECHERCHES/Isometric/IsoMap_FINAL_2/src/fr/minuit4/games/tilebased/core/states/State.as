@@ -4,26 +4,28 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package games.paths.pathfinding.heuristics 
+package fr.minuit4.games.tilebased.core.states 
 {
 	
-	public class Manhattan implements IHeuristic
+	public class State
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _dx:Number;
-		private var _dy:Number;
-		private var _vx:Number;
-		private var _vy:Number;
-		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
-		// - CONSTRUCTOR -----------------------------------------------------------------
+		public static const FREE:State = new State( 0x000000, "free" );
+		public static const UNWALKABLE:State = new State( 0x000001, "name" );
 		
-		public function Manhattan() 
+		public var value:int;
+		public var name:String;
+		
+		// - CONSTRUCTOR ----------------------------------------------------------------- 
+		
+		public function State( value:int, name:String ) 
 		{
-			
+			this.value = value;
+			this.name = name;
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -32,15 +34,14 @@ package games.paths.pathfinding.heuristics
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function getCost( x1:int, y1:int, x2:int, y2:int ):Number
+		public function valueOf():int
 		{
-			_dx = x1 - x2;
-			_vx = _dx < 0 ? -_dx : _dx;
-			
-			_dy = y1 + y2;
-			_vy = _dy < 0 ? -_dy : _dy;
-			
-			return _vx + _vy;
+			return value;
+		}
+		
+		public function toString():String
+		{
+			return name;
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
