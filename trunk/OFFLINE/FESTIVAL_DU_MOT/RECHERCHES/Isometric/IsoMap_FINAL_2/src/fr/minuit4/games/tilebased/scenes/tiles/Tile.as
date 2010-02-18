@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.games.tilebased.core.tiles 
+package fr.minuit4.games.tilebased.scenes.tiles 
 {
 	import flash.display.Sprite;
 	

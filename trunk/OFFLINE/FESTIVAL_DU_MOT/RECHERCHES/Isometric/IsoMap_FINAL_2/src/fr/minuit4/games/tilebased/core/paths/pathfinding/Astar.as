@@ -8,12 +8,11 @@ package fr.minuit4.games.tilebased.core.paths.pathfinding
 {
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
-	import games.core.IntPoint;
-	import games.paths.pathfinding.heuristics.Diagonal;
-	import games.paths.pathfinding.heuristics.Euclidian;
-	import games.paths.pathfinding.heuristics.IHeuristic;
-	import games.paths.pathfinding.heuristics.Manhattan;
-	import games.scenes.maps.Map;
+	import fr.minuit4.games.tilebased.core.maps.Map;
+	import fr.minuit4.games.tilebased.core.paths.pathfinding.heuristics.Diagonal;
+	import fr.minuit4.games.tilebased.core.paths.pathfinding.heuristics.IHeuristic;
+	import fr.minuit4.games.tilebased.core.tiles.TileDatas;
+	import fr.minuit4.geom.IntPoint;
 	
 	public class Astar 
 	{
@@ -21,13 +20,11 @@ package fr.minuit4.games.tilebased.core.paths.pathfinding
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _map:Map;
-		private var _width:int;
-		private var _height:int;
 		
-		private var _nodes:Vector.<Vector.<Node>>;
+		private var _nodes:Vector.<Vector.<TileDatas>>;
 		
-		private var _startNode:Node;
-		private var _endNode:Node;
+		private var _startNode:TileDatas;
+		private var _endNode:TileDatas;
 		private var _openList:Array;
 		private var _closedList:Array;
 		
@@ -43,41 +40,16 @@ package fr.minuit4.games.tilebased.core.paths.pathfinding
 		public function Astar( map:Map ) 
 		{
 			this._map = map;
-			
-			_width = _map.width;
-			_height = _map.height;
-			
-			initNodes();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		private function initNodes():void
-		{
-			_nodes = new Vector.<Vector.<Node>>( _height, true );
-			
-			var node:Node;
-			var nodes:Vector.<Node>;
-			var j:int;
-			for ( var i:int; i < _height; ++i )
-			{
-				nodes = new Vector.<Node>( _width, true );
-				for ( j = 0; j < _width; ++j )
-				{
-					node = new Node( j, i );
-					node.walkable = _map.isWalkable( j, i );
-					nodes[ j ] = node;
-				}
-				_nodes[ i ] = nodes;
-			}
-		}
-		
 		private function search():Vector.<IntPoint>
 		{
-			var testNode:Node;
-			var node:Node = _startNode;
+			var testNode:TileDatas;
+			var node:TileDatas = _startNode;
 			
 			var startX:int;
 			var startY:int;
@@ -85,7 +57,6 @@ package fr.minuit4.games.tilebased.core.paths.pathfinding
 			var endY:int;
 			
 			var g:Number;
-			var h:Number;
 			var f:Number;
 			var cost:Number;
 			
@@ -96,8 +67,8 @@ package fr.minuit4.games.tilebased.core.paths.pathfinding
 			{
 				startX = node.x - 1 < 0 ? 0 : node.x - 1;
 				startY = node.y - 1 < 0 ? 0 : node.y - 1;
-				endX = node.x + 1 >= _width ? _width - 1 : node.x + 1;
-				endY = node.y + 1 >= _height ? _height - 1 : node.y + 1;
+				endX = node.x + 1 >= _map.width ? _map.width - 1 : node.x + 1;
+				endY = node.y + 1 >= _map.height ? _map.height - 1 : node.y + 1;
 				
 				for ( y = startY; y <= endY; ++y )
 				{
@@ -158,7 +129,7 @@ package fr.minuit4.games.tilebased.core.paths.pathfinding
 			
 			var startNodeReached:Boolean;
 			
-			var node:Node = _endNode;
+			var node:TileDatas = _endNode;
 			while ( !startNodeReached )
 			{
 				node = node.parent;
@@ -195,30 +166,6 @@ package fr.minuit4.games.tilebased.core.paths.pathfinding
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
-	}
-	
-}
-
-final internal class Node
-{
-	public var x:int;
-	public var y:int;
-	
-	public var g:Number = 0;
-	public var f:Number = 0;
-	
-	public var walkable:Boolean;
-	public var parent:Node;
-	
-	public function Node( x:int, y:int )
-	{
-		this.x = x;
-		this.y = y;
-	}
-	
-	public function toString():String
-	{
-		return "Node[ x : " + x + ", y : " + y + "]";
 	}
 	
 }
