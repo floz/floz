@@ -11,17 +11,17 @@ package fr.minuit4.games.tilebased.core.maps
 	import fr.minuit4.games.tilebased.core.tiles.TileDatas;
 	import games.paths.pathfinding.Astar;
 	
-	public class Map extends EventDispatcher
+	public class Map extends EventDispatcher implements IMap
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _datas:Vector.<Vector.<TileDatas>>;
 		
-		private var _width:int;
-		private var _height:int;
-		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
+		
+		public var width:int;
+		public var height:int;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
@@ -40,8 +40,8 @@ package fr.minuit4.games.tilebased.core.maps
 		
 		private function initMap():void
 		{
-			_width = _datas[ 0 ].length;
-			_height = _datas.length;
+			width = _datas[ 0 ].length;
+			height = _datas.length;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
@@ -59,6 +59,7 @@ package fr.minuit4.games.tilebased.core.maps
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
 		public function get datas():Vector.<Vector.<TileDatas>> { return _datas; }
+		
 		public function set datas( value:Vector.<Vector.<TileDatas>> ):void
 		{
 			if ( value == null ) 
@@ -67,10 +68,6 @@ package fr.minuit4.games.tilebased.core.maps
 			_datas = value;
 			initMap();
 		}
-		
-		public function get width():int { return _width; }
-		
-		public function get height():int { return _height; }
 		
 	}
 	

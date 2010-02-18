@@ -6,9 +6,10 @@
  */
 package fr.minuit4.games.tilebased.core.maps 
 {
+	import flash.events.IEventDispatcher;
 	import fr.minuit4.games.tilebased.core.tiles.TileDatas;
 	
-	public interface IMap 
+	public interface IMap extends IEventDispatcher
 	{
 		
 		public function isWalkable( x:int, y:int ):Boolean;
