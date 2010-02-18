@@ -21,7 +21,7 @@ package fr.minuit4.games.tilebased.utils
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public static function fromArray( datas:/*Array*/Array ):Vector.<TileDatas>
+		public static function fromArray( datas:/*Array*/Array ):Vector.<Vector.<TileDatas>>
 		{
 			var tiles:Vector.<Vector.<TileDatas>> = new Vector.<Vector.<TileDatas>>( datas.length, true );
 			
@@ -33,6 +33,7 @@ package fr.minuit4.games.tilebased.utils
 			for ( ; i < n; ++i )
 			{
 				v = new Vector.<TileDatas>( datas[ i ].length, true );
+				m = v.length;
 				for ( j = 0; j < m; ++j )
 				{
 					t = new TileDatas( j, i, datas[ i ][ j ] );					
@@ -44,7 +45,7 @@ package fr.minuit4.games.tilebased.utils
 			return tiles;
 		}
 		
-		public static function fromVector( datas:Vector.<Vector.<int>> ):Vector.<TileDatas>
+		public static function fromVector( datas:Vector.<Vector.<int>> ):Vector.<Vector.<TileDatas>>
 		{
 			var tiles:Vector.<Vector.<TileDatas>> = new Vector.<Vector.<TileDatas>>( datas.length, true );
 			
@@ -56,6 +57,7 @@ package fr.minuit4.games.tilebased.utils
 			for ( ; i < n; ++i )
 			{
 				v = new Vector.<TileDatas>( datas[ i ].length, true );
+				m = v.length;
 				for ( j = 0; j < m; ++j )
 				{
 					t = new TileDatas( j, i, datas[ i ][ j ] );					

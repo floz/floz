@@ -21,13 +21,13 @@ package fr.minuit4.games.tilebased.core.tiles
 		public var g:Number = 0;
 		public var f:Number = 0;
 		
-		public var flag:int = State.FREE;
+		public var flag:int = State.FREE.value;
 		
 		public var parent:TileDatas;
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function TileDatas( x:int, y:int, flag:int = State.FREE ) 
+		public function TileDatas( x:int, y:int, flag:int = 0 ) 
 		{
 			this.x = x;
 			this.y = y;
@@ -39,6 +39,11 @@ package fr.minuit4.games.tilebased.core.tiles
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function toString():String
+		{
+			return "TileDatas [ x: " + x + ", y: " + y + ", flag : " + flag + " ] ";
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
