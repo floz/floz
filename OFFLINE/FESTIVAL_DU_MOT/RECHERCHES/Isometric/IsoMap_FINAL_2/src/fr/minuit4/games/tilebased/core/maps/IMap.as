@@ -10,9 +10,6 @@ package fr.minuit4.games.tilebased.core.maps
 	
 	public interface IMap 
 	{
-		public function setDatasFromVector( datas:Vector.<Vector.<int>> ):void;
-		
-		public function setDatasFromArray( datas:Array ):void;
 		
 		public function isWalkable( x:int, y:int ):Boolean;
 		

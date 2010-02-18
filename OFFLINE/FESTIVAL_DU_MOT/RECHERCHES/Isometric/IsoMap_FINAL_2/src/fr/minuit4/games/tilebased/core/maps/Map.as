@@ -42,8 +42,6 @@ package fr.minuit4.games.tilebased.core.maps
 		{
 			_width = _datas[ 0 ].length;
 			_height = _datas.length;
-			
-			dispatchEvent( new MapEvent( MapEvent.INITIALIZED ) );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
@@ -60,6 +58,7 @@ package fr.minuit4.games.tilebased.core.maps
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
+		public function get datas():Vector.<Vector.<TileDatas>> { return _datas; }
 		public function set datas( value:Vector.<Vector.<TileDatas>> ):void
 		{
 			if ( value == null ) 
@@ -68,7 +67,6 @@ package fr.minuit4.games.tilebased.core.maps
 			_datas = value;
 			initMap();
 		}
-		public function get datas():Vector.<Vector.<TileDatas>> { return _datas; }
 		
 		public function get width():int { return _width; }
 		
