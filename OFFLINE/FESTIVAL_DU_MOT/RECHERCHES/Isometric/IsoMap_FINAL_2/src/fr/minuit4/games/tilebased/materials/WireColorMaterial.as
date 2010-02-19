@@ -27,7 +27,7 @@ package fr.minuit4.games.tilebased.materials
 			_wireColor = color;
 			_wireAlpha = alpha;
 			
-			_graphicsStroke.fill = new GraphicsSolidFill( color, alpha );
+			_graphicsStroke.fill = new GraphicsSolidFill( _wireColor, _wireAlpha );
 			_graphicsStroke.thickness = 1;
 		}
 		
