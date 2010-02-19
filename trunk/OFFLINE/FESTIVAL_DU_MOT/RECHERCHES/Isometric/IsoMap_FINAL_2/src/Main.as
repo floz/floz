@@ -37,7 +37,7 @@ package
 		
 		public function Main() 
 		{
-			_world = new World( 32, MapDatasConverter.fromArray( _datas ), Orientation.ORTHOGONAL );
+			_world = new World( 32, MapDatasConverter.fromArray( _datas ), Orientation.ISOMETRIC );
 			_world.x = ( stage.stageWidth - _world.width ) * .5;
 			_world.y = ( stage.stageHeight - _world.height ) * .5;
 			_world.showGrid = true;

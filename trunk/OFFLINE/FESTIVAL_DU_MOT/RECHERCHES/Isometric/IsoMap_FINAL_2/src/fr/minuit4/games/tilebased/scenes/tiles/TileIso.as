@@ -15,6 +15,8 @@ package fr.minuit4.games.tilebased.scenes.tiles
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
+		private var _position:Point3D;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
@@ -22,6 +24,7 @@ package fr.minuit4.games.tilebased.scenes.tiles
 		public function TileIso( material:Material, size:int ) 
 		{
 			super( material, size );
+			_position = new Point3D();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -50,9 +53,32 @@ package fr.minuit4.games.tilebased.scenes.tiles
 			_DATAS[ 9 ] = 0;
 		}
 		
+		private function updatePosition():void
+		{
+			var p:Point3D = IsoMath.isoToScreen( _position.x, _position.y, _position.z );
+			super.x = p.x;
+			super.y = p.y;
+		}
+		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
+		
+		override public function get x():Number { return _position.x; }
+		
+		override public function set x(value:Number):void 
+		{
+			_position.x = value;
+			updatePosition();
+		}
+		
+		override public function get y():Number { return _position.y; }
+		
+		override public function set y(value:Number):void 
+		{
+			_position.y = value;
+			updatePosition();
+		}
 		
 	}
 	
