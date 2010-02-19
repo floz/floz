@@ -9,9 +9,8 @@ package fr.minuit4.games.tilebased.core.maps
 	import flash.events.EventDispatcher;
 	import flash.geom.Point;
 	import fr.minuit4.games.tilebased.core.tiles.TileDatas;
-	import games.paths.pathfinding.Astar;
 	
-	public class Map extends EventDispatcher implements IMap
+	public class Map extends EventDispatcher
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -48,12 +47,12 @@ package fr.minuit4.games.tilebased.core.maps
 		
 		public function isWalkable( x:int, y:int ):Boolean
 		{
-			return ( isInside( x, y ) && _datas[ y ][ x ] == 0 );
+			return ( isInside( x, y ) && _datas[ y ][ x ].walkable );
 		}
 		
 		public function isInside( x:int, y:int ):Boolean
 		{
-			return ( ( x >= 0 && x < _width ) && ( y >= 0 && y < _height ) );
+			return ( ( x >= 0 && x < width ) && ( y >= 0 && y < height ) );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

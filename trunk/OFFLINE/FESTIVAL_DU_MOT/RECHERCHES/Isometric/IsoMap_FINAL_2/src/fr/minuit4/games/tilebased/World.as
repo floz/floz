@@ -94,6 +94,14 @@ package fr.minuit4.games.tilebased
 		
 		public function get type():String { return _type; }
 		
+		public function get showGrid():Boolean { return _showGrid; }
+		
+		public function set showGrid(value:Boolean):void 
+		{
+			_showGrid = value;
+			_grid.visible = _showGrid;
+		}
+		
 	}
 	
 }
