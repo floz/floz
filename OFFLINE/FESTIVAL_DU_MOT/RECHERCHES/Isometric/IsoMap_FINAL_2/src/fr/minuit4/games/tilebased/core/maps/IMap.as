@@ -11,18 +11,17 @@ package fr.minuit4.games.tilebased.core.maps
 	
 	public interface IMap extends IEventDispatcher
 	{
+		function isWalkable( x:int, y:int ):Boolean;
 		
-		public function isWalkable( x:int, y:int ):Boolean;
+		function isInside( x:int, y:int ):Boolean
 		
-		public function isInside( x:int, y:int ):Boolean
+		function set datas( value:Vector.<Vector.<TileDatas>> ):void;
 		
-		public function set datas( value:Vector.<Vector.<TileDatas>> ):void;
+		function get datas():Vector.<Vector.<TileDatas>>;
 		
-		public function get datas():Vector.<Vector.<TileDatas>>;
+		function get width():int;
 		
-		public function get width():int;
-		
-		public function get height():int;
+		function get height():int;
 	}
 	
 }

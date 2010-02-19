@@ -4,29 +4,24 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.games.tilebased.core.paths.pathfinding.heuristics 
+package fr.minuit4.games.tilebased.geom.transformations 
 {
-	import fr.minuit4.games.tilebased.core.paths.pathfinding.Astar;
+	import fr.minuit4.geom.Point3D;
 	
-	public class Diagonal implements IHeuristic
+	public class DimetricTransformation implements IAxonometricTransformation
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _dx:Number;
-		private var _dy:Number;		
-		private var _vx:Number;
-		private var _vy:Number;
-		private var _diag:Number;
-		private var _straight:Number;
+		private static const Z_CORRECT:Number = Math.cos( -Math.PI / 6 ) * Math.SQRT2;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Diagonal() 
+		public function DimetricTransformation() 
 		{
-			
+			//
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -35,18 +30,22 @@ package fr.minuit4.games.tilebased.core.paths.pathfinding.heuristics
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
-		public function getCost( x1:int, y1:int, x2:int, y2:int ):Number
+		public function screenToSpace( x:Number, y:Number, z:Number ):Point3D
 		{
-			_dx = x1 - x2;
-			_vx = _dx < 0 ? -_dx : _dx;
+			var px:Number = y + x * .5 + z;
+			var py:Number = y - x * .5 + z;
+			var pz:Number = z;
 			
-			_dy = y1 - y2;
-			_vy = _dy < 0 ? -_dy : _dy;
+			return new Point3D( px, py, pz );
+		}
+		
+		public function spaceToScreen( x:Number, y:Number, z:Number ):Point3D
+		{
+			var px:Number = x - y;
+			var py:Number = ( x + y ) * .5 - z; // + z * Z_CORRECT; dixit Keith Peters
+			var pz:Number = z;
 			
-			_diag = _vx < _vy ? _vx : _vy; // _dx < _dy ? _dx : _dy; Meilleures perfs ?
-			_straight = _vx + _vy;
-			
-			return Astar.DIAG_COST * _diag + Astar.STRAIGHT_COST * ( _straight - 2 * _diag );
+			return new Point3D( px, py, pz );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
