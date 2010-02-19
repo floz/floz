@@ -63,10 +63,11 @@ package fr.minuit4.games.tilebased.scenes.grid
 				px = 0;
 				for ( j = 0; j < _map.width; ++j )
 				{
-					material = _map.isWalkable( j, i ) ? new WireColorMaterial( 0xbbbbbb, 1, 0x444444, 1, 1 ) : new WireColorMaterial( 0x444444, 1, 0x111111, 1, 1 );
+					material = _map.isWalkable( j, i ) ? new WireColorMaterial( 0x444444, 1, 0x444444, 1, 1 ) : new WireColorMaterial( 0x444444, 1, 0x444444, 1, 1 );
 					tile = TileFactory.create( material, _tileSize, _orientation );
 					tile.x = px;
 					tile.y = py;
+					tile.cacheAsBitmap = true;
 					addChild( tile );
 					
 					v[ j ] = tile;
