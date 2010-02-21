@@ -6,6 +6,7 @@
  */
 package fr.minuit4.games.tilebased 
 {
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -66,9 +67,22 @@ package fr.minuit4.games.tilebased
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
+		/**
+		 * Renvoie une série de points correspondant aux tiles de la map (et non aux coordonnées)
+		 * à emprunter pour arriver à destination.
+		 * Le chemin renvoyé est toujours le plus court.
+		 * @param	start	Point	Le point de départ.
+		 * @param	end	Point	Le point d'arriver.
+		 * @return	Vector.<IntPoint>	Le vecteur contenant les points du parcours.
+		 */
 		public function findPath( start:Point, end:Point ):Vector.<IntPoint>
 		{
 			return _astar.findPath( start, end );
+		}
+		
+		public function addMobile( d:DisplayObject ):void
+		{
+			_world.addChild( d );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
@@ -101,6 +115,8 @@ package fr.minuit4.games.tilebased
 			_showGrid = value;
 			_grid.visible = _showGrid;
 		}
+		
+		override public function get mouseX():Number { return ( super.mouseX + _gridRect.x ); }
 		
 	}
 	

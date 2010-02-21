@@ -24,7 +24,7 @@ package fr.minuit4.games.tilebased.materials
 			_graphicsSolidFill.color = color;
 			_graphicsSolidFill.alpha = alpha;
 			
-			graphicsData = Vector.<IGraphicsData>( [ _graphicsStroke, _graphicsSolidFill, _graphicsEndFill ] );
+			graphicsData = Vector.<IGraphicsData>( [ _graphicsSolidFill, _graphicsStroke ] );
 			graphicsData.fixed = true;
 		}
 		

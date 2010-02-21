@@ -7,6 +7,8 @@
 package fr.minuit4.games.tilebased.materials 
 {
 	import flash.display.GraphicsSolidFill;
+	import flash.display.GraphicsStroke;
+	import flash.display.IGraphicsData;
 	
 	public class WireColorMaterial extends ColorMaterial
 	{
@@ -24,11 +26,11 @@ package fr.minuit4.games.tilebased.materials
 		{
 			super( color, alpha );
 			
-			_wireColor = color;
-			_wireAlpha = alpha;
+			_wireColor = wireColor;
+			_wireAlpha = wireAlpha;
 			
 			_graphicsStroke.fill = new GraphicsSolidFill( _wireColor, _wireAlpha );
-			_graphicsStroke.thickness = 1;
+			_graphicsStroke.thickness = 1;			
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------

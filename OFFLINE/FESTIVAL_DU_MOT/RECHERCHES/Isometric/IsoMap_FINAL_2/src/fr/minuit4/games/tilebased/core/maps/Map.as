@@ -41,6 +41,8 @@ package fr.minuit4.games.tilebased.core.maps
 		{
 			width = _datas[ 0 ].length;
 			height = _datas.length;
+			
+			dispatchEvent( new MapEvent( MapEvent.INITIALIZED ) );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

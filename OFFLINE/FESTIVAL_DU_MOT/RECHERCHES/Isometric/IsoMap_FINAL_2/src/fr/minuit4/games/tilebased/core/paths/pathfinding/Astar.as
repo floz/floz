@@ -19,10 +19,6 @@ package fr.minuit4.games.tilebased.core.paths.pathfinding
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _map:Map;
-		
-		private var _nodes:Vector.<Vector.<TileDatas>>;
-		
 		private var _startNode:TileDatas;
 		private var _endNode:TileDatas;
 		private var _openList:Array;
@@ -33,13 +29,15 @@ package fr.minuit4.games.tilebased.core.paths.pathfinding
 		public static const STRAIGHT_COST:int = 10;
 		public static const DIAG_COST:int = 14;
 		
+		public var map:Map;
+		
 		public var heuristic:IHeuristic = new Diagonal();
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function Astar( map:Map ) 
 		{
-			this._map = map;
+			this.map = map;
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -67,20 +65,22 @@ package fr.minuit4.games.tilebased.core.paths.pathfinding
 			{
 				startX = node.x - 1 < 0 ? 0 : node.x - 1;
 				startY = node.y - 1 < 0 ? 0 : node.y - 1;
-				endX = node.x + 1 >= _map.width ? _map.width - 1 : node.x + 1;
-				endY = node.y + 1 >= _map.height ? _map.height - 1 : node.y + 1;
+				endX = node.x + 1 >= map.width ? map.width - 1 : node.x + 1;
+				endY = node.y + 1 >= map.height ? map.height - 1 : node.y + 1;
 				
 				for ( y = startY; y <= endY; ++y )
 				{
 					for ( x = startX; x <= endX; ++x )
 					{
-						testNode = _nodes[ y ][ x ];
+						testNode = map.datas[ y ][ x ];
 						
-						if ( testNode == node || !testNode.walkable || !_map.isWalkable( node.x, y ) || !_map.isWalkable( x, node.y ) )
+						// Autorise ou non le déplacement de diagonal lorsqu'une case proche est "unwakable"
+						if ( testNode == node || !testNode.walkable || !map.isWalkable( node.x, y ) || !map.isWalkable( x, node.y ) )
 							continue;
 						
+						// Assigne le coup diagonal ou normal.
 						cost = STRAIGHT_COST;
-						if ( !( node.x == testNode.x || node.y == testNode.y ) )
+						if ( !( node.x == testNode.x || node.y == testNode.y ) ) // Si le test renvoie faux, alors on est en diagonal.
 							cost = DIAG_COST;
 						
 						g = node.g + cost;
@@ -110,6 +110,7 @@ package fr.minuit4.games.tilebased.core.paths.pathfinding
 				if ( _openList.length == 0 ) 
 					return null;
 				
+				// On trie pour récupérer celui avec le "f" le plus grand, en l'enlevant de la liste ouverte.
 				_openList.sortOn( "f", Array.NUMERIC );
 				node = _openList.shift();
 				
@@ -145,16 +146,24 @@ package fr.minuit4.games.tilebased.core.paths.pathfinding
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
+		/**
+		 * Renvoie une série de points correspondant aux tiles de la map (et non aux coordonnées)
+		 * à emprunter pour arriver à destination.
+		 * Le chemin renvoyé est toujours le plus court.
+		 * @param	start	Point	Le point de départ.
+		 * @param	end	Point	Le point d'arriver.
+		 * @return	Vector.<IntPoint>	Le vecteur contenant les points du parcours.
+		 */
 		public function findPath( start:Point, end:Point ):Vector.<IntPoint>
 		{
-			if ( !_map.isWalkable( start.x, start.y ) || !_map.isWalkable( end.x, end.y ) || ( start.x == end.x && start.y == end.y ) ) 
+			if ( !map.isWalkable( start.x, start.y ) || !map.isWalkable( end.x, end.y ) || ( start.x == end.x && start.y == end.y ) ) 
 				return null;
 			
 			_openList = [];
 			_closedList = [];
 			
-			_startNode = _nodes[ start.y ][ start.x ];
-			_endNode = _nodes[ end.y ][ end.x ];
+			_startNode = map.datas[ start.y ][ start.x ];
+			_endNode = map.datas[ end.y ][ end.x ];
 			
 			_startNode.g = 0;
 			_startNode.f = heuristic.getCost( start.x, start.y, end.x, end.y );
