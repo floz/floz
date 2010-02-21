@@ -79,6 +79,11 @@ package fr.minuit4.geom
 			return new IntPoint( x, y );
 		}
 		
+		public function toString():String
+		{
+			return "IntPoint :: [ x: " + x + ", y: " + y + " ];";
+		}
+		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
 		public function get length():Number 

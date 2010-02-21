@@ -4,7 +4,7 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.games.tilebased.paths.pathfinding.heuristics 
+package fr.minuit4.games.tilebased.core.paths.pathfinding.heuristics 
 {
 	
 	public class Manhattan implements IHeuristic
