@@ -90,11 +90,14 @@ package
 			var p:Point3D = IsoMath.screenToIso( _world.mouseX, _world.mouseY );
 			
 			var d:int = getTimer();
-			_path = _world.findPath( _currentPos, new Point( p.x >> 5, p.y >> 5 ) );
+			var newPath:Vector.<IntPoint> = _world.findPath( _currentPos, new Point( p.x >> 5, p.y >> 5 ) );
 			trace( getTimer() - d );
 			
-			if ( _path )
+			if ( newPath )
+			{
+				_path = newPath;
 				_timer.start();
+			}
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
