@@ -47,9 +47,11 @@ package fr.minuit4.net.stratus
 			this._developerKey = developerKey;
 			
 			_dispatcher = new EventDispatcher();
+			
 			_connectionSuccessEvent = new StratusEvent( StratusEvent.CONNECTION_SUCCESS );
 			_connectionFailedEvent = new StratusEvent( StratusEvent.CONNECTION_FAILED );
 			_connectionClosedEvent = new StratusEvent( StratusEvent.CONNECTION_CLOSED );
+			
 			_streamSuccessEvent = new StratusEvent( StratusEvent.STREAM_SUCCESS );
 			_streamStartEvent = new StratusEvent( StratusEvent.STREAM_START );
 			_streamResetEvent = new StratusEvent( StratusEvent.STREAM_RESET );
