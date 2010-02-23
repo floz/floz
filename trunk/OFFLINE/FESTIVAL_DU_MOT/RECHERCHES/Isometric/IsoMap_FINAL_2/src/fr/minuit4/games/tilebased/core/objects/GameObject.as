@@ -4,12 +4,11 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.games.tilebased.common.layers 
+package fr.minuit4.games.tilebased.core.objects 
 {
-	import com.wtf.engines.renderer.IRenderable;
 	import flash.display.Sprite;
 	
-	public class Layer extends Sprite implements IRenderable
+	public class GameObject extends Sprite
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -18,7 +17,7 @@ package fr.minuit4.games.tilebased.common.layers
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Layer() 
+		public function GameObject() 
 		{
 			
 		}
@@ -30,6 +29,11 @@ package fr.minuit4.games.tilebased.common.layers
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
+		
+		public function get depth():Number
+		{
+			return NaN;
+		}
 		
 	}
 	

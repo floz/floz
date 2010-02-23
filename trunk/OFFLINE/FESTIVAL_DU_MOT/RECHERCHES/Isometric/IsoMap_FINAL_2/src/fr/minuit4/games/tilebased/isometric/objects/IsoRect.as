@@ -4,12 +4,10 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.games.tilebased.common.layers 
+package fr.minuit4.games.tilebased.isometric.objects 
 {
-	import com.wtf.engines.renderer.IRenderable;
-	import flash.display.Sprite;
 	
-	public class Layer extends Sprite implements IRenderable
+	public class IsoRect extends IsoObject
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
@@ -18,7 +16,7 @@ package fr.minuit4.games.tilebased.common.layers
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Layer() 
+		public function IsoRect() 
 		{
 			
 		}
