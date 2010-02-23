@@ -12,11 +12,11 @@ package
 	import flash.geom.Point;
 	import flash.utils.getTimer;
 	import flash.utils.Timer;
-	import fr.minuit4.games.tilebased.geom.IsoMath;
-	import fr.minuit4.games.tilebased.materials.ColorMaterial;
-	import fr.minuit4.games.tilebased.orientations.Orientation;
-	import fr.minuit4.games.tilebased.scenes.tiles.TileIso;
-	import fr.minuit4.games.tilebased.utils.MapDatasConverter;
+	import fr.minuit4.games.tilebased.common.materials.ColorMaterial;
+	import fr.minuit4.games.tilebased.common.orientations.Orientation;
+	import fr.minuit4.games.tilebased.common.utils.MapDatasConverter;
+	import fr.minuit4.games.tilebased.isometric.geom.IsoMath;
+	import fr.minuit4.games.tilebased.isometric.tiles.TileIso;
 	import fr.minuit4.games.tilebased.World;
 	import fr.minuit4.geom.IntPoint;
 	import fr.minuit4.geom.Point3D;
@@ -51,7 +51,7 @@ package
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
 		public function Main() 
-		{
+		{			
 			_world = new World( 32, MapDatasConverter.fromArray( _datas ), Orientation.ISOMETRIC );
 			_world.x = ( stage.stageWidth - _world.width ) * .5;
 			_world.y = ( stage.stageHeight - _world.height ) * .5;
