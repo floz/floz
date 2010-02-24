@@ -4,35 +4,31 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.games.tilebased.common.scenes.grid 
+package fr.minuit4.games.tilebased.isometric.objects 
 {
 	import flash.display.Sprite;
 	import fr.minuit4.games.tilebased.core.maps.Map;
-	import fr.minuit4.games.tilebased.common.tiles.Tile;
-	import fr.minuit4.games.tilebased.common.tiles.TileFactory;
 	import fr.minuit4.games.tilebased.common.materials.Material;
 	import fr.minuit4.games.tilebased.common.materials.WireColorMaterial;
 	
-	public class Grid extends Sprite
+	public class IsoGrid extends Sprite
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
 		private var _tileSize:int;
 		private var _map:Map;
-		private var _orientation:String;
 		
-		private var _tiles:Vector.<Vector.<Tile>>
+		private var _tiles:Vector.<Vector.<IsoPlane>>
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Grid( tileSize:int, map:Map, orientation:String ) 
+		public function IsoGrid( tileSize:int, map:Map ) 
 		{
 			this._tileSize = tileSize;
 			this._map = map;
-			this._orientation = orientation;
 			
 			build();
 		}
@@ -45,26 +41,26 @@ package fr.minuit4.games.tilebased.common.scenes.grid
 		{
 			destroy();
 			
-			var tile:Tile;
+			var tile:IsoPlane;
 			var material:Material;
 			
 			var px:Number = 0;
 			var py:Number = 0;
 			
-			var v:Vector.<Tile>;
+			var v:Vector.<IsoPlane>;
 			
 			var i:int;
 			var j:int;
 			for ( i = 0; i < _map.height; ++i )
 			{
-				v = new Vector.<Tile>( _map.width, true );
+				v = new Vector.<IsoPlane>( _map.width, true );
 				_tiles[ i ] = v;
 				
 				px = 0;
 				for ( j = 0; j < _map.width; ++j )
 				{
 					material = _map.isWalkable( j, i ) ? new WireColorMaterial( 0xeeeeee, 1, 0x444444, 1, 1 ) : new WireColorMaterial( 0x444444, 1, 0x444444, 1, 1 );
-					tile = TileFactory.create( material, _tileSize, _orientation );
+					tile = new IsoPlane( material, _tileSize );
 					tile.x = px;
 					tile.y = py;
 					tile.cacheAsBitmap = true;
@@ -81,7 +77,7 @@ package fr.minuit4.games.tilebased.common.scenes.grid
 		private function destroy():void
 		{
 			while ( numChildren ) removeChildAt( 0 );
-			_tiles = new Vector.<Vector.<Tile>>();
+			_tiles = new Vector.<Vector.<IsoPlane>>();
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
