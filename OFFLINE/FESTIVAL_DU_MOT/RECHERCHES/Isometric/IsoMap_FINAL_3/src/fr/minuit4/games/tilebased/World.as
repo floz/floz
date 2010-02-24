@@ -114,9 +114,9 @@ package fr.minuit4.games.tilebased
 		
 		public function render( forceRender:Boolean = false, renderTime:Number = -1 ):void
 		{
-			_backgroundLayer.render( forceRender, renderTime );
-			_floorLayer.render( forceRender, renderTime );			
-			_mobilesLayer.render( forceRender, renderTime );
+			_backgroundLayer.render( forceRender, renderTime );			
+			_floorLayer.render( forceRender, renderTime );						
+			_mobilesLayer.render( forceRender, renderTime );			
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
