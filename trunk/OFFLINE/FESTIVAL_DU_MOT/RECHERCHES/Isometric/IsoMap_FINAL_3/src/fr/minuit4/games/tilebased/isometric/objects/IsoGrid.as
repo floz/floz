@@ -10,6 +10,7 @@ package fr.minuit4.games.tilebased.isometric.objects
 	import fr.minuit4.games.tilebased.core.maps.Map;
 	import fr.minuit4.games.tilebased.common.materials.Material;
 	import fr.minuit4.games.tilebased.common.materials.WireColorMaterial;
+	import fr.minuit4.games.tilebased.isometric.objects.primitives.IsoPlane;
 	
 	public class IsoGrid extends Sprite
 	{

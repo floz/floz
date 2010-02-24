@@ -34,6 +34,7 @@ package fr.minuit4.games.tilebased
 		private var _backgroundLayer:Layer;
 		private var _floorLayer:Layer;
 		private var _mobilesLayer:Layer;
+		private var _topLayer:Layer;
 		
 		private var _showGrid:Boolean;
 		
@@ -80,6 +81,9 @@ package fr.minuit4.games.tilebased
 			
 			_mobilesLayer = new Layer();
 			_world.addChild( _mobilesLayer );
+			
+			_topLayer = new Layer();
+			_world.addChild( _topLayer );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
@@ -97,12 +101,12 @@ package fr.minuit4.games.tilebased
 			return _astar.findPath( start, end );
 		}
 		
-		public function addBackgroundItem( d:GameObject ):void
+		public function addBackgroundObject( d:GameObject ):void
 		{
 			_backgroundLayer.addObject( d );
 		}
 		
-		public function addFloorItem( d:GameObject ):void
+		public function addFloorObject( d:GameObject ):void
 		{
 			_floorLayer.addObject( d );
 		}
@@ -112,11 +116,17 @@ package fr.minuit4.games.tilebased
 			_mobilesLayer.addObject( d );
 		}
 		
+		public function addTopObject( d:GameObject ):void
+		{
+			_topLayer.addObject( d );
+		}
+		
 		public function render( forceRender:Boolean = false, renderTime:Number = -1 ):void
 		{
 			_backgroundLayer.render( forceRender, renderTime );			
 			_floorLayer.render( forceRender, renderTime );						
-			_mobilesLayer.render( forceRender, renderTime );			
+			_mobilesLayer.render( forceRender, renderTime );
+			_topLayer.render( forceRender, renderTime );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

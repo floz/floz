@@ -15,7 +15,7 @@ package
 	import fr.minuit4.games.tilebased.common.materials.ColorMaterial;
 	import fr.minuit4.games.tilebased.common.utils.MapDatasConverter;
 	import fr.minuit4.games.tilebased.isometric.geom.IsoMath;
-	import fr.minuit4.games.tilebased.isometric.objects.IsoPlane;
+	import fr.minuit4.games.tilebased.isometric.objects.primitives.IsoPlane;
 	import fr.minuit4.games.tilebased.World;
 	import fr.minuit4.geom.IntPoint;
 	import fr.minuit4.geom.Point3D;
@@ -58,13 +58,15 @@ package
 			addChild( _world );
 			
 			_char = new IsoPlane( new ColorMaterial( 0x000fff ), 32 );
-			_world.addMobile( _char );
+			
 			
 			var p:IsoPlane = new IsoPlane( new ColorMaterial( 0xff00ff ), 32 );
 			p.x = 4 << 5;
 			p.y = 2 << 5;
 			p.z = 10;
 			_world.addMobile( p );
+			
+			_world.addMobile( _char );
 			
 			_currentPos = new Point( _char.x, _char.y );
 			

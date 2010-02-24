@@ -32,14 +32,32 @@ package fr.minuit4.games.tilebased.common.objects
 		protected function invalidate():void
 		{
 			if ( _layer )
+			{
+				_layer.renderObject( this );
 				_layer.needRender = true;
+			}
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function registerToLayer( layer:ILayer ):void
 		{
-			this._layer = layer;
+			_layer = layer;
+		}
+		
+		public function unregisterFromLayer():void
+		{
+			_layer = null;
+		}
+		
+		public function isRegisterToLayer( layer:ILayer ):Boolean
+		{
+			return ( hasLayer() && ( _layer == layer ) );
+		}
+		
+		public function hasLayer():Boolean
+		{
+			return ( _layer != null );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

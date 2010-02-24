@@ -199,6 +199,10 @@ package fr.minuit4.games.tilebased.core.paths.astar
 			return search();
 		}
 		
+		/**
+		 * Met à jour les données de la carte.
+		 * A appeller quand le paramètre map a modifié, mais que la référence ne change pas.
+		 */
 		public function update():void
 		{
 			initMap();
