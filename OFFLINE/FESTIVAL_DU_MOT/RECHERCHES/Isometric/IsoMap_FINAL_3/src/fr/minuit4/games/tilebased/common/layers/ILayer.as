@@ -12,6 +12,7 @@ package fr.minuit4.games.tilebased.common.layers
 	public interface ILayer extends IRenderable
 	{
 		function addObject( object:GameObject ):void;
+		function renderObject( object:GameObject ):void;
 		
 		function get needRender():Boolean;
 		function set needRender( value:Boolean ):void;

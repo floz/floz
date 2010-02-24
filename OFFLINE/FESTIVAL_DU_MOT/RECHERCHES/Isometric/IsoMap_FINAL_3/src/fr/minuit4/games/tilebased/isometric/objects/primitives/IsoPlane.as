@@ -4,11 +4,12 @@
  * @author Floz
  * www.floz.fr || www.minuit4.fr
  */
-package fr.minuit4.games.tilebased.isometric.objects 
+package fr.minuit4.games.tilebased.isometric.objects.primitives
 {
 	import flash.display.GraphicsPathCommand;
 	import fr.minuit4.games.tilebased.common.materials.Material;
 	import fr.minuit4.games.tilebased.isometric.geom.IsoMath;
+	import fr.minuit4.games.tilebased.isometric.objects.IsoObject;
 	import fr.minuit4.geom.Point3D;
 	
 	public class IsoPlane extends IsoObject
