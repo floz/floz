@@ -85,24 +85,6 @@ package fr.floz.isometric.objects.primitives
 			}
 		}
 		
-		//private function translate( base:Vector.<Point3D>, vector:Point3D ):Vector.<Point3D>
-		//{
-			//var n:int = base.length;
-			//var trans:Vector.<Point3D> = new Vector.<Point3D>( base.length, true );
-			//
-			//var p:Point3D;
-			//for ( var i:int; i < n; ++i )
-			//{
-				//p = base[ i ].clone();
-				//p.x += vector.x;
-				//p.y += vector.y;
-				//p.z += vector.z;
-				//
-				//trans[ i ] = p;
-			//}
-			//return trans;
-		//}
-		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
