@@ -43,6 +43,7 @@ package fr.minuit4.games.tilebased.common.objects
 		public function registerToLayer( layer:ILayer ):void
 		{
 			_layer = layer;
+			invalidate();
 		}
 		
 		public function unregisterFromLayer():void

@@ -20,7 +20,7 @@ package fr.minuit4.games.tilebased.isometric.objects
 		private var _tileSize:int;
 		private var _map:Map;
 		
-		private var _tiles:Vector.<Vector.<IsoPlane>>
+		private var _tiles:Vector.<Vector.<IsoObject>>
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -48,13 +48,13 @@ package fr.minuit4.games.tilebased.isometric.objects
 			var px:Number = 0;
 			var py:Number = 0;
 			
-			var v:Vector.<IsoPlane>;
+			var v:Vector.<IsoObject>;
 			
 			var i:int;
 			var j:int;
 			for ( i = 0; i < _map.height; ++i )
 			{
-				v = new Vector.<IsoPlane>( _map.width, true );
+				v = new Vector.<IsoObject>( _map.width, true );
 				_tiles[ i ] = v;
 				
 				px = 0;
@@ -78,7 +78,7 @@ package fr.minuit4.games.tilebased.isometric.objects
 		private function destroy():void
 		{
 			while ( numChildren ) removeChildAt( 0 );
-			_tiles = new Vector.<Vector.<IsoPlane>>();
+			_tiles = new Vector.<Vector.<IsoObject>>();
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------

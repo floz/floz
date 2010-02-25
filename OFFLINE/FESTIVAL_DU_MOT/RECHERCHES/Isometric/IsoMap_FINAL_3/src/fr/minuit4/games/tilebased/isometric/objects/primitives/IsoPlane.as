@@ -12,15 +12,11 @@ package fr.minuit4.games.tilebased.isometric.objects.primitives
 	import fr.minuit4.games.tilebased.isometric.objects.IsoObject;
 	import fr.minuit4.geom.Point3D;
 	
-	public class IsoPlane extends IsoObject
+	public class IsoPlane extends IsoPrimitive
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		protected const _COMMANDS:Vector.<int> = new Vector.<int>( 5, true );
-		protected const _DATAS:Vector.<Number> = new Vector.<Number>( 10, true );
-		
-		protected var _material:Material;
 		protected var _size:int;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
@@ -29,69 +25,49 @@ package fr.minuit4.games.tilebased.isometric.objects.primitives
 		
 		public function IsoPlane( material:Material, size:int = 32 ) 
 		{
-			this._material = material;
 			this._size = size;
-			
-			initCommands();
-			initDatas();
-			
-			render();
+			super( material );
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		protected function initCommands():void
+		override protected function initCommands():void
 		{
-			_COMMANDS[ 0 ] = GraphicsPathCommand.MOVE_TO;
-			var i:int = _COMMANDS.length;
+			_commands = new Vector.<int>( 5, true );
+			
+			_commands[ 0 ] = GraphicsPathCommand.MOVE_TO;
+			var i:int = _commands.length;
 			while ( --i > 0 )
-				_COMMANDS[ i ] = GraphicsPathCommand.LINE_TO;
+				_commands[ i ] = GraphicsPathCommand.LINE_TO;
 		}
 		
-		protected function initDatas():void
+		override protected function initDatas():void
 		{
 			var p1:Point3D = IsoMath.isoToScreen( _size, 0 );
 			var p2:Point3D = IsoMath.isoToScreen( _size, _size );
 			var p3:Point3D = IsoMath.isoToScreen( 0, _size );
 			
-			_DATAS[ 0 ] = 0;
-			_DATAS[ 1 ] = 0;
+			_datas = new Vector.<Number>( 10, true );
 			
-			_DATAS[ 2 ] = p1.x;
-			_DATAS[ 3 ] = p1.y;
+			_datas[ 0 ] = 0;
+			_datas[ 1 ] = 0;
 			
-			_DATAS[ 4 ] = p2.x;
-			_DATAS[ 5 ] = p2.y;
+			_datas[ 2 ] = p1.x;
+			_datas[ 3 ] = p1.y;
 			
-			_DATAS[ 6 ] = p3.x;
-			_DATAS[ 7 ] = p3.y;
+			_datas[ 4 ] = p2.x;
+			_datas[ 5 ] = p2.y;
 			
-			_DATAS[ 8 ] = 0;
-			_DATAS[ 9 ] = 0;
-		}
-		
-		protected function applyMaterial():Boolean
-		{
-			if ( !material )
-				return false;
+			_datas[ 6 ] = p3.x;
+			_datas[ 7 ] = p3.y;
 			
-			graphics.clear();
-			graphics.drawGraphicsData( material.graphicsData );
-			
-			return true;
+			_datas[ 8 ] = 0;
+			_datas[ 9 ] = 0;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
-		
-		public function render():void
-		{
-			if ( !applyMaterial() )
-				return;
-			
-			graphics.drawPath( _COMMANDS, _DATAS );
-		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
@@ -100,14 +76,7 @@ package fr.minuit4.games.tilebased.isometric.objects.primitives
 		public function set size(value:int):void 
 		{
 			_size = value;
-			render();
-		}
-		
-		public function get material():Material { return _material; }
-		
-		public function set material(value:Material):void 
-		{
-			_material = value;
+			initDatas();
 			render();
 		}
 		

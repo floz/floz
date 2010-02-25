@@ -16,6 +16,7 @@ package
 	import flash.utils.Timer;
 	import fr.floz.isometric.geom.IsoMath;
 	import fr.floz.isometric.geom.Point3D;
+	import fr.floz.isometric.objects.primitives.IsoBox;
 	import maps.core.Node;
 	import maps.IMap;
 	import maps.Map;
@@ -87,6 +88,11 @@ package
 			_timer = new Timer( 50 );
 			_timer.addEventListener( TimerEvent.TIMER, timerHandler );
 			_timer.start();
+			
+			var b:IsoBox = new IsoBox( 20, 20, 50 );
+			b.x = 400;
+			b.y = 100;
+			addChild( b );
 			
 			_isoMap.addEventListener( MouseEvent.MOUSE_DOWN, mouseDownHandler );	
 			_isoMap.addEventListener( MouseEvent.MOUSE_UP, mouseUpHandler );
