@@ -13,8 +13,10 @@ package
 	import flash.utils.getTimer;
 	import flash.utils.Timer;
 	import fr.minuit4.games.tilebased.common.materials.ColorMaterial;
+	import fr.minuit4.games.tilebased.common.materials.WireColorMaterial;
 	import fr.minuit4.games.tilebased.common.utils.MapDatasConverter;
 	import fr.minuit4.games.tilebased.isometric.geom.IsoMath;
+	import fr.minuit4.games.tilebased.isometric.objects.primitives.IsoBox;
 	import fr.minuit4.games.tilebased.isometric.objects.primitives.IsoPlane;
 	import fr.minuit4.games.tilebased.World;
 	import fr.minuit4.geom.IntPoint;
@@ -58,15 +60,9 @@ package
 			addChild( _world );
 			
 			_char = new IsoPlane( new ColorMaterial( 0x000fff ), 32 );
-			
-			
-			var p:IsoPlane = new IsoPlane( new ColorMaterial( 0xff00ff ), 32 );
-			p.x = 4 << 5;
-			p.y = 2 << 5;
-			p.z = 10;
-			_world.addMobile( p );
-			
 			_world.addMobile( _char );
+			
+			initWalls();
 			
 			_currentPos = new Point( _char.x, _char.y );
 			
@@ -110,6 +106,33 @@ package
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
+		
+		private function initWalls():void
+		{
+			var box:IsoBox;
+			
+			var material:WireColorMaterial = new WireColorMaterial( 0x444444, 1, 0x111111 );
+			
+			var j:int, m:int;
+			var n:int = _datas.length;
+			for ( var i:int; i < n; ++i )
+			{
+				m = _datas[ i ].length;
+				for ( j = 0; j < m; ++j )
+				{
+					if ( _datas[ i ][ j ] == 0 ) 
+						continue;
+					
+					box = new IsoBox( material );
+					box.x = j * 32;
+					box.y = i * 32;
+					box.cacheAsBitmap = true;
+					_world.addMobile( box );
+				}
+			}
+			
+			_world.render();
+		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		

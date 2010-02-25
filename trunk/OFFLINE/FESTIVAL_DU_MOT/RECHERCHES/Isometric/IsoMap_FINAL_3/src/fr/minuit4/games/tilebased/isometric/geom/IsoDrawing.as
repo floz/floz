@@ -76,7 +76,7 @@ package fr.minuit4.games.tilebased.isometric.geom
 			}
 			else return null;
 			
-			geometry[ 4 ] = geometry[ 0 ].clone();
+			geometry[ 4 ] = IsoMath.isoToScreen( origin.x, origin.y, origin.z );
 			
 			var commands:Vector.<int> = new Vector.<int>( 5, true );
 			commands[ 0 ] = GraphicsPathCommand.MOVE_TO;
