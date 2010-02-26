@@ -6,8 +6,10 @@
  */
 package fr.minuit4.games.tilebased.isometric.objects.primitives
 {
+	import flash.display.GraphicsPath;
 	import flash.display.GraphicsPathCommand;
 	import fr.minuit4.games.tilebased.common.materials.Material;
+	import fr.minuit4.games.tilebased.isometric.geom.IsoDrawing;
 	import fr.minuit4.games.tilebased.isometric.geom.IsoMath;
 	import fr.minuit4.games.tilebased.isometric.objects.IsoObject;
 	import fr.minuit4.geom.Point3D;
@@ -26,6 +28,9 @@ package fr.minuit4.games.tilebased.isometric.objects.primitives
 		public function IsoPlane( material:Material, size:int = 32 ) 
 		{
 			this._size = size;
+			
+			initShape();
+			
 			super( material );
 		}
 		
@@ -33,38 +38,17 @@ package fr.minuit4.games.tilebased.isometric.objects.primitives
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
-		override protected function initCommands():void
+		private function initShape():void
 		{
-			_commands = new Vector.<int>( 5, true );
+			_commands = new Vector.<int>();
+			_datas = new Vector.<Number>();
 			
-			_commands[ 0 ] = GraphicsPathCommand.MOVE_TO;
-			var i:int = _commands.length;
-			while ( --i > 0 )
-				_commands[ i ] = GraphicsPathCommand.LINE_TO;
-		}
-		
-		override protected function initDatas():void
-		{
-			var p1:Point3D = IsoMath.isoToScreen( _size, 0 );
-			var p2:Point3D = IsoMath.isoToScreen( _size, _size );
-			var p3:Point3D = IsoMath.isoToScreen( 0, _size );
+			var gp:GraphicsPath = IsoDrawing.getRectPath( _size, _size );
+			_commands = _commands.concat( gp.commands );
+			_datas = _datas.concat( gp.data );
 			
-			_datas = new Vector.<Number>( 10, true );
-			
-			_datas[ 0 ] = 0;
-			_datas[ 1 ] = 0;
-			
-			_datas[ 2 ] = p1.x;
-			_datas[ 3 ] = p1.y;
-			
-			_datas[ 4 ] = p2.x;
-			_datas[ 5 ] = p2.y;
-			
-			_datas[ 6 ] = p3.x;
-			_datas[ 7 ] = p3.y;
-			
-			_datas[ 8 ] = 0;
-			_datas[ 9 ] = 0;
+			_commands.fixed = true;
+			_datas.fixed = true;
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
@@ -76,7 +60,7 @@ package fr.minuit4.games.tilebased.isometric.objects.primitives
 		public function set size(value:int):void 
 		{
 			_size = value;
-			initDatas();
+			initShape();
 			render();
 		}
 		

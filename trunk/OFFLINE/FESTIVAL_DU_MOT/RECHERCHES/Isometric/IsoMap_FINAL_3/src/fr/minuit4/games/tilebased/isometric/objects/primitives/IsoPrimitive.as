@@ -27,25 +27,12 @@ package fr.minuit4.games.tilebased.isometric.objects.primitives
 		{
 			this._material = material;
 			
-			initCommands();
-			initDatas();
-			
 			render();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
-		
-		protected function initCommands():void
-		{
-			// ABSTRACT
-		}
-		
-		protected function initDatas():void
-		{
-			// ABSTRACT
-		}
 		
 		protected function applyMaterial():Boolean
 		{
