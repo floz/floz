@@ -48,16 +48,14 @@ package fr.minuit4.games.tilebased.isometric.objects
 		
 		public function set realX( value:Number ):void
 		{
-			var p:Point3D = IsoMath.screenToIso( value, super.y, z );
-			super.x = p.x;
+			super.x = value;
 		}
 		
 		public function get realY():Number { return super.y; }
 		
 		public function set realY( value:Number ):void
 		{
-			var p:Point3D = IsoMath.screenToIso( super.x, value, z );
-			super.y = p.y;
+			super.y = value;
 		}
 		
 		override public function get x():Number { return _position.x; }

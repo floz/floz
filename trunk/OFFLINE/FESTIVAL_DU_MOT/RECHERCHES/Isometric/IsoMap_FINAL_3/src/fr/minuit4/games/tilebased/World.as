@@ -34,7 +34,7 @@ package fr.minuit4.games.tilebased
 		private var _backgroundLayer:Layer;
 		private var _floorLayer:Layer;
 		private var _mobilesLayer:Layer;
-		private var _topLayer:Layer;
+		private var _foregroundLayer:Layer;
 		
 		private var _showGrid:Boolean;
 		
@@ -82,8 +82,8 @@ package fr.minuit4.games.tilebased
 			_mobilesLayer = new Layer();
 			_world.addChild( _mobilesLayer );
 			
-			_topLayer = new Layer();
-			_world.addChild( _topLayer );
+			_foregroundLayer = new Layer();
+			_world.addChild( _foregroundLayer );
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
@@ -101,32 +101,58 @@ package fr.minuit4.games.tilebased
 			return _astar.findPath( start, end );
 		}
 		
-		public function addBackgroundObject( d:GameObject ):void
+		/**
+		 * Ajoute un objet de background.
+		 * Il s'agit du calque 0/3.
+		 * @param	go	GameObject	L'objet à ajouter.
+		 */
+		public function addBackgroundObject( go:GameObject ):void
 		{
-			_backgroundLayer.addObject( d );
+			_backgroundLayer.addObject( go );
 		}
 		
-		public function addFloorObject( d:GameObject ):void
+		/**
+		 * Ajoute un objet qui se trouve juste au dessus du sol, sous les mobiles.
+		 * Il s'agit du calque 1/3.
+		 * @param	go	GameObject	L'objet à ajouter.
+		 */
+		public function addFloorObject( go:GameObject ):void
 		{
-			_floorLayer.addObject( d );
+			_floorLayer.addObject( go );
 		}
 		
-		public function addMobile( d:GameObject ):void
+		/**
+		 * Ajoute un objet "mobile" : tout ce qui se trouve sur le même plan que les personnages.
+		 * Il s'agit du calque 2/3.
+		 * @param	go	GameObject	L'objet à ajouter.
+		 */
+		public function addMobile( go:GameObject ):void
 		{
-			_mobilesLayer.addObject( d );
+			_mobilesLayer.addObject( go );
 		}
 		
-		public function addTopObject( d:GameObject ):void
+		/**
+		 * Ajoute un objet au premier plan.
+		 * Il s'agit du calque 3/3.
+		 * @param	go	GameObject	L'objet à ajouter.
+		 */
+		public function addForegroundObject( go:GameObject ):void
 		{
-			_topLayer.addObject( d );
+			_foregroundLayer.addObject( go );
 		}
 		
+		/**
+		 * Actualise les différents layers.
+		 * A appeller lors d'un changement de profondeur d'un des objets.
+		 * @param	forceRender	Boolean	Oblige tous les calques à se rafraichir, même s'ils n'ont pas détectés de changements.
+		 * @param	renderTime
+		 */
 		public function render( forceRender:Boolean = false, renderTime:Number = -1 ):void
 		{
 			_backgroundLayer.render( forceRender, renderTime );			
 			_floorLayer.render( forceRender, renderTime );						
 			_mobilesLayer.render( forceRender, renderTime );
-			_topLayer.render( forceRender, renderTime );
+			_foregroundLayer.render( forceRender, renderTime );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
