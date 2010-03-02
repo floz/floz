@@ -36,6 +36,14 @@ package fr.minuit4.games.tilebased.common.layers
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
+		private function addToList( object:GameObject ):void
+		{
+			var depth:int = getDepthIdx( object.depth );
+			_objects.splice( depth, 0, object );
+			addChildAt( object, depth );
+		}
+		
+		// Binary search : optimisation, plus rapide que de sortOn le tableau
 		private function getDepthIdx( depth:Number ):int
 		{
 			const L:int = _objects.length;
@@ -48,7 +56,7 @@ package fr.minuit4.games.tilebased.common.layers
 			while ( min < max )
 			{
 				mid = min + ( ( max - min ) >> 1 );
-				if ( _objects[ mid ] < depth )
+				if ( _objects[ mid ].depth < depth )
 					min = mid + 1;
 				else
 					max = mid;
@@ -57,29 +65,11 @@ package fr.minuit4.games.tilebased.common.layers
 			return min;			
 		}
 		
-		private function debugDepth():void
-		{
-			var n:int = _objects.length;
-			//trace("n : " + n);
-			for ( var i:int; i < n; ++i )
-			{
-				//trace( "x : " + (_objects[ i ].x >> 5 ));
-				//trace( "y : " + (_objects[ i ].y >> 5 ));
-				//trace( "depth : " + _objects[ i ].depth );
-				//trace( "index : " + getChildIndex( _objects[ i ] ) );
-				//trace( "------" );
-			}
-			//trace( "======" );
-		}
-		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		
 		public function addObject( object:GameObject ):void
 		{
-			var idx:int = getDepthIdx( object.depth );
-			_objects.splice( idx, 0, object );
-			addChildAt( object, idx );
-			
+			addToList( object );
 			object.registerToLayer( this );
 		}
 		
@@ -117,21 +107,16 @@ package fr.minuit4.games.tilebased.common.layers
 			var i:int = _objectsToRender.length;
 			while ( --i > -1 )
 			{
+				// On récupère l'objet à render, ainsi que sa profondeur, et on reset sa position.
 				go = _objectsToRender[ i ];
-				depth = getDepthIdx( go.depth );
-				addChildAt( go, depth );
 				
-				idx = _objects.indexOf( _objects );
+				// On met à jour la liste d'objets.
+				idx = _objects.indexOf( go ); // TODO : Regarder pour optimiser à cet endroit
 				if ( idx >= 0 )
-					_objects.splice( idx, 1 );
+					_objects.splice( idx, 1 );				
 				
-				_objects.splice( depth, 0, go );
-				//trace( "x : " + ( go.x >> 5 ) );
-				//trace( "y : " + ( go.y >> 5 ) );
-				//trace("getDepthIdx( go.depth ) : " + getDepthIdx( go.depth ));
+				addToList( go );
 			}
-			
-			debugDepth();
 			
 			_objectsToRender = new Vector.<GameObject>();
 			

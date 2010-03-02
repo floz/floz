@@ -12,36 +12,11 @@
 		private var phase:int;
 		private var event:Event = new Event( Event.COMPLETE );
 		private var array:/*Class2*/Array = [];
-		private var _a:Array = [];
-		
-		private var p1:Point = new Point( 234.55, 21 );
-		private var p2:Point = new Point( 132.1, 98.3 );
+		private var _a:Array = [ 5, 2, 3, 5, 2, 1, 3 ];
+		private var _v:Vector.<int> = Vector.<int>( [ 5, 2, 3, 5, 2, 1, 3 ] );
 		
 		public function Main():void 
-		{			
-			_a.push( false );
-			_a.push( true );
-			_a.push( true );
-			_a.push( false );
-			_a.push( false );
-			_a.push( true );
-			_a.push( false );
-			_a.push( true );
-			_a.push( true );
-			_a.push( true );
-			_a.push( true );
-			_a.push( false );
-			_a.push( false );
-			_a.push( false );
-			_a.push( true );
-			_a.push( true );
-			_a.push( true );
-			_a.push( true );
-			_a.push( true );
-			_a.push( true );
-			_a.push( true );
-			_a.push( true );
-			
+		{
 			stage.addEventListener( MouseEvent.CLICK, onClick );
 		}
 		
@@ -51,12 +26,12 @@
 			if ( phase == 0 ) 
 			{
 				f = ppi;
-				trace( "continue" );
+				trace( "vector" );
 			}
 			else if ( phase == 1 )
 			{
 				f = ipp;
-				trace( "tri" );
+				trace( "array" );
 			}
 
 			var debut:Number = 0;
@@ -74,33 +49,16 @@
 		
 		private function ppi():void
 		{
-			var cost:int;
-			var n:int = _a.length;
-			for ( var i:int; i < n; ++i )
-			{
-				if ( _a[ i ] == false ) continue;
-				++cost;
-			}
+			_v = Vector.<int>( [ 5, 2, 3, 5, 2, 1, 3 ] );
+			_v.splice( 2, 0, 20 );
+			_v.splice( 4, 0, 32 );
 		}
 		
 		private function ipp():void
 		{
-			var a:Array = tri();
-			
-			var cost:int;
-			var n:int = a.length;
-			for ( var i:int; i < n; ++i )
-				++cost;
-		}
-		
-		private function tri():Array
-		{
-			var a:Array = [];
-			var n:int = _a.length;
-			for ( var i:int; i < n; ++i )
-				if ( _a[ i ] ) a[ i ] = _a[ i ];
-			
-			return a;
+			_a = [ 5, 2, 3, 5, 2, 1, 3 ];
+			_a.splice( 2, 0, 20 );
+			_a.splice( 4, 0, 32 );
 		}
 	}
 	

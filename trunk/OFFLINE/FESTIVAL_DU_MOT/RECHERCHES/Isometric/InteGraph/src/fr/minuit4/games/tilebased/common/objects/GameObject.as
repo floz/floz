@@ -61,6 +61,11 @@ package fr.minuit4.games.tilebased.common.objects
 			return ( _layer != null );
 		}
 		
+		override public function toString():String
+		{
+			return "IsoBox : depth : " + depth;
+		}
+		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
 		public function get depth():Number
