@@ -52,14 +52,14 @@ package fr.minuit4.games.tilebased
 			_world = new Sprite();
 			addChild( _world );
 			
+			createLayers();
+			
 			_grid = new IsoGrid( _tileSize, _map );
 			_grid.visible = _showGrid;
 			_world.addChild( _grid );
 			
 			_gridRect = _world.getBounds( _grid );			
 			replaceWorld();
-			
-			createLayers();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
