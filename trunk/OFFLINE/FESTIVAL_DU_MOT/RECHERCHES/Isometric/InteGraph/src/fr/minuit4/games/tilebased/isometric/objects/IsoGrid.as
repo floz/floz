@@ -31,6 +31,8 @@ package fr.minuit4.games.tilebased.isometric.objects
 			this._tileSize = tileSize;
 			this._map = map;
 			
+			this.alpha = .3;
+			
 			build();
 		}
 		
@@ -60,7 +62,7 @@ package fr.minuit4.games.tilebased.isometric.objects
 				px = 0;
 				for ( j = 0; j < _map.width; ++j )
 				{
-					material = _map.isWalkable( j, i ) ? new WireColorMaterial( 0xeeeeee, 1, 0x444444, 1, 1 ) : new WireColorMaterial( 0x444444, 1, 0x444444, 1, 1 );
+					material = _map.isWalkable( j, i ) ? new WireColorMaterial( 0xeeeeee, 1, 0x000000, 1, 1 ) : new WireColorMaterial( 0x444444, 1, 0x000000, 1, 1 );
 					tile = new IsoPlane( material, _tileSize );
 					tile.x = px;
 					tile.y = py;
