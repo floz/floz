@@ -1,26 +1,28 @@
-assets_home.swf Rapport sur l'animation
-----------------------------------------
+assets_home.swf Movie Report
+-----------------------------
 
-Image #    Image octets    Total octets    Séquence
--------    ------------    ------------    -------------------
-      1         137380         137380    Séquence 1 (Image d'exportation des classes AS 3.0)
+Frame #    Frame Bytes    Total Bytes    Scene
+-------    -----------    -----------    ----------------
+      1         283588         283588    Séquence 1 (AS 3.0 Classes Export Frame)
 
-Séquence                        Forme octets    Texte octets    ActionScript octets
-----------------------------    ------------    ------------    -------------------
+Scene                        Shape Bytes    Text Bytes    ActionScript Bytes
+-------------------------    -----------    ----------    ------------------
 Séquence 1                            0             0                     0
 
-Symbole                       Forme octets    Texte octets    ActionScript octets
---------------------------    ------------    ------------    -------------------
+Symbol                       Shape Bytes    Text Bytes    ActionScript Bytes
+-------------------------    -----------    ----------    ------------------
+Tree                                   0             0                     0
 Floor                                  0             0                     0
 Guide                                  0             0                     0
 
-ActionScript octets    Emplacement
--------------------    -----------
-               522    Classes ActionScript 3.0
+ActionScript Bytes    Location
+------------------    --------
+               991    ActionScript 3.0 Classes
 
-Bitmap                     Compressé    Compression
------------------------    ---------  --------  -----------
-background_floor.png          136741     3666832   Qualité JPEG=80
+Bitmap                     Compressed    Compression
+-----------------------    ----------  --------  -----------
+background_floor.png          136268     3666832   JPEG Quality=80
+tree.png                      146118     2564916   JPEG Quality=80
 
 
 
