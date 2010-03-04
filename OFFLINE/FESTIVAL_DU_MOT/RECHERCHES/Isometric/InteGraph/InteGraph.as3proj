@@ -14,7 +14,8 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
-    <class path="..\..\..\_COMMON" />
+    <class path="..\..\..\_COMMON\src" />
+    <class path="..\..\..\_COMMON\swc" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -45,6 +46,7 @@
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="swc\assets_home.swc" />
+    <element path="..\..\..\_COMMON\swc\assets_debug.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

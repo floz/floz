@@ -1,28 +1,28 @@
-assets_home.swf Movie Report
------------------------------
+assets_home.swf Rapport sur l'animation
+----------------------------------------
 
-Frame #    Frame Bytes    Total Bytes    Scene
--------    -----------    -----------    ----------------
-      1         283588         283588    Séquence 1 (AS 3.0 Classes Export Frame)
+Image #    Image octets    Total octets    Séquence
+-------    ------------    ------------    -------------------
+      1         282849         282849    Séquence 1 (Image d'exportation des classes AS 3.0)
 
-Scene                        Shape Bytes    Text Bytes    ActionScript Bytes
--------------------------    -----------    ----------    ------------------
+Séquence                        Forme octets    Texte octets    ActionScript octets
+----------------------------    ------------    ------------    -------------------
 Séquence 1                            0             0                     0
 
-Symbol                       Shape Bytes    Text Bytes    ActionScript Bytes
--------------------------    -----------    ----------    ------------------
+Symbole                       Forme octets    Texte octets    ActionScript octets
+--------------------------    ------------    ------------    -------------------
 Tree                                   0             0                     0
 Floor                                  0             0                     0
 Guide                                  0             0                     0
 
-ActionScript Bytes    Location
-------------------    --------
-               991    ActionScript 3.0 Classes
+ActionScript octets    Emplacement
+-------------------    -----------
+              1055    Classes ActionScript 3.0
 
-Bitmap                     Compressed    Compression
------------------------    ----------  --------  -----------
-background_floor.png          136268     3666832   JPEG Quality=80
-tree.png                      146118     2564916   JPEG Quality=80
+Bitmap                     Compressé    Compression
+-----------------------    ---------  --------  -----------
+background_floor.png          136202     3666832   Qualité JPEG=80
+tree.png                      145381     2562384   Qualité JPEG=80
 
 
 
