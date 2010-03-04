@@ -188,6 +188,10 @@ package fr.minuit4.games.tilebased
 		
 		override public function get mouseX():Number { return ( super.mouseX + _gridRect.x ); }
 		
+		public function get worldWidth():Number { return _gridRect.width; }
+		
+		public function get worldHeight():Number { return _gridRect.height; }
+		
 	}
 	
 }

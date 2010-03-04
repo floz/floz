@@ -18,6 +18,10 @@ package fr.minuit4.games.tilebased.isometric.objects
 		
 		private var _position:Point3D;
 		
+		private var _sizeW:Number;
+		private var _sizeL:Number;
+		private var _sizeH:Number;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
@@ -25,6 +29,7 @@ package fr.minuit4.games.tilebased.isometric.objects
 		public function IsoObject() 
 		{
 			_position = new Point3D();
+			setSize();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
@@ -41,6 +46,13 @@ package fr.minuit4.games.tilebased.isometric.objects
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function setSize( sizeW:Number = 32, sizeL:Number = 32, sizeH:Number = 32 ):void
+		{
+			this._sizeW = sizeW;
+			this._sizeL = sizeL;
+			this._sizeH = sizeH;
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		
@@ -84,7 +96,8 @@ package fr.minuit4.games.tilebased.isometric.objects
 		
 		override public function get depth():Number
 		{
-			return ( ( x + y ) * .866 - z * .707 );
+			return ( ( x + _sizeW * .5 + y + _sizeL * .5 ) * .866 - z * .707 );
+			//return ( ( x + y ) * .866 - z * .707 );
 		}
 		
 	}
