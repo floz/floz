@@ -5,12 +5,16 @@
  */
 package  
 {
+	import assets.home.AssetBarrierLeft;
+	import assets.home.AssetCliff;
 	import assets.home.AssetMachine;
+	import assets.home.AssetPost1;
+	import assets.home.AssetPost2;
 	import assets.home.AssetRocks;
 	import assets.home.AssetsFloor;
 	import assets.home.AssetsTree;
-	import com.bit101.components.PushButton;
 	import flash.display.Bitmap;
+	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -29,7 +33,7 @@ package
 	import fr.minuit4.games.tilebased.World;
 	import fr.minuit4.geom.Point3D;
 	import fr.minuit4.utils.debug.FPS;
-	import fr.phorm.debug.DebugButton;
+	//import fr.phorm.debug.DebugButton;
 	
 	public class EditorObjects extends Sprite
 	{
@@ -90,6 +94,11 @@ package
 			_world.showGrid = true;
 			addChild( _world );
 			
+			var cliff:IsoObject = new IsoObject();
+			cliff.addChild( new AssetCliff() );
+			cliff.y -= 1;
+			_world.addBackgroundObject( cliff );
+			
 			var floor:IsoObject = new IsoObject();
 			floor.addChild( new AssetsFloor() );
 			_world.addBackgroundObject( floor );
@@ -114,16 +123,34 @@ package
 			machine.setSize( 3 << 5, 32 );
 			_world.addMobile( machine );
 			
+			var post1:IsoObject = new IsoObject();
+			post1.addChild( new AssetPost1() );
+			post1.x = 30 * 32;
+			post1.y = 21 * 32;
+			_world.addMobile( post1 );
+			
+			var post2:IsoObject = new IsoObject();
+			post2.addChild( new AssetPost2() );
+			post2.x = 26 * 32;
+			post2.y = 24 * 32;
+			_world.addMobile( post2 );
+			
+			var barrier:IsoObject = new IsoObject();
+			barrier.addChild( new AssetBarrierLeft() );
+			barrier.x = 28 * 32;
+			barrier.y = 28 * 32;;
+			_world.addMobile( barrier );
+			
 			_char = new IsoBox( new WireColorMaterial( 0xff8a00, 1, 0x444444 ) );
 			_world.addMobile( _char );
 			
 			addChild( new FPS() ); 
 			
-			var showGridButton:DebugButton = new DebugButton( "Show grid" );
-			showGridButton.x = 20;
-			showGridButton.y = 90;
-			showGridButton.addEventListener( MouseEvent.CLICK, showGridButtonClickHandler );
-			addChild( showGridButton );
+			//var showGridButton:DebugButton = new DebugButton( "Show grid" );
+			//showGridButton.x = 20;
+			//showGridButton.y = 90;
+			//showGridButton.addEventListener( MouseEvent.CLICK, showGridButtonClickHandler );
+			//addChild( showGridButton );
 			
 			_world.addEventListener( MouseEvent.MOUSE_DOWN, worldDownHandler );
 			stage.addEventListener( MouseEvent.MOUSE_WHEEL, mouseWheelHandler );
