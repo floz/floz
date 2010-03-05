@@ -1,32 +1,40 @@
-assets_home.swf Rapport sur l'animation
-----------------------------------------
+assets_home.swf Movie Report
+-----------------------------
 
-Image #    Image octets    Total octets    Séquence
--------    ------------    ------------    -------------------
-      1         435377         435377    Séquence 1 (Image d'exportation des classes AS 3.0)
+Frame #    Frame Bytes    Total Bytes    Scene
+-------    -----------    -----------    ----------------
+      1         522599         522599    Séquence 1 (AS 3.0 Classes Export Frame)
 
-Séquence                        Forme octets    Texte octets    ActionScript octets
-----------------------------    ------------    ------------    -------------------
+Scene                        Shape Bytes    Text Bytes    ActionScript Bytes
+-------------------------    -----------    ----------    ------------------
 Séquence 1                            0             0                     0
 
-Symbole                       Forme octets    Texte octets    ActionScript octets
---------------------------    ------------    ------------    -------------------
+Symbol                       Shape Bytes    Text Bytes    ActionScript Bytes
+-------------------------    -----------    ----------    ------------------
+Cliff                                  0             0                     0
+BarrierLeft                            0             0                     0
+Post2                                  0             0                     0
+Post1                                  0             0                     0
 Machine                                0             0                     0
 Rocks                                  0             0                     0
 Tree                                   0             0                     0
 Floor                                  0             0                     0
-Guide                                  0             0                     0
+Guide                                 40             0                     0
 
-ActionScript octets    Emplacement
--------------------    -----------
-              2088    Classes ActionScript 3.0
+ActionScript Bytes    Location
+------------------    --------
+              4028    ActionScript 3.0 Classes
 
-Bitmap                     Compressé    Compression
------------------------    ---------  --------  -----------
-background_floor.png          217185     3666832   Qualité JPEG=90
-machine.png                     7751      104060   Qualité JPEG=90
-rocks.png                       1050        3864   Qualité JPEG=90
-tree.png                      206911     2587076   Qualité JPEG=90
+Bitmap                     Compressed    Compression
+-----------------------    ----------  --------  -----------
+background_floor.png          213933     3666832   JPEG Quality=90
+falaise.png                    86551     4390400   JPEG Quality=80
+barrier_left.png                2147       14592   JPEG Quality=80
+poteau2.png                     1420        4032   JPEG Quality=90
+poteau1.png                     1225        3040   JPEG Quality=90
+machine.png                     7635      104060   JPEG Quality=90
+rocks.png                       1034        3864   JPEG Quality=90
+tree.png                      203813     2587076   JPEG Quality=90
 
 
 
