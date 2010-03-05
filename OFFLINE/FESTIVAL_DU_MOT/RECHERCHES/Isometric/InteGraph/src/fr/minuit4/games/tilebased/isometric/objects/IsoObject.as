@@ -96,8 +96,11 @@ package fr.minuit4.games.tilebased.isometric.objects
 		
 		override public function get depth():Number
 		{
+			//var px:int = ( x >> 5 ) + ( ( _sizeW / 2 ) >> 5 );
+			//var py:int = ( y >> 5 ) + ( ( _sizeL / 2 ) >> 5 );
+			
+			//return super.x + super.width + ( super.y + super.height ) * 1000;
 			return ( ( x + _sizeW * .5 + y + _sizeL * .5 ) * .866 - z * .707 );
-			//return ( ( x + y ) * .866 - z * .707 );
 		}
 		
 	}
