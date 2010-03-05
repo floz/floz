@@ -3,7 +3,7 @@ assets_home.swf Rapport sur l'animation
 
 Image #    Image octets    Total octets    Séquence
 -------    ------------    ------------    -------------------
-      1         282849         282849    Séquence 1 (Image d'exportation des classes AS 3.0)
+      1         435377         435377    Séquence 1 (Image d'exportation des classes AS 3.0)
 
 Séquence                        Forme octets    Texte octets    ActionScript octets
 ----------------------------    ------------    ------------    -------------------
@@ -11,18 +11,22 @@ Séquence 1                            0             0                     0
 
 Symbole                       Forme octets    Texte octets    ActionScript octets
 --------------------------    ------------    ------------    -------------------
+Machine                                0             0                     0
+Rocks                                  0             0                     0
 Tree                                   0             0                     0
 Floor                                  0             0                     0
 Guide                                  0             0                     0
 
 ActionScript octets    Emplacement
 -------------------    -----------
-              1055    Classes ActionScript 3.0
+              2088    Classes ActionScript 3.0
 
 Bitmap                     Compressé    Compression
 -----------------------    ---------  --------  -----------
-background_floor.png          136202     3666832   Qualité JPEG=80
-tree.png                      145381     2562384   Qualité JPEG=80
+background_floor.png          217185     3666832   Qualité JPEG=90
+machine.png                     7751      104060   Qualité JPEG=90
+rocks.png                       1050        3864   Qualité JPEG=90
+tree.png                      206911     2587076   Qualité JPEG=90
 
 
 

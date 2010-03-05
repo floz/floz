@@ -5,6 +5,8 @@
  */
 package  
 {
+	import assets.home.AssetMachine;
+	import assets.home.AssetRocks;
 	import assets.home.AssetsFloor;
 	import assets.home.AssetsTree;
 	import com.bit101.components.PushButton;
@@ -45,13 +47,13 @@ package
 									[ 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ],
 									[ 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ],
 									[ 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2 ],
-									[ 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2 ],
-									[ 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2 ],
-									[ 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2 ],
-									[ 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2 ],
+									[ 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2 ],
+									[ 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2 ],
+									[ 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2 ],
+									[ 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2 ],
 									[ 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2 ],
 									[ 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2 ],
-									[ 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2 ],
+									[ 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2 ],
 									[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2 ],
 									[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2 ],
 									[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2 ],
@@ -73,6 +75,7 @@ package
 		private var _pos:Point = new Point( 0, 0 );
 		private var _lastPos:Point = new Point( 0, 0 );
 		private var _lastState:int;
+		private var machine:IsoObject;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
@@ -93,10 +96,23 @@ package
 			
 			_tree = new IsoObject();
 			_tree.addChild( new AssetsTree() );
-			_tree.setSize( 4 << 5, 4 << 5 );
+			_tree.setSize( 4 << 5, 4 << 5 ); // 4 << 5 ?
 			_tree.x = 15 * 32;
 			_tree.y = 12 * 32;
 			_world.addMobile( _tree );
+			
+			var rocks:IsoObject = new IsoObject();
+			rocks.addChild( new AssetRocks() );
+			rocks.x = 18 * 32;
+			rocks.y = 17 * 32;
+			_world.addMobile( rocks );
+			
+			machine = new IsoObject();
+			machine.addChild( new AssetMachine() );
+			machine.x = 21 * 32;
+			machine.y = 11 * 32;
+			machine.setSize( 3 << 5, 32 );
+			_world.addMobile( machine );
 			
 			_char = new IsoBox( new WireColorMaterial( 0xff8a00, 1, 0x444444 ) );
 			_world.addMobile( _char );
@@ -134,7 +150,9 @@ package
 		{
 			var p:Point3D = IsoMath.screenToIso( _world.mouseX, _world.mouseY );
 			_pos.x = p.x >> 5;
+			trace( "_pos.x : " + _pos.x );
 			_pos.y = p.y >> 5;
+			trace( "_pos.y : " + _pos.y );
 			
 			if ( !( _pos.x == _lastPos.x && _pos.y == _lastPos.y ) && ( _pos.y >= 0 && _pos.y < _datas.length ) && ( _pos.x >= 0 && _pos.y < _datas[ 0 ].length ) )
 				updateDatas();
@@ -199,6 +217,7 @@ package
 			
 			trace( "char : " + _char.depth );
 			trace( "tree : " + _tree.depth );
+			trace( "machine : " + machine.depth );
 		}
 		
 		private function resizeHandler(e:Event):void 

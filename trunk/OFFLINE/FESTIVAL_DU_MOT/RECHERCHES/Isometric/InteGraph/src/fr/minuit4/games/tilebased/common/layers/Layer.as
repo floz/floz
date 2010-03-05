@@ -38,9 +38,25 @@ package fr.minuit4.games.tilebased.common.layers
 		
 		private function addToList( object:GameObject ):void
 		{
-			var depth:int = getDepthIdx( object.depth );
-			_objects.splice( depth, 0, object );
-			addChildAt( object, depth );
+			var idx:int = getDepthIdx( object.depth );
+			_objects.splice( idx, 0, object );
+			addChildAt( object, idx );
+			
+			var objA:GameObject = object; // TODO : rendre "dynamique"/récursif.
+			var objB:GameObject;
+			if ( idx + 1 < _objects.length )
+			{
+				if ( _objects[ idx + 1 ].depth == object.depth )
+				{
+					objB = _objects[ idx + 1 ];
+					if ( objA.y > objB.y )
+					{
+						_objects[ idx ] = objB;
+						_objects[ idx + 1 ] = objA;
+						swapChildren( objA, objB );
+					}
+				}
+			}
 		}
 		
 		// Binary search : optimisation, plus rapide que de sortOn le tableau
