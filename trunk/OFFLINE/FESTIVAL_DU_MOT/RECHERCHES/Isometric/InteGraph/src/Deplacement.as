@@ -251,28 +251,8 @@ package
 		private function resizeHandler(e:Event):void 
 		{
 			var p:Point = _char.localToGlobal( new Point( 0, 0 ) );
-			//_char.parent.localToGlobal( new Point( _char.x, _char.y ) );
-			trace( "_char.parent.localToGlobal( new Point( _char.x, _char.y ) ) : " + _char.parent.localToGlobal( new Point( _char.x, _char.y ) ) );
-			trace( "p : " + p );
-			trace( "_world.x : " + _world.x );
-			trace( "_world.y : " + _world.y );
-			trace( "_char.x : " + _char.x );
-			trace( "_char.y : " + _char.y );
-			trace( _world.globalToLocal( new Point( _char.x, _char.y ) ) );
-			trace( _world.localToGlobal( new Point( _char.x, _char.y ) ) );
 			_world.x = - p.x + stage.stageWidth * .5 + _world.x;
 			_world.y = - p.y + stage.stageHeight * .5 + _world.y;
-			//eaze( _world ).to( .1, { x: 
-			//_world.y =
-			trace( "_world.x : " + _world.x );
-			trace( "_world.y : " + _world.y );
-			trace( "_char.x : " + _char.x );
-			trace( "_char.y : " + _char.y );
-			
-			
-			trace( "_char.localToGlobal( new Point( 0, 0 ) ) : " + _char.localToGlobal( new Point( 0, 0 ) ) );
-			//_world.x = ( stage.stageWidth - _world.worldWidth * _world.scaleX ) * .5 - p.x * .5;
-			//_world.y = ( stage.stageHeight - _world.worldHeight * _world.scaleY ) * .5 - p.y * .5;
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
