@@ -13,6 +13,8 @@ package
 	import assets.home.AssetRocks;
 	import assets.home.AssetsFloor;
 	import assets.home.AssetsTree;
+	import aze.motion.easing.Linear;
+	import aze.motion.eaze;
 	import flash.display.Bitmap;
 	import flash.display.Graphics;
 	import flash.display.Shape;
@@ -37,7 +39,7 @@ package
 	import fr.minuit4.geom.IntPoint;
 	import fr.minuit4.geom.Point3D;
 	import fr.minuit4.utils.debug.FPS;
-	//import fr.phorm.debug.DebugButton;
+	import fr.phorm.debug.DebugButton;
 	
 	public class Deplacement extends Sprite
 	{
@@ -87,6 +89,8 @@ package
 		private var _path:Vector.<IntPoint>;
 		private var _timer:Timer;
 		
+		private var _running:Boolean;
+		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
@@ -97,7 +101,7 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			
 			_world = new World( 32, MapDatasConverter.fromArray( _datas ) );
-			//_world.showGrid = true;
+			_world.showGrid = true;
 			addChild( _world );
 			
 			var cliff:IsoObject = new IsoObject();
@@ -112,44 +116,44 @@ package
 			_tree = new IsoObject();
 			_tree.addChild( new AssetsTree() );
 			_tree.setSize( 4 << 5, 4 << 5 ); // 4 << 5 ?
-			_tree.x = 15 * 32;
-			_tree.y = 12 * 32;
+			_tree.x = int( 15 * 32 );
+			_tree.y = int( 12 * 32 );
 			_world.addMobile( _tree );
 			
 			var rocks:IsoObject = new IsoObject();
 			rocks.addChild( new AssetRocks() );
-			rocks.x = 18 * 32;
-			rocks.y = 17 * 32;
+			rocks.x = int( 18 * 32 );
+			rocks.y = int( 17 * 32 );
 			_world.addMobile( rocks );
 			
 			machine = new IsoObject();
 			machine.addChild( new AssetMachine() );
-			machine.x = 21 * 32;
-			machine.y = 11 * 32;
+			machine.x = int( 21 * 32 );
+			machine.y = int( 11 * 32 );
 			machine.setSize( 3 << 5, 32 );
 			_world.addMobile( machine );
 			
 			var post1:IsoObject = new IsoObject();
 			post1.addChild( new AssetPost1() );
-			post1.x = 30 * 32;
-			post1.y = 21 * 32;
+			post1.x = int( 30 * 32 );
+			post1.y = int( 21 * 32 );
 			_world.addMobile( post1 );
 			
 			var post2:IsoObject = new IsoObject();
 			post2.addChild( new AssetPost2() );
-			post2.x = 26 * 32;
-			post2.y = 24 * 32;
+			post2.x = int( 26 * 32 );
+			post2.y = int( 24 * 32 );
 			_world.addMobile( post2 );
 			
 			var barrier:IsoObject = new IsoObject();
 			barrier.addChild( new AssetBarrierLeft() );
-			barrier.x = 28 * 32;
-			barrier.y = 28 * 32;;
+			barrier.x = int( 28 * 32 );
+			barrier.y = int( 28 * 32 );
 			_world.addMobile( barrier );
 			
 			_char = new IsoBox( new WireColorMaterial( 0xff8a00, 1, 0x444444 ) );
-			_char.x = 18 * 32;
-			_char.y = 22 * 32;
+			_char.x = 20 * 32;
+			_char.y = 15 * 32;
 			_world.addMobile( _char );
 			
 			_pos.x = _char.x >> 5;
@@ -157,11 +161,11 @@ package
 			
 			addChild( new FPS() ); 
 			
-			//var showGridButton:DebugButton = new DebugButton( "Show grid" );
-			//showGridButton.x = 20;
-			//showGridButton.y = 90;
-			//showGridButton.addEventListener( MouseEvent.CLICK, showGridButtonClickHandler );
-			//addChild( showGridButton );
+			var showGridButton:DebugButton = new DebugButton( "Show grid" );
+			showGridButton.x = 20;
+			showGridButton.y = 90;
+			showGridButton.addEventListener( MouseEvent.CLICK, showGridButtonClickHandler );
+			addChild( showGridButton );
 			
 			_timer = new Timer( 10 );
 			_timer.addEventListener( TimerEvent.TIMER, timerHandler );
@@ -177,33 +181,24 @@ package
 		
 		private function worldDownHandler(e:MouseEvent):void 
 		{
+			//moveChar();
 			addEventListener( Event.ENTER_FRAME, enterFrameHandler );
 			stage.addEventListener( MouseEvent.MOUSE_UP, mouseUpHandler );
 		}
 		
 		private function enterFrameHandler(e:Event):void 
 		{
-			var p:Point3D = IsoMath.screenToIso( _world.mouseX, _world.mouseY );
-			p.x = p.x >> 5;
-			p.y = p.y >> 5;
-			
-			if ( ( p.x >= 0 && p.x < _datas[ 0 ].length ) && ( p.y >= 0 && p.y < _datas.length ) )
-			{
-				var v:Vector.<IntPoint> = _world.findPath( _pos, p );
-				if ( v != null ) 
-				{
-					_path = v;
-					if ( !_timer.running )
-						_timer.start();
-				}
-			}
-			
-			_lastPos = p;
+			moveChar();
 		}
 		
 		private function mouseUpHandler(e:MouseEvent):void 
 		{
 			removeEventListener( Event.ENTER_FRAME, enterFrameHandler );
+			
+			_lastPos.x = -1;
+			_lastPos.y = -1;
+			
+			moveChar();
 		}
 		
 		private function timerHandler(e:TimerEvent):void 
@@ -255,11 +250,85 @@ package
 		
 		private function resizeHandler(e:Event):void 
 		{
-			_world.x = ( stage.stageWidth - _world.worldWidth * _world.scaleX ) * .5;
-			_world.y = ( stage.stageHeight - _world.worldHeight * _world.scaleY ) * .5;
+			var p:Point = _char.localToGlobal( new Point( 0, 0 ) );
+			//_char.parent.localToGlobal( new Point( _char.x, _char.y ) );
+			trace( "_char.parent.localToGlobal( new Point( _char.x, _char.y ) ) : " + _char.parent.localToGlobal( new Point( _char.x, _char.y ) ) );
+			trace( "p : " + p );
+			trace( "_world.x : " + _world.x );
+			trace( "_world.y : " + _world.y );
+			trace( "_char.x : " + _char.x );
+			trace( "_char.y : " + _char.y );
+			trace( _world.globalToLocal( new Point( _char.x, _char.y ) ) );
+			trace( _world.localToGlobal( new Point( _char.x, _char.y ) ) );
+			_world.x = - p.x + stage.stageWidth * .5 + _world.x;
+			_world.y = - p.y + stage.stageHeight * .5 + _world.y;
+			//eaze( _world ).to( .1, { x: 
+			//_world.y =
+			trace( "_world.x : " + _world.x );
+			trace( "_world.y : " + _world.y );
+			trace( "_char.x : " + _char.x );
+			trace( "_char.y : " + _char.y );
+			
+			
+			trace( "_char.localToGlobal( new Point( 0, 0 ) ) : " + _char.localToGlobal( new Point( 0, 0 ) ) );
+			//_world.x = ( stage.stageWidth - _world.worldWidth * _world.scaleX ) * .5 - p.x * .5;
+			//_world.y = ( stage.stageHeight - _world.worldHeight * _world.scaleY ) * .5 - p.y * .5;
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
+		
+		private function moveChar():void
+		{
+			var p:Point3D = IsoMath.screenToIso( _world.mouseX, _world.mouseY );
+			p.x = p.x >> 5;
+			p.y = p.y >> 5;
+			
+			//if ( ( p.x >= 0 && p.x < _datas[ 0 ].length ) && ( p.y >= 0 && p.y < _datas.length ) )
+			//{			
+			if ( ( p.x != _lastPos.x || p.y != _lastPos.y ) )
+			{
+				var d:int = getTimer();
+				var v:Vector.<IntPoint> = _world.findPath( _pos, p );
+				trace( getTimer() - d );
+				if ( v != null ) 
+				{
+					_path = v;
+					if ( !_running ) tween();
+					
+					_lastPos = p;
+				}
+			}				
+		}
+		
+		private function tween():void
+		{
+			if ( _path.length )
+			{
+				_running = true;
+				var p:IntPoint = _path.shift();
+				eaze( _char ).to( .15, { x: ( p.x << 5 ), y: ( p.y << 5 ) } )
+							 .easing( Linear.easeNone )
+							 .onUpdate( update );				
+				
+				eaze( this ).delay( .13 ).onComplete( tween );
+				
+				_pos.x = p.x;
+				_pos.y = p.y;
+				
+				
+			}
+			else _running = false;
+		}
+		
+		private function update():void
+		{			
+			var p:Point = _char.localToGlobal( new Point( 0, 0 ) );
+			
+			_world.x = - p.x + stage.stageWidth * .5 + _world.x;
+			_world.y = - p.y + stage.stageHeight * .5 + _world.y;
+			
+			_world.render();
+		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
 		

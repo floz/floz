@@ -5,9 +5,9 @@
     <movie disabled="False" />
     <movie input="" />
     <movie path="bin\IsoMapFINAL3.swf" />
-    <movie fps="30" />
-    <movie width="1400" />
-    <movie height="900" />
+    <movie fps="50" />
+    <movie width="960" />
+    <movie height="580" />
     <movie version="10" />
     <movie background="#FFFFFF" />
   </output>
