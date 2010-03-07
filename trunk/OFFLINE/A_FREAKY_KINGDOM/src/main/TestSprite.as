@@ -33,16 +33,16 @@ package main
 		
 		public function TestSprite() 
 		{
-			//GameEngine.initialize( stage );
-			//
-			//_gameSprite = new GameSprite( stage.frameRate );
-			//_gameSprite.addEventListener( GameSprite.READY, onSpriteReady );
-			//_gameSprite.addAnimation( new liaf_marche(), 0 );
-			//addChild( _gameSprite );
+			GameEngine.initialize( stage );
 			
-			_liaf = new Liaf();
-			_liaf.scaleX = -1;
-			addChild( _liaf );
+			_gameSprite = new GameSprite( stage.frameRate );
+			_gameSprite.addEventListener( GameSprite.READY, onSpriteReady );
+			_gameSprite.addAnimation( new liaf_marche(), 0 );
+			addChild( _gameSprite );
+			
+			//_liaf = new Liaf();
+			//_liaf.scaleX = -1;
+			//addChild( _liaf );
 			
 			stage.addEventListener( MouseEvent.CLICK, onClick );
 		}
