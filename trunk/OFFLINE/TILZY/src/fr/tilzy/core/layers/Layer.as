@@ -6,6 +6,8 @@
  */
 package fr.tilzy.core.layers 
 {
+	import flash.display.Bitmap;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import fr.tilzy.common.objects.GameObject;
 	import fr.tilzy.isometric.objects.primitives.IsoBox;
@@ -20,7 +22,7 @@ package fr.tilzy.core.layers
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _objects:Array;
+		private var _objects:/*GameObject*/Array;
 		private var _objectsToRender:Vector.<GameObject>;
 		private var _needRender:Boolean;
 		
@@ -137,9 +139,9 @@ package fr.tilzy.core.layers
 			_objects.splice( idx, 1 );
 			
 			// On vérifie et supprime si présent dans la liste des objets à rendre.
-			idx = _objectsToRender.indexOf( object ); // TODO : Optimiser à ce niveau ?
+			/*idx = _objectsToRender.indexOf( object ); // TODO : Optimiser à ce niveau ?
 			if ( idx >= 0 )
-				_objectsToRender.splice( idx, 1 );
+				_objectsToRender.splice( idx, 1 );*/
 			
 			object.unregisterFromLayer();
 			
@@ -153,7 +155,7 @@ package fr.tilzy.core.layers
 		 */
 		public function render( forceRender:Boolean = false ):void
 		{
-			if ( !_needRender && !forceRender )
+			/*if ( !_needRender && !forceRender )
 				return;
 			
 			var go:GameObject;
@@ -173,9 +175,8 @@ package fr.tilzy.core.layers
 				addToList( go );
 			}
 			
-			_objectsToRender = new Vector.<GameObject>();
-			
-			_needRender = false;
+			_objectsToRender = new Vector.<GameObject>();			
+			_needRender = false;*/
 		}
 		
 		/**
@@ -185,10 +186,36 @@ package fr.tilzy.core.layers
 		 */
 		public function renderObject( object:GameObject ):void
 		{
-			if ( _objectsToRender.indexOf( object ) >= 0 ) // TODO : Optimiser à ce niveau ?
-				return;
+			//var idx:int = _objectsToRender.indexOf( object );
+			//if ( idx >= 0 ) // TODO : Optimiser à ce niveau ?
+				//_objectsToRender.splice( idx, 1 );
 			
-			_objectsToRender[ _objectsToRender.length ] = object;
+			//_objectsToRender.splice( 0, 0, object );
+			
+			var idx:int = _objects.indexOf( object );
+			if ( idx >= 0 )
+				_objects.splice( idx, 1 );
+			
+			addToList( object );
+			
+			// Lancer un render à chaque fois, plutot qu'ajouter tout dans la liste et la traiter a l'appel de render() ?
+		}
+		
+		public function dispose():void
+		{			
+			_objA = null;
+			_objB = null;
+			var i:int = _objects.length;
+			while ( --i > -1 )
+			{
+				_objects[ i ].unregisterFromLayer();
+			}
+			_objectsToRender = null;
+		}
+		
+		public function traceObjects():void
+		{
+			trace( "Object : " + _objects );
 		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------

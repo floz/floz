@@ -16,6 +16,9 @@ package fr.tilzy.core.layers
 		
 		function get needRender():Boolean;
 		function set needRender( value:Boolean ):void;
+		
+		function get cacheAsBitmap():Boolean;
+		function set cacheAsBitmap( value:Boolean ):void;
 	}
 	
 }
