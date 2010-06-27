@@ -2,6 +2,44 @@
 <data>
 <path img="assets/img/" works="works/" lab="lab/" />
 <works>
+	<item title="Phorm Editor" preview="phormeditor.jpg" pubdate="1273770400000">
+		<client><![CDATA[Gobelins]]></client>
+		<job>Flash developer, Designer</job>
+		<technos>AS3, Flash, AIR, XML</technos>
+		<url>http://www.phorm.fr/devblog/2010/05/phorm-editor/</url>
+		<desc><![CDATA[The phorm editor has been realized in parallel of the development of the Phorm project. These two are my first end year project at Gobelins. The editor, in AIR, is about one week of work.<br />Date: March 2010]]></desc>
+		<diaporama>
+			<image name="phormeditor1.jpg" />
+			<image name="phormeditor2.jpg" />
+			<image name="phormeditor3.jpg" />
+		</diaporama>
+	</item>
+	<item title="Elive" preview="elive.jpg" pubdate="1253770400000">
+		<client><![CDATA[Gobelins]]></client>
+		<job>Flash developer, Designer</job>
+		<technos>AS3, Flash, AIR, XML</technos>
+		<url>http://www.floz.fr/beatlize</url>
+		<desc><![CDATA[Elive is the first project that we had to make at Gobelins.<br /> With a team of four, we designed and build a prototype of a widget, using AIR, named Elive.<br />Date: October 2009]]></desc>
+		<diaporama>
+			<image name="elive1.jpg" />
+			<image name="elive2.jpg" />
+			<image name="elive3.jpg" />
+		</diaporama>
+	</item>
+	<item title="Eurosport Madrid" preview="madrid.jpg" pubdate="1242870400000">
+		<client><![CDATA[Addiction Agency]]></client>
+		<job>Flash developer</job>
+		<technos>AS3, Flash, ZendAMF, XML</technos>
+		<url>http://fr.madrid.eurosport.com/</url>
+		<desc><![CDATA[I worked on this project as a Flash Developer while Make me pulse was in charge of the PHP part. This project has been realized in one week.<br />Date: August 2009]]></desc>
+		<diaporama>
+			<image name="madrid1.jpg" />
+			<image name="madrid2.jpg" />
+			<image name="madrid3.jpg" />
+			<image name="madrid4.jpg" />
+			<image name="madrid5.jpg" />
+		</diaporama>
+	</item>
 	<item title="Beatlize Yourself" preview="beatlize.jpg" pubdate="1242770400000">
 		<client><![CDATA[Nous Production & Synerg'Hetic]]></client>
 		<job>Flash developer, Graphic designer, Project Chief</job>
@@ -34,7 +72,7 @@
 		<client><![CDATA[M6]]></client>
 		<job>Flash developer</job>
 		<technos>Flash, AS3, Papervision3D, XML</technos>
-		<url>http://www.groupem6.fr/rentree2008/</url>
+		<url></url>
 		<desc><![CDATA[During an internship at Havas Entertainment, I worked on a project for M6. I had to build a coverflow/caroussel which is now their shows' portfolio. <br />Date: June 2008 ]]></desc>
 		<diaporama>
 			<image name="m6rentree1.jpg" />
@@ -140,11 +178,11 @@
 	</item>
 </lab>
 <about>
-	<presentation><![CDATA[I discovered I had a passion for Flash development two years ago. I'm currently at HETIC, a computer sciences school, after graduating with a DUT "Services et Réseaux de Communication" (Services and Communication Networks). These two schools gave me some skills related to the domains of the New Technologies of Information and Communication. <br />Last year, I spent 5 months at Havas Entertainement, a web agency, as a Flash Developer.]]></presentation>
+	<presentation><![CDATA[I'm currently student at Gobelins, l'école de l'image, a computer graphics school; and I'm an apprentice at Digitas France since August 2009.]]></presentation>
 	<skills>
-		<flash><![CDATA[AS1 / AS2 / AS3 Programming <br />Flash Remoting / XML / etc. <br />PV3D / Away3D / FLARToolKit / PureMVC / etc. <br />Flex & Air (Basics)]]></flash>
+		<flash><![CDATA[AS1 / AS2 / AS3 Programming <br />Flash Remoting / XML / etc. <br />PV3D / Away3D / FLARToolKit / etc. <br />Flex & Air]]></flash>
 		<graphic><![CDATA[Identification <br />Web layouts]]></graphic>
 	</skills>
-	<softwares flash="Flash, Flex Builder, Flash Develop" graphic="Photoshop, Illustrator, Pencils & Hands" />
+	<softwares flash="Flash, Flex Builder, Flash Develop, FDT" graphic="Photoshop, Illustrator, Pencils" />
 </about>
 </data>
