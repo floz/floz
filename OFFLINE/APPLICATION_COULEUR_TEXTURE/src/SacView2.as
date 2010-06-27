@@ -6,60 +6,60 @@
  */
 package  
 {
+	import assets.sacs.AssetSac1ChangeColor;
+	import aze.motion.eaze;
+	import flash.display.Bitmap;
+	import flash.display.BlendMode;
 	import flash.display.Sprite;
-	import flash.events.Event;
+	import sacs.AssetSac1;
 	
-	public class Main extends Sprite
+	public class SacView2 extends Sprite
 	{
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private var _sac:SacView;
-		private var _sac2:SacView2;
-		private var _colorPanel:ColorPanel;
+		private var _sac:AssetSac1;
+		private var _colorBag:AssetSac1ChangeColor;
+		private var _part:Bitmap;
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
 		// - CONSTRUCTOR -----------------------------------------------------------------
 		
-		public function Main() 
+		public function SacView2() 
 		{
 			initSac();
-			initColorPanel();
+			initPart();
 		}
 		
 		// - EVENTS HANDLERS -------------------------------------------------------------
-		
-		private function changeHandler(e:Event):void 
-		{
-			_sac.changeColor( _colorPanel.currentColor );
-			_sac2.changeColor( _colorPanel.currentColor );
-		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
 		
 		private function initSac():void
 		{
-			_sac = new SacView();
-			_sac.x = _sac.y = 10;
+			_sac = new AssetSac1();
 			addChild( _sac );
 			
-			_sac2 = new SacView2();
-			_sac2.x = _sac.x + _sac.width + 10;
-			_sac2.y = 10;
-			addChild( _sac2 );
+			_colorBag = new AssetSac1ChangeColor();
+			_colorBag.blendMode = BlendMode.OVERLAY;
+			addChild( _colorBag );
 		}
 		
-		private function initColorPanel():void
+		private function initPart():void
 		{
-			_colorPanel = new ColorPanel();
-			_colorPanel.x = stage.stageWidth - _colorPanel.width - 10;
-			_colorPanel.y = 10;
-			_colorPanel.addEventListener( Event.CHANGE, changeHandler );
-			addChild( _colorPanel );
+			//_part = new 
 		}
 		
 		// - PUBLIC METHODS --------------------------------------------------------------
+		
+		public function changeColor( color:uint ):void
+		{
+			//eaze( _sac ).to( .25 ).tint( color, .5, .5 );
+			//eaze( _colorBag ).to( .25 ).colorMatrix( 0, 0, 0, 0, color, 1 );//tint( color, .5, .5 );
+			
+			eaze( _colorBag ).to( .25 ).tint( color );
+		}
 		
 		// - GETTERS & SETTERS -----------------------------------------------------------
 		

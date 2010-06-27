@@ -15,7 +15,7 @@ package
 		
 		// - PRIVATE VARIABLES -----------------------------------------------------------
 		
-		private const COLORS:/*uint*/Array = [ 0xac0208, 0x000099, 0xff6565, 0x177ac7, 0x000000, 0xff00ff, 0xe4c11d ];
+		private const COLORS:/*uint*/Array = [ 0xac0208, 0x000099, 0x9f2b39, 0x177ac7, 0x127695, 0x000000, 0xff00ff, 0x644c9f, 0xe5df1f ];
 		
 		// - PUBLIC VARIABLES ------------------------------------------------------------
 		
