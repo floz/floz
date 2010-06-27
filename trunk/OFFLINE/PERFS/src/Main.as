@@ -26,12 +26,12 @@
 			if ( phase == 0 ) 
 			{
 				f = ppi;
-				trace( "vector" );
+				trace( "const" );
 			}
 			else if ( phase == 1 )
 			{
 				f = ipp;
-				trace( "array" );
+				trace( "var" );
 			}
 
 			var debut:Number = 0;
@@ -49,16 +49,12 @@
 		
 		private function ppi():void
 		{
-			_v = Vector.<int>( [ 5, 2, 3, 5, 2, 1, 3 ] );
-			_v.splice( 2, 0, 20 );
-			_v.splice( 4, 0, 32 );
+			const machin:Number = 0;
 		}
 		
 		private function ipp():void
 		{
-			_a = [ 5, 2, 3, 5, 2, 1, 3 ];
-			_a.splice( 2, 0, 20 );
-			_a.splice( 4, 0, 32 );
+			var machin:Number = 0;
 		}
 	}
 	

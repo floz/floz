@@ -147,8 +147,8 @@ package painting.brushes.ribbons
 			px = ribbon.px;
 			py = ribbon.py;
 			
-			ribbon.vx = ( ribbon.vx + ( ribbon.px - ribbon.dx ) * SLOWDOWN ) * ( FRICTION + _diffX );
-			ribbon.vy = ( ribbon.vy + ( ribbon.py - ribbon.dy ) * SLOWDOWN ) * ( FRICTION + _diffY );
+			ribbon.vx = ( ribbon.vx + ( ribbon.px - px ) * SLOWDOWN ) * ( FRICTION + _diffX );
+			ribbon.vy = ( ribbon.vy + ( ribbon.py - py ) * SLOWDOWN ) * ( FRICTION + _diffY );
 			
 			ribbon.px -= ribbon.vx;
 			ribbon.py -= ribbon.vy;
