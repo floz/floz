@@ -7,7 +7,7 @@
 package test_text 
 {
 	import flash.display.Sprite;
-	import fr.minuit4.core.managers.textManager;
+	import fr.minuit4.text.textManager;
 	
 	public class MainTestText extends Sprite
 	{
