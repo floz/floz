@@ -15,6 +15,9 @@
   <classpaths>
     <class path="src" />
     <class path="lib" />
+    <class path="..\..\..\Packages\bigarobas\src" />
+    <class path="..\..\..\Packages\nude\frameworks\as3\src" />
+    <class path="..\..\..\Packages\minuit4\flash\fr" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -22,6 +25,7 @@
     <option allowSourcePathOverlap="False" />
     <option benchmark="False" />
     <option es="False" />
+    <option locale="" />
     <option loadConfig="" />
     <option optimize="True" />
     <option showActionScriptWarnings="True" />
@@ -35,7 +39,9 @@
     <option verboseStackTraces="False" />
     <option linkReport="" />
     <option loadExterns="" />
+    <option staticLinkRSL="True" />
     <option additional="" />
+    <option compilerConstants="" />
     <option customSDK="" />
   </build>
   <!-- SWC Include Libraries -->
