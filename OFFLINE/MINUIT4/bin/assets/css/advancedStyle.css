@@ -1,0 +1,7 @@
+
+.default { font-family: HelveticaNeue-Black; font-size: 22; autoSize: left; antiAliasType: advanced; selectable: false; embedFonts: true; y: 50; color: #0000ff; }
+.default2 { font-family: HelveticaNeue-Black; font-size: 22; autoSize: left; antiAliasType: advanced; selectable: false; embedFonts: true; y: 100; color: #00ff00; }
+.default3 { font-family: HelveticaNeue-Black; font-size: 22; autoSize: left; antiAliasType: advanced; selectable: false; embedFonts: true; y: 150; color: #ff0000; }
+
+.testInput { font-family: HelveticaNeue-Black; font-size: 22; selectable: true; border: 1; type: input; multiline: true; wordWrap: true; leading: 10; }
+.testInput2 { font-family: HelveticaNeue-Black; font-size: 22; selectable: true; border: 1; type: input; multiline: true; wordWrap: true; leading: 50; letterSpacing: 20; }

@@ -4,31 +4,34 @@
 <flex-config>
   <target-player>10.0.0</target-player>
   <compiler>
-    <define>
+    <define append="true">
       <name>CONFIG::debug</name>
       <value>true</value>
     </define>
-    <define>
+    <define append="true">
       <name>CONFIG::release</name>
       <value>false</value>
     </define>
-    <define>
+    <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'11/07/2010'</value>
+      <value>'05/08/2010'</value>
     </define>
     <source-path append="true">
-      <path-element>D:\Projets\Projets\OFFLINE\MINUIT4\src</path-element>
-      <path-element>D:\Projets\Packages\bigarobas\src</path-element>
-      <path-element>D:\Projets\Packages\nude\frameworks\as3\src</path-element>
-      <path-element>D:\Projets\Packages\minuit4\flash\0.2</path-element>
-      <path-element>D:\Projets\Packages\eaze\as3\src</path-element>
-      <path-element>D:\Projets\Packages\away3D\trunk\fp10\Away3DLite\src</path-element>
-      <path-element>D:\Projets\Packages\flowearth\framework\src\trunk</path-element>
-      <path-element>D:\Appz\FlashDevelop\Library\AS3\classes</path-element>
+      <path-element>D:\Work\workspace\MINUIT4\src</path-element>
+      <path-element>D:\Packages\bigarobas\src</path-element>
+      <path-element>D:\Packages\nude\frameworks\as3\src</path-element>
+      <path-element>D:\Packages\minuit4\flash\0.2</path-element>
+      <path-element>D:\Packages\eaze\as3\src</path-element>
+      <path-element>D:\Packages\away3D\fp10\Away3DLite\src</path-element>
+      <path-element>D:\Packages\flowearth\framework\src\trunk</path-element>
+      <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
+    <library-path append="true">
+      <path-element>D:\Work\workspace\MINUIT4\swc\fonts.swc</path-element>
+    </library-path>
   </compiler>
   <file-specs>
-    <path-element>D:\Projets\Projets\OFFLINE\MINUIT4\src\test_text\MainTestText.as</path-element>
+    <path-element>D:\Work\workspace\MINUIT4\src\test_text\MainTestHeritage.as</path-element>
   </file-specs>
   <default-background-color>#C0C0C0</default-background-color>
   <default-frame-rate>30</default-frame-rate>
