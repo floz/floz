@@ -1,3 +1,6 @@
-.test, .test2 { font-family: HelveticaNeue-Black; font-size: 22; }
+.test, test2 { font-family: HelveticaNeue-Black; font-size: 22; }
 .toto { font-family: HelveticaNeue-Black; font-size: 22; }
-.parent>.enfant { font-family: HelveticaNeue-Black; font-size: 22; }
+
+.parent { font-size: 22; color: #ff00ff; }
+.parent>.enfant { font-family: HelveticaNeue-Black; x: 50; y: 40; }
+.enfant>.enfant2 { color: #0000ff; font-size: 16; antiAliasType: advanced; y: 100; }

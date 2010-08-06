@@ -13,8 +13,8 @@ package test_text
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import fr.minuit4.net.loaders.DataLoader;
-	import fr.minuit4.text.fontManager;
-	import fr.minuit4.text.textManager;
+	import fr.minuit4.text.managers.fontManager;
+	import fr.minuit4.text.managers.textManager;
 	
 	public class MainTestManagers extends Sprite
 	{
