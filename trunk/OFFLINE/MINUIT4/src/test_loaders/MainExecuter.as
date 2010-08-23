@@ -52,7 +52,8 @@ package test_loaders
 		private function progressHandler(e:CommandEvent):void 
 		{
 			trace( "PROGRESS !" );
-			trace( e.progressCount );
+			trace( "PROGRESS >> progressCount : " + e.progressCount + ", totalCount : " + e.totalCount );
+			trace( "PROGRESS >> percent : " + e.progressCount / e.totalCount );
 		}
 		
 		private function commandCompleteHandler(e:CommandEvent):void 
@@ -78,13 +79,21 @@ package test_loaders
 			grappin.x = grappin.y = 200;
 			addChild( grappin );
 			
+			// OK
+			trace( executer );
+			trace( executer.getCommandById( "grappin_2" ) );
+			
 			_executer.removeEventListener( CommandEvent.PROGRESS, progressHandler );
 			_executer.removeEventListener( CommandEvent.COMMAND_COMPLETE, commandCompleteHandler );
 			_executer.removeEventListener( CommandEvent.COMPLETE, completeHandler );
 			_executer.dispose();
 			
-			trace( executer );
-			trace( executer.getCommandById( "grappin_2" ) );
+			// Ca marche quelques instants, mais plus après.
+			// Le temps que le garbage collector passe quoi.
+			// Donc à éviter : si on dispose l'object Executer principal, tout ce qu'il contient se dispose aussi.
+			// Donc les autres Executer qu'il peut contenir, aussi ;)
+			//trace( executer );
+			//trace( executer.getCommandById( "grappin_2" ) );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------

@@ -33,9 +33,9 @@ package test_nav
 		public function MainTestNav() 
 		{
 			_navManager = new NavManager();
-			_navManager.addNode( "item1" );
-			_navManager.addNode( "item2" );
-			_navManager.addNode( "item3" );
+			_navManager.createNode( "item1" );
+			_navManager.createNode( "item2" );
+			_navManager.createNode( "item3" );
 			_navManager.addEventListener( NavEvent.NAV_CHANGE, navChangeHandler, false, 0, true );
 			
 			_item1 = new M4Button( "ITEM 1 " );
