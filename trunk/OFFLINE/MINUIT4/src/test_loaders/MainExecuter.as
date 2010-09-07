@@ -90,7 +90,7 @@ package test_loaders
 			
 			// Ca marche quelques instants, mais plus après.
 			// Le temps que le garbage collector passe quoi.
-			// Donc à éviter : si on dispose l'object Executer principal, tout ce qu'il contient se dispose aussi.
+			// Donc à ne pas faire : si on dispose l'object Executer principal, tout ce qu'il contient se dispose aussi.
 			// Donc les autres Executer qu'il peut contenir, aussi ;)
 			//trace( executer );
 			//trace( executer.getCommandById( "grappin_2" ) );

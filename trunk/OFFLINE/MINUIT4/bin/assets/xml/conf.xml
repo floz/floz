@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data
+
+	<paths base="assets"></paths>
+		<xml>${paths.base}/xml</xml>
+		<img>${paths.base}/images</img>
+		<css>${paths.base}/css</css>
+	</paths>
+	
+	
+</data>
