@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+
+	<paths>
+		<base>assets</base>
+		<xml>${paths.base}/xml</xml>
+		<img>${paths.base}/images</img>
+		<css>${paths.base}/css</css>
+		<swf>${paths.base}/swf</swf>
+		<fonts>${paths.swf}/fonts</fonts>
+	</paths>
+	
+	<preload>
+		<item id="item1">${paths.xml}/loadme.xml</item>
+		<item id="item2">${paths.img}/dragon.jpg</item>
+		<item id="item3">${paths.img}/grappin.jpg</item>
+	</preload>
+	
+	<stylesheet>${paths.css}/stylesheet.css</stylesheet>
+	
+	<fonts>
+		<font>
+			<class><![CDATA[HelveticaBold]]></class>
+			<url>${paths.fonts}/helvebold.swf</url>
+		</font>
+		<font>
+			<class><![CDATA[Arial]]></class>
+			<url>${paths.fonts}/arial.swf</url>
+		</font>
+	</fonts>	
+	
+</data>
