@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<data
+<data>
 
-	<paths base="assets"></paths>
-		<xml>${paths.base}/xml</xml>
-		<img>${paths.base}/images</img>
-		<css>${paths.base}/css</css>
+	<paths>
+		<base>.</base>
+		<xml>assets/xml</xml>
+		<img>assets/images</img>
+		<css>assets/css</css>
+		<swf>assets/swf</swf>
+		<fonts>assets/swf/fonts</fonts>
 	</paths>
 	
+	<preload>
+		<item id="item1">assets/xml/loadme.xml</item>
+		<item id="item2">assets/images/dragon.jpg</item>
+		<item id="item3">assets/images/grappin.jpg</item>
+	</preload>
+	
+	<stylesheet>assets/css/advancedStyle.css</stylesheet>
+	
+	<fonts>
+		<item id="helvetica">
+			<class><![CDATA[assets.fonts.AssetGaramond]]></class>
+			<class><![CDATA[assets.fonts.AssetHelveticaBlack]]></class>
+			<url>assets/swf/fonts/fonts1.swf</url>
+		</item>
+		<item id="arial">
+			<class><![CDATA[assets.fonts.AssetAkkurat]]></class>
+			<url>assets/swf/fonts/fonts2.swf</url>
+		</item>
+	</fonts>	
 	
 </data>
