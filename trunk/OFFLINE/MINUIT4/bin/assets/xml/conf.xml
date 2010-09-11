@@ -20,12 +20,12 @@
 	
 	<fonts>
 		<item id="helvetica">
-			<class><![CDATA[assets.fonts.AssetGaramond]]></class>
-			<class><![CDATA[assets.fonts.AssetHelveticaBlack]]></class>
+			<classId><![CDATA[assets.fonts.AssetGaramond]]></classId>
+			<classId><![CDATA[assets.fonts.AssetHelveticaBlack]]></classId>
 			<url>assets/swf/fonts/fonts1.swf</url>
 		</item>
 		<item id="arial">
-			<class><![CDATA[assets.fonts.AssetAkkurat]]></class>
+			<classId><![CDATA[assets.fonts.AssetAkkurat]]></classId>
 			<url>assets/swf/fonts/fonts2.swf</url>
 		</item>
 	</fonts>	
