@@ -4,33 +4,32 @@
 <flex-config>
   <target-player>10.0.0</target-player>
   <compiler>
-    <define>
+    <define append="true">
       <name>CONFIG::debug</name>
       <value>true</value>
     </define>
-    <define>
+    <define append="true">
       <name>CONFIG::release</name>
       <value>false</value>
     </define>
-    <define>
+    <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'10/09/2010'</value>
+      <value>'15/11/2010'</value>
     </define>
     <source-path append="true">
-      <path-element>D:\Projets\Projets\OFFLINE\MINUIT4\src</path-element>
-      <path-element>D:\Projets\Packages\minuit4\flash\0.2</path-element>
-      <path-element>D:\Projets\Packages\bigarobas\src</path-element>
-      <path-element>D:\Projets\Packages\away3D\trunk\fp10\Away3DLite\src</path-element>
-      <path-element>D:\Projets\Packages\eaze\as3\src</path-element>
-      <path-element>D:\Projets\Packages\flowearth\framework\src\trunk</path-element>
-      <path-element>D:\Appz\FlashDevelop\Library\AS3\classes</path-element>
+      <path-element>D:\Floz\Work\Flash\Projets\Floz\OFFLINE\MINUIT4\src</path-element>
+      <path-element>D:\Floz\Work\Flash\Packages\minuit4\flash\0.2</path-element>
+      <path-element>D:\Floz\Work\Flash\Packages\bigarobas\src</path-element>
+      <path-element>D:\Floz\Work\Flash\Packages\eaze\as3\src</path-element>
+      <path-element>D:\Floz\Work\Flash\Packages\flowearth\framework\src\trunk</path-element>
+      <path-element>C:\Appz\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>D:\Projets\Projets\OFFLINE\MINUIT4\swc\fonts.swc</path-element>
+      <path-element>D:\Floz\Work\Flash\Projets\Floz\OFFLINE\MINUIT4\swc\fonts.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>D:\Projets\Projets\OFFLINE\MINUIT4\src\test_conf\TestConf.as</path-element>
+    <path-element>D:\Floz\Work\Flash\Projets\Floz\OFFLINE\MINUIT4\src\test_loaders\MainExecuter.as</path-element>
   </file-specs>
   <default-background-color>#C0C0C0</default-background-color>
   <default-frame-rate>30</default-frame-rate>

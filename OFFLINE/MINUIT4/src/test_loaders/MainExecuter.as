@@ -31,14 +31,14 @@ package test_loaders
 			addChild( _cnt = new Sprite() );
 			
 			var executer:Executer = new Executer();
-			executer.addCommand( new AssetLoader( "assets/images/dragon.jpg" ), "dragon_2" );
-			executer.addCommand( new AssetLoader( "assets/images/grappin.jpg" ), "grappin_2" );
+			executer.add( new AssetLoader( "assets/images/dragon.jpg" ), "dragon_2" );
+			executer.add( new AssetLoader( "assets/images/grappin.jpg" ), "grappin_2" );
 			
 			_executer = new Executer();
-			_executer.addCommand( executer, "paquet" );
-			_executer.addCommand( new AssetLoader( "assets/images/dragon.jpg" ), "dragon" );
-			_executer.addCommand( new AssetLoader( "assets/images/grappin.jpg" ) );
-			_executer.addCommand( new DataLoader( "assets/css/style.css" ) );
+			_executer.add( executer, "paquet" );
+			_executer.add( new AssetLoader( "assets/images/dragon.jpg" ), "dragon" );
+			_executer.add( new AssetLoader( "assets/images/grappin.jpg" ) );
+			_executer.add( new DataLoader( "assets/css/style.css" ) );
 			_executer.addEventListener( CommandEvent.PROGRESS, progressHandler, false, 0, true );
 			_executer.addEventListener( CommandEvent.COMMAND_COMPLETE, commandCompleteHandler, false, 0, true );
 			_executer.addEventListener( CommandEvent.COMPLETE, completeHandler, false, 0, true );
@@ -82,18 +82,12 @@ package test_loaders
 			// OK
 			trace( executer );
 			trace( executer.getCommandById( "grappin_2" ) );
+			trace( executer.getCommand( 0 ) );
 			
 			_executer.removeEventListener( CommandEvent.PROGRESS, progressHandler );
 			_executer.removeEventListener( CommandEvent.COMMAND_COMPLETE, commandCompleteHandler );
 			_executer.removeEventListener( CommandEvent.COMPLETE, completeHandler );
 			_executer.dispose();
-			
-			// Ca marche quelques instants, mais plus après.
-			// Le temps que le garbage collector passe quoi.
-			// Donc à ne pas faire : si on dispose l'object Executer principal, tout ce qu'il contient se dispose aussi.
-			// Donc les autres Executer qu'il peut contenir, aussi ;)
-			//trace( executer );
-			//trace( executer.getCommandById( "grappin_2" ) );
 		}
 		
 		// - PRIVATE METHODS -------------------------------------------------------------
