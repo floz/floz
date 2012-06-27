@@ -108,8 +108,8 @@ package main
 		{
 			removeEventListener( Event.REMOVED_FROM_STAGE, onRemovedFromStage );
 			
-			removeEventListener( MouseEvent.MOUSE_OVER, onOver, true );
-			removeEventListener( MouseEvent.MOUSE_OUT, onOut, true );
+			removeEventListener( MouseEvent.ROLL_OVER, onOver );
+			removeEventListener( MouseEvent.ROLL_OUT, onOut );
 			removeEventListener( MouseEvent.CLICK, onClick, true );
 			
 			//Tweener.removeTweens( this );
@@ -124,8 +124,8 @@ package main
 			this.scaleX =
 			this.scaleY = 0;
 			
-			addEventListener( MouseEvent.MOUSE_OVER, onOver );
-			addEventListener( MouseEvent.MOUSE_OUT, onOut );
+			addEventListener( MouseEvent.ROLL_OVER, onOver );
+			addEventListener( MouseEvent.ROLL_OUT, onOut );
 			addEventListener( MouseEvent.CLICK, onClick );
 		}
 		
@@ -134,7 +134,7 @@ package main
 			if ( !ready ) return;
 			
 			enlarge();
-			dispatchEvent( new Event( Vignette.VIGNETTE_OVER, true ) );
+			dispatchEvent( new Event( Vignette.VIGNETTE_OVER ) );
 		}
 		
 		private function onOut(e:MouseEvent):void 
@@ -142,7 +142,7 @@ package main
 			if ( !ready ) return;
 			
 			normalize();
-			dispatchEvent( new Event( Vignette.VIGNETTE_OUT, true ) );
+			dispatchEvent( new Event( Vignette.VIGNETTE_OUT ) );
 		}
 		
 		private function onClick(e:MouseEvent):void 

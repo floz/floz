@@ -13,7 +13,7 @@ package main
 	public class Link extends MovieClip 
 	{
 		public var txt:TextField;
-		public var z:SimpleButton;
+		public var bt:SimpleButton;
 		
 		public var url:String;
 		public var mail:Boolean;
