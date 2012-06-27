@@ -49,10 +49,10 @@ package main
 		{
 			switch( e.target )
 			{
-				case pub.z: activateRubrique( Const.PUB, pub ); break;
-				case clip.z: activateRubrique( Const.CLIP, clip ); break;
-				case short.z: activateRubrique( Const.SHORT, short ); break;
-				case links.z: activateRubrique( Const.LINKS, links ); break;
+				case pub.bt: activateRubrique( Const.PUB, pub ); break;
+				case clip.bt: activateRubrique( Const.CLIP, clip ); break;
+				case short.bt: activateRubrique( Const.SHORT, short ); break;
+				case links.bt: activateRubrique( Const.LINKS, links ); break;
 			}
 		}
 		
@@ -60,8 +60,8 @@ package main
 		
 		private function desactivate():void
 		{
-			currentButton.z.enabled = true;
-			currentButton.z.useHandCursor = true;
+			currentButton.bt.enabled = true;
+			currentButton.bt.useHandCursor = true;
 			currentButton.mc.gotoAndStop( "deselect" );
 		}
 		
@@ -72,8 +72,8 @@ package main
 			
 			this.rubriqueName = rubriqueName;
 			currentButton = button;			
-			currentButton.z.enabled = false;
-			currentButton.z.useHandCursor = false;
+			currentButton.bt.enabled = false;
+			currentButton.bt.useHandCursor = false;
 			currentButton.mc.gotoAndStop( "select" );
 			
 			dispatchEvent( new Event( Menu.RUBRIQUE_CHANGE ) );

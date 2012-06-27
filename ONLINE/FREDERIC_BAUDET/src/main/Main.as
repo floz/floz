@@ -33,7 +33,7 @@ package main
 		
 		private var vignettesManager:VignettesManager;
 		private var datas:Datas;
-		private var toolTip:Tooltip;
+		private var toolTip:ToolTip;
 		private var toolTips:Array;
 		private var curtain:Sprite;
 		private var player:Player;
@@ -77,8 +77,8 @@ package main
 			//logo.y = -38 + 560 * .5 - stage.stageHeight * .5;
 			
 			vignettesManager = new VignettesManager();
-			vignettesManager.addEventListener( Vignette.VIGNETTE_OVER, onVignetteOver );
-			vignettesManager.addEventListener( Vignette.VIGNETTE_OUT, onVignetteOut );
+			vignettesManager.addEventListener( Vignette.VIGNETTE_OVER, onVignetteOver, true );
+			vignettesManager.addEventListener( Vignette.VIGNETTE_OUT, onVignetteOut, true );
 			vignettesManager.addEventListener( Vignette.VIGNETTE_CLICK, onVignetteClick );
 			cnt.addChild( vignettesManager );
 			
@@ -115,7 +115,7 @@ package main
 		
 		private function onVignetteOver(e:Event):void 
 		{
-			toolTip = new Tooltip();
+			toolTip = new ToolTip();
 			addChild( toolTip );
 			
 			toolTips.push( toolTip );
@@ -125,7 +125,12 @@ package main
 		
 		private function onVignetteOut(e:Event):void 
 		{
-			if ( toolTips.length ) Tooltip( toolTips.shift() ).desactivate();
+			if ( toolTips.length ) 
+			{
+				//var tooltip:Tooltip = toolTips.shift();
+				//tooltip.desactivate();
+				ToolTip( toolTips.shift() ).desactivate();
+			}
 		}
 		
 		private function onVignetteClick(e:Event):void 

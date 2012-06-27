@@ -76,6 +76,8 @@ package main
 			
 			currentVignette.addEventListener( MouseEvent.MOUSE_MOVE, onMove );
 			bubbles.bubble( currentVignette.x, currentVignette.y );
+			
+			trace( "tototototo" );
 		}
 		
 		private function onMove(e:MouseEvent):void 

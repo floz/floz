@@ -19,7 +19,7 @@ package main
 	
 	public class SoundManager extends MovieClip
 	{
-		public var z:SimpleButton;
+		public var bt:SimpleButton;
 		
 		private var activated:Boolean;
 		private var request:URLRequest;
@@ -54,7 +54,7 @@ package main
 			soundTransf = new SoundTransform( .35 );
 			channel = sound.play( 0, 100, soundTransf );
 			
-			z.addEventListener( MouseEvent.CLICK, onClick );
+			bt.addEventListener( MouseEvent.CLICK, onClick );
 		}
 		
 		private function onClick(e:MouseEvent):void 

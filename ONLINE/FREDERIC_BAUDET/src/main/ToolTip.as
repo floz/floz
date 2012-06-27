@@ -15,13 +15,13 @@ package main
 	import gs.easing.Quad;
 	import gs.TweenLite;
 	
-	public class Tooltip extends MovieClip
+	public class ToolTip extends MovieClip
 	{
 		public var title:TextField;
 		public var director:TextField;
 		public var sound:TextField;
 		
-		public function Tooltip() 
+		public function ToolTip() 
 		{
 			this.mouseChildren = false;
 			this.mouseEnabled = false;

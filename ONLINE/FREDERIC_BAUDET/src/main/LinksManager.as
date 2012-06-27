@@ -146,7 +146,7 @@ package main
 					
 					TweenLite.to( link, .2, { y: link.y - 20, alpha: 1, delay: i * .01, ease: Back.easeOut } );
 					
-					link.z.addEventListener( MouseEvent.CLICK, onClick );
+					link.bt.addEventListener( MouseEvent.CLICK, onClick );
 					
 					addChild( link );
 				}
