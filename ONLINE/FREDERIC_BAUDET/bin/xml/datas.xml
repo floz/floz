@@ -2,7 +2,7 @@
 <data>
 	<path img="img/" flv="flv/" />
 	<pub>
-		<vignette img="1000_enfants.jpeg" flv="1000_enfants.flv" title="1000 enfants" director="F.RUGGIERI" sound="M. Pothier" lock="" />
+		<vignette img="1000_enfants.jpeg" flv="1000_enfants.flv" title="1000 enfants" subtitle="toto" director="F.RUGGIERI" sound="M. Pothier" lock="" />
 		<vignette img="aides.jpeg" flv="aids.flv" title="A.I.D.S" director="A. BOWYN" sound="Bod" lock="" />
 		<vignette img="amnesty_international.jpeg" flv="amnesty_international.flv" title="Amnesty International" director="S. SEVERI" sound="" lock="" />
 		<vignette img="canal_sat.jpeg" flv="canalsat.flv" title="Canal sat" director="J. BACK" sound="" lock="" />

@@ -58,7 +58,8 @@ package main
 			var a:Array = [];
 			
 			var x:XML;
-			for each( x in xml[ rubrique ].vignette ) a.push( { img: xml.path.@img + rubrique + "/" + x.@img, flv: xml.path.@flv + rubrique + "/" + x.@flv, title: x.@title, director: x.@director, sound: x.@sound, lock: x.@lock } );
+			for each( x in xml[ rubrique ].vignette ) 
+				a.push( { img: xml.path.@img + rubrique + "/" + x.@img, flv: xml.path.@flv + rubrique + "/" + x.@flv, title: x.@title, subtitle: x.@subtitle, director: x.@director, sound: x.@sound, lock: x.@lock } );
 			
 			return a
 		}

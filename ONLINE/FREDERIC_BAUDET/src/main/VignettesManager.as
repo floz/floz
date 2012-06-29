@@ -76,8 +76,6 @@ package main
 			
 			currentVignette.addEventListener( MouseEvent.MOUSE_MOVE, onMove );
 			bubbles.bubble( currentVignette.x, currentVignette.y );
-			
-			trace( "tototototo" );
 		}
 		
 		private function onMove(e:MouseEvent):void 
@@ -102,7 +100,7 @@ package main
 			
 			var o:Object = infosVignettes[ downloader.currentCount - 1 ];
 			var b:Boolean = ( o.lock == "" ) ? false : true;
-			var v:Vignette = new Vignette( downloader.getLastItem(), o.flv, o.title, o.director, o.sound, b, randRange( 40, 90 ) );
+			var v:Vignette = new Vignette( downloader.getLastItem(), o.flv, o.title, o.subtitle, o.director, o.sound, b, randRange( 40, 90 ) );
 			v.x = Const.POSITIONS[ downloader.currentCount - 1 ].x + 60;
 			v.y = Const.POSITIONS[ downloader.currentCount - 1 ].y + 50;
 			

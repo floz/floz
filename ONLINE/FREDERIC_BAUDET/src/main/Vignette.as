@@ -32,6 +32,7 @@ package main
 		private var preview:BitmapData;
 		private var flv:String;
 		private var title:String;
+		private var subtitle:String;
 		private var director:String;
 		private var sound:String;
 		private var lock:Boolean;
@@ -45,11 +46,12 @@ package main
 		private var ready:Boolean;
 		private var dispatchable:Boolean;
 		
-		public function Vignette( preview:BitmapData, flv:String, title:String, director:String, sound:String, lock:Boolean, size:Number = 50 )
+		public function Vignette( preview:BitmapData, flv:String, title:String, subtitle:String, director:String, sound:String, lock:Boolean, size:Number = 50 )
 		{			
 			this.preview = preview;
 			this.flv = flv;
 			this.title = title;
+			this.subtitle = subtitle;
 			this.director = director;
 			this.sound = sound;
 			this.size = size;
@@ -211,6 +213,7 @@ package main
 		public function setIndex( index:int ):void { this.index = index };
 		public function getIndex():int { return this.index; }		
 		public function getTitle():String { return this.title; }
+		public function getSubtitle():String { return this.subtitle; }
 		public function getDirector():String { return this.director; }
 		public function getSound():String { return this.sound; }
 		public function getFLV():String { return this.flv; }
