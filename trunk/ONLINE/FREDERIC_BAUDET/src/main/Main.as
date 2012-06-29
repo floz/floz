@@ -120,7 +120,7 @@ package main
 			
 			toolTips.push( toolTip );
 			
-			toolTip.activate( e.target as DisplayObject, Vignette( e.target ).getTitle(), Vignette( e.target ).getDirector(), Vignette( e.target ).getSound() );
+			toolTip.activate( e.target as DisplayObject, Vignette( e.target ).getTitle(), Vignette( e.target ).getSubtitle(), Vignette( e.target ).getDirector(), Vignette( e.target ).getSound() );
 		}
 		
 		private function onVignetteOut(e:Event):void 

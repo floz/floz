@@ -18,6 +18,7 @@ package main
 	public class ToolTip extends MovieClip
 	{
 		public var title:TextField;
+		public var subtitle:TextField;
 		public var director:TextField;
 		public var sound:TextField;
 		
@@ -57,14 +58,15 @@ package main
 		
 		// PUBLIC
 		
-		public function activate( target:DisplayObject, title:String, director:String, sound:String ):void
+		public function activate( target:DisplayObject, title:String, subtitle:String, director:String, sound:String ):void
 		{
 			this.x = target.x;
 			this.y = target.y - target.height / 4 - 10;
 			
 			this.title.text = title;
-			this.director.text = "Director : " + director;
-			this.sound.text = sound == "" ? sound : "Music/Sound : " + sound;
+			this.director.text = director == "" ? "" : "Director : " + director;
+			this.sound.text = sound == "" ? "" : "Music/Sound : " + sound;
+			this.subtitle.text = subtitle || "";
 			
 			var tf:TextFormat = new TextFormat();
 			tf.bold = true;
